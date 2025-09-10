@@ -1,0 +1,12 @@
+name: my_project
+publish_to: none
+environment:
+  sdk: ^3.9.0
+workspace:
+  - apps/tina_app
+dev_dependencies:
+  melos: ^7.1.0
+melos:
+  scripts:
+    generate:
+      run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build
