@@ -1,0 +1,128 @@
+# PRD-01: Basic Chat Interface
+
+## User Value Proposition
+Enable users to have natural conversations with an AI assistant through a clean, intuitive chat interface with real-time streaming responses.
+
+## User Stories (Vertical Slices)
+- As a user, I want to send messages to an AI assistant so that I can get helpful responses
+- As a user, I want to see AI responses appear in real-time so that I know the system is working
+- As a user, I want to easily distinguish between my messages and AI responses so that I can follow the conversation
+- As a user, I want to see when the AI is thinking/processing so that I know to wait
+
+## Success Criteria
+- User can type a message and press send/enter to submit
+- Message appears immediately in chat with "sending" indicator
+- AI response streams in real-time, token by token
+- User can send another message while AI is responding
+- Chat maintains scrolling position appropriately
+- Clear visual distinction between user and AI messages
+- Loading/thinking indicator while AI processes
+- Stop generation button appears during streaming
+- Messages display timestamps
+- Code blocks render with proper formatting
+
+## Technical Requirements
+
+### Core Components
+```yaml
+packages/features/chat/:
+  - ui/chat_screen.dart           # Main chat interface
+  - ui/message_bubble.dart        # Message display widget
+  - ui/message_input.dart          # Input field with send button
+  - bloc/chat_bloc.dart            # State management
+  - models/message.dart            # Message entity
+
+packages/infrastructure/providers/:
+  - openai_provider/               # Initial AI provider (OpenAI)
+    - openai_client.dart           # API client implementation
+    - streaming_handler.dart       # SSE stream processing
+```
+
+### Dependencies
+```yaml
+dependencies:
+  flutter_bloc: ^8.1.3             # State management
+  dio: ^5.3.3                      # HTTP client
+  flutter_client_sse: ^2.0.0       # SSE streaming
+  flutter_markdown: ^0.6.18        # Message formatting
+```
+
+### Data Models
+```dart
+class Message {
+  final String id;
+  final String content;
+  final MessageRole role;          // user, assistant, system
+  final DateTime timestamp;
+  final MessageStatus status;       // sending, sent, streaming, complete, error
+}
+```
+
+### State Management
+```dart
+abstract class ChatState {}
+class ChatInitial extends ChatState {}
+class ChatLoading extends ChatState {}
+class ChatReady extends ChatState {
+  final List<Message> messages;
+  final bool isStreaming;
+}
+class ChatError extends ChatState {
+  final String error;
+}
+```
+
+## Implementation Plan
+
+### Week 1: Core Chat UI
+1. Create basic Flutter app structure
+2. Implement chat screen layout
+3. Build message bubble widget
+4. Create message input component
+5. Set up basic navigation
+
+### Week 2: AI Integration & Streaming
+1. Implement OpenAI provider
+2. Add SSE streaming handler
+3. Connect chat bloc to provider
+4. Implement real-time message streaming
+5. Add error handling and retry logic
+
+## Out of Scope (for this PRD)
+- Multiple chats/conversations
+- Chat persistence/history
+- Multiple AI providers
+- User authentication
+- Settings/configuration
+- Search functionality
+- Export capabilities
+- Advanced formatting (images, files)
+
+## Dependencies
+- Flutter SDK setup
+- OpenAI API key for testing
+- Basic project structure
+
+## What This Enables for Future PRDs
+- Foundation for chat persistence (PRD-02)
+- Base for multi-chat management (PRD-03)
+- Interface for provider switching (PRD-04)
+- Starting point for advanced features
+
+## Acceptance Tests
+1. **Send Message Test**: User types "Hello" → Message appears → AI responds
+2. **Streaming Test**: Long AI response streams token by token
+3. **Stop Generation Test**: User can stop mid-stream
+4. **Error Handling Test**: Invalid API key shows error message
+5. **Code Block Test**: Request code → Proper formatting applied
+6. **Multiple Messages Test**: Send 5 messages rapidly → All processed in order
+
+## Definition of Done
+- [ ] Chat interface renders on mobile (iOS/Android)
+- [ ] User can send messages
+- [ ] AI responses stream in real-time
+- [ ] Visual distinction between user/AI messages
+- [ ] Stop generation works
+- [ ] Error states handled gracefully
+- [ ] Code reviewed and tested
+- [ ] Basic documentation written

@@ -1,0 +1,293 @@
+# PRD-08: Workflows & UI Customization
+
+## User Value Proposition
+Enable users to create reusable AI workflows combining backends, tools, and policies, while personalizing the app's appearance with themes and customization options for a tailored experience.
+
+## User Stories (Vertical Slices)
+- As a user, I want to create workflows so that I can reuse complex AI configurations
+- As a user, I want to save backend+tool combinations so that I don't reconfigure each time
+- As a user, I want to customize the app theme so that it matches my preferences
+- As a user, I want workflow templates so that I can start quickly
+- As a user, I want to set cost limits so that I control spending
+
+## Success Criteria
+- Create and save custom workflows
+- Workflow = Backend + Tools + Policies + Credentials
+- Quick workflow switching
+- Theme customization (light/dark/custom)
+- Color scheme selection
+- Font size adjustment
+- Cost limit enforcement (soft/hard)
+- Workflow sharing via export
+- Template library
+- Usage tracking per workflow
+
+## Technical Requirements
+
+### Core Components
+```yaml
+packages/domain/workflow_domain/:
+  - entities/workflow.dart         # Workflow aggregate
+  - entities/workflow_policy.dart  # Cost/permission policies
+  - value_objects/cost_limit.dart  # Cost control settings
+  - services/workflow_service.dart # Workflow operations
+
+packages/features/workflow_designer/:
+  - ui/workflow_creator.dart       # Workflow builder UI
+  - ui/workflow_list.dart          # Saved workflows
+  - ui/policy_editor.dart          # Policy configuration
+  - ui/cost_meter.dart             # Usage display
+  - bloc/workflow_bloc.dart        # Workflow state
+
+packages/presentation/design_system/:
+  - themes/theme_provider.dart     # Theme management
+  - themes/color_schemes.dart      # Color options
+  - widgets/theme_selector.dart    # Theme picker UI
+  - tokens/design_tokens.dart      # Design system tokens
+```
+
+### Database Schema Extension
+```sql
+CREATE TABLE workflows (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  backend_id TEXT NOT NULL,
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
+  is_default BOOLEAN DEFAULT FALSE,
+  config_json TEXT,                -- Workflow-specific config
+  FOREIGN KEY (backend_id) REFERENCES backends(id)
+);
+
+CREATE TABLE workflow_tools (
+  workflow_id TEXT NOT NULL,
+  tool_id TEXT NOT NULL,
+  enabled BOOLEAN DEFAULT TRUE,
+  policy_override_json TEXT,       -- Tool-specific policies
+  PRIMARY KEY (workflow_id, tool_id),
+  FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON DELETE CASCADE,
+  FOREIGN KEY (tool_id) REFERENCES tools(id)
+);
+
+CREATE TABLE workflow_credentials (
+  workflow_id TEXT NOT NULL,
+  credential_id TEXT NOT NULL,
+  scope TEXT NOT NULL,
+  PRIMARY KEY (workflow_id, credential_id),
+  FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON DELETE CASCADE,
+  FOREIGN KEY (credential_id) REFERENCES credentials(id)
+);
+
+CREATE TABLE cost_policies (
+  id TEXT PRIMARY KEY,
+  workflow_id TEXT,
+  chat_id TEXT,
+  soft_limit_usd REAL,
+  hard_limit_usd REAL,
+  period TEXT,                     -- daily, weekly, monthly, per_chat
+  action_on_soft TEXT,             -- warn, prompt
+  action_on_hard TEXT,             -- block, prompt_override
+  FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON DELETE CASCADE
+);
+
+CREATE TABLE usage_tracking (
+  id TEXT PRIMARY KEY,
+  workflow_id TEXT,
+  chat_id TEXT,
+  tokens_in INTEGER,
+  tokens_out INTEGER,
+  cost_usd REAL,
+  timestamp INTEGER NOT NULL
+);
+```
+
+### Workflow Model
+```dart
+class Workflow {
+  final String id;
+  final String name;
+  final Backend backend;
+  final List<Tool> enabledTools;
+  final Map<String, Credential> credentials;
+  final WorkflowPolicy policy;
+  final bool isDefault;
+  
+  static Workflow create({
+    required String name,
+    required Backend backend,
+    List<Tool> tools = const [],
+    WorkflowPolicy? policy,
+  }) {
+    return Workflow(
+      id: Uuid().v4(),
+      name: name,
+      backend: backend,
+      enabledTools: tools,
+      credentials: {},
+      policy: policy ?? WorkflowPolicy.default(),
+      isDefault: false,
+    );
+  }
+}
+
+class WorkflowPolicy {
+  final CostLimit? costLimit;
+  final Map<String, PermissionScope> toolPermissions;
+  final bool requireConfirmation;
+  final int? maxTokens;
+}
+
+class CostLimit {
+  final double softLimit;
+  final double hardLimit;
+  final CostPeriod period;
+  final CostAction onSoftLimit;
+  final CostAction onHardLimit;
+}
+```
+
+### Theme System
+```dart
+class ThemeProvider extends ChangeNotifier {
+  ThemeMode _mode = ThemeMode.system;
+  ColorScheme? _customColorScheme;
+  double _fontScale = 1.0;
+  
+  ThemeData get lightTheme => _buildTheme(Brightness.light);
+  ThemeData get darkTheme => _buildTheme(Brightness.dark);
+  
+  ThemeData _buildTheme(Brightness brightness) {
+    final colorScheme = _customColorScheme ?? 
+      ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+        brightness: brightness,
+      );
+    
+    return ThemeData(
+      colorScheme: colorScheme,
+      useMaterial3: true,
+      textTheme: _buildTextTheme(_fontScale),
+    );
+  }
+  
+  Future<void> setCustomColors(Color primary, Color accent) async {
+    _customColorScheme = ColorScheme.fromSeed(
+      seedColor: primary,
+      secondary: accent,
+    );
+    notifyListeners();
+    await _savePreferences();
+  }
+}
+```
+
+### Cost Enforcement
+```dart
+class CostEnforcementService {
+  Future<bool> checkCostLimit(
+    Workflow workflow,
+    double estimatedCost,
+  ) async {
+    final usage = await _getUsage(workflow.id);
+    final newTotal = usage.totalCost + estimatedCost;
+    
+    if (workflow.policy.costLimit == null) return true;
+    
+    final limit = workflow.policy.costLimit!;
+    
+    // Check hard limit
+    if (newTotal > limit.hardLimit) {
+      switch (limit.onHardLimit) {
+        case CostAction.block:
+          throw CostLimitExceeded('Hard limit reached');
+        case CostAction.promptOverride:
+          return await _promptUserOverride();
+      }
+    }
+    
+    // Check soft limit
+    if (newTotal > limit.softLimit) {
+      switch (limit.onSoftLimit) {
+        case CostAction.warn:
+          _showWarning('Approaching cost limit');
+          return true;
+        case CostAction.prompt:
+          return await _promptUserContinue();
+      }
+    }
+    
+    return true;
+  }
+}
+```
+
+## Implementation Plan
+
+### Week 1: Workflow System
+1. Create workflow domain model
+2. Build workflow creator UI
+3. Implement workflow persistence
+4. Add workflow switching
+5. Test workflow execution
+
+### Week 2: Customization & Polish
+1. Implement theme system
+2. Build theme selector
+3. Add cost tracking
+4. Implement cost limits
+5. Create workflow templates
+
+## Out of Scope (for this PRD)
+- Visual workflow designer
+- Complex workflow logic
+- Conditional branching
+- Workflow marketplace
+- Team sharing
+- Advanced analytics
+- Custom CSS injection
+- Plugin themes
+
+## Dependencies
+- PRD-01-07 complete
+- Design system foundation
+- Cost data from providers
+
+## What This Enables for Future PRDs
+- Production-ready workflows
+- Team collaboration features
+- Workflow automation
+- Advanced customization
+
+## Acceptance Tests
+1. **Create Workflow Test**: Build workflow → Save → Use in chat
+2. **Switch Workflow Test**: Change workflow mid-chat → New config active
+3. **Theme Change Test**: Select dark theme → UI updates immediately
+4. **Cost Limit Test**: Hit soft limit → Warning shown → Can continue
+5. **Hard Limit Test**: Hit hard limit → Blocked → Override option
+6. **Template Test**: Use template → Workflow pre-configured
+
+## UI/UX Requirements
+- Intuitive workflow builder
+- Visual policy editor
+- Live theme preview
+- Cost meter visualization
+- Template gallery
+- Smooth animations
+- Responsive design
+- Accessibility maintained
+
+## Definition of Done
+- [ ] Workflow creation and saving
+- [ ] Workflow switching in chat
+- [ ] Backend + tools binding
+- [ ] Policy configuration
+- [ ] Theme customization
+- [ ] Color scheme selection
+- [ ] Font size adjustment
+- [ ] Cost tracking implemented
+- [ ] Cost limit enforcement
+- [ ] Workflow templates
+- [ ] Export/import workflows
+- [ ] Unit tests for workflows
+- [ ] Integration tests for limits
+- [ ] Theme persistence
