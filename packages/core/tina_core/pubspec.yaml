@@ -1,0 +1,13 @@
+name: tina_core
+description: Core utilities, constants, and base classes for the Tina AI Assistant
+version: 1.0.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: '^3.9.0'
+
+# No external dependencies - pure Dart package
+dependencies:
+
+dev_dependencies:

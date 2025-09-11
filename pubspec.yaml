@@ -5,6 +5,7 @@ environment:
 
 workspace:
   - apps/tina_app
+  - packages/core/tina_core
 
 dev_dependencies:
   melos: ^7.1.0
@@ -33,7 +34,7 @@ melos:
       description: Check code formatting (CI mode)
 
     format:fix:
-      run: melos exec -- "dart format . --fix"
+      run: melos exec -- "dart format ."
       description: Fix code formatting
 
     # Testing Scripts
