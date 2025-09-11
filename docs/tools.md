@@ -1,0 +1,19 @@
+- Widgetbook - to build design systems
+- Mason - to create and manage code templates
+- melos - to manage monorepo project
+- FlutterGen - to generate code for assets, fonts, colors, etc. with strong typing
+- Mocktail - for mocking in tests
+- Codemagic - CI/CD for Flutter apps
+- bloc - for state management
+- alchemist - for testing and code generation, and generating screenshots of stores
+- Retrofit - for networking typesafe HTTP client
+- flutter_launcher_icons - for generating app icons
+- flutter_native_splash - for creating native splash screens
+- shorebird - for deploying Flutter apps
+- go_router - for declarative routing
+- very_good_analysis - for static analysis and linting
+- envied - for managing environment variables
+- drift - for reactive persistence
+
+- freezed - for immutable data classes and unions
+- json_serializable - for JSON serialization

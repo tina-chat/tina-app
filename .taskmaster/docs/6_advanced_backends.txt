@@ -1,0 +1,244 @@
+# PRD-06: Advanced Backends - Orchestrators & MCP
+
+## User Value Proposition
+Connect to powerful AI workflow orchestrators (n8n, Flowise) and MCP servers to execute complex multi-step AI workflows, tool chains, and agent systems beyond simple chat completions.
+
+## User Stories (Vertical Slices)
+- As a user, I want to connect to n8n workflows so that I can use complex AI chains
+- As a user, I want to use Flowise agents so that I can leverage pre-built AI systems
+- As a user, I want to discover MCP server capabilities so that I can use available tools
+- As a user, I want to see workflow execution steps so that I understand what's happening
+- As a user, I want to configure orchestrator endpoints so that I can use self-hosted services
+
+## Success Criteria
+- Connect to n8n via SSE/webhook endpoints
+- Connect to Flowise via API
+- Discover and connect to MCP servers
+- Real-time streaming from orchestrators
+- Tool execution visibility
+- Workflow selection UI
+- Connection status indicators
+- Error recovery for failed connections
+- Support for self-hosted instances
+- Unified streaming event handling
+
+## Technical Requirements
+
+### Core Components
+```yaml
+packages/infrastructure/orchestrators/:
+  n8n_client/:
+    - n8n_client.dart              # n8n API client
+    - n8n_sse_handler.dart         # SSE stream handling
+    - n8n_workflow_discovery.dart  # Workflow enumeration
+  
+  flowise_client/:
+    - flowise_client.dart          # Flowise API client
+    - flowise_agent_manager.dart   # Agent discovery
+    - flowise_stream_handler.dart  # JSONL streaming
+  
+  sim_studio_client/:
+    - sim_studio_client.dart       # Sim Studio integration
+
+packages/infrastructure/integrations/:
+  mcp_client/:
+    - mcp_client.dart              # MCP JSON-RPC client
+    - mcp_discovery.dart           # Server discovery
+    - mcp_tool_registry.dart       # Tool registration
+    - json_rpc_handler.dart        # JSON-RPC 2.0 protocol
+
+packages/features/orchestrator_management/:
+  - ui/orchestrator_setup.dart    # Configuration screen
+  - ui/workflow_selector.dart     # Workflow picker
+  - ui/execution_trace.dart       # Step visualization
+```
+
+### Dependencies
+```yaml
+dependencies:
+  json_rpc_2: ^3.0.2              # MCP JSON-RPC protocol
+  json_schema: ^5.1.0             # Tool schema validation
+```
+
+### Database Schema Extension
+```sql
+CREATE TABLE backends (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,             -- llm, orchestrator, mcp
+  name TEXT NOT NULL,
+  base_url TEXT,
+  credential_id TEXT,
+  created_at INTEGER NOT NULL,
+  FOREIGN KEY (credential_id) REFERENCES credentials(id)
+);
+
+CREATE TABLE orchestrators (
+  backend_id TEXT PRIMARY KEY,
+  platform TEXT NOT NULL,         -- n8n, flowise, sim_studio
+  stream_format TEXT,              -- sse, jsonl
+  webhook_url TEXT,
+  config_json TEXT,
+  FOREIGN KEY (backend_id) REFERENCES backends(id) ON DELETE CASCADE
+);
+
+CREATE TABLE mcp_servers (
+  backend_id TEXT PRIMARY KEY,
+  url TEXT NOT NULL,
+  headers_json TEXT,
+  capabilities_json TEXT,          -- Cached capabilities
+  last_discovery_at INTEGER,
+  FOREIGN KEY (backend_id) REFERENCES backends(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tools (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  source TEXT NOT NULL,            -- builtin, orchestrator, mcp
+  backend_id TEXT,
+  schema_json TEXT NOT NULL,       -- JSON Schema definition
+  FOREIGN KEY (backend_id) REFERENCES backends(id) ON DELETE CASCADE
+);
+```
+
+### Unified Backend Interface
+```dart
+abstract class BackendClient {
+  String get id;
+  BackendType get type;
+  
+  Future<bool> testConnection();
+  Stream<StreamEvent> streamCompletion(
+    List<Message> messages,
+    Map<String, dynamic> params,
+  );
+  Future<List<Tool>> discoverTools();
+}
+
+class StreamEvent {
+  final StreamEventType type;  // start, delta, tool_start, tool_end, error, done
+  final String? messageId;
+  final String? toolId;
+  final String? source;
+  final dynamic data;
+  final DateTime timestamp;
+}
+```
+
+### Orchestrator Implementation
+```dart
+class N8nClient extends BackendClient {
+  final String webhookUrl;
+  final Dio _dio;
+  
+  @override
+  Stream<StreamEvent> streamCompletion(messages, params) async* {
+    final sseClient = SSEClient(_dio);
+    
+    await for (final event in sseClient.stream(webhookUrl, {
+      'messages': messages,
+      'sessionId': params['sessionId'],
+    })) {
+      yield _parseN8nEvent(event);
+    }
+  }
+  
+  StreamEvent _parseN8nEvent(String event) {
+    // Parse n8n-specific SSE format
+    final data = json.decode(event);
+    return StreamEvent(
+      type: _mapEventType(data['type']),
+      data: data['payload'],
+      toolId: data['toolId'],
+      timestamp: DateTime.now(),
+    );
+  }
+}
+```
+
+### MCP Integration
+```dart
+class MCPClient extends BackendClient {
+  final JsonRPC2Client _rpcClient;
+  
+  @override
+  Future<List<Tool>> discoverTools() async {
+    final response = await _rpcClient.call('tools/list');
+    return (response as List)
+      .map((t) => Tool.fromMCPSchema(t))
+      .toList();
+  }
+  
+  Future<dynamic> callTool(String toolName, Map<String, dynamic> args) async {
+    return await _rpcClient.call('tools/call', {
+      'name': toolName,
+      'arguments': args,
+    });
+  }
+}
+```
+
+## Implementation Plan
+
+### Week 1: Orchestrator Clients
+1. Implement n8n SSE client
+2. Build Flowise JSONL handler
+3. Create unified stream event model
+4. Add orchestrator discovery
+5. Test with real instances
+
+### Week 2: MCP & Integration
+1. Implement MCP JSON-RPC client
+2. Build tool discovery mechanism
+3. Create execution trace UI
+4. Add backend switching logic
+5. Test complex workflows
+
+## Out of Scope (for this PRD)
+- Custom orchestrator creation
+- Workflow editing/design
+- Direct tool implementation
+- Orchestrator hosting
+- Advanced debugging tools
+- Performance profiling
+- Load balancing
+- Orchestrator marketplace
+
+## Dependencies
+- PRD-01-05 complete
+- Access to orchestrator instances
+- MCP server for testing
+
+## What This Enables for Future PRDs
+- Tool execution with permissions (PRD-07)
+- Complex workflows (PRD-08)
+- Advanced agent capabilities
+- Multi-step reasoning
+
+## Acceptance Tests
+1. **n8n Connection Test**: Add n8n webhook → Test connection → Success
+2. **Workflow Execution Test**: Select workflow → Execute → See step traces
+3. **MCP Discovery Test**: Add MCP server → Tools discovered and listed
+4. **Streaming Test**: Execute workflow → Real-time updates displayed
+5. **Error Recovery Test**: Kill connection → Reconnect → Resume stream
+6. **Tool Execution Test**: Call MCP tool → Result returned correctly
+
+## Performance Requirements
+- Connection establishment: < 2s
+- Tool discovery: < 3s
+- Stream latency: < 500ms
+- Reconnection time: < 5s
+- Concurrent backends: Support 5+
+
+## Definition of Done
+- [ ] n8n client implemented with SSE
+- [ ] Flowise client with JSONL support
+- [ ] MCP client with JSON-RPC
+- [ ] Tool discovery working
+- [ ] Unified stream event model
+- [ ] Backend configuration UI
+- [ ] Workflow selection interface
+- [ ] Execution trace visualization
+- [ ] Connection testing for all types
+- [ ] Error handling and recovery
+- [ ] Unit tests for clients
+- [ ] Integration tests with mock servers
