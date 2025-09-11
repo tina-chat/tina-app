@@ -2,13 +2,13 @@
   "models": {
     "main": {
       "provider": "claude-code",
-      "modelId": "opus",
+      "modelId": "sonnet",
       "maxTokens": 32000,
       "temperature": 0.2
     },
     "research": {
       "provider": "claude-code",
-      "modelId": "opus",
+      "modelId": "sonnet",
       "maxTokens": 32000,
       "temperature": 0.1
     },
