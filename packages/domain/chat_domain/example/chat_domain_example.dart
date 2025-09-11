@@ -38,10 +38,7 @@ void main() {
   print('Message status: ${completedMessage.status}');
 
   // Demonstrate domain events
-  final chatCreated = ChatCreated(
-    chat: chat,
-    timestamp: DateTime.now(),
-  );
+  final chatCreated = ChatCreated(chat: chat, timestamp: DateTime.now());
   print('Domain event: ${chatCreated.toString()}');
 
   print('=== Example completed successfully! ===');
