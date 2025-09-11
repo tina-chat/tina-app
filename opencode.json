@@ -13,17 +13,27 @@
     },
   },
   "mcp": {
-     "firecrawl-mcp": {
+    "firecrawl-mcp": {
       "type": "local",
-        "command": ["npx", "-y", "firecrawl-mcp"],
-        "enabled": false,
-        "environment": {
-          "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
-        }
-      },
+      "command": [
+        "npx",
+        "-y",
+        "firecrawl-mcp"
+      ],
+      "enabled": true,
+      "environment": {
+        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
+      }
+    },
     "task-master-ai": {
       "type": "local",
-      "command": ["npx","-y", "--package=task-master-ai", "task-master-ai"],
+      "command": [
+        "npx",
+        "-y",
+        "--package=task-master-ai",
+        "task-master-ai"
+      ],
+      "enabled": true,
       "environment": {
         "ANTHROPIC_API_KEY": "{env:ANTHROPIC_API_KEY}",
         "PERPLEXITY_API_KEY": "{env:PERPLEXITY_API_KEY}",
