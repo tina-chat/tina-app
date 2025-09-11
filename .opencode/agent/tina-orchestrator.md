@@ -9,7 +9,7 @@ tools:
   grep: true
   glob: true
   list: true
-  bash: true
+  bash: false
   edit: false
   write: false
   task-master-ai_get_tasks: true

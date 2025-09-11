@@ -2,7 +2,9 @@
 
 ## Project Overview
 Flutter monorepo for Tina AI Assistant using Melos for package management.
-Main app: `apps/tina_shell/` | Packages: `packages/*/`
+Main app: `apps/tina_shell/` | Legacy app: `apps/tina_app/` | Packages: `packages/*/`
+
+**Note**: `apps/tina_shell/` is the main application following the architecture guide.
 
 ## Essential Commands
 
@@ -41,11 +43,75 @@ melos run validate:quick     # Quick development check
 melos run validate           # Full CI validation
 ```
 
+### Package Creation
+**CRITICAL**: New packages are automatically discovered but must be created in the correct location.
+
+```bash
+# Create pure Dart packages (domain/core layers - no Flutter dependencies)
+dart create --template=package packages/domain/chat_domain
+dart create --template=package packages/core/tina_contracts
+
+# Create Flutter packages (features/presentation - with Flutter dependencies)
+flutter create --template=package packages/features/chat
+flutter create --template=package packages/presentation/design_system
+
+# After creating any package, ALWAYS run bootstrap
+melos bootstrap                      # Links all packages and installs dependencies
+melos list                          # Verify new package is discovered
+```
+
+**Package Creation Workflow:**
+1. **Create Package**: Use appropriate template (`dart create` vs `flutter create`)
+2. **Add Workspace Resolution**: Add `resolution: workspace` to package's pubspec.yaml
+3. **Update Root Workspace**: Add package path to root pubspec.yaml workspace list
+4. **Bootstrap**: Run `melos bootstrap` to link dependencies across workspace
+5. **Validate**: Use `melos list` and `melos run analyze` to verify setup
+
+**Important Notes:**
+- All workspace packages must include `resolution: workspace` in their pubspec.yaml
+- SDK constraint should be `^3.9.0` or higher for workspace support
+- Watch for dependency conflicts between packages - use compatible versions
+- Test dependencies in isolated packages may conflict with app dependencies
+
 ### Development
 ```bash
 cd apps/tina_shell && flutter run    # Run main app
 flutter test path/to/test.dart       # Run specific test
 ```
+
+## Workspace Management
+
+### Package Discovery
+Melos automatically discovers packages listed in the root `pubspec.yaml` workspace configuration:
+
+```yaml
+# Root pubspec.yaml
+workspace:
+  packages:
+    - apps/*
+    - packages/core/*
+    - packages/domain/*
+    - packages/application/*
+    - packages/infrastructure/**/*
+    - packages/presentation/*
+    - packages/features/*
+```
+
+### Package Registration Process
+1. **Create Package**: Use `dart create --template=package` for pure Dart packages
+2. **Workspace Auto-Discovery**: New packages are automatically discovered by existing workspace patterns
+3. **Bootstrap**: Run `melos bootstrap` to install dependencies and link packages
+4. **Verify**: Use `melos list` to confirm package is discovered and linked
+
+**Note**: The workspace patterns in `pubspec.yaml` cover all standard package locations:
+- `apps/tina_shell` - Main application shell (follows architecture guide)
+- `apps/tina_app` - Legacy application (being migrated)
+- `packages/core/*` - Core utilities (tina_core, tina_contracts, etc.)
+- `packages/domain/*` - Domain logic (pure Dart, no Flutter)
+- `packages/application/*` - Use cases and application services
+- `packages/infrastructure/**/*` - External integrations (supports nested structure)
+- `packages/presentation/*` - Shared UI components and design system
+- `packages/features/*` - Feature modules (chat, backend_management, etc.)
 
 ## Agent Protocol
 
@@ -117,5 +183,41 @@ All must pass:
 - ✅ Design system compliance
 - ✅ No analyzer warnings
 - ✅ App builds and runs
+
+## Current Workspace Status
+
+### ✅ **Configured Packages:**
+- `tina_app` - Legacy Flutter application (being migrated)
+- `tina_core` - Core utilities package (COMPLETED)
+
+### 📋 **Package Creation Example:**
+```bash
+# Create new domain package
+dart create --template=package packages/domain/chat_domain
+cd packages/domain/chat_domain
+
+# Add workspace resolution to pubspec.yaml
+echo "resolution: workspace" >> pubspec.yaml
+
+# Update SDK constraint for workspace support  
+sed -i 's/sdk: .*/sdk: "^3.9.0"/' pubspec.yaml
+
+# Add to root workspace (already configured with patterns)
+# Root pubspec.yaml workspace already includes: packages/domain/*
+
+# Bootstrap workspace
+cd ../../.. && melos bootstrap
+
+# Verify package is discovered
+melos list
+```
+
+### 🔧 **Workspace Verification Commands:**
+```bash
+melos list                    # Show all discovered packages
+melos bootstrap               # Install dependencies & link packages  
+melos run validate:quick      # Quick analysis and formatting check
+melos run analyze             # Full static analysis
+```
 
 For detailed architecture and patterns, see `docs/monorepo-architecture-guide.md`.
