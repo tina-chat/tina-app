@@ -1,0 +1,15 @@
+name: chat_domain
+description: Chat domain layer with entities, value objects, and repository interfaces following DDD principles.
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  tina_core:
+    path: ../../core/tina_core
+  equatable: ^2.0.7
+
+dev_dependencies:
+  lints: ^6.0.0
