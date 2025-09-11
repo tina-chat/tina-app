@@ -1,0 +1,861 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Structure and Dependencies",
+        "description": "Configure the Flutter monorepo project structure following the Hybrid Architecture guidelines with proper package separation, Melos configuration, and DDD/Clean Architecture patterns",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Following the monorepo architecture guide at /docs/monorepo-architecture-guide.md: 1) Update pubspec.yaml in apps/tina_app with chat dependencies: flutter_bloc ^8.1.6, dio ^5.7.0, flutter_markdown ^0.7.4, equatable ^2.0.7 (uuid ^4.5.1 already exists). 2) Create Clean Architecture folder structure: lib/features/chat/{domain,application,infrastructure}/{entities,use_cases,repositories}, lib/core/{constants,utils,errors}, lib/infrastructure/providers/openai. 3) Remove default counter app code from apps/tina_app/lib/main.dart and setup basic MaterialApp with proper routing. 4) Verify Melos configuration works with melos bootstrap and code generation with melos run generate. 5) Ensure proper package boundaries and DDD patterns are established for future domain/application layer packages.",
+        "testStrategy": "Verify monorepo structure with melos bootstrap, test package dependencies install correctly with melos exec, validate folder structure follows Clean Architecture patterns, ensure app runs without errors showing basic scaffold, test melos run generate works for code generation, and verify package boundaries are properly established",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "",
+            "description": "Update pubspec.yaml dependencies in apps/tina_app",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "",
+            "description": "Create Clean Architecture folder structure in lib/",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "",
+            "description": "Remove default counter app and setup basic MaterialApp",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "",
+            "description": "Verify Melos monorepo structure with melos bootstrap",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "",
+            "description": "Test code generation with melos run generate",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "",
+            "description": "Validate package boundaries and DDD patterns",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Create Core Data Models",
+        "description": "Implement Message model and related enums for chat functionality following DDD principles as Value Objects with proper validation and json_serializable integration",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "Following the Hybrid Architecture from /docs/monorepo-architecture-guide.md, implement domain models as Value Objects in lib/features/chat/domain/entities/message.dart and lib/features/chat/domain/value_objects/ for MessageRole and MessageStatus enums. Create Message as immutable Value Object with proper validation using freezed and json_serializable annotations. The Message should include: id (String), content (String), role (MessageRole enum: user/assistant/system), timestamp (DateTime), status (MessageStatus enum: sending/sent/streaming/complete/error). Implement proper equality, validation rules, and business invariants. Create lib/core/constants/app_constants.dart for API endpoints and configuration following the core package structure.",
+        "testStrategy": "Comprehensive unit tests for Message Value Object including: serialization/deserialization with json_serializable, enum value handling and edge cases, model equality comparisons and hashCode consistency, validation rules for required fields and business constraints, immutability verification with freezed, and proper error handling for invalid inputs. Test coverage should exceed 90% following DDD testing principles.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Chat Bloc State Management",
+        "description": "Create BLoC pattern implementation for chat state management with proper events and states",
+        "details": "Create lib/features/chat/bloc/chat_bloc.dart with ChatBloc extending Bloc<ChatEvent, ChatState>. Define events: SendMessage, StopGeneration, ClearChat. Define states: ChatInitial, ChatLoading, ChatReady(List<Message> messages, bool isStreaming), ChatError(String error). Implement event handlers with proper state transitions and error handling using try-catch blocks.",
+        "testStrategy": "Unit tests for each event handler, state transitions, error scenarios, and bloc state persistence during streaming",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create ChatEvent Abstract Class and Concrete Events",
+            "description": "Define the abstract ChatEvent class and implement concrete event classes: SendMessage, StopGeneration, and ClearChat with proper parameters and validation",
+            "dependencies": [],
+            "details": "Create abstract ChatEvent class in lib/features/chat/bloc/chat_event.dart. Implement SendMessage event with required message parameter and validation. Create StopGeneration event for canceling ongoing operations. Implement ClearChat event for resetting chat history. Add proper documentation and type safety.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create ChatState Abstract Class and Concrete States",
+            "description": "Define the abstract ChatState class and implement all concrete state classes with proper data structures and equality",
+            "dependencies": [],
+            "details": "Create abstract ChatState class in lib/features/chat/bloc/chat_state.dart. Implement ChatInitial for initial state, ChatLoading for processing states, ChatReady with messages list and isStreaming flag, and ChatError with error message. Add Equatable implementation for proper state comparison and rebuild optimization.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement ChatBloc Class Structure",
+            "description": "Create the main ChatBloc class extending Bloc with proper initialization, dependency injection, and event registration",
+            "dependencies": [
+              "3.1",
+              "3.2"
+            ],
+            "details": "Create ChatBloc class in lib/features/chat/bloc/chat_bloc.dart extending Bloc<ChatEvent, ChatState>. Set up constructor with required dependencies, initialize with ChatInitial state, and register event handlers. Add proper disposal methods and stream subscription management for cleanup.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement SendMessage Event Handler",
+            "description": "Create comprehensive SendMessage event handler with streaming support, error handling, and proper state transitions",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Implement _onSendMessage handler with try-catch error handling. Add message to state, emit ChatLoading, integrate with AI service for streaming responses, handle token-by-token updates, and emit ChatReady with updated messages. Include proper error handling and state rollback on failures.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement StopGeneration and ClearChat Event Handlers",
+            "description": "Create event handlers for stopping message generation and clearing chat history with proper cleanup",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Implement _onStopGeneration handler to cancel active stream subscriptions and update isStreaming flag. Create _onClearChat handler to reset messages list and return to ChatInitial state. Ensure proper cleanup of resources and state consistency during transitions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add Comprehensive Unit Tests for ChatBloc",
+            "description": "Create complete test suite covering all event handlers, state transitions, error scenarios, and edge cases",
+            "dependencies": [
+              "3.4",
+              "3.5"
+            ],
+            "details": "Create test/features/chat/bloc/chat_bloc_test.dart with bloc_test framework. Test initial state, all event handlers, error scenarios, state transitions, stream cancellation, and concurrent event handling. Include edge cases like rapid message sending and network failures. Ensure 100% code coverage for the bloc implementation.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Build OpenAI Provider Integration",
+        "description": "Implement OpenAI API client with streaming support for real-time chat responses",
+        "details": "Create lib/infrastructure/providers/openai/openai_client.dart using Dio for HTTP requests. Implement streamChat method that sends POST to https://api.openai.com/v1/chat/completions with stream:true. Handle Server-Sent Events using dio.responseStream. Create lib/infrastructure/providers/openai/streaming_handler.dart to parse SSE data chunks and emit partial responses. Include proper error handling for network issues, API limits, and malformed responses.",
+        "testStrategy": "Integration tests with mock OpenAI responses, unit tests for SSE parsing, error handling for various API error codes, and timeout scenarios",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create OpenAI client class with Dio configuration",
+            "description": "Set up the basic OpenAI client class with Dio HTTP client configuration, including base URL, headers, and authentication setup",
+            "dependencies": [],
+            "details": "Create lib/infrastructure/providers/openai/openai_client.dart with OpenAIClient class. Configure Dio instance with base URL (https://api.openai.com/v1), proper headers including Authorization bearer token, content-type application/json, and timeout settings. Add constructor to accept API key parameter.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement basic chat completion API call structure",
+            "description": "Create the foundation for chat completion requests with proper request formatting and basic response handling",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Implement chatCompletion method in OpenAIClient that constructs proper request body with model, messages array, and other parameters. Create request/response model classes for OpenAI API format. Handle basic HTTP POST to /chat/completions endpoint without streaming.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add streaming support with Server-Sent Events handling",
+            "description": "Extend the client to support streaming responses using Dio's response stream capabilities",
+            "dependencies": [
+              "4.2"
+            ],
+            "details": "Implement streamChat method that sends POST request with stream:true parameter. Use dio.responseStream to handle streaming response. Set up proper stream subscription and manage connection lifecycle including cleanup on cancellation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create streaming response parser for SSE data chunks",
+            "description": "Build dedicated handler to parse Server-Sent Events data and extract message chunks",
+            "dependencies": [
+              "4.3"
+            ],
+            "details": "Create lib/infrastructure/providers/openai/streaming_handler.dart with StreamingHandler class. Parse SSE format (data: prefix, JSON content, [DONE] termination). Extract delta content from OpenAI response format and emit partial message updates as Stream<String>.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement comprehensive error handling for various API scenarios",
+            "description": "Add robust error handling for network issues, API rate limits, authentication failures, and malformed responses",
+            "dependencies": [
+              "4.4"
+            ],
+            "details": "Create custom exception classes for different error types (NetworkException, ApiLimitException, AuthenticationException, ParseException). Implement try-catch blocks with specific error detection based on HTTP status codes (401, 429, 500, etc.) and response content. Add retry logic for transient failures.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add proper request/response models for OpenAI API",
+            "description": "Create comprehensive data models for OpenAI API request and response structures with proper serialization",
+            "dependencies": [
+              "4.2"
+            ],
+            "details": "Create models for ChatCompletionRequest (model, messages, stream, temperature, etc.), ChatCompletionResponse, Message, Choice, and Delta objects. Add json_annotation and generate serialization code. Ensure models handle both streaming and non-streaming response formats.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create integration tests with mock responses and error scenarios",
+            "description": "Develop comprehensive test suite covering successful requests, streaming responses, and various error conditions",
+            "dependencies": [
+              "4.5",
+              "4.6"
+            ],
+            "details": "Create test files for OpenAIClient and StreamingHandler. Mock Dio responses for successful chat completion, streaming data chunks, authentication errors, rate limiting, and network failures. Test stream cancellation, proper resource cleanup, and error propagation throughout the integration.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Create Message Input Widget",
+        "description": "Build the text input component with send button and proper keyboard handling following Material Design 3 guidelines with multiline support and enhanced UX features",
+        "status": "pending",
+        "dependencies": [
+          3
+        ],
+        "priority": "medium",
+        "details": "Create lib/features/chat/ui/message_input.dart as StatefulWidget with TextEditingController for multiline input support. Implement TextField with Material Design 3 styling following the design system specifications (design-system.json:inputs). Include dynamic height adjustment for multiline text, send IconButton with loading states, Enter key submission (with Shift+Enter for new lines), comprehensive input validation (non-empty, max length), proper focus management, and error feedback UI. Apply design system colors, spacing, and border radius values. Support keyboard shortcuts and accessibility features. Handle loading states during message sending with visual feedback.",
+        "testStrategy": "Widget tests for multiline input behavior, send button states, keyboard shortcuts (Enter vs Shift+Enter), validation feedback, focus management, loading states, accessibility features, and proper Material Design 3 theming integration",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implement Message Bubble Component",
+        "description": "Create message display widget with proper styling for user and AI messages following Material Design 3 shape system and project design tokens",
+        "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "medium",
+        "details": "Create apps/tina_app/lib/features/chat/ui/message_bubble.dart implementing a StatelessWidget that displays chat messages with role-based styling. User messages: right-aligned with primary.base (#2563EB) background, white text, and trailing alignment. AI messages: left-aligned with neutral.100 (#F1F5F9) background, neutral.800 (#1E293B) text, and leading alignment. Implement Material Design 3 shape system using borders.radius.lg (0.5rem) for message bubbles. Integrate flutter_markdown (to be added to pubspec.yaml) for AI response rendering. Add message status indicators using semantic colors (success: #22C55E for sent, warning: #F59E0B for sending, error: #EF4444 for failed). Include timestamp display using typography.scale.xs (0.75rem) with neutral.500 color. Apply responsive width constraints with maximum 85% screen width and proper spacing.layout.componentSpacing (1rem) margins. Follow design-system.json color palette and typography scale for consistent theming.",
+        "testStrategy": "Widget tests for different message types (user/AI), markdown rendering verification, status indicator states (sending/sent/error), timestamp formatting, responsive layout behavior at different screen widths, and proper Material Design 3 theming integration using project design tokens",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Build Main Chat Screen",
+        "description": "Create the primary chat interface combining all components with proper layout and scrolling",
+        "details": "Create lib/features/chat/ui/chat_screen.dart as StatelessWidget using BlocBuilder for state management. Include AppBar with title and stop generation button, ListView.builder for messages with reverse scrolling, MessageInput at bottom using SafeArea. Implement auto-scroll to bottom on new messages, scroll position maintenance during streaming, and proper keyboard handling with bottomInset behavior.",
+        "testStrategy": "Widget tests for layout components, integration tests for message flow, scroll behavior testing, and keyboard interaction testing",
+        "priority": "high",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Basic ChatScreen StatelessWidget Structure",
+            "description": "Set up the foundational ChatScreen widget with BlocBuilder integration and basic scaffold structure",
+            "dependencies": [],
+            "details": "Create lib/features/chat/ui/chat_screen.dart as StatelessWidget. Implement BlocBuilder<ChatBloc, ChatState> wrapper with proper state handling. Set up Scaffold with basic structure and import necessary dependencies including chat bloc and related models.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement AppBar with Stop Generation Functionality",
+            "description": "Add AppBar component with title and stop generation button functionality",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Create AppBar with 'Chat' title and stop generation IconButton. Implement stop generation functionality by dispatching StopGeneration event to ChatBloc. Show stop button only when isStreaming is true in ChatReady state. Style according to Material Design 3 principles.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add ListView.builder for Messages with Reverse Scrolling",
+            "description": "Implement scrollable message list with proper reverse scrolling configuration",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Create ListView.builder in Scaffold body with reverse: true for bottom-to-top message display. Set up ScrollController for programmatic scrolling control. Implement message rendering using MessageBubble widgets with proper itemCount based on ChatState messages list.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integrate MessageInput Widget with Proper Positioning",
+            "description": "Add MessageInput component to screen bottom with SafeArea and keyboard handling",
+            "dependencies": [
+              "7.3"
+            ],
+            "details": "Position MessageInput widget at bottom of screen using Column layout. Wrap with SafeArea for proper inset handling. Set Scaffold resizeToAvoidBottomInset to true for keyboard behavior. Ensure MessageInput maintains position above keyboard when opened.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Auto-scroll Behavior for New Messages",
+            "description": "Add automatic scrolling to bottom when new messages are received",
+            "dependencies": [
+              "7.3"
+            ],
+            "details": "Implement WidgetsBinding.instance.addPostFrameCallback to scroll to bottom after new messages. Use ScrollController.animateTo with appropriate duration and curve. Handle scroll behavior during streaming messages to maintain user position or auto-follow based on current scroll position.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Handle Keyboard Interactions and SafeArea Management",
+            "description": "Implement comprehensive keyboard handling and SafeArea edge case management",
+            "dependencies": [
+              "7.4",
+              "7.5"
+            ],
+            "details": "Fine-tune keyboard appearance animations and input field focus behavior. Implement proper SafeArea padding for different device orientations and screen sizes. Handle edge cases like keyboard dismissal, input field scrolling, and maintaining chat scroll position during keyboard operations.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Integrate Chat Components with BLoC",
+        "description": "Connect all UI components with the chat BLoC for complete functionality",
+        "details": "Wire ChatScreen with BlocProvider and BlocBuilder, connect MessageInput send action to SendMessage event, display messages from ChatReady state, show loading indicators during streaming, implement stop generation functionality, and handle error states with proper user feedback. Add BlocListener for side effects like scrolling and showing snackbars for errors.",
+        "testStrategy": "Integration tests for complete user flow: send message → streaming response → display, error handling scenarios, and stop generation functionality",
+        "priority": "high",
+        "dependencies": [
+          4,
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up BlocProvider in widget tree",
+            "description": "Configure BlocProvider to make ChatBloc accessible throughout the chat screen widget hierarchy",
+            "dependencies": [],
+            "details": "Wrap ChatScreen with BlocProvider<ChatBloc> in the widget tree, ensure proper bloc instance creation and disposal, and verify bloc is accessible to all child widgets that need it.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Connect MessageInput send actions to BLoC events",
+            "description": "Wire MessageInput component to trigger SendMessage events when user submits messages",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Implement onSend callback in MessageInput that dispatches SendMessage event to ChatBloc, pass message content and metadata, and ensure proper event triggering on submit actions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement BlocBuilder for displaying chat states and messages",
+            "description": "Create BlocBuilder widgets to render different chat states and message lists based on ChatBloc state",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Build UI for ChatInitial, ChatReady, ChatStreaming, and ChatError states. Display message list from ChatReady state, show streaming indicators during ChatStreaming, and render appropriate UI for each state transition.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add BlocListener for side effects",
+            "description": "Implement BlocListener to handle side effects like auto-scrolling and error snackbars",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Use BlocListener to scroll to bottom on new messages, show snackbars for error states, handle navigation side effects, and manage other UI side effects that don't directly update the widget tree.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement loading indicators during streaming",
+            "description": "Add visual feedback during message streaming and generation states",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Display loading indicators during ChatStreaming state, show typing indicators while AI is generating responses, implement shimmer effects for message placeholders, and provide clear visual feedback for ongoing operations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add stop generation functionality",
+            "description": "Implement ability for users to stop ongoing message generation",
+            "dependencies": [
+              "8.3",
+              "8.5"
+            ],
+            "details": "Add stop generation button in AppBar or message input area, connect button to StopGeneration event in ChatBloc, handle stream cancellation gracefully, and provide user feedback when generation is stopped.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create comprehensive error handling with user feedback",
+            "description": "Implement robust error handling with clear user messaging and recovery options",
+            "dependencies": [
+              "8.4"
+            ],
+            "details": "Handle ChatError states with user-friendly messages, implement retry functionality for failed requests, show connection status and network errors clearly, and provide actionable error messages with recovery suggestions.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Error Handling and Loading States",
+        "description": "Add comprehensive error handling, retry logic, and user feedback mechanisms following the project's architecture and design system",
+        "status": "pending",
+        "dependencies": [
+          8
+        ],
+        "priority": "medium",
+        "details": "Create a robust error handling system using the existing project architecture. Implement lib/core/utils/error_handler.dart following the package dependency rules (core packages only use pure Dart). Create error types aligned with the semantic color system (error: #EF4444) from design-system.json. Implement retry mechanisms for HTTP requests using the existing http: ^1.5.0 package. Add loading shimmer effects following Material Design 3 principles with the project's animation system (duration.normal: 200ms, easing.default). Create user-friendly error messages for network failures, API key issues, and rate limits. Add connection status indicators using the design system's semantic colors and proper error logging foundation for future crashlytics integration. All implementations should follow the monorepo package structure and use Provider pattern for state management as configured in pubspec.yaml.",
+        "testStrategy": "Unit tests for error handler utilities in packages/tina_core/, widget tests for loading states and error UI components using flutter_test framework, integration tests for retry functionality with mock HTTP responses, error message display testing with different screen sizes using the responsive breakpoints from design-system.json, and comprehensive coverage of all error scenarios including network timeouts, API failures, and recovery flows",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Core Error Handler Package Structure",
+            "description": "Set up error handling foundation following monorepo architecture",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Domain Error Types",
+            "description": "Define error types for network, API, and application failures using semantic colors",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create HTTP Client with Retry Logic",
+            "description": "Extend existing http package with exponential backoff retry mechanism",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build Error UI Components",
+            "description": "Create error display widgets following Material Design 3 and design system tokens",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Loading State Components",
+            "description": "Create shimmer effects and loading indicators using design system animations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add Connection Status Indicators",
+            "description": "Build network status widgets with semantic color feedback",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Integrate Error Logging Foundation",
+            "description": "Set up error logging structure for future crashlytics integration",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Create Provider State Management",
+            "description": "Implement error and loading state providers using existing provider pattern",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Write Comprehensive Test Coverage",
+            "description": "Create unit, widget, and integration tests for all error handling scenarios",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Add Streaming Response Features",
+        "description": "Implement real-time streaming with stop generation and smooth UI updates",
+        "details": "Enhance streaming implementation with token-by-token display using StreamBuilder, typing indicators while AI is generating, stop generation button that cancels the stream, smooth text animation during streaming, and proper cleanup of stream subscriptions. Optimize performance with debounced UI updates and efficient list rebuilding using keys.",
+        "testStrategy": "Performance tests for streaming UI updates, functionality tests for stop generation, memory leak testing for stream cleanup, and stress testing with rapid message sending",
+        "priority": "medium",
+        "dependencies": [
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Enhance UI with StreamBuilder for Real-time Updates",
+            "description": "Implement StreamBuilder widget to display streaming responses in real-time with proper state management",
+            "dependencies": [],
+            "details": "Create StreamBuilder implementation in chat UI to listen to streaming responses. Replace static message display with dynamic streaming updates. Handle different stream states (waiting, active, completed, error) with appropriate UI feedback. Integrate with existing chat bloc to receive streaming data and update UI smoothly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Token-by-token Text Display with Smooth Animations",
+            "description": "Create smooth text animation system that displays AI responses character by character as they arrive",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Implement AnimatedTextKit or custom animation controller for smooth text appearance. Create typewriter effect that shows tokens as they arrive from the stream. Add configurable animation speed and smooth transitions. Ensure animations are performant and don't block UI updates during rapid token arrival.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add Typing Indicators During AI Response Generation",
+            "description": "Implement visual indicators to show when AI is actively generating a response",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create typing indicator widget with animated dots or pulse effect. Display indicator during streaming states and hide when complete or stopped. Position indicator appropriately in chat UI. Add loading shimmer effect for message container during generation. Ensure indicator responds correctly to stream state changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create Stop Generation Button with Stream Cancellation",
+            "description": "Implement stop button that allows users to cancel ongoing AI response generation",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Add stop generation button that appears during streaming. Implement stream cancellation logic in chat bloc to properly terminate ongoing requests. Handle partial response preservation when stopped. Provide visual feedback for stop action and ensure clean state transition. Test cancellation at different stages of response generation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Optimize Performance with Debounced UI Updates",
+            "description": "Implement debouncing and performance optimizations for smooth streaming UI updates",
+            "dependencies": [
+              "10.1",
+              "10.2"
+            ],
+            "details": "Add debouncing mechanism to prevent excessive UI rebuilds during rapid token arrival. Implement efficient text buffer management for streaming updates. Use Timer or RxDart debouncing to batch UI updates. Optimize ListView rebuilding with proper keys and minimal widget reconstruction. Monitor and optimize memory usage during streaming.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Proper Stream Subscription Cleanup",
+            "description": "Ensure proper disposal of stream subscriptions to prevent memory leaks",
+            "dependencies": [
+              "10.1",
+              "10.4"
+            ],
+            "details": "Implement comprehensive cleanup logic in chat bloc dispose method. Cancel all active stream subscriptions on widget disposal or navigation. Add subscription management with proper error handling and resource cleanup. Create stream subscription pool for managing multiple concurrent streams. Test for memory leaks and ensure proper resource disposal.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Add Performance Testing and Memory Leak Prevention",
+            "description": "Implement performance monitoring and testing for streaming features with memory leak detection",
+            "dependencies": [
+              "10.5",
+              "10.6"
+            ],
+            "details": "Create performance tests for streaming UI updates and measure frame rates during streaming. Implement memory leak detection tests for stream subscriptions. Add performance monitoring for token processing speed and UI responsiveness. Create stress tests with rapid message sending and long streaming sessions. Document performance benchmarks and optimization recommendations.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-11T11:54:08.739Z",
+      "updated": "2025-09-11T11:54:08.739Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

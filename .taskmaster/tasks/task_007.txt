@@ -1,0 +1,49 @@
+# Task ID: 7
+# Title: Build Main Chat Screen
+# Status: pending
+# Dependencies: 5, 6
+# Priority: high
+# Description: Create the primary chat interface combining all components with proper layout and scrolling
+# Details:
+Create lib/features/chat/ui/chat_screen.dart as StatelessWidget using BlocBuilder for state management. Include AppBar with title and stop generation button, ListView.builder for messages with reverse scrolling, MessageInput at bottom using SafeArea. Implement auto-scroll to bottom on new messages, scroll position maintenance during streaming, and proper keyboard handling with bottomInset behavior.
+
+# Test Strategy:
+Widget tests for layout components, integration tests for message flow, scroll behavior testing, and keyboard interaction testing
+
+# Subtasks:
+## 1. Create Basic ChatScreen StatelessWidget Structure [pending]
+### Dependencies: None
+### Description: Set up the foundational ChatScreen widget with BlocBuilder integration and basic scaffold structure
+### Details:
+Create lib/features/chat/ui/chat_screen.dart as StatelessWidget. Implement BlocBuilder<ChatBloc, ChatState> wrapper with proper state handling. Set up Scaffold with basic structure and import necessary dependencies including chat bloc and related models.
+
+## 2. Implement AppBar with Stop Generation Functionality [pending]
+### Dependencies: 7.1
+### Description: Add AppBar component with title and stop generation button functionality
+### Details:
+Create AppBar with 'Chat' title and stop generation IconButton. Implement stop generation functionality by dispatching StopGeneration event to ChatBloc. Show stop button only when isStreaming is true in ChatReady state. Style according to Material Design 3 principles.
+
+## 3. Add ListView.builder for Messages with Reverse Scrolling [pending]
+### Dependencies: 7.1
+### Description: Implement scrollable message list with proper reverse scrolling configuration
+### Details:
+Create ListView.builder in Scaffold body with reverse: true for bottom-to-top message display. Set up ScrollController for programmatic scrolling control. Implement message rendering using MessageBubble widgets with proper itemCount based on ChatState messages list.
+
+## 4. Integrate MessageInput Widget with Proper Positioning [pending]
+### Dependencies: 7.3
+### Description: Add MessageInput component to screen bottom with SafeArea and keyboard handling
+### Details:
+Position MessageInput widget at bottom of screen using Column layout. Wrap with SafeArea for proper inset handling. Set Scaffold resizeToAvoidBottomInset to true for keyboard behavior. Ensure MessageInput maintains position above keyboard when opened.
+
+## 5. Implement Auto-scroll Behavior for New Messages [pending]
+### Dependencies: 7.3
+### Description: Add automatic scrolling to bottom when new messages are received
+### Details:
+Implement WidgetsBinding.instance.addPostFrameCallback to scroll to bottom after new messages. Use ScrollController.animateTo with appropriate duration and curve. Handle scroll behavior during streaming messages to maintain user position or auto-follow based on current scroll position.
+
+## 6. Handle Keyboard Interactions and SafeArea Management [pending]
+### Dependencies: 7.4, 7.5
+### Description: Implement comprehensive keyboard handling and SafeArea edge case management
+### Details:
+Fine-tune keyboard appearance animations and input field focus behavior. Implement proper SafeArea padding for different device orientations and screen sizes. Handle edge cases like keyboard dismissal, input field scrolling, and maintaining chat scroll position during keyboard operations.
+
