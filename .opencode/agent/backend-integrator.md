@@ -1,7 +1,7 @@
 ---
 description: Specialist for backend service integration including AI provider APIs, SSE streaming, MCP tool connections, and real-time communication. Use for all backend integration and streaming tasks.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.0
 color: orange
 tools:

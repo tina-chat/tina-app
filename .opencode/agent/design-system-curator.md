@@ -1,7 +1,7 @@
 ---
 description: Specialist for design system management, Widgetbook stories, design tokens, theming, and component library maintenance. Use for UI consistency and design documentation.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.3
 color: cyan
 tools:

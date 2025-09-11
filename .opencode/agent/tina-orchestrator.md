@@ -1,7 +1,7 @@
 ---
 description: Use proactively as the master orchestrator for all Tina AI Assistant development tasks. Coordinates work across specialized agents, manages task tracking via Task Master MCP, and ensures architectural compliance.
 mode: primary
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-opus-4-1-20250805
 temperature: 0.3
 color: purple
 tools:

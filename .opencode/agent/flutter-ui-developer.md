@@ -1,7 +1,7 @@
 ---
 description: Specialist for Flutter UI development including widgets, screens, BLoC state management, responsive design, and platform-specific adaptations. Use for all UI/UX implementation tasks.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.3
 color: cyan
 tools:

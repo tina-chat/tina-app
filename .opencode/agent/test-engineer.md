@@ -1,7 +1,7 @@
 ---
 description: Specialist for comprehensive testing strategy including unit tests, widget tests, integration tests, and test automation. Use for all testing implementation and coverage tasks.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.0
 color: yellow
 tools:

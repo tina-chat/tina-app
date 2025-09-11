@@ -1,7 +1,7 @@
 ---
 description: Focus work on implementing a specific Task Master subtask with architectural awareness
 agent: build
-model: anthropic/claude-3-sonnet-20240229
+model: anthropic/claude-sonnet-4-20250514
 ---
 
 Let's implement a specific subtask while maintaining architectural alignment.

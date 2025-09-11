@@ -1,7 +1,7 @@
 ---
 description: Specialist for code quality, architecture compliance, performance optimization, and standards enforcement. Use for code reviews, linting, and ensuring best practices.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.0
 color: red
 tools:

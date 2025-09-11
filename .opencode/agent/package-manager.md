@@ -1,7 +1,7 @@
 ---
 description: Specialist for monorepo management using Melos, package dependencies, versioning, and workspace configuration. Use for package creation, dependency management, and build configuration.
 mode: subagent
-model: anthropic/claude-3-5-sonnet-20241022
+model: anthropic/claude-sonnet-4-20250514
 temperature: 0.0
 color: pink
 tools:
