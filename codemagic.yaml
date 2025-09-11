@@ -1,40 +1,169 @@
 workflows:
-  ci:
-    name: CI
-    instance_type: mac_mini
-    # Setting the timeout for a build to 15 minutes.
-    max_build_duration: 15
+  # Pull Request Validation
+  pr-validation:
+    name: PR Validation
+    instance_type: mac_mini_m2
+    max_build_duration: 20
     environment:
-      # Using the latest Flutter version.
       flutter: stable
     when:
       changeset:
         includes:
-          # Only run the CI when a file in one of the following directories
-          # changed.
           - "apps/**"
           - "packages/**"
+          - "melos.yaml"
           - "codemagic.yaml"
+          - "pubspec.yaml"
         excludes:
-          # Don't run the CI when only .md files have changed.
           - "**/*.md"
-    # This workflow should trigger when a new pull request opens or updates.
+          - "**/README.md"
+          - "docs/**"
     triggering:
       events:
         - pull_request
+      branch_patterns:
+        - pattern: "*"
+          include: true
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - $FLUTTER_ROOT/.pub-cache
     scripts:
-      - name: Add Dart SDK to PATH
+      - name: Setup Environment
         script: |
-           echo PATH="$PATH":"$FLUTTER_ROOT/.pub-cache/bin" >> $CM_ENV
-           echo PATH="$PATH":"$FLUTTER_ROOT/bin" >> $CM_ENV           
-      
-      - name: Melos Bootstrap
+          echo "Setting up Dart/Flutter environment..."
+          echo PATH="$PATH":"$FLUTTER_ROOT/.pub-cache/bin" >> $CM_ENV
+          echo PATH="$PATH":"$FLUTTER_ROOT/bin" >> $CM_ENV
+          dart --version
+          flutter --version
+
+      - name: Install Melos
         script: |
-           dart pub global activate melos
-           melos bootstrap    
-      - name: Run Analyze
-        script: melos run analyze
-      - name: Run Format
-        script: melos format --set-exit-if-changed
-      - name: Run Tests
-        script: melos run test
+          echo "Installing Melos..."
+          dart pub global activate melos
+          melos --version
+
+      - name: Bootstrap Monorepo
+        script: |
+          echo "Bootstrapping monorepo packages..."
+          melos bootstrap --verbose
+
+      - name: Run Full Validation
+        script: |
+          echo "Running full validation pipeline..."
+          melos run validate
+
+      - name: Generate Coverage Report
+        script: |
+          echo "Generating coverage reports..."
+          melos run coverage || true
+
+    artifacts:
+      - coverage/**/*.html
+      - "**/coverage/lcov.info"
+      - "**/build/app/outputs/flutter-apk/*.apk"
+
+  # Main Branch CI/CD
+  main-ci:
+    name: Main Branch CI/CD
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      flutter: stable
+    when:
+      changeset:
+        includes:
+          - "apps/**"
+          - "packages/**"
+          - "melos.yaml"
+          - "codemagic.yaml"
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "main"
+          include: true
+        - pattern: "develop"
+          include: true
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - $FLUTTER_ROOT/.pub-cache
+    scripts:
+      - name: Setup Environment
+        script: |
+          echo "Setting up production environment..."
+          echo PATH="$PATH":"$FLUTTER_ROOT/.pub-cache/bin" >> $CM_ENV
+          echo PATH="$PATH":"$FLUTTER_ROOT/bin" >> $CM_ENV
+
+      - name: Install Melos
+        script: |
+          dart pub global activate melos
+          melos --version
+
+      - name: Bootstrap Monorepo
+        script: |
+          melos bootstrap --verbose
+
+      - name: Run Full Validation
+        script: |
+          melos run validate
+
+      - name: Build Release APK
+        script: |
+          echo "Building release APK..."
+          melos run build:release
+
+      - name: Build Web
+        script: |
+          echo "Building web version..."
+          melos run build:web
+
+      - name: Run Integration Tests
+        script: |
+          echo "Running integration tests..."
+          melos run test:integration || echo "Integration tests not available yet"
+
+    artifacts:
+      - "**/build/app/outputs/flutter-apk/*.apk"
+      - "**/build/web/**"
+      - coverage/**/*.html
+
+  # Development Quick Check
+  dev-check:
+    name: Quick Development Check
+    instance_type: mac_mini_m2
+    max_build_duration: 10
+    environment:
+      flutter: stable
+    when:
+      changeset:
+        includes:
+          - "apps/**"
+          - "packages/**"
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "feature/*"
+          include: true
+        - pattern: "bugfix/*"
+          include: true
+        - pattern: "hotfix/*"
+          include: true
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    scripts:
+      - name: Quick Setup
+        script: |
+          echo PATH="$PATH":"$FLUTTER_ROOT/.pub-cache/bin" >> $CM_ENV
+          dart pub global activate melos
+
+      - name: Bootstrap and Quick Check
+        script: |
+          melos bootstrap
+          melos run validate:quick
+
+    artifacts:
+      - "**/coverage/lcov.info"

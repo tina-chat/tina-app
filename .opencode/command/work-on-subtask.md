@@ -1,48 +1,53 @@
 ---
-description: Focus work on implementing a specific Task Master subtask with architectural awareness
-agent: build
+description: Work on next sub task from Task Master subtask with validation
+agent: flutter-ui-developer
 model: anthropic/claude-sonnet-4-20250514
 ---
 
-Let's implement a specific subtask while maintaining architectural alignment.
+# Subtask Implementation Workflow
 
-First, let's get the next pending subtask:
-!`taskmaster next-task`
+## 1. Get Next Subtask
+!`task-master-ai_next_task"`
 
-Get architectural guidelines:
+## 2. Current Status Check
+!`melos bootstrap`
+!`melos run analyze`
+
+## 3. Context Loading
 @docs/monorepo-architecture-guide.md
-
-Get PRD context:
 @docs/tina_ai_assistant_prd.md
+@AGENTS.md
 
-I am an AI assistant focused on implementing a specific subtask in the Tina monorepo. I will:
+## Implementation Focus
 
-1. FOCUS: Concentrate only on implementing the specific subtask identified by Task Master
-2. ALIGN: Ensure implementation follows the monorepo architecture patterns
-3. VERIFY: Test the implementation thoroughly
-4. TRACK: Update Task Master with progress
+I will implement the identified subtask following these steps:
 
-Key Guidelines:
-- Follow the package architecture and dependency rules
-- Use proper code organization and styling conventions
-- Implement comprehensive tests
-- Keep changes focused on just this subtask
-- Ensure alignment with the overall PRD vision
+### Pre-Implementation
+- Mark subtask as in-progress in Task Master
+- Verify current build status
+- Check package dependencies
+- Check existing code for related functionality
 
-Please provide me with:
-1. The specific code changes needed for this subtask
-2. Test coverage for the changes
-3. Verification that changes align with architecture
+### Implementation
+- Focus only on the specific subtask requirements
+- Follow Flutter/Dart best practices
+- Maintain package boundaries
+- When Working with widgets design, Use design system from design-system.json
 
-I will start by marking the subtask as in-progress:
-!`taskmaster set-task-status --id "$SUBTASK_ID" --status "in-progress"`
+### Validation
+- Run package-specific tests
+- Verify no regressions: `melos run validate:quick`
+- Test app functionality manually, ask user for validation
 
-After implementation and testing, I will mark it complete:
-!`taskmaster set-task-status --id "$SUBTASK_ID" --status "done"`
+### Completion
+- Update Task Master status to "done"
+- Document any architectural decisions
+- Prepare for next subtask
 
-I maintain focus on the current subtask while ensuring:
-- Proper package boundaries
-- Dependency rules
-- Code organization
-- Testing coverage
-- PRD alignment
+## Key Commands
+- Next task: `task-master-ai_next_task`
+- Set status: `task-master-ai_set_task_status --id="X.Y" --status="in-progress"`
+- Quick validation: `melos run validate:quick`
+- Full validation: `melos run validate`
+
+Ready to implement the identified subtask with focus and quality.

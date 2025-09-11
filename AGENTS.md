@@ -1,130 +1,100 @@
 # Tina Flutter Monorepo - Agent Guidelines
 
 ## Project Overview
-Flutter monorepo for Tina AI Assistant using Dart workspaces and Melos for package management.
-Main app: `apps/tina_app/` | Packages: `packages/*/` | Tools: Flutter 3.9+, Melos 7.1+
+Flutter monorepo for Tina AI Assistant using Melos for package management.
+Main app: `apps/tina_shell/` | Packages: `packages/*/`
 
-## Quick Commands (from root unless specified)
+## Essential Commands
 
-### Melos Monorepo Commands
+### Melos Commands
 ```bash
-melos bootstrap              # Install deps & link packages
+melos bootstrap              # Install dependencies & link packages
 melos clean                  # Clean all packages
-melos exec -- <command>      # Run command in all packages
-melos run generate           # Run build_runner for code generation
 melos list                   # List all packages
-melos exec -c 1 -- flutter test  # Run tests concurrently
+melos exec -- <command>     # Run command in all packages
 ```
 
-### Development Commands
+### Quality & Testing
 ```bash
-# Run app (from apps/tina_app/)
-flutter run
+melos run analyze            # Analyze code quality
+melos run format             # Check code formatting
+melos run test               # Run all tests
+melos run validate:quick     # Quick development check
+melos run validate           # Full CI validation
+```
 
-# Testing
-melos run test                   # All package tests
-flutter test test/specific_test.dart          # Single test file
-flutter test --name "test description"        # Test by name pattern
-melos exec --scope="*core*" -- flutter test   # Test specific packages
+### Development
+```bash
+cd apps/tina_shell && flutter run    # Run main app
+flutter test path/to/test.dart       # Run specific test
+```
 
-# Code Quality
-melos run analyze                 # Analyze all packages
-melos exec -- dart format . --set-exit-if-changed  # Check formatting
-dart fix --apply                              # Apply automatic fixes
+## Agent Protocol
+
+### Before Implementation
+```bash
+melos bootstrap              # Ensure dependencies
+melos run analyze           # Check current state
+```
+
+### During Implementation
+```bash
+# Test specific package changes
+melos exec --scope="package_name" -- flutter test
+
+# Verify no regressions
+melos run validate:quick
+```
+
+### After Implementation
+```bash
+melos run validate          # Must pass completely
+cd apps/tina_shell && flutter run    # Manual verification
 ```
 
 ## Package Architecture
 ```
 packages/
-├── tina_core/           # Core business logic & entities
-├── tina_providers/      # State management providers
-├── tina_ui_core/        # Reusable UI components
-├── tina_design_system/  # Design tokens & theming
-├── infrastructure/      # External service integrations
-├── features/            # Feature modules
-└── shared/              # Shared utilities
+├── core/                   # Core business logic
+├── domain/                 # Domain models  
+├── application/            # Application services
+├── infrastructure/         # External adapters
+├── features/               # Feature implementations
+└── ui/                     # UI components
 ```
 
-### Package Dependencies Rules
-- Core packages: No external dependencies, pure Dart
-- UI packages: Can depend on Flutter & core packages
-- Feature packages: Can depend on core, UI, providers
-- Infrastructure: Implements core interfaces
-- Never: Circular dependencies between packages
+### Dependency Rules
+- Core packages: No external dependencies
+- Domain: Pure Dart, no Flutter
+- Infrastructure: Implements domain interfaces
+- Features: Can depend on all layers
+- No circular dependencies
 
-## Code Style & Conventions
+## Testing Requirements
+- Minimum 80% coverage for new code
+- All tests must pass before merge
+- Use `const` constructors where possible
+- Follow BLoC pattern for state management
 
-### Imports Organization
-```dart
-// 1. Dart SDK imports
-import 'dart:async';
+## Design System
+Reference `design-system.json` for:
+- Colors: Use design tokens, not hardcoded values
+- Typography: Inter font family with defined scales
+- Spacing: Use scale multipliers (xs: 0.25rem to 3xl: 4rem)
+- Borders: Use radius tokens (sm: 0.125rem to xl: 1rem)
 
-// 2. Flutter imports
-import 'package:flutter/material.dart';
+## Common Issues
+- Import errors: `melos bootstrap`
+- Generated files outdated: `melos run generate`
+- Build failures: `melos clean && melos bootstrap`
+- Test failures: Check mock setups
 
-// 3. External packages
-import 'package:provider/provider.dart';
+## Quality Gates
+All must pass:
+- ✅ `melos run validate` passes
+- ✅ Tests have >80% coverage
+- ✅ Design system compliance
+- ✅ No analyzer warnings
+- ✅ App builds and runs
 
-// 4. Internal packages (monorepo)
-import 'package:tina_core/tina_core.dart';
-
-// 5. Relative imports
-import '../widgets/chat_bubble.dart';
-```
-
-### Flutter Best Practices
-- Use `const` constructors: `const MyWidget()`
-- Prefer composition: Extract widgets over inheritance
-- State management: Provider pattern (already configured)
-- Keys: Use `super.key` in constructors
-- Dispose: Always dispose controllers, streams, animations
-
-### Error Handling Pattern
-```dart
-try {
-  final result = await operation();
-  return Success(result);
-} on NetworkException catch (e, stack) {
-  logger.e('Network error', error: e, stackTrace: stack);
-  return Failure(NetworkError(e.message));
-} catch (e, stack) {
-  logger.e('Unexpected error', error: e, stackTrace: stack);
-  return Failure(UnexpectedError());
-}
-```
-
-## Testing Guidelines
-- Write tests before implementation (TDD preferred)
-- Test file naming: `<name>_test.dart`
-- Use `flutter_test` package assertions
-- Mock dependencies with `tina_mocks` package
-- Golden tests for UI: `flutter test --update-goldens`
-
-## Workflow Patterns
-
-### Adding New Feature
-1. Create feature package: `packages/features/new_feature/`
-2. Define interfaces in `tina_core`
-3. Implement UI in feature package
-4. Add to main app dependencies
-5. Run `melos bootstrap`
-6. Generate code: `melos run generate`
-
-### Modifying Existing Package
-1. Make changes in package
-2. Run `melos bootstrap` if deps changed
-3. Test: `melos exec --scope="package_name" -- flutter test`
-4. Verify app: `cd apps/tina_app && flutter run`
-
-## Common Issues & Solutions
-- **Import not found**: Run `melos bootstrap`
-- **Generated files outdated**: Run `melos run generate`
-- **Version conflicts**: Check workspace resolution in pubspec.yaml
-- **Clean rebuild**: `melos clean && melos bootstrap`
-
-## AI Agent Specific Notes
-- Always run `melos bootstrap` after dependency changes
-- Use `melos exec` for package-wide operations
-- Check existing packages before creating new ones
-- Follow package dependency rules strictly
-- Run tests after changes to verify integrity
+For detailed architecture and patterns, see `docs/monorepo-architecture-guide.md`.
