@@ -14,6 +14,24 @@ melos list                   # List all packages
 melos exec -- <command>     # Run command in all packages
 ```
 
+### Dependency Management
+**IMPORTANT**: Always use these commands instead of manually editing pubspec.yaml files.
+
+```bash
+# Add runtime dependencies
+flutter pub add package_name
+
+# Add development dependencies  
+flutter pub add dev:package_name
+
+# Add dependencies with version constraints
+flutter pub add package_name:^1.0.0
+
+# Examples:
+flutter pub add flutter_bloc dio flutter_markdown equatable
+flutter pub add dev:build_runner dev:json_serializable
+```
+
 ### Quality & Testing
 ```bash
 melos run analyze            # Analyze code quality
@@ -39,6 +57,9 @@ melos run analyze           # Check current state
 
 ### During Implementation
 ```bash
+# Add dependencies using flutter pub add (not manual editing)
+cd apps/tina_app && flutter pub add package_name
+
 # Test specific package changes
 melos exec --scope="package_name" -- flutter test
 
