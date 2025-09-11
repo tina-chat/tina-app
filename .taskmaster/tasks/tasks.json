@@ -115,19 +115,20 @@
         "description": "Implement Message model and related enums for chat functionality following DDD principles as Value Objects with proper validation and json_serializable integration",
         "status": "pending",
         "dependencies": [
-          1
+          1,
+          11
         ],
         "priority": "high",
-        "details": "Following the Hybrid Architecture from /docs/monorepo-architecture-guide.md, implement domain models as pure Dart Value Objects in packages/domain/chat_domain/lib/src/entities/message.dart and packages/domain/chat_domain/lib/src/value_objects/ for MessageRole and MessageStatus enums. The chat_domain package already exists from Task 1. Create Message as immutable Value Object with proper validation using freezed and json_annotation (NO external dependencies in domain layer). The Message should include: id (String), content (String), role (MessageRole enum: user/assistant/system), timestamp (DateTime), status (MessageStatus enum: sending/sent/streaming/complete/error). Implement proper equality, validation rules, and business invariants. Domain packages must remain pure Dart with NO Flutter dependencies.",
+        "details": "Following the Hybrid Architecture from /docs/monorepo-architecture-guide.md, refactor existing domain models in packages/domain/chat_domain/ to use freezed and json_annotation instead of the current equatable implementation. The chat_domain package already exists with Message entity (/packages/domain/chat_domain/lib/src/entities/message.dart) and MessageRole enum (/packages/domain/chat_domain/lib/src/value_objects/message_role.dart) implemented using equatable. Refactor to use freezed for immutability and json_annotation for serialization. Add missing MessageStatus enum and MessageId value object with proper validation. Create Message as immutable Value Object with properties: MessageId id, String content, MessageRole role, DateTime timestamp, MessageStatus status. Implement proper equality, validation rules, and business invariants. Domain packages must remain pure Dart with NO Flutter dependencies.",
         "testStrategy": "Comprehensive unit tests for Message Value Object including: serialization/deserialization with json_annotation, enum value handling and edge cases, model equality comparisons and hashCode consistency, validation rules for required fields and business constraints, immutability verification with freezed, and proper error handling for invalid inputs. Test coverage should exceed 90% following DDD testing principles. All tests in pure Dart environment.",
         "subtasks": [
           {
             "id": 1,
-            "title": "Create MessageRole enum value object",
-            "description": "Implement MessageRole enum as a value object in packages/domain/chat_domain/lib/src/value_objects/message_role.dart",
+            "title": "Refactor MessageRole enum to use freezed",
+            "description": "Update existing MessageRole enum in packages/domain/chat_domain/lib/src/value_objects/message_role.dart to use freezed and json_annotation",
             "status": "pending",
             "dependencies": [],
-            "details": "Create MessageRole enum with values: user, assistant, system. Use freezed for code generation and json_annotation for serialization. Include validation methods and proper toString implementation. Must be pure Dart with no external dependencies.",
+            "details": "Refactor existing MessageRole enum (currently has user, assistant, system, tool values) to use freezed for code generation and json_annotation for serialization. Preserve existing displayName getter and fromString factory. Must be pure Dart with no external dependencies.",
             "testStrategy": "Unit tests for enum serialization, deserialization, equality, and all enum values"
           },
           {
@@ -141,67 +142,67 @@
           },
           {
             "id": 3,
-            "title": "Create MessageId value object",
-            "description": "Implement MessageId value object in packages/domain/chat_domain/lib/src/value_objects/message_id.dart",
+            "title": "Refactor MessageId value object to use freezed",
+            "description": "Update existing MessageId value object in packages/domain/chat_domain/lib/src/value_objects/message_id.dart to use freezed",
             "status": "pending",
             "dependencies": [],
-            "details": "Create MessageId as a typed wrapper around String with validation. Use freezed for immutability and json_annotation for serialization. Include UUID generation and validation methods. Must be pure Dart.",
+            "details": "Refactor existing MessageId implementation to use freezed for immutability and json_annotation for serialization. Preserve existing UUID generation and validation methods. Must be pure Dart.",
             "testStrategy": "Unit tests for ID validation, equality, serialization, and UUID format validation"
           },
           {
             "id": 4,
-            "title": "Create Message entity",
-            "description": "Implement Message entity in packages/domain/chat_domain/lib/src/entities/message.dart",
+            "title": "Refactor Message entity to use freezed",
+            "description": "Update existing Message entity in packages/domain/chat_domain/lib/src/entities/message.dart to use freezed",
             "status": "pending",
             "dependencies": [
               1,
               2,
               3
             ],
-            "details": "Create Message as immutable entity using freezed with properties: MessageId id, String content, MessageRole role, DateTime timestamp, MessageStatus status. Include factory constructors, validation methods, and business invariants. Use json_annotation for serialization. Must be pure Dart with no external dependencies.",
+            "details": "Refactor existing Message entity (currently uses equatable) to use freezed with properties: MessageId id, String content, MessageRole role, DateTime timestamp, MessageStatus status. Preserve existing factory constructors, validation methods, and business invariants (copyWith, isFromUser, isFromAssistant, hasToolTrace). Add json_annotation for serialization. Must be pure Dart with no external dependencies.",
             "testStrategy": "Comprehensive unit tests for entity creation, validation, immutability, serialization, and business rules"
           },
           {
             "id": 5,
-            "title": "Create domain barrel exports",
-            "description": "Create barrel export files for clean package imports in packages/domain/chat_domain/lib/",
+            "title": "Update domain barrel exports",
+            "description": "Update existing barrel export files in packages/domain/chat_domain/lib/ to include new MessageStatus",
             "status": "pending",
             "dependencies": [
               4
             ],
-            "details": "Create chat_domain.dart barrel file that exports all entities and value objects. Create separate barrel files for entities/ and value_objects/ directories. Follow the package structure from the monorepo architecture guide.",
+            "details": "Update existing chat_domain.dart barrel file to export MessageStatus. Ensure all entities and value objects are properly exported. Follow the package structure from the monorepo architecture guide.",
             "testStrategy": "Import tests to verify all exports work correctly and no circular dependencies exist"
           },
           {
             "id": 6,
-            "title": "Add package pubspec.yaml configuration",
-            "description": "Configure pubspec.yaml for chat_domain package with proper dependencies",
+            "title": "Update package pubspec.yaml configuration",
+            "description": "Update pubspec.yaml for chat_domain package to include freezed and json_annotation dependencies",
             "status": "pending",
             "dependencies": [],
-            "details": "Update packages/domain/chat_domain/pubspec.yaml with freezed_annotation, json_annotation, and meta as dependencies. Add dev_dependencies: build_runner, freezed, json_serializable. Ensure NO Flutter or external dependencies to maintain pure Dart domain package.",
+            "details": "Update packages/domain/chat_domain/pubspec.yaml to add freezed_annotation, json_annotation dependencies. Add dev_dependencies: build_runner, freezed, json_serializable. Remove equatable dependency (move to tina_core if still needed). Ensure NO Flutter dependencies to maintain pure Dart domain package.",
             "testStrategy": "Verify package dependencies install correctly and build_runner generates code without issues"
           },
           {
             "id": 7,
             "title": "Generate code with build_runner",
-            "description": "Run build_runner to generate freezed and json_serializable code for all domain models",
+            "description": "Run build_runner to generate freezed and json_serializable code for all refactored domain models",
             "status": "pending",
             "dependencies": [
               4,
               6
             ],
-            "details": "Execute flutter pub run build_runner build in chat_domain package to generate .freezed.dart and .g.dart files for all entities and value objects. Verify generated code compiles correctly.",
+            "details": "Execute flutter pub run build_runner build in chat_domain package to generate .freezed.dart and .g.dart files for all entities and value objects. Verify generated code compiles correctly and replaces equatable functionality.",
             "testStrategy": "Verify all generated files compile and serialization/deserialization works as expected"
           },
           {
             "id": 8,
-            "title": "Create comprehensive test suite",
-            "description": "Implement complete unit test suite for all domain models in packages/domain/chat_domain/test/",
+            "title": "Update and expand test suite",
+            "description": "Update existing test suite for refactored domain models in packages/domain/chat_domain/test/",
             "status": "pending",
             "dependencies": [
               7
             ],
-            "details": "Create unit tests for all entities and value objects covering: serialization/deserialization, equality and hashCode, immutability verification, validation rules, business invariants, and error scenarios. Organize tests in test/src/entities/ and test/src/value_objects/ directories matching source structure.",
+            "details": "Update unit tests for all refactored entities and value objects covering: serialization/deserialization with json_annotation, equality and hashCode with freezed, immutability verification, validation rules, business invariants, and error scenarios. Organize tests in test/src/entities/ and test/src/value_objects/ directories matching source structure.",
             "testStrategy": "Achieve >90% test coverage with comprehensive test scenarios for all domain logic and edge cases"
           }
         ]
@@ -988,11 +989,24 @@
             "testStrategy": "Memory leak detection tests and subscription cleanup verification using the established test framework"
           }
         ]
+      },
+      {
+        "id": 11,
+        "title": "Fix Task 1 Implementation Errors",
+        "description": "Fix compilation errors from incomplete Task 1 implementation",
+        "details": "Task 1 created partial implementations that reference non-existent code and didn't run necessary code generation. This task fixes: 1) Run build_runner for tina_database to generate Drift code, 2) Fix type errors in tina_events event bus, 3) Fix missing getter in tina_providers OpenAI provider, 4) Remove references to non-existent files in chat_feature, 5) Fix stream transformer type issues. This is a cleanup task to make the codebase compile before continuing with planned tasks.",
+        "testStrategy": "Run melos exec -- flutter analyze and ensure no errors remain. All packages should compile without errors.",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-11T11:54:08.739Z",
-      "updated": "2025-09-11T11:54:08.739Z",
+      "updated": "2025-09-11T13:43:52.192Z",
       "description": "Tasks for master context"
     }
   }

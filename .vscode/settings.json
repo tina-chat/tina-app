@@ -1,0 +1,8 @@
+{
+    "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
+    "yaml.schemaStore.enable": true,
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/weaveworks/eksctl/main/pkg/apis/eksctl.io/v1alpha5/assets/schema.json": "*.eksctl.yaml",
+        "https://codemagic.io/codemagic-schema.json": "codemagic.yaml"
+    }
+}

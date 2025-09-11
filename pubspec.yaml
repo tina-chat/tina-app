@@ -1,4 +1,4 @@
-name: my_project
+name: tina_app
 publish_to: none
 environment:
   sdk: ^3.9.0
@@ -10,3 +10,11 @@ melos:
   scripts:
     generate:
       run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build
+    analyze:
+      run: melos exec -- "flutter analyze"
+      description: Run `flutter analyze` in all packages
+    
+    test:
+      # Only run the test command when the package has a test directory
+      run: melos exec --dir-exists=test -- "flutter test"
+      description: Run `flutter test` in all packages

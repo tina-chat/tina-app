@@ -22,13 +22,13 @@ melos exec -c 1 -- flutter test  # Run tests concurrently
 flutter run
 
 # Testing
-melos exec -- flutter test                    # All package tests
+melos run test                   # All package tests
 flutter test test/specific_test.dart          # Single test file
 flutter test --name "test description"        # Test by name pattern
 melos exec --scope="*core*" -- flutter test   # Test specific packages
 
 # Code Quality
-melos exec -- flutter analyze                 # Analyze all packages
+melos run analyze                 # Analyze all packages
 melos exec -- dart format . --set-exit-if-changed  # Check formatting
 dart fix --apply                              # Apply automatic fixes
 ```
