@@ -6,6 +6,7 @@ environment:
 workspace:
   - apps/tina_app
   - packages/ui
+  - widgetbook
 
 dev_dependencies:
   melos: ^7.1.0

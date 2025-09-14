@@ -1,4 +1,4 @@
-name: ui
+name: tina_ui
 description: Tina AI Assistant UI package with atomic design system components.
 version: 0.1.0+1
 publish_to: none
