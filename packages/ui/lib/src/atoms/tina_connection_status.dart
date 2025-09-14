@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A connection status indicator component.
 ///
@@ -44,15 +45,16 @@ class _TinaConnectionStatusState extends State<TinaConnectionStatus>
       vsync: this,
     );
 
-    _pulseAnimation = Tween<double>(
-      begin: 0.7,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _pulseAnimation =
+        Tween<double>(
+          begin: 0.7,
+          end: 1,
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
 
     // Only animate for connecting status
     if (widget.status == TinaConnectionState.connecting) {
@@ -63,13 +65,14 @@ class _TinaConnectionStatusState extends State<TinaConnectionStatus>
   @override
   void didUpdateWidget(TinaConnectionStatus oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     if (oldWidget.status != widget.status) {
       if (widget.status == TinaConnectionState.connecting) {
         _animationController.repeat(reverse: true);
       } else {
-        _animationController.stop();
-        _animationController.reset();
+        _animationController
+          ..stop()
+          ..reset();
       }
     }
   }
@@ -82,30 +85,30 @@ class _TinaConnectionStatusState extends State<TinaConnectionStatus>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildIndicator(),
+        _buildIndicator(tinaColors),
         if (widget.showLabel) ...[
           const SizedBox(width: DesignSpacing.sm),
-          _buildLabel(theme),
+          _buildLabel(tinaColors),
         ],
       ],
     );
   }
 
-  Widget _buildIndicator() {
+  Widget _buildIndicator(TinaColorScheme tinaColors) {
     final indicator = Container(
       width: _getIndicatorSize(),
       height: _getIndicatorSize(),
       decoration: BoxDecoration(
-        color: _getStatusColor(),
+        color: _getStatusColor(tinaColors),
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: _getStatusColor().withOpacity(0.3),
+            color: _getStatusColor(tinaColors).withValues(alpha: 0.3),
             blurRadius: 4,
             spreadRadius: 1,
           ),
@@ -134,11 +137,11 @@ class _TinaConnectionStatusState extends State<TinaConnectionStatus>
     );
   }
 
-  Widget _buildLabel(ThemeData theme) {
+  Widget _buildLabel(TinaColorScheme tinaColors) {
     return Text(
       widget.customLabel ?? _getDefaultLabel(),
       style: TextStyle(
-        color: _getStatusColor(),
+        color: _getStatusColor(tinaColors),
         fontSize: _getLabelFontSize(),
         fontWeight: DesignTypography.fontWeightMedium,
         fontFamily: DesignTypography.bodyFontFamily,
@@ -162,11 +165,11 @@ class _TinaConnectionStatusState extends State<TinaConnectionStatus>
     };
   }
 
-  Color _getStatusColor() {
+  Color _getStatusColor(TinaColorScheme tinaColors) {
     return switch (widget.status) {
-      TinaConnectionState.online => DesignColors.success,
-      TinaConnectionState.offline => DesignColors.error,
-      TinaConnectionState.connecting => DesignColors.warning,
+      TinaConnectionState.online => tinaColors.success,
+      TinaConnectionState.offline => tinaColors.error,
+      TinaConnectionState.connecting => tinaColors.warning,
     };
   }
 

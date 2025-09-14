@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable divider component following the Tina design system.
 ///
@@ -15,9 +16,9 @@ class TinaDivider extends StatelessWidget {
     this.color,
     this.indent = 0,
     this.endIndent = 0,
-  })  : orientation = TinaDividerOrientation.horizontal,
-        width = null,
-        label = null;
+  }) : orientation = TinaDividerOrientation.horizontal,
+       width = null,
+       label = null;
 
   /// Creates a vertical Tina divider.
   const TinaDivider.vertical({
@@ -27,9 +28,9 @@ class TinaDivider extends StatelessWidget {
     this.color,
     this.indent = 0,
     this.endIndent = 0,
-  })  : orientation = TinaDividerOrientation.vertical,
-        height = null,
-        label = null;
+  }) : orientation = TinaDividerOrientation.vertical,
+       height = null,
+       label = null;
 
   /// Creates a horizontal Tina divider with a label.
   const TinaDivider.withLabel({
@@ -40,8 +41,8 @@ class TinaDivider extends StatelessWidget {
     this.color,
     this.indent = 0,
     this.endIndent = 0,
-  })  : orientation = TinaDividerOrientation.horizontal,
-        width = null;
+  }) : orientation = TinaDividerOrientation.horizontal,
+       width = null;
 
   /// The orientation of the divider.
   final TinaDividerOrientation orientation;
@@ -69,12 +70,12 @@ class TinaDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final dividerColor = color ?? _getDefaultColor(theme);
+    final tinaTheme = context.tinaTheme;
+    final dividerColor = color ?? tinaTheme.colors.outline;
     final dividerThickness = thickness ?? DesignBorderWidth.thin;
 
     if (label != null) {
-      return _buildLabeledDivider(dividerColor, dividerThickness);
+      return _buildLabeledDivider(dividerColor, dividerThickness, tinaTheme);
     }
 
     if (orientation == TinaDividerOrientation.vertical) {
@@ -116,7 +117,11 @@ class TinaDivider extends StatelessWidget {
     );
   }
 
-  Widget _buildLabeledDivider(Color dividerColor, double dividerThickness) {
+  Widget _buildLabeledDivider(
+    Color dividerColor,
+    double dividerThickness,
+    TinaTheme tinaTheme,
+  ) {
     return Container(
       height: height ?? DesignSpacing.xl,
       margin: EdgeInsets.only(
@@ -138,7 +143,7 @@ class TinaDivider extends StatelessWidget {
             child: TinaText(
               label!,
               style: TinaTextStyle.caption,
-              color: DesignColors.neutral500,
+              color: tinaTheme.colors.onSurfaceVariant,
             ),
           ),
           Expanded(
@@ -150,12 +155,6 @@ class TinaDivider extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color _getDefaultColor(ThemeData theme) {
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral700
-        : DesignColors.neutral200;
   }
 }
 
@@ -223,9 +222,9 @@ class TinaSectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget divider = label != null
+    final Widget divider = label != null
         ? TinaDivider.withLabel(
-            label: label!,
+            label: label,
             height: spacing,
             thickness: thickness ?? DesignBorderWidth.medium,
             color: color,

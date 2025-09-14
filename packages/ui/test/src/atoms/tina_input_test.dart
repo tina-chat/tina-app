@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_input.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_input.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaInput', () {
@@ -22,7 +22,7 @@ void main() {
 
     testWidgets('displays initial value correctly', (tester) async {
       const initialValue = 'Initial text';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -33,13 +33,15 @@ void main() {
         ),
       );
 
-      final textField = tester.widget<TextFormField>(find.byType(TextFormField));
+      final textField = tester.widget<TextFormField>(
+        find.byType(TextFormField),
+      );
       expect(textField.initialValue, initialValue);
     });
 
     testWidgets('calls onChanged when text changes', (tester) async {
       String? changedValue;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -56,7 +58,7 @@ void main() {
 
     testWidgets('calls onSubmitted when submitted', (tester) async {
       String? submittedValue;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -74,7 +76,7 @@ void main() {
 
     testWidgets('displays helper text correctly', (tester) async {
       const helperText = 'This is helper text';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -90,7 +92,7 @@ void main() {
 
     testWidgets('displays error text correctly', (tester) async {
       const errorText = 'This is an error';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -103,7 +105,7 @@ void main() {
       );
 
       expect(find.text(errorText), findsOneWidget);
-      
+
       final errorTextWidget = tester.widget<Text>(find.text(errorText));
       expect(errorTextWidget.style?.color, DesignColors.error);
     });
@@ -111,7 +113,7 @@ void main() {
     testWidgets('prioritizes error text over helper text', (tester) async {
       const helperText = 'Helper text';
       const errorText = 'Error text';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -139,12 +141,14 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
+
       expect(container.constraints?.maxHeight, DesignInputSizes.heightSm);
     });
 
@@ -152,20 +156,20 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaInput(
-              size: TinaInputSize.medium,
-            ),
+            body: TinaInput(),
           ),
         ),
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
+
       expect(container.constraints?.maxHeight, DesignInputSizes.heightMd);
     });
 
@@ -181,12 +185,14 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
+
       expect(container.constraints?.maxHeight, DesignInputSizes.heightLg);
     });
 
@@ -202,13 +208,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border?.top.color, DesignColors.success);
     });
 
@@ -224,13 +232,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border?.top.color, DesignColors.warning);
     });
 
@@ -246,13 +256,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.ancestor(
-          of: find.byType(TextFormField),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TextFormField),
+              matching: find.byType(Container),
+            )
+            .first,
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border?.top.color, DesignColors.error);
     });
 
@@ -267,7 +279,9 @@ void main() {
         ),
       );
 
-      final textField = tester.widget<TextFormField>(find.byType(TextFormField));
+      final textField = tester.widget<TextFormField>(
+        find.byType(TextFormField),
+      );
       expect(textField.enabled, isFalse);
     });
 
@@ -302,14 +316,14 @@ void main() {
       // Find the TinaInput widget and verify obscureText property is set
       final tinaInput = tester.widget<TinaInput>(find.byType(TinaInput));
       expect(tinaInput.obscureText, isTrue);
-      
+
       // Verify the initial value is set correctly
       expect(tinaInput.initialValue, equals('password'));
     });
 
     testWidgets('displays prefix icon correctly', (tester) async {
       const prefixIcon = Icon(Icons.search);
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -325,7 +339,7 @@ void main() {
 
     testWidgets('displays suffix icon correctly', (tester) async {
       const suffixIcon = Icon(Icons.clear);
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

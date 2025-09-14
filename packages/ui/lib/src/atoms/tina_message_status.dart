@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A message delivery status indicator component.
 ///
@@ -21,7 +22,8 @@ class TinaMessageStatus extends StatefulWidget {
   /// The size of the status indicator.
   final TinaMessageStatusSize size;
 
-  /// Custom color for the status indicator. If null, uses status-appropriate colors.
+  /// Custom color for the status indicator. If null, uses status-appropriate
+  /// colors.
   final Color? color;
 
   /// Whether to show animations for status changes.
@@ -46,33 +48,36 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
 
   void _setupAnimations() {
     if (!widget.showAnimation) return;
-    
+
     if (widget.status == TinaMessageDeliveryStatus.sending) {
       _rotationController = AnimationController(
         duration: const Duration(milliseconds: 1000),
         vsync: this,
       );
-      
+
       _rotationAnimation = Tween<double>(
-        begin: 0.0,
-        end: 1.0,
+        begin: 0,
+        end: 1,
       ).animate(_rotationController!);
-      
+
       _rotationController!.repeat();
     } else {
       _scaleController = AnimationController(
         duration: DesignDuration.normal,
         vsync: this,
       );
-      
-      _scaleAnimation = Tween<double>(
-        begin: 0.0,
-        end: 1.0,
-      ).animate(CurvedAnimation(
-        parent: _scaleController!,
-        curve: Curves.elasticOut,
-      ));
-      
+
+      _scaleAnimation =
+          Tween<double>(
+            begin: 0,
+            end: 1,
+          ).animate(
+            CurvedAnimation(
+              parent: _scaleController!,
+              curve: Curves.elasticOut,
+            ),
+          );
+
       _scaleController!.forward();
     }
   }
@@ -80,8 +85,9 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
   @override
   void didUpdateWidget(TinaMessageStatus oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
-    if (oldWidget.status != widget.status || oldWidget.showAnimation != widget.showAnimation) {
+
+    if (oldWidget.status != widget.status ||
+        oldWidget.showAnimation != widget.showAnimation) {
       _disposeControllers();
       _setupAnimations();
     }
@@ -102,9 +108,10 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
 
   @override
   Widget build(BuildContext context) {
+    final tinaColors = context.tinaColors;
     final icon = _getStatusIcon();
-    final color = widget.color ?? _getStatusColor();
-    
+    final color = widget.color ?? _getStatusColor(tinaColors);
+
     Widget statusIcon = Icon(
       icon,
       size: _getIconSize(),
@@ -113,14 +120,15 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
     );
 
     if (widget.showAnimation) {
-      if (widget.status == TinaMessageDeliveryStatus.sending && _rotationController != null) {
+      if (widget.status == TinaMessageDeliveryStatus.sending &&
+          _rotationController != null) {
         // Rotating animation for sending status
         statusIcon = AnimatedBuilder(
           animation: _rotationAnimation,
           builder: (context, child) {
             return Transform.rotate(
               angle: _rotationAnimation.value * 2 * 3.14159,
-              child: child!,
+              child: child,
             );
           },
           child: statusIcon,
@@ -132,7 +140,7 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
           builder: (context, child) {
             return Transform.scale(
               scale: _scaleAnimation.value,
-              child: child!,
+              child: child,
             );
           },
           child: statusIcon,
@@ -156,13 +164,14 @@ class _TinaMessageStatusState extends State<TinaMessageStatus>
     };
   }
 
-  Color _getStatusColor() {
+  Color _getStatusColor(TinaColorScheme tinaColors) {
     return switch (widget.status) {
-      TinaMessageDeliveryStatus.sending => DesignColors.neutral400,
-      TinaMessageDeliveryStatus.sent => DesignColors.neutral500,
-      TinaMessageDeliveryStatus.delivered => DesignColors.info,
-      TinaMessageDeliveryStatus.read => DesignColors.success,
-      TinaMessageDeliveryStatus.error => DesignColors.error,
+      TinaMessageDeliveryStatus.sending =>
+        tinaColors.onSurfaceVariant.withValues(alpha: 0.6),
+      TinaMessageDeliveryStatus.sent => tinaColors.onSurfaceVariant,
+      TinaMessageDeliveryStatus.delivered => tinaColors.info,
+      TinaMessageDeliveryStatus.read => tinaColors.success,
+      TinaMessageDeliveryStatus.error => tinaColors.error,
     };
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable input field component following the Tina design system.
 ///
@@ -80,7 +81,8 @@ class TinaInput extends StatefulWidget {
   /// Whether the input field is read-only.
   final bool readOnly;
 
-  /// Whether this input field should focus itself if nothing else is already focused.
+  /// Whether this input field should focus itself if nothing else is already
+  /// focused.
   final bool autofocus;
 
   /// The maximum number of lines to show at one time.
@@ -95,7 +97,8 @@ class TinaInput extends StatefulWidget {
   /// Called when the user changes the text in the field.
   final ValueChanged<String>? onChanged;
 
-  /// Called when the user indicates that they are done editing the text in the field.
+  /// Called when the user indicates that they are done editing the text in the
+  /// field.
   final ValueChanged<String>? onSubmitted;
 
   /// Called when the input field is tapped.
@@ -140,8 +143,8 @@ class _TinaInputState extends State<TinaInput> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -149,18 +152,16 @@ class _TinaInputState extends State<TinaInput> {
         Container(
           height: _getHeight(),
           decoration: BoxDecoration(
-            color: _getBackgroundColor(),
+            color: _getBackgroundColor(tinaColors),
             border: Border.all(
-              color: _getBorderColor(),
-              width: DesignBorderWidth.thin,
+              color: _getBorderColor(tinaColors),
             ),
             borderRadius: BorderRadius.circular(DesignBorderRadius.md),
             boxShadow: _isFocused && widget.state != TinaInputState.error
                 ? [
                     BoxShadow(
-                      color: DesignColors.primaryBase.withOpacity(0.1),
+                      color: tinaColors.primary.withValues(alpha: 0.1),
                       blurRadius: 4,
-                      offset: const Offset(0, 0),
                       spreadRadius: 3,
                     ),
                   ]
@@ -182,10 +183,10 @@ class _TinaInputState extends State<TinaInput> {
             onChanged: widget.onChanged,
             onFieldSubmitted: widget.onSubmitted,
             onTap: widget.onTap,
-            style: _getTextStyle(),
+            style: _getTextStyle(tinaColors),
             decoration: InputDecoration(
               hintText: widget.placeholder,
-              hintStyle: _getHintStyle(),
+              hintStyle: _getHintStyle(tinaColors),
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
               contentPadding: _getPadding(),
@@ -209,8 +210,8 @@ class _TinaInputState extends State<TinaInput> {
                 fontWeight: DesignTypography.fontWeightRegular,
                 height: DesignTypography.lineHeightXs,
                 color: widget.errorText != null
-                    ? DesignColors.error
-                    : DesignColors.neutral500,
+                    ? tinaColors.error
+                    : tinaColors.onSurfaceVariant,
               ),
             ),
           ),
@@ -234,26 +235,24 @@ class _TinaInputState extends State<TinaInput> {
     };
   }
 
-  Color _getBackgroundColor() {
-    if (!widget.enabled) return DesignColors.neutral100;
-    if (widget.readOnly) return DesignColors.neutral50;
-    return Colors.white;
+  Color _getBackgroundColor(TinaColorScheme colors) {
+    if (!widget.enabled) return colors.surfaceVariant.withValues(alpha: 0.5);
+    if (widget.readOnly) return colors.surfaceVariant;
+    return colors.surface;
   }
 
-  Color _getBorderColor() {
-    if (!widget.enabled) return DesignColors.neutral200;
-    
+  Color _getBorderColor(TinaColorScheme colors) {
+    if (!widget.enabled) return colors.outlineVariant;
+
     return switch (widget.state) {
-      TinaInputState.normal => _isFocused 
-          ? DesignColors.primaryBase 
-          : DesignColors.neutral300,
-      TinaInputState.success => DesignColors.success,
-      TinaInputState.warning => DesignColors.warning,
-      TinaInputState.error => DesignColors.error,
+      TinaInputState.normal => _isFocused ? colors.primary : colors.outline,
+      TinaInputState.success => colors.success,
+      TinaInputState.warning => colors.warning,
+      TinaInputState.error => colors.error,
     };
   }
 
-  TextStyle _getTextStyle() {
+  TextStyle _getTextStyle(TinaColorScheme colors) {
     final fontSize = switch (widget.size) {
       TinaInputSize.small => DesignTypography.fontSizeSm,
       TinaInputSize.medium => DesignTypography.fontSizeBase,
@@ -265,11 +264,11 @@ class _TinaInputState extends State<TinaInput> {
       fontSize: fontSize,
       fontWeight: DesignTypography.fontWeightRegular,
       height: DesignTypography.lineHeightBase,
-      color: widget.enabled ? DesignColors.neutral900 : DesignColors.neutral500,
+      color: widget.enabled ? colors.onSurface : colors.onSurfaceVariant,
     );
   }
 
-  TextStyle _getHintStyle() {
+  TextStyle _getHintStyle(TinaColorScheme colors) {
     final fontSize = switch (widget.size) {
       TinaInputSize.small => DesignTypography.fontSizeSm,
       TinaInputSize.medium => DesignTypography.fontSizeBase,
@@ -281,7 +280,7 @@ class _TinaInputState extends State<TinaInput> {
       fontSize: fontSize,
       fontWeight: DesignTypography.fontWeightRegular,
       height: DesignTypography.lineHeightBase,
-      color: DesignColors.neutral400,
+      color: colors.onSurfaceVariant.withValues(alpha: 0.7),
     );
   }
 }

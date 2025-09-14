@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable badge component following the Tina design system.
 ///
@@ -24,17 +25,17 @@ class TinaBadge extends StatelessWidget {
     TinaBadgeSize size = TinaBadgeSize.medium,
     String? semanticLabel,
   }) : this(
-          key: key,
-          variant: variant,
-          size: size,
-          semanticLabel: semanticLabel,
-          child: TinaText(
-            text,
-            style: size == TinaBadgeSize.small 
-                ? TinaTextStyle.caption 
-                : TinaTextStyle.bodySmall,
-          ),
-        );
+         key: key,
+         variant: variant,
+         size: size,
+         semanticLabel: semanticLabel,
+         child: TinaText(
+           text,
+           style: size == TinaBadgeSize.small
+               ? TinaTextStyle.caption
+               : TinaTextStyle.bodySmall,
+         ),
+       );
 
   /// Creates a Tina badge with a count number.
   TinaBadge.count({
@@ -45,17 +46,17 @@ class TinaBadge extends StatelessWidget {
     String? semanticLabel,
     int maxCount = 99,
   }) : this(
-          key: key,
-          variant: variant,
-          size: size,
-          semanticLabel: semanticLabel ?? '$count notifications',
-          child: TinaText(
-            count > maxCount ? '$maxCount+' : count.toString(),
-            style: size == TinaBadgeSize.small 
-                ? TinaTextStyle.caption 
-                : TinaTextStyle.bodySmall,
-          ),
-        );
+         key: key,
+         variant: variant,
+         size: size,
+         semanticLabel: semanticLabel ?? '$count notifications',
+         child: TinaText(
+           count > maxCount ? '$maxCount+' : count.toString(),
+           style: size == TinaBadgeSize.small
+               ? TinaTextStyle.caption
+               : TinaTextStyle.bodySmall,
+         ),
+       );
 
   /// Creates a Tina badge with a dot indicator.
   const TinaBadge.dot({
@@ -63,12 +64,12 @@ class TinaBadge extends StatelessWidget {
     TinaBadgeVariant variant = TinaBadgeVariant.primary,
     String? semanticLabel,
   }) : this(
-          key: key,
-          variant: variant,
-          size: TinaBadgeSize.small,
-          semanticLabel: semanticLabel ?? 'notification indicator',
-          child: const SizedBox(width: 6, height: 6),
-        );
+         key: key,
+         variant: variant,
+         size: TinaBadgeSize.small,
+         semanticLabel: semanticLabel ?? 'notification indicator',
+         child: const SizedBox(width: 6, height: 6),
+       );
 
   /// The widget to display inside the badge.
   final Widget child;
@@ -84,23 +85,22 @@ class TinaBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     Widget badge = Container(
       padding: _getPadding(),
       decoration: BoxDecoration(
-        color: _getBackgroundColor(),
+        color: _getBackgroundColor(tinaColors),
         borderRadius: BorderRadius.circular(_getBorderRadius()),
         border: variant == TinaBadgeVariant.outlined
             ? Border.all(
-                color: _getBorderColor(),
-                width: DesignBorderWidth.thin,
+                color: _getBorderColor(tinaColors),
               )
             : null,
       ),
       child: DefaultTextStyle(
         style: TextStyle(
-          color: _getForegroundColor(),
+          color: _getForegroundColor(tinaColors),
           fontWeight: DesignTypography.fontWeightMedium,
         ),
         child: child,
@@ -120,17 +120,17 @@ class TinaBadge extends StatelessWidget {
   EdgeInsets _getPadding() {
     return switch (size) {
       TinaBadgeSize.small => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.xs,
-          vertical: 2.0,
-        ),
+        horizontal: DesignSpacing.xs,
+        vertical: 2,
+      ),
       TinaBadgeSize.medium => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.sm,
-          vertical: DesignSpacing.xs,
-        ),
+        horizontal: DesignSpacing.sm,
+        vertical: DesignSpacing.xs,
+      ),
       TinaBadgeSize.large => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.sm,
-          vertical: DesignSpacing.xs,
-        ),
+        horizontal: DesignSpacing.sm,
+        vertical: DesignSpacing.xs,
+      ),
     };
   }
 
@@ -142,90 +142,93 @@ class TinaBadge extends StatelessWidget {
     };
   }
 
-  Color _getBackgroundColor() {
+  Color _getBackgroundColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryBase,
-      TinaBadgeVariant.secondary => DesignColors.secondaryBase,
-      TinaBadgeVariant.success => DesignColors.success,
-      TinaBadgeVariant.warning => DesignColors.warning,
-      TinaBadgeVariant.error => DesignColors.error,
-      TinaBadgeVariant.info => DesignColors.info,
-      TinaBadgeVariant.neutral => DesignColors.neutral500,
+      TinaBadgeVariant.primary => colors.primary,
+      TinaBadgeVariant.secondary => colors.secondary,
+      TinaBadgeVariant.success => colors.success,
+      TinaBadgeVariant.warning => colors.warning,
+      TinaBadgeVariant.error => colors.error,
+      TinaBadgeVariant.info => colors.info,
+      TinaBadgeVariant.neutral => colors.onSurfaceVariant,
       TinaBadgeVariant.outlined => Colors.transparent,
-      TinaBadgeVariant.soft => _getSoftBackgroundColor(),
+      TinaBadgeVariant.soft => _getSoftBackgroundColor(colors),
     };
   }
 
-  Color _getForegroundColor() {
+  Color _getForegroundColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryContrast,
-      TinaBadgeVariant.secondary => DesignColors.secondaryContrast,
-      TinaBadgeVariant.success => Colors.white,
-      TinaBadgeVariant.warning => Colors.white,
-      TinaBadgeVariant.error => Colors.white,
-      TinaBadgeVariant.info => Colors.white,
-      TinaBadgeVariant.neutral => Colors.white,
-      TinaBadgeVariant.outlined => _getOutlinedForegroundColor(),
-      TinaBadgeVariant.soft => _getSoftForegroundColor(),
+      TinaBadgeVariant.primary => colors.onPrimary,
+      TinaBadgeVariant.secondary => colors.onSecondary,
+      TinaBadgeVariant.success => colors.onSuccess,
+      TinaBadgeVariant.warning => colors.onWarning,
+      TinaBadgeVariant.error => colors.onError,
+      TinaBadgeVariant.info => colors.onInfo,
+      TinaBadgeVariant.neutral => colors.onSurface,
+      TinaBadgeVariant.outlined => _getOutlinedForegroundColor(colors),
+      TinaBadgeVariant.soft => _getSoftForegroundColor(colors),
     };
   }
 
-  Color _getBorderColor() {
+  Color _getBorderColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryBase,
-      TinaBadgeVariant.secondary => DesignColors.secondaryBase,
-      TinaBadgeVariant.success => DesignColors.success,
-      TinaBadgeVariant.warning => DesignColors.warning,
-      TinaBadgeVariant.error => DesignColors.error,
-      TinaBadgeVariant.info => DesignColors.info,
-      TinaBadgeVariant.neutral => DesignColors.neutral500,
-      TinaBadgeVariant.outlined => DesignColors.neutral300,
+      TinaBadgeVariant.primary => colors.primary,
+      TinaBadgeVariant.secondary => colors.secondary,
+      TinaBadgeVariant.success => colors.success,
+      TinaBadgeVariant.warning => colors.warning,
+      TinaBadgeVariant.error => colors.error,
+      TinaBadgeVariant.info => colors.info,
+      TinaBadgeVariant.neutral => colors.onSurfaceVariant,
+      TinaBadgeVariant.outlined => colors.outline,
       TinaBadgeVariant.soft => Colors.transparent,
     };
   }
 
-  Color _getSoftBackgroundColor() {
+  Color _getSoftBackgroundColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryBase.withOpacity(0.1),
-      TinaBadgeVariant.secondary => DesignColors.secondaryBase.withOpacity(0.1),
-      TinaBadgeVariant.success => DesignColors.success.withOpacity(0.1),
-      TinaBadgeVariant.warning => DesignColors.warning.withOpacity(0.1),
-      TinaBadgeVariant.error => DesignColors.error.withOpacity(0.1),
-      TinaBadgeVariant.info => DesignColors.info.withOpacity(0.1),
-      TinaBadgeVariant.neutral => DesignColors.neutral500.withOpacity(0.1),
-      TinaBadgeVariant.outlined => DesignColors.neutral100,
-      TinaBadgeVariant.soft => DesignColors.primaryBase.withOpacity(0.1),
+      TinaBadgeVariant.primary => colors.primary.withValues(alpha: 0.1),
+      TinaBadgeVariant.secondary => colors.secondary.withValues(alpha: 0.1),
+      TinaBadgeVariant.success => colors.success.withValues(alpha: 0.1),
+      TinaBadgeVariant.warning => colors.warning.withValues(alpha: 0.1),
+      TinaBadgeVariant.error => colors.error.withValues(alpha: 0.1),
+      TinaBadgeVariant.info => colors.info.withValues(alpha: 0.1),
+      TinaBadgeVariant.neutral => colors.onSurfaceVariant.withValues(
+        alpha: 0.1,
+      ),
+      TinaBadgeVariant.outlined => colors.surfaceVariant,
+      TinaBadgeVariant.soft => colors.primary.withValues(alpha: 0.1),
     };
   }
 
-  Color _getSoftForegroundColor() {
+  Color _getSoftForegroundColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryDark,
-      TinaBadgeVariant.secondary => DesignColors.secondaryDark,
-      TinaBadgeVariant.success => DesignColors.success,
-      TinaBadgeVariant.warning => DesignColors.warning,
-      TinaBadgeVariant.error => DesignColors.error,
-      TinaBadgeVariant.info => DesignColors.info,
-      TinaBadgeVariant.neutral => DesignColors.neutral700,
-      _ => DesignColors.neutral700,
+      TinaBadgeVariant.primary => colors.primaryVariant,
+      TinaBadgeVariant.secondary => colors.secondaryVariant,
+      TinaBadgeVariant.success => colors.success,
+      TinaBadgeVariant.warning => colors.warning,
+      TinaBadgeVariant.error => colors.error,
+      TinaBadgeVariant.info => colors.info,
+      TinaBadgeVariant.neutral => colors.onSurfaceVariant,
+      _ => colors.onSurfaceVariant,
     };
   }
 
-  Color _getOutlinedForegroundColor() {
+  Color _getOutlinedForegroundColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaBadgeVariant.primary => DesignColors.primaryBase,
-      TinaBadgeVariant.secondary => DesignColors.secondaryBase,
-      TinaBadgeVariant.success => DesignColors.success,
-      TinaBadgeVariant.warning => DesignColors.warning,
-      TinaBadgeVariant.error => DesignColors.error,
-      TinaBadgeVariant.info => DesignColors.info,
-      TinaBadgeVariant.neutral => DesignColors.neutral500,
-      _ => DesignColors.neutral700,
+      TinaBadgeVariant.primary => colors.primary,
+      TinaBadgeVariant.secondary => colors.secondary,
+      TinaBadgeVariant.success => colors.success,
+      TinaBadgeVariant.warning => colors.warning,
+      TinaBadgeVariant.error => colors.error,
+      TinaBadgeVariant.info => colors.info,
+      TinaBadgeVariant.neutral => colors.onSurfaceVariant,
+      _ => colors.onSurfaceVariant,
     };
   }
 }
 
-/// A specialized badge component that can be positioned relative to another widget.
+/// A specialized badge component that can be positioned relative to another
+/// widget.
 ///
 /// This is commonly used for notification badges on icons or avatars.
 class TinaPositionedBadge extends StatelessWidget {
@@ -270,7 +273,8 @@ class TinaPositionedBadge extends StatelessWidget {
   double? _getTop() {
     final baseOffset = offset?.dy ?? 0;
     return switch (position) {
-      TinaBadgePosition.topLeft || TinaBadgePosition.topRight => -8.0 + baseOffset,
+      TinaBadgePosition.topLeft ||
+      TinaBadgePosition.topRight => -8.0 + baseOffset,
       TinaBadgePosition.bottomLeft || TinaBadgePosition.bottomRight => null,
     };
   }
@@ -278,7 +282,8 @@ class TinaPositionedBadge extends StatelessWidget {
   double? _getRight() {
     final baseOffset = offset?.dx ?? 0;
     return switch (position) {
-      TinaBadgePosition.topRight || TinaBadgePosition.bottomRight => -8.0 + baseOffset,
+      TinaBadgePosition.topRight ||
+      TinaBadgePosition.bottomRight => -8.0 + baseOffset,
       TinaBadgePosition.topLeft || TinaBadgePosition.bottomLeft => null,
     };
   }
@@ -286,7 +291,8 @@ class TinaPositionedBadge extends StatelessWidget {
   double? _getBottom() {
     final baseOffset = offset?.dy ?? 0;
     return switch (position) {
-      TinaBadgePosition.bottomLeft || TinaBadgePosition.bottomRight => -8.0 + baseOffset,
+      TinaBadgePosition.bottomLeft ||
+      TinaBadgePosition.bottomRight => -8.0 + baseOffset,
       TinaBadgePosition.topLeft || TinaBadgePosition.topRight => null,
     };
   }
@@ -294,7 +300,8 @@ class TinaPositionedBadge extends StatelessWidget {
   double? _getLeft() {
     final baseOffset = offset?.dx ?? 0;
     return switch (position) {
-      TinaBadgePosition.topLeft || TinaBadgePosition.bottomLeft => -8.0 + baseOffset,
+      TinaBadgePosition.topLeft ||
+      TinaBadgePosition.bottomLeft => -8.0 + baseOffset,
       TinaBadgePosition.topRight || TinaBadgePosition.bottomRight => null,
     };
   }

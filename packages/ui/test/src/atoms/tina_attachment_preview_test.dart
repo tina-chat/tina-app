@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_attachment_preview.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_attachment_preview.dart';
 
 void main() {
   group('TinaAttachmentPreview', () {
     testWidgets('renders file name and type correctly', (tester) async {
       const fileName = 'document.pdf';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -25,7 +24,7 @@ void main() {
 
     testWidgets('displays file size when provided', (tester) async {
       const fileSize = 1024 * 1024; // 1 MB
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -43,7 +42,7 @@ void main() {
 
     testWidgets('shows thumbnail for image type with URL', (tester) async {
       const thumbnailUrl = 'https://example.com/image.jpg';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -60,9 +59,11 @@ void main() {
       expect(find.byType(AspectRatio), findsOneWidget);
     });
 
-    testWidgets('shows download button when onDownload is provided', (tester) async {
-      bool downloadCalled = false;
-      
+    testWidgets('shows download button when onDownload is provided', (
+      tester,
+    ) async {
+      var downloadCalled = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -76,14 +77,16 @@ void main() {
       );
 
       expect(find.byIcon(Icons.download), findsOneWidget);
-      
+
       await tester.tap(find.byIcon(Icons.download));
       expect(downloadCalled, isTrue);
     });
 
-    testWidgets('shows remove button when onRemove is provided', (tester) async {
-      bool removeCalled = false;
-      
+    testWidgets('shows remove button when onRemove is provided', (
+      tester,
+    ) async {
+      var removeCalled = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -97,7 +100,7 @@ void main() {
       );
 
       expect(find.byIcon(Icons.close), findsOneWidget);
-      
+
       await tester.tap(find.byIcon(Icons.close));
       expect(removeCalled, isTrue);
     });
@@ -120,7 +123,7 @@ void main() {
       expect(find.byIcon(Icons.downloading), findsOneWidget);
       expect(find.byType(LinearProgressIndicator), findsOneWidget);
       expect(find.text('50%'), findsOneWidget);
-      
+
       // Download button should be disabled
       final downloadButton = tester.widget<IconButton>(
         find.widgetWithIcon(IconButton, Icons.downloading),
@@ -143,10 +146,11 @@ void main() {
 
       final containers = tester.widgetList<Container>(find.byType(Container));
       final mainContainer = containers.firstWhere(
-        (container) => container.constraints != null &&
+        (container) =>
+            container.constraints != null &&
             container.constraints!.maxWidth == 200.0,
       );
-      final constraints = mainContainer.constraints as BoxConstraints;
+      final constraints = mainContainer.constraints!;
       expect(constraints.maxWidth, 200.0);
     });
 
@@ -157,7 +161,6 @@ void main() {
             body: TinaAttachmentPreview(
               fileName: 'file.pdf',
               fileType: TinaAttachmentType.pdf,
-              size: TinaAttachmentPreviewSize.medium,
             ),
           ),
         ),
@@ -165,10 +168,11 @@ void main() {
 
       final containers = tester.widgetList<Container>(find.byType(Container));
       final mainContainer = containers.firstWhere(
-        (container) => container.constraints != null &&
+        (container) =>
+            container.constraints != null &&
             container.constraints!.maxWidth == 280.0,
       );
-      final constraints = mainContainer.constraints as BoxConstraints;
+      final constraints = mainContainer.constraints!;
       expect(constraints.maxWidth, 280.0);
     });
 
@@ -187,10 +191,11 @@ void main() {
 
       final containers = tester.widgetList<Container>(find.byType(Container));
       final mainContainer = containers.firstWhere(
-        (container) => container.constraints != null &&
+        (container) =>
+            container.constraints != null &&
             container.constraints!.maxWidth == 360.0,
       );
-      final constraints = mainContainer.constraints as BoxConstraints;
+      final constraints = mainContainer.constraints!;
       expect(constraints.maxWidth, 360.0);
     });
 
@@ -268,8 +273,9 @@ void main() {
     });
 
     testWidgets('truncates long file names', (tester) async {
-      const longFileName = 'This_is_a_very_long_file_name_that_should_be_truncated_properly.pdf';
-      
+      const longFileName =
+          'This_is_a_very_long_file_name_that_should_be_truncated_properly.pdf';
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -301,7 +307,9 @@ void main() {
       expect(find.bySemanticsLabel('pdf file'), findsOneWidget);
     });
 
-    testWidgets('shows progress without percentage when progress is null', (tester) async {
+    testWidgets('shows progress without percentage when progress is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -325,10 +333,19 @@ void main() {
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.image));
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.video));
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.audio));
-        expect(TinaAttachmentType.values, contains(TinaAttachmentType.document));
+        expect(
+          TinaAttachmentType.values,
+          contains(TinaAttachmentType.document),
+        );
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.pdf));
-        expect(TinaAttachmentType.values, contains(TinaAttachmentType.spreadsheet));
-        expect(TinaAttachmentType.values, contains(TinaAttachmentType.presentation));
+        expect(
+          TinaAttachmentType.values,
+          contains(TinaAttachmentType.spreadsheet),
+        );
+        expect(
+          TinaAttachmentType.values,
+          contains(TinaAttachmentType.presentation),
+        );
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.archive));
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.code));
         expect(TinaAttachmentType.values, contains(TinaAttachmentType.other));
@@ -338,9 +355,18 @@ void main() {
     group('TinaAttachmentPreviewSize enum', () {
       test('has all expected values', () {
         expect(TinaAttachmentPreviewSize.values, hasLength(3));
-        expect(TinaAttachmentPreviewSize.values, contains(TinaAttachmentPreviewSize.small));
-        expect(TinaAttachmentPreviewSize.values, contains(TinaAttachmentPreviewSize.medium));
-        expect(TinaAttachmentPreviewSize.values, contains(TinaAttachmentPreviewSize.large));
+        expect(
+          TinaAttachmentPreviewSize.values,
+          contains(TinaAttachmentPreviewSize.small),
+        );
+        expect(
+          TinaAttachmentPreviewSize.values,
+          contains(TinaAttachmentPreviewSize.medium),
+        );
+        expect(
+          TinaAttachmentPreviewSize.values,
+          contains(TinaAttachmentPreviewSize.large),
+        );
       });
     });
   });

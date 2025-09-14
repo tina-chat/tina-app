@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tina_ui/ui.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(
-  name: 'Primary Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Primary Button', type: TinaButton)
 Widget primaryButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -17,10 +14,7 @@ Widget primaryButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Secondary Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Secondary Button', type: TinaButton)
 Widget secondaryButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -32,10 +26,7 @@ Widget secondaryButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Outlined Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Outlined Button', type: TinaButton)
 Widget outlinedButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -47,10 +38,7 @@ Widget outlinedButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Ghost Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Ghost Button', type: TinaButton)
 Widget ghostButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -62,10 +50,7 @@ Widget ghostButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Elevated Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Elevated Button', type: TinaButton)
 Widget elevatedButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -77,10 +62,7 @@ Widget elevatedButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Loading Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Loading Button', type: TinaButton)
 Widget loadingButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -93,10 +75,7 @@ Widget loadingButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Disabled Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Disabled Button', type: TinaButton)
 Widget disabledButtonUseCase(BuildContext context) {
   return Center(
     child: TinaButton(
@@ -108,10 +87,7 @@ Widget disabledButtonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Button Sizes',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Button Sizes', type: TinaButton)
 Widget buttonSizesUseCase(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -140,10 +116,7 @@ Widget buttonSizesUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Full Width Button',
-  type: TinaButton,
-)
+@widgetbook.UseCase(name: 'Full Width Button', type: TinaButton)
 Widget fullWidthButtonUseCase(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(16.0),

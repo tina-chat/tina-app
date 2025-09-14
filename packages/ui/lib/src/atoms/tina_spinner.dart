@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable loading spinner component following the Tina design system.
 ///
@@ -29,12 +30,12 @@ class TinaSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final tinaColors = context.tinaColors;
     final spinnerSize = _getSpinnerSize();
-    final spinnerColor = color ?? DesignColors.primaryBase;
+    final spinnerColor = color ?? tinaColors.primary;
     final spinnerStrokeWidth = strokeWidth ?? _getDefaultStrokeWidth();
 
-    Widget spinner = SizedBox(
+    final Widget spinner = SizedBox(
       width: spinnerSize,
       height: spinnerSize,
       child: CircularProgressIndicator(
@@ -107,6 +108,7 @@ class TinaSpinnerWithLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tinaColors = context.tinaColors;
     final spinner = TinaSpinner(
       size: size,
       color: color,
@@ -120,7 +122,7 @@ class TinaSpinnerWithLabel extends StatelessWidget {
         fontFamily: DesignTypography.bodyFontFamily,
         fontSize: _getLabelFontSize(),
         fontWeight: DesignTypography.fontWeightRegular,
-        color: DesignColors.neutral600,
+        color: tinaColors.onSurfaceVariant,
       ),
       textAlign: TextAlign.center,
     );
@@ -161,7 +163,8 @@ class TinaSpinnerWithLabel extends StatelessWidget {
 
 /// A specialized full-screen loading overlay component.
 ///
-/// This provides a consistent way to show loading states that cover the entire screen.
+/// This provides a consistent way to show loading states that cover the entire
+/// screen.
 class TinaLoadingOverlay extends StatelessWidget {
   /// Creates a Tina loading overlay.
   const TinaLoadingOverlay({
@@ -198,13 +201,14 @@ class TinaLoadingOverlay extends StatelessWidget {
       return child ?? const SizedBox.shrink();
     }
 
-    final overlay = Container(
-      color: backgroundColor ?? Colors.black.withOpacity(0.5),
+    final tinaColors = context.tinaColors;
+    final overlay = ColoredBox(
+      color: backgroundColor ?? tinaColors.scrim,
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(DesignSpacing.xl),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: tinaColors.surface,
             borderRadius: BorderRadius.circular(DesignBorderRadius.lg),
             boxShadow: const [DesignShadows.lg],
           ),
@@ -238,7 +242,8 @@ class TinaLoadingOverlay extends StatelessWidget {
 
 /// A specialized inline loading component for buttons and small spaces.
 ///
-/// This provides a consistent way to show loading states within other components.
+/// This provides a consistent way to show loading states within other
+/// components.
 class TinaInlineSpinner extends StatelessWidget {
   /// Creates a Tina inline spinner.
   const TinaInlineSpinner({
@@ -318,7 +323,7 @@ class _TinaDotsSpinnerState extends State<TinaDotsSpinner>
     );
 
     _animations = _controllers.map((controller) {
-      return Tween<double>(begin: 0.4, end: 1.0).animate(
+      return Tween<double>(begin: 0.4, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOut),
       );
     }).toList();
@@ -335,7 +340,7 @@ class _TinaDotsSpinnerState extends State<TinaDotsSpinner>
   }
 
   void _startAnimations() {
-    for (int i = 0; i < _controllers.length; i++) {
+    for (var i = 0; i < _controllers.length; i++) {
       Future.delayed(Duration(milliseconds: i * 200), () {
         if (mounted) {
           _controllers[i].repeat(reverse: true);
@@ -347,7 +352,8 @@ class _TinaDotsSpinnerState extends State<TinaDotsSpinner>
   @override
   Widget build(BuildContext context) {
     final dotSize = _getDotSize();
-    final dotColor = widget.color ?? DesignColors.primaryBase;
+    final tinaColors = context.tinaColors;
+    final dotColor = widget.color ?? tinaColors.primary;
 
     return Semantics(
       label: widget.semanticLabel ?? 'Loading',
@@ -364,7 +370,7 @@ class _TinaDotsSpinnerState extends State<TinaDotsSpinner>
                   horizontal: dotSize * 0.2,
                 ),
                 decoration: BoxDecoration(
-                  color: dotColor.withOpacity(_animations[index].value),
+                  color: dotColor.withValues(alpha: _animations[index].value),
                   shape: BoxShape.circle,
                 ),
               );

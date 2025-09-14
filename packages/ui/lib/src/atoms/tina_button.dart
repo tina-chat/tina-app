@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable button component following the Tina design system.
 ///
@@ -37,14 +38,14 @@ class TinaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     return SizedBox(
       width: isFullWidth ? double.infinity : null,
       height: _getHeight(),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
-        style: _getButtonStyle(theme),
+        style: _getButtonStyle(tinaColors),
         child: isLoading
             ? SizedBox(
                 width: 20,
@@ -52,7 +53,7 @@ class TinaButton extends StatelessWidget {
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    _getLoadingColor(theme),
+                    _getLoadingColor(tinaColors),
                   ),
                 ),
               )
@@ -61,55 +62,54 @@ class TinaButton extends StatelessWidget {
     );
   }
 
-  ButtonStyle _getButtonStyle(ThemeData theme) {
+  ButtonStyle _getButtonStyle(TinaColorScheme colors) {
     return ElevatedButton.styleFrom(
-      backgroundColor: _getBackgroundColor(theme),
-      foregroundColor: _getForegroundColor(theme),
+      backgroundColor: _getBackgroundColor(colors),
+      foregroundColor: _getForegroundColor(colors),
       elevation: variant == TinaButtonVariant.elevated ? 2 : 0,
       padding: _getPadding(),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(DesignBorderRadius.md),
         side: variant == TinaButtonVariant.outlined
             ? BorderSide(
-                color: DesignColors.primaryBase,
-                width: DesignBorderWidth.thin,
+                color: colors.primary,
               )
             : BorderSide.none,
       ),
     );
   }
 
-  Color _getBackgroundColor(ThemeData theme) {
-    if (onPressed == null) return DesignColors.neutral300;
-    
+  Color _getBackgroundColor(TinaColorScheme colors) {
+    if (onPressed == null) return colors.outlineVariant;
+
     return switch (variant) {
-      TinaButtonVariant.primary => DesignColors.primaryBase,
-      TinaButtonVariant.secondary => DesignColors.secondaryBase,
+      TinaButtonVariant.primary => colors.primary,
+      TinaButtonVariant.secondary => colors.secondary,
       TinaButtonVariant.outlined => Colors.transparent,
       TinaButtonVariant.ghost => Colors.transparent,
-      TinaButtonVariant.elevated => DesignColors.primaryBase,
+      TinaButtonVariant.elevated => colors.primary,
     };
   }
 
-  Color _getForegroundColor(ThemeData theme) {
-    if (onPressed == null) return DesignColors.neutral500;
-    
+  Color _getForegroundColor(TinaColorScheme colors) {
+    if (onPressed == null) return colors.onSurfaceVariant;
+
     return switch (variant) {
-      TinaButtonVariant.primary => DesignColors.primaryContrast,
-      TinaButtonVariant.secondary => DesignColors.secondaryContrast,
-      TinaButtonVariant.outlined => DesignColors.primaryBase,
-      TinaButtonVariant.ghost => DesignColors.primaryBase,
-      TinaButtonVariant.elevated => DesignColors.primaryContrast,
+      TinaButtonVariant.primary => colors.onPrimary,
+      TinaButtonVariant.secondary => colors.onSecondary,
+      TinaButtonVariant.outlined => colors.primary,
+      TinaButtonVariant.ghost => colors.primary,
+      TinaButtonVariant.elevated => colors.onPrimary,
     };
   }
 
-  Color _getLoadingColor(ThemeData theme) {
+  Color _getLoadingColor(TinaColorScheme colors) {
     return switch (variant) {
-      TinaButtonVariant.primary => DesignColors.primaryContrast,
-      TinaButtonVariant.secondary => DesignColors.secondaryContrast,
-      TinaButtonVariant.outlined => DesignColors.primaryBase,
-      TinaButtonVariant.ghost => DesignColors.primaryBase,
-      TinaButtonVariant.elevated => DesignColors.primaryContrast,
+      TinaButtonVariant.primary => colors.onPrimary,
+      TinaButtonVariant.secondary => colors.onSecondary,
+      TinaButtonVariant.outlined => colors.primary,
+      TinaButtonVariant.ghost => colors.primary,
+      TinaButtonVariant.elevated => colors.onPrimary,
     };
   }
 

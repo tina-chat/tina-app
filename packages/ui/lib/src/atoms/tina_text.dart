@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A text widget that follows the Tina design system typography scale.
 ///
@@ -25,10 +26,12 @@ class TinaText extends StatelessWidget {
   /// The style variant to apply to the text.
   final TinaTextStyle style;
 
-  /// The color to use for the text. If null, uses the default color for the style.
+  /// The color to use for the text. If null, uses the default color for the
+  /// style.
   final Color? color;
 
-  /// The font weight to use for the text. If null, uses the default weight for the style.
+  /// The font weight to use for the text. If null, uses the default weight for
+  /// the style.
   final FontWeight? fontWeight;
 
   /// How the text should be aligned horizontally.
@@ -45,8 +48,8 @@ class TinaText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textStyle = _getTextStyle(theme);
+    final tinaColors = context.tinaColors;
+    final textStyle = _getTextStyle(tinaColors);
 
     return Text(
       text,
@@ -61,113 +64,113 @@ class TinaText extends StatelessWidget {
     );
   }
 
-  TextStyle _getTextStyle(ThemeData theme) {
+  TextStyle _getTextStyle(TinaColorScheme colors) {
     const fontFamily = DesignTypography.bodyFontFamily;
-    
+
     return switch (style) {
       TinaTextStyle.heading1 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSize5Xl,
-          fontWeight: DesignTypography.fontWeightBold,
-          height: DesignTypography.lineHeight5Xl,
-          letterSpacing: DesignTypography.letterSpacingTight,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSize5Xl,
+        fontWeight: DesignTypography.fontWeightBold,
+        height: DesignTypography.lineHeight5Xl,
+        letterSpacing: DesignTypography.letterSpacingTight,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.heading2 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSize4Xl,
-          fontWeight: DesignTypography.fontWeightBold,
-          height: DesignTypography.lineHeight4Xl,
-          letterSpacing: DesignTypography.letterSpacingTight,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSize4Xl,
+        fontWeight: DesignTypography.fontWeightBold,
+        height: DesignTypography.lineHeight4Xl,
+        letterSpacing: DesignTypography.letterSpacingTight,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.heading3 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSize3Xl,
-          fontWeight: DesignTypography.fontWeightSemibold,
-          height: DesignTypography.lineHeight3Xl,
-          letterSpacing: DesignTypography.letterSpacingTight,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSize3Xl,
+        fontWeight: DesignTypography.fontWeightSemibold,
+        height: DesignTypography.lineHeight3Xl,
+        letterSpacing: DesignTypography.letterSpacingTight,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.heading4 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSize2Xl,
-          fontWeight: DesignTypography.fontWeightSemibold,
-          height: DesignTypography.lineHeight2Xl,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSize2Xl,
+        fontWeight: DesignTypography.fontWeightSemibold,
+        height: DesignTypography.lineHeight2Xl,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.heading5 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeXl,
-          fontWeight: DesignTypography.fontWeightSemibold,
-          height: DesignTypography.lineHeightXl,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeXl,
+        fontWeight: DesignTypography.fontWeightSemibold,
+        height: DesignTypography.lineHeightXl,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.heading6 => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeLg,
-          fontWeight: DesignTypography.fontWeightSemibold,
-          height: DesignTypography.lineHeightLg,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral900,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeLg,
+        fontWeight: DesignTypography.fontWeightSemibold,
+        height: DesignTypography.lineHeightLg,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onBackground,
+      ),
       TinaTextStyle.bodyLarge => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeLg,
-          fontWeight: DesignTypography.fontWeightRegular,
-          height: DesignTypography.lineHeightLg,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral700,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeLg,
+        fontWeight: DesignTypography.fontWeightRegular,
+        height: DesignTypography.lineHeightLg,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onSurface,
+      ),
       TinaTextStyle.body => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeBase,
-          fontWeight: DesignTypography.fontWeightRegular,
-          height: DesignTypography.lineHeightBase,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral700,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeBase,
+        fontWeight: DesignTypography.fontWeightRegular,
+        height: DesignTypography.lineHeightBase,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onSurface,
+      ),
       TinaTextStyle.bodySmall => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeSm,
-          fontWeight: DesignTypography.fontWeightRegular,
-          height: DesignTypography.lineHeightSm,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral600,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeSm,
+        fontWeight: DesignTypography.fontWeightRegular,
+        height: DesignTypography.lineHeightSm,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onSurfaceVariant,
+      ),
       TinaTextStyle.caption => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeXs,
-          fontWeight: DesignTypography.fontWeightRegular,
-          height: DesignTypography.lineHeightXs,
-          letterSpacing: DesignTypography.letterSpacingWide,
-          color: DesignColors.neutral500,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeXs,
+        fontWeight: DesignTypography.fontWeightRegular,
+        height: DesignTypography.lineHeightXs,
+        letterSpacing: DesignTypography.letterSpacingWide,
+        color: colors.onSurfaceVariant,
+      ),
       TinaTextStyle.overline => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeXs,
-          fontWeight: DesignTypography.fontWeightMedium,
-          height: DesignTypography.lineHeightXs,
-          letterSpacing: DesignTypography.letterSpacingWide,
-          color: DesignColors.neutral500,
-        ),
-      TinaTextStyle.button => TextStyle(
-          fontFamily: fontFamily,
-          fontSize: DesignTypography.fontSizeBase,
-          fontWeight: DesignTypography.fontWeightMedium,
-          height: DesignTypography.lineHeightBase,
-          letterSpacing: DesignTypography.letterSpacingWide,
-        ),
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeXs,
+        fontWeight: DesignTypography.fontWeightMedium,
+        height: DesignTypography.lineHeightXs,
+        letterSpacing: DesignTypography.letterSpacingWide,
+        color: colors.onSurfaceVariant,
+      ),
+      TinaTextStyle.button => const TextStyle(
+        fontFamily: fontFamily,
+        fontSize: DesignTypography.fontSizeBase,
+        fontWeight: DesignTypography.fontWeightMedium,
+        height: DesignTypography.lineHeightBase,
+        letterSpacing: DesignTypography.letterSpacingWide,
+      ),
       TinaTextStyle.code => TextStyle(
-          fontFamily: DesignTypography.monoFontFamily,
-          fontSize: DesignTypography.fontSizeSm,
-          fontWeight: DesignTypography.fontWeightRegular,
-          height: DesignTypography.lineHeightSm,
-          letterSpacing: DesignTypography.letterSpacingNormal,
-          color: DesignColors.neutral800,
-        ),
+        fontFamily: DesignTypography.monoFontFamily,
+        fontSize: DesignTypography.fontSizeSm,
+        fontWeight: DesignTypography.fontWeightRegular,
+        height: DesignTypography.lineHeightSm,
+        letterSpacing: DesignTypography.letterSpacingNormal,
+        color: colors.onSurface,
+      ),
     };
   }
 }

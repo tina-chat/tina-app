@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_message_status.dart';
+import 'package:tina_ui/src/atoms/tina_message_status.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A message bubble component for chat interfaces.
 ///
@@ -46,8 +47,8 @@ class TinaMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: GestureDetector(
@@ -63,27 +64,27 @@ class TinaMessageBubble extends StatelessWidget {
             bottom: DesignSpacing.sm,
           ),
           child: Column(
-            crossAxisAlignment: isUser 
-                ? CrossAxisAlignment.end 
+            crossAxisAlignment: isUser
+                ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
               Container(
                 padding: _getPadding(),
-                decoration: _getDecoration(theme),
+                decoration: _getDecoration(tinaColors),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildContent(theme),
+                    _buildContent(tinaColors),
                     if (timestamp != null) ...[
                       const SizedBox(height: DesignSpacing.xs),
-                      _buildTimestamp(theme),
+                      _buildTimestamp(tinaColors),
                     ],
                   ],
                 ),
               ),
               if (isUser && status != TinaMessageDeliveryStatus.sent) ...[
                 const SizedBox(height: DesignSpacing.xs / 2),
-                _buildStatusIndicator(theme),
+                _buildStatusIndicator(tinaColors),
               ],
             ],
           ),
@@ -95,31 +96,33 @@ class TinaMessageBubble extends StatelessWidget {
   EdgeInsets _getPadding() {
     return switch (contentType) {
       TinaMessageContentType.text => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.md,
-          vertical: DesignSpacing.sm,
-        ),
+        horizontal: DesignSpacing.md,
+        vertical: DesignSpacing.sm,
+      ),
       TinaMessageContentType.image => const EdgeInsets.all(DesignSpacing.xs),
       TinaMessageContentType.file => const EdgeInsets.all(DesignSpacing.sm),
     };
   }
 
-  BoxDecoration _getDecoration(ThemeData theme) {
-    final baseColor = isUser 
-        ? DesignColors.primaryBase 
-        : DesignColors.neutral100;
-    
-    final errorColor = status == TinaMessageDeliveryStatus.error 
-        ? DesignColors.error.withOpacity(0.1)
+  BoxDecoration _getDecoration(TinaColorScheme tinaColors) {
+    final baseColor = isUser ? tinaColors.primary : tinaColors.surfaceVariant;
+
+    final errorColor = status == TinaMessageDeliveryStatus.error
+        ? tinaColors.error.withValues(alpha: 0.1)
         : null;
 
     return BoxDecoration(
       color: errorColor ?? baseColor,
       borderRadius: BorderRadius.circular(DesignBorderRadius.lg).copyWith(
-        bottomRight: isUser ? const Radius.circular(DesignBorderRadius.sm) : null,
-        bottomLeft: !isUser ? const Radius.circular(DesignBorderRadius.sm) : null,
+        bottomRight: isUser
+            ? const Radius.circular(DesignBorderRadius.sm)
+            : null,
+        bottomLeft: !isUser
+            ? const Radius.circular(DesignBorderRadius.sm)
+            : null,
       ),
       border: status == TinaMessageDeliveryStatus.error
-          ? Border.all(color: DesignColors.error, width: DesignBorderWidth.thin)
+          ? Border.all(color: tinaColors.error)
           : null,
       boxShadow: [
         if (status != TinaMessageDeliveryStatus.error) DesignShadows.sm,
@@ -127,75 +130,73 @@ class TinaMessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ThemeData theme) {
-    final textColor = isUser 
-        ? DesignColors.primaryContrast 
-        : DesignColors.neutral800;
+  Widget _buildContent(TinaColorScheme tinaColors) {
+    final textColor = isUser ? tinaColors.onPrimary : tinaColors.onSurface;
 
     return switch (contentType) {
       TinaMessageContentType.text => SelectableText(
-          content,
-          style: TextStyle(
-            color: textColor,
-            fontSize: DesignTypography.fontSizeBase,
-            fontFamily: DesignTypography.bodyFontFamily,
-            height: DesignTypography.lineHeightBase,
-          ),
+        content,
+        style: TextStyle(
+          color: textColor,
+          fontSize: DesignTypography.fontSizeBase,
+          fontFamily: DesignTypography.bodyFontFamily,
+          height: DesignTypography.lineHeightBase,
         ),
+      ),
       TinaMessageContentType.image => ClipRRect(
-          borderRadius: BorderRadius.circular(DesignBorderRadius.md),
-          child: Image.network(
-            content,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              padding: const EdgeInsets.all(DesignSpacing.md),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.broken_image,
-                    color: textColor,
-                    size: 20,
-                  ),
-                  const SizedBox(width: DesignSpacing.sm),
-                  Text(
-                    'Failed to load image',
-                    style: TextStyle(color: textColor),
-                  ),
-                ],
-              ),
+        borderRadius: BorderRadius.circular(DesignBorderRadius.md),
+        child: Image.network(
+          content,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) => Container(
+            padding: const EdgeInsets.all(DesignSpacing.md),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.broken_image,
+                  color: textColor,
+                  size: 20,
+                ),
+                const SizedBox(width: DesignSpacing.sm),
+                Text(
+                  'Failed to load image',
+                  style: TextStyle(color: textColor),
+                ),
+              ],
             ),
           ),
         ),
+      ),
       TinaMessageContentType.file => Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.attach_file,
-              color: textColor,
-              size: 20,
-            ),
-            const SizedBox(width: DesignSpacing.sm),
-            Flexible(
-              child: Text(
-                content,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: DesignTypography.fontSizeBase,
-                  fontFamily: DesignTypography.bodyFontFamily,
-                ),
-                overflow: TextOverflow.ellipsis,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.attach_file,
+            color: textColor,
+            size: 20,
+          ),
+          const SizedBox(width: DesignSpacing.sm),
+          Flexible(
+            child: Text(
+              content,
+              style: TextStyle(
+                color: textColor,
+                fontSize: DesignTypography.fontSizeBase,
+                fontFamily: DesignTypography.bodyFontFamily,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     };
   }
 
-  Widget _buildTimestamp(ThemeData theme) {
-    final textColor = isUser 
-        ? DesignColors.primaryContrast.withOpacity(0.7)
-        : DesignColors.neutral500;
+  Widget _buildTimestamp(TinaColorScheme tinaColors) {
+    final textColor = isUser
+        ? tinaColors.onPrimary.withValues(alpha: 0.7)
+        : tinaColors.onSurfaceVariant;
 
     return Text(
       _formatTimestamp(timestamp!),
@@ -207,7 +208,7 @@ class TinaMessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusIndicator(ThemeData theme) {
+  Widget _buildStatusIndicator(TinaColorScheme tinaColors) {
     final icon = switch (status) {
       TinaMessageDeliveryStatus.sending => Icons.access_time,
       TinaMessageDeliveryStatus.sent => Icons.done,
@@ -217,11 +218,14 @@ class TinaMessageBubble extends StatelessWidget {
     };
 
     final color = switch (status) {
-      TinaMessageDeliveryStatus.sending => DesignColors.neutral400,
-      TinaMessageDeliveryStatus.sent => DesignColors.neutral400,
-      TinaMessageDeliveryStatus.delivered => DesignColors.info,
-      TinaMessageDeliveryStatus.read => DesignColors.info,
-      TinaMessageDeliveryStatus.error => DesignColors.error,
+      TinaMessageDeliveryStatus.sending =>
+        tinaColors.onSurfaceVariant.withValues(alpha: 0.6),
+      TinaMessageDeliveryStatus.sent => tinaColors.onSurfaceVariant.withValues(
+        alpha: 0.6,
+      ),
+      TinaMessageDeliveryStatus.delivered => tinaColors.info,
+      TinaMessageDeliveryStatus.read => tinaColors.info,
+      TinaMessageDeliveryStatus.error => tinaColors.error,
     };
 
     return Icon(
@@ -259,7 +263,6 @@ class TinaMessageBubble extends StatelessWidget {
 }
 
 /// The delivery status of a message.
-
 
 /// The type of content in a message.
 enum TinaMessageContentType {

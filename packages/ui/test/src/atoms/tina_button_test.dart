@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_button.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_button.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaButton', () {
     testWidgets('renders button with text correctly', (tester) async {
       const buttonText = 'Click me';
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -22,7 +22,7 @@ void main() {
 
       expect(find.text(buttonText), findsOneWidget);
       expect(find.byType(ElevatedButton), findsOneWidget);
-      
+
       await tester.tap(find.byType(TinaButton));
       expect(wasPressed, isTrue);
     });
@@ -33,7 +33,6 @@ void main() {
           home: Scaffold(
             body: TinaButton(
               onPressed: () {},
-              variant: TinaButtonVariant.primary,
               child: const Text('Primary'),
             ),
           ),
@@ -43,11 +42,15 @@ void main() {
       final elevatedButton = tester.widget<ElevatedButton>(
         find.byType(ElevatedButton),
       );
-      
-      expect(elevatedButton.style?.backgroundColor?.resolve({}), 
-             DesignColors.primaryBase);
-      expect(elevatedButton.style?.foregroundColor?.resolve({}), 
-             DesignColors.primaryContrast);
+
+      expect(
+        elevatedButton.style?.backgroundColor?.resolve({}),
+        DesignColors.primaryBase,
+      );
+      expect(
+        elevatedButton.style?.foregroundColor?.resolve({}),
+        DesignColors.primaryContrast,
+      );
     });
 
     testWidgets('applies secondary variant styling correctly', (tester) async {
@@ -66,11 +69,15 @@ void main() {
       final elevatedButton = tester.widget<ElevatedButton>(
         find.byType(ElevatedButton),
       );
-      
-      expect(elevatedButton.style?.backgroundColor?.resolve({}), 
-             DesignColors.secondaryBase);
-      expect(elevatedButton.style?.foregroundColor?.resolve({}), 
-             DesignColors.secondaryContrast);
+
+      expect(
+        elevatedButton.style?.backgroundColor?.resolve({}),
+        DesignColors.secondaryBase,
+      );
+      expect(
+        elevatedButton.style?.foregroundColor?.resolve({}),
+        DesignColors.secondaryContrast,
+      );
     });
 
     testWidgets('applies outlined variant styling correctly', (tester) async {
@@ -89,11 +96,15 @@ void main() {
       final elevatedButton = tester.widget<ElevatedButton>(
         find.byType(ElevatedButton),
       );
-      
-      expect(elevatedButton.style?.backgroundColor?.resolve({}), 
-             Colors.transparent);
-      expect(elevatedButton.style?.foregroundColor?.resolve({}), 
-             DesignColors.primaryBase);
+
+      expect(
+        elevatedButton.style?.backgroundColor?.resolve({}),
+        Colors.transparent,
+      );
+      expect(
+        elevatedButton.style?.foregroundColor?.resolve({}),
+        DesignColors.primaryBase,
+      );
     });
 
     testWidgets('applies ghost variant styling correctly', (tester) async {
@@ -112,11 +123,15 @@ void main() {
       final elevatedButton = tester.widget<ElevatedButton>(
         find.byType(ElevatedButton),
       );
-      
-      expect(elevatedButton.style?.backgroundColor?.resolve({}), 
-             Colors.transparent);
-      expect(elevatedButton.style?.foregroundColor?.resolve({}), 
-             DesignColors.primaryBase);
+
+      expect(
+        elevatedButton.style?.backgroundColor?.resolve({}),
+        Colors.transparent,
+      );
+      expect(
+        elevatedButton.style?.foregroundColor?.resolve({}),
+        DesignColors.primaryBase,
+      );
     });
 
     testWidgets('applies small size correctly', (tester) async {
@@ -133,12 +148,14 @@ void main() {
       );
 
       final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            )
+            .first,
       );
-      
+
       expect(sizedBox.height, DesignButtonSizes.heightSm);
     });
 
@@ -148,7 +165,6 @@ void main() {
           home: Scaffold(
             body: TinaButton(
               onPressed: () {},
-              size: TinaButtonSize.medium,
               child: const Text('Medium'),
             ),
           ),
@@ -156,12 +172,14 @@ void main() {
       );
 
       final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            )
+            .first,
       );
-      
+
       expect(sizedBox.height, DesignButtonSizes.heightMd);
     });
 
@@ -179,12 +197,14 @@ void main() {
       );
 
       final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            )
+            .first,
       );
-      
+
       expect(sizedBox.height, DesignButtonSizes.heightLg);
     });
 
@@ -206,8 +226,8 @@ void main() {
     });
 
     testWidgets('disables button when isLoading is true', (tester) async {
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -238,16 +258,20 @@ void main() {
       );
 
       final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            )
+            .first,
       );
-      
+
       expect(sizedBox.width, double.infinity);
     });
 
-    testWidgets('applies disabled styling when onPressed is null', (tester) async {
+    testWidgets('applies disabled styling when onPressed is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -262,7 +286,7 @@ void main() {
       final elevatedButton = tester.widget<ElevatedButton>(
         find.byType(ElevatedButton),
       );
-      
+
       expect(elevatedButton.onPressed, isNull);
     });
 

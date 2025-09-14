@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_badge.dart';
-import 'tina_icon.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable tab item component following the Tina design system.
 ///
@@ -40,14 +41,13 @@ class TinaTabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
-    Widget content = _buildContent(theme);
-    
+    final tinaColors = context.tinaColors;
+
+    var content = _buildContent(tinaColors);
+
     if (badge != null) {
       content = TinaPositionedBadge(
         badge: badge!,
-        position: TinaBadgePosition.topRight,
         offset: const Offset(-4, 4),
         child: content,
       );
@@ -70,7 +70,7 @@ class TinaTabItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: _getIndicatorColor(theme),
+                  color: _getIndicatorColor(tinaColors),
                   width: isActive ? 2.0 : 0.0,
                 ),
               ),
@@ -82,9 +82,9 @@ class TinaTabItem extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ThemeData theme) {
-    final iconColor = _getIconColor(theme);
-    final textColor = _getTextColor(theme);
+  Widget _buildContent(TinaColorScheme tinaColors) {
+    final iconColor = _getIconColor(tinaColors);
+    final textColor = _getTextColor(tinaColors);
 
     if (icon != null && text != null) {
       return Column(
@@ -92,7 +92,6 @@ class TinaTabItem extends StatelessWidget {
         children: [
           TinaIcon(
             icon!,
-            size: TinaIconSize.medium,
             color: iconColor,
           ),
           const SizedBox(height: DesignSpacing.xs),
@@ -102,60 +101,58 @@ class TinaTabItem extends StatelessWidget {
             color: textColor,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            fontWeight: isActive 
-                ? DesignTypography.fontWeightMedium 
+            fontWeight: isActive
+                ? DesignTypography.fontWeightMedium
                 : DesignTypography.fontWeightRegular,
           ),
         ],
       );
     }
-    
+
     if (icon != null) {
       return TinaIcon(
         icon!,
-        size: TinaIconSize.medium,
         color: iconColor,
       );
     }
-    
+
     if (text != null) {
       return TinaText(
         text!,
-        style: TinaTextStyle.body,
         color: textColor,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        fontWeight: isActive 
-            ? DesignTypography.fontWeightMedium 
+        fontWeight: isActive
+            ? DesignTypography.fontWeightMedium
             : DesignTypography.fontWeightRegular,
       );
     }
-    
+
     return const SizedBox.shrink();
   }
 
-  Color _getIndicatorColor(ThemeData theme) {
+  Color _getIndicatorColor(TinaColorScheme tinaColors) {
     if (!isActive) return Colors.transparent;
-    return DesignColors.primaryBase;
+    return tinaColors.primary;
   }
 
-  Color _getIconColor(ThemeData theme) {
-    if (onTap == null) return DesignColors.neutral400;
-    
-    if (isActive) return DesignColors.primaryBase;
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral400
-        : DesignColors.neutral500;
+  Color _getIconColor(TinaColorScheme tinaColors) {
+    if (onTap == null) {
+      return tinaColors.onSurfaceVariant.withValues(alpha: 0.6);
+    }
+
+    if (isActive) return tinaColors.primary;
+
+    return tinaColors.onSurfaceVariant;
   }
 
-  Color _getTextColor(ThemeData theme) {
-    if (onTap == null) return DesignColors.neutral400;
-    
-    if (isActive) return DesignColors.primaryBase;
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral300
-        : DesignColors.neutral600;
+  Color _getTextColor(TinaColorScheme tinaColors) {
+    if (onTap == null) {
+      return tinaColors.onSurfaceVariant.withValues(alpha: 0.6);
+    }
+
+    if (isActive) return tinaColors.primary;
+
+    return tinaColors.onSurface;
   }
 }

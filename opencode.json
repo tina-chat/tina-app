@@ -12,6 +12,20 @@
       },
     },
   },
+  "lsp": {
+    "dart": {
+      "disabled": false,
+      "command": ["dart","language-server", "--protocol=lsp"],
+      "extensions": [".dart"],
+      "initialization": {
+        "onlyAnalyzeProjectsWithOpenFiles": false,
+        "suggestFromUnimportedLibraries": true,
+        "closingLabels": true,
+        "outline": true,
+        "flutterOutline": true
+      }
+    }
+  },
   "mcp": {
     "firecrawl-mcp": {
       "type": "local",

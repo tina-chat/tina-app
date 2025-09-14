@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable card container component following the Tina design system.
 ///
-/// This card provides consistent styling with different elevations, rounded corners,
+/// This card provides consistent styling with different elevations, rounded
+/// corners,
 /// and padding variants for content organization.
 class TinaCard extends StatelessWidget {
   /// Creates a Tina card.
@@ -74,9 +76,10 @@ class TinaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cardBackgroundColor = backgroundColor ?? _getDefaultBackgroundColor(theme);
-    
+    final tinaColors = context.tinaColors;
+    final cardBackgroundColor =
+        backgroundColor ?? _getDefaultBackgroundColor(tinaColors);
+
     Widget card = Container(
       padding: _getPadding(),
       decoration: BoxDecoration(
@@ -85,7 +88,6 @@ class TinaCard extends StatelessWidget {
         border: borderColor != null
             ? Border.all(
                 color: borderColor!,
-                width: DesignBorderWidth.thin,
               )
             : null,
         boxShadow: _getBoxShadow(),
@@ -134,10 +136,8 @@ class TinaCard extends StatelessWidget {
     };
   }
 
-  Color _getDefaultBackgroundColor(ThemeData theme) {
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral800
-        : DesignColors.neutral50;
+  Color _getDefaultBackgroundColor(TinaColorScheme colors) {
+    return colors.surface;
   }
 }
 

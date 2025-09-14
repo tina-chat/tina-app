@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_message_status.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_message_status.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 void main() {
   group('TinaMessageStatus', () {
     testWidgets('renders sending status with correct icon', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: ThemeData.light().copyWith(
+            extensions: const [TinaTheme.light],
+          ),
+          home: const Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sending,
               showAnimation: false, // Disable animation for stable testing
@@ -18,15 +22,20 @@ void main() {
       );
 
       expect(find.byIcon(Icons.access_time), findsOneWidget);
-      
+
       final icon = tester.widget<Icon>(find.byIcon(Icons.access_time));
-      expect(icon.color, DesignColors.neutral400);
+      // In light theme, sending status uses onSurfaceVariant with 60% opacity
+      final expectedColor = DesignColors.neutral700.withValues(alpha: 0.6);
+      expect(icon.color, expectedColor);
     });
 
     testWidgets('renders sent status with correct icon', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: ThemeData.light().copyWith(
+            extensions: const [TinaTheme.light],
+          ),
+          home: const Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sent,
               showAnimation: false, // Disable animation for stable testing
@@ -36,9 +45,10 @@ void main() {
       );
 
       expect(find.byIcon(Icons.done), findsOneWidget);
-      
+
       final icon = tester.widget<Icon>(find.byIcon(Icons.done));
-      expect(icon.color, DesignColors.neutral500);
+      // In light theme, sent status uses onSurfaceVariant (neutral700)
+      expect(icon.color, DesignColors.neutral700);
     });
 
     testWidgets('renders delivered status with correct icon', (tester) async {
@@ -54,7 +64,7 @@ void main() {
       );
 
       expect(find.byIcon(Icons.done_all), findsOneWidget);
-      
+
       final icon = tester.widget<Icon>(find.byIcon(Icons.done_all));
       expect(icon.color, DesignColors.info);
     });
@@ -72,7 +82,7 @@ void main() {
       );
 
       expect(find.byIcon(Icons.done_all), findsOneWidget);
-      
+
       final icon = tester.widget<Icon>(find.byIcon(Icons.done_all));
       expect(icon.color, DesignColors.success);
     });
@@ -90,7 +100,7 @@ void main() {
       );
 
       expect(find.byIcon(Icons.error_outline), findsOneWidget);
-      
+
       final icon = tester.widget<Icon>(find.byIcon(Icons.error_outline));
       expect(icon.color, DesignColors.error);
     });
@@ -118,7 +128,6 @@ void main() {
           home: Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sent,
-              size: TinaMessageStatusSize.medium,
               showAnimation: false, // Disable animation for stable testing
             ),
           ),
@@ -148,7 +157,7 @@ void main() {
 
     testWidgets('applies custom color when provided', (tester) async {
       const customColor = Colors.purple;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -167,18 +176,30 @@ void main() {
 
     testWidgets('has proper semantic labels', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Column(
-              children: const [
+              children: [
                 TinaMessageStatus(
                   status: TinaMessageDeliveryStatus.sending,
                   showAnimation: false, // Disable animation for stable testing
                 ),
-                TinaMessageStatus(status: TinaMessageDeliveryStatus.sent, showAnimation: false),
-                TinaMessageStatus(status: TinaMessageDeliveryStatus.delivered, showAnimation: false),
-                TinaMessageStatus(status: TinaMessageDeliveryStatus.read, showAnimation: false),
-                TinaMessageStatus(status: TinaMessageDeliveryStatus.error, showAnimation: false),
+                TinaMessageStatus(
+                  status: TinaMessageDeliveryStatus.sent,
+                  showAnimation: false,
+                ),
+                TinaMessageStatus(
+                  status: TinaMessageDeliveryStatus.delivered,
+                  showAnimation: false,
+                ),
+                TinaMessageStatus(
+                  status: TinaMessageDeliveryStatus.read,
+                  showAnimation: false,
+                ),
+                TinaMessageStatus(
+                  status: TinaMessageDeliveryStatus.error,
+                  showAnimation: false,
+                ),
               ],
             ),
           ),
@@ -186,9 +207,15 @@ void main() {
       );
 
       expect(find.bySemanticsLabel('Message is being sent'), findsOneWidget);
-      expect(find.bySemanticsLabel('Message sent successfully'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Message sent successfully'),
+        findsOneWidget,
+      );
       expect(find.bySemanticsLabel('Message delivered'), findsOneWidget);
-      expect(find.bySemanticsLabel('Message read by recipient'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Message read by recipient'),
+        findsOneWidget,
+      );
       expect(find.bySemanticsLabel('Message failed to send'), findsOneWidget);
     });
 
@@ -198,16 +225,17 @@ void main() {
           home: Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sent,
-              showAnimation: true,
             ),
           ),
         ),
       );
 
       // Should find the widget with animation enabled
-      final widget = tester.widget<TinaMessageStatus>(find.byType(TinaMessageStatus));
+      final widget = tester.widget<TinaMessageStatus>(
+        find.byType(TinaMessageStatus),
+      );
       expect(widget.showAnimation, true);
-      
+
       // Wait for animation to complete to avoid hanging
       await tester.pumpAndSettle();
     });
@@ -225,9 +253,11 @@ void main() {
       );
 
       // Should find the widget with animation disabled
-      final widget = tester.widget<TinaMessageStatus>(find.byType(TinaMessageStatus));
+      final widget = tester.widget<TinaMessageStatus>(
+        find.byType(TinaMessageStatus),
+      );
       expect(widget.showAnimation, false);
-      
+
       // Icon should be directly visible without animation wrapper
       expect(find.byIcon(Icons.done), findsOneWidget);
     });
@@ -238,22 +268,23 @@ void main() {
           home: Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sending,
-              showAnimation: true,
             ),
           ),
         ),
       );
 
       // Should find the widget with sending status and animation enabled
-      final widget = tester.widget<TinaMessageStatus>(find.byType(TinaMessageStatus));
+      final widget = tester.widget<TinaMessageStatus>(
+        find.byType(TinaMessageStatus),
+      );
       expect(widget.status, TinaMessageDeliveryStatus.sending);
       expect(widget.showAnimation, true);
       expect(find.byIcon(Icons.access_time), findsOneWidget);
-      
+
       // Pump some frames to let animation run briefly
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
-      
+
       // Immediately clean up by disabling animation
       await tester.pumpWidget(
         const MaterialApp(
@@ -265,7 +296,7 @@ void main() {
           ),
         ),
       );
-      
+
       // Wait for widget update
       await tester.pump();
     });
@@ -276,24 +307,24 @@ void main() {
           home: Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sending,
-              showAnimation: true,
             ),
           ),
         ),
       );
 
       // Initial state should be sending
-      var widget = tester.widget<TinaMessageStatus>(find.byType(TinaMessageStatus));
+      var widget = tester.widget<TinaMessageStatus>(
+        find.byType(TinaMessageStatus),
+      );
       expect(widget.status, TinaMessageDeliveryStatus.sending);
       expect(find.byIcon(Icons.access_time), findsOneWidget);
-      
+
       // Change status to stop the repeating animation
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             body: TinaMessageStatus(
               status: TinaMessageDeliveryStatus.sent,
-              showAnimation: true,
             ),
           ),
         ),
@@ -303,17 +334,17 @@ void main() {
       widget = tester.widget<TinaMessageStatus>(find.byType(TinaMessageStatus));
       expect(widget.status, TinaMessageDeliveryStatus.sent);
       expect(find.byIcon(Icons.done), findsOneWidget);
-      
+
       // Wait for animation to complete
       await tester.pumpAndSettle();
     });
 
     testWidgets('applies correct padding for different sizes', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Column(
-              children: const [
+              children: [
                 TinaMessageStatus(
                   status: TinaMessageDeliveryStatus.sent,
                   size: TinaMessageStatusSize.small,
@@ -321,7 +352,6 @@ void main() {
                 ),
                 TinaMessageStatus(
                   status: TinaMessageDeliveryStatus.sent,
-                  size: TinaMessageStatusSize.medium,
                   showAnimation: false,
                 ),
                 TinaMessageStatus(
@@ -336,30 +366,54 @@ void main() {
       );
 
       final containers = tester.widgetList<Container>(find.byType(Container));
-      
+
       // Check padding for each size
-      expect(containers.elementAt(0).padding, const EdgeInsets.all(2.0));
-      expect(containers.elementAt(1).padding, const EdgeInsets.all(4.0));
-      expect(containers.elementAt(2).padding, const EdgeInsets.all(6.0));
+      expect(containers.elementAt(0).padding, const EdgeInsets.all(2));
+      expect(containers.elementAt(1).padding, const EdgeInsets.all(4));
+      expect(containers.elementAt(2).padding, const EdgeInsets.all(6));
     });
 
     group('TinaMessageDeliveryStatus enum', () {
       test('has all expected values', () {
         expect(TinaMessageDeliveryStatus.values, hasLength(5));
-        expect(TinaMessageDeliveryStatus.values, contains(TinaMessageDeliveryStatus.sending));
-        expect(TinaMessageDeliveryStatus.values, contains(TinaMessageDeliveryStatus.sent));
-        expect(TinaMessageDeliveryStatus.values, contains(TinaMessageDeliveryStatus.delivered));
-        expect(TinaMessageDeliveryStatus.values, contains(TinaMessageDeliveryStatus.read));
-        expect(TinaMessageDeliveryStatus.values, contains(TinaMessageDeliveryStatus.error));
+        expect(
+          TinaMessageDeliveryStatus.values,
+          contains(TinaMessageDeliveryStatus.sending),
+        );
+        expect(
+          TinaMessageDeliveryStatus.values,
+          contains(TinaMessageDeliveryStatus.sent),
+        );
+        expect(
+          TinaMessageDeliveryStatus.values,
+          contains(TinaMessageDeliveryStatus.delivered),
+        );
+        expect(
+          TinaMessageDeliveryStatus.values,
+          contains(TinaMessageDeliveryStatus.read),
+        );
+        expect(
+          TinaMessageDeliveryStatus.values,
+          contains(TinaMessageDeliveryStatus.error),
+        );
       });
     });
 
     group('TinaMessageStatusSize enum', () {
       test('has all expected values', () {
         expect(TinaMessageStatusSize.values, hasLength(3));
-        expect(TinaMessageStatusSize.values, contains(TinaMessageStatusSize.small));
-        expect(TinaMessageStatusSize.values, contains(TinaMessageStatusSize.medium));
-        expect(TinaMessageStatusSize.values, contains(TinaMessageStatusSize.large));
+        expect(
+          TinaMessageStatusSize.values,
+          contains(TinaMessageStatusSize.small),
+        );
+        expect(
+          TinaMessageStatusSize.values,
+          contains(TinaMessageStatusSize.medium),
+        );
+        expect(
+          TinaMessageStatusSize.values,
+          contains(TinaMessageStatusSize.large),
+        );
       });
     });
   });

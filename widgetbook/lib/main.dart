@@ -29,16 +29,10 @@ class WidgetbookApp extends StatelessWidget {
               name: 'Tina Light Theme',
               data: _createLightTheme(),
             ),
-            WidgetbookTheme(
-              name: 'Tina Dark Theme', 
-              data: _createDarkTheme(),
-            ),
+            WidgetbookTheme(name: 'Tina Dark Theme', data: _createDarkTheme()),
           ],
         ),
-        BuilderAddon(
-          name: 'Builder',
-          builder: (context, child) => child,
-        ),
+        BuilderAddon(name: 'Builder', builder: (context, child) => child),
       ],
     );
   }
@@ -58,6 +52,7 @@ class WidgetbookApp extends StatelessWidget {
           ),
         ),
       ),
+      extensions: const [TinaTheme.light],
     );
   }
 
@@ -76,6 +71,7 @@ class WidgetbookApp extends StatelessWidget {
           ),
         ),
       ),
+      extensions: const [TinaTheme.dark],
     );
   }
 }

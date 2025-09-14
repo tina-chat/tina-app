@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_connection_status.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_connection_status.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaConnectionStatus', () {
@@ -22,8 +22,8 @@ void main() {
           matching: find.byType(Container),
         ),
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.success);
     });
 
@@ -44,8 +44,8 @@ void main() {
           matching: find.byType(Container),
         ),
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.error);
     });
 
@@ -66,10 +66,10 @@ void main() {
           matching: find.byType(Container),
         ),
       );
-      
-      final decoration = container.decoration as BoxDecoration;
+
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.warning);
-      
+
       // Should have AnimatedBuilder for pulsing animation
       // Find AnimatedBuilder specifically within TinaConnectionStatus
       final connectionStatusFinder = find.byType(TinaConnectionStatus);
@@ -102,19 +102,21 @@ void main() {
           home: Scaffold(
             body: TinaConnectionStatus(
               status: TinaConnectionState.online,
-              showLabel: false,
             ),
           ),
         ),
       );
 
       expect(find.text('Online'), findsNothing);
-      expect(find.byType(Row), findsOneWidget); // Row still exists but only has indicator
+      expect(
+        find.byType(Row),
+        findsOneWidget,
+      ); // Row still exists but only has indicator
     });
 
     testWidgets('uses custom label when provided', (tester) async {
       const customLabel = 'Custom Status';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -154,7 +156,6 @@ void main() {
           home: Scaffold(
             body: TinaConnectionStatus(
               status: TinaConnectionState.online,
-              size: TinaConnectionStatusSize.medium,
             ),
           ),
         ),
@@ -197,9 +198,18 @@ void main() {
         ),
       );
 
-      expect(find.bySemanticsLabel('Connection status: Online'), findsOneWidget);
-      expect(find.bySemanticsLabel('Connection status: Offline'), findsOneWidget);
-      expect(find.bySemanticsLabel('Connection status: Connecting'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Connection status: Online'),
+        findsOneWidget,
+      );
+      expect(
+        find.bySemanticsLabel('Connection status: Offline'),
+        findsOneWidget,
+      );
+      expect(
+        find.bySemanticsLabel('Connection status: Connecting'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('updates animation when status changes', (tester) async {
@@ -210,9 +220,9 @@ void main() {
           ),
         ),
       );
-      
+
       await tester.pumpWidget(widget);
-      
+
       // Initially no animation for online status (look within TinaConnectionStatus only)
       final connectionStatusFinder = find.byType(TinaConnectionStatus);
       final animatedBuilderInStatus = find.descendant(
@@ -220,7 +230,7 @@ void main() {
         matching: find.byType(AnimatedBuilder),
       );
       expect(animatedBuilderInStatus, findsNothing);
-      
+
       // Change to connecting status
       await tester.pumpWidget(
         const MaterialApp(
@@ -231,7 +241,7 @@ void main() {
           ),
         ),
       );
-      
+
       // Should now have animation (look within TinaConnectionStatus only)
       final connectionStatusFinder2 = find.byType(TinaConnectionStatus);
       final animatedBuilderInStatus2 = find.descendant(
@@ -260,28 +270,48 @@ void main() {
     group('TinaConnectionState enum', () {
       test('has all expected values', () {
         expect(TinaConnectionState.values, hasLength(3));
-        expect(TinaConnectionState.values, contains(TinaConnectionState.online));
-        expect(TinaConnectionState.values, contains(TinaConnectionState.offline));
-        expect(TinaConnectionState.values, contains(TinaConnectionState.connecting));
+        expect(
+          TinaConnectionState.values,
+          contains(TinaConnectionState.online),
+        );
+        expect(
+          TinaConnectionState.values,
+          contains(TinaConnectionState.offline),
+        );
+        expect(
+          TinaConnectionState.values,
+          contains(TinaConnectionState.connecting),
+        );
       });
     });
 
     group('TinaConnectionStatusSize enum', () {
       test('has all expected values', () {
         expect(TinaConnectionStatusSize.values, hasLength(3));
-        expect(TinaConnectionStatusSize.values, contains(TinaConnectionStatusSize.small));
-        expect(TinaConnectionStatusSize.values, contains(TinaConnectionStatusSize.medium));
-        expect(TinaConnectionStatusSize.values, contains(TinaConnectionStatusSize.large));
+        expect(
+          TinaConnectionStatusSize.values,
+          contains(TinaConnectionStatusSize.small),
+        );
+        expect(
+          TinaConnectionStatusSize.values,
+          contains(TinaConnectionStatusSize.medium),
+        );
+        expect(
+          TinaConnectionStatusSize.values,
+          contains(TinaConnectionStatusSize.large),
+        );
       });
     });
 
     group('default labels', () {
-      testWidgets('shows correct default labels for each status', (tester) async {
+      testWidgets('shows correct default labels for each status', (
+        tester,
+      ) async {
         await tester.pumpWidget(
-          MaterialApp(
+          const MaterialApp(
             home: Scaffold(
               body: Column(
-                children: const [
+                children: [
                   TinaConnectionStatus(
                     status: TinaConnectionState.online,
                     showLabel: true,

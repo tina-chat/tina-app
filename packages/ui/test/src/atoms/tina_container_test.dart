@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_container.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_container.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaContainer', () {
     testWidgets('renders container with child correctly', (tester) async {
       const testText = 'Container Content';
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               child: Text(testText),
@@ -23,10 +23,10 @@ void main() {
     });
 
     testWidgets('applies custom padding correctly', (tester) async {
-      const customPadding = EdgeInsets.all(20.0);
-      
+      const customPadding = EdgeInsets.all(20);
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               padding: customPadding,
@@ -41,10 +41,10 @@ void main() {
     });
 
     testWidgets('applies custom margin correctly', (tester) async {
-      const customMargin = EdgeInsets.all(15.0);
-      
+      const customMargin = EdgeInsets.all(15);
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               margin: customMargin,
@@ -60,9 +60,9 @@ void main() {
 
     testWidgets('applies custom background color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               backgroundColor: customColor,
@@ -73,15 +73,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, customColor);
     });
 
     testWidgets('applies custom border radius correctly', (tester) async {
       const customRadius = 12.0;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               borderRadius: customRadius,
@@ -92,15 +92,17 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.borderRadius, BorderRadius.circular(customRadius));
     });
 
     testWidgets('applies custom border correctly', (tester) async {
-      const customBorder = Border.fromBorderSide(BorderSide(color: Colors.blue, width: 2.0));
-      
+      const customBorder = Border.fromBorderSide(
+        BorderSide(color: Colors.blue, width: 2),
+      );
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               border: customBorder,
@@ -111,16 +113,16 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border, customBorder);
     });
 
     testWidgets('applies custom width and height correctly', (tester) async {
       const customWidth = 200.0;
       const customHeight = 100.0;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               width: customWidth,
@@ -138,9 +140,9 @@ void main() {
 
     testWidgets('applies custom alignment correctly', (tester) async {
       const customAlignment = Alignment.topRight;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               alignment: customAlignment,
@@ -154,9 +156,11 @@ void main() {
       expect(container.alignment, customAlignment);
     });
 
-    testWidgets('applies content padding constructor correctly', (tester) async {
+    testWidgets('applies content padding constructor correctly', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer.content(
               child: Text('Content'),
@@ -166,12 +170,17 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      expect(container.padding, const EdgeInsets.all(DesignSpacing.contentPadding));
+      expect(
+        container.padding,
+        const EdgeInsets.all(DesignSpacing.contentPadding),
+      );
     });
 
-    testWidgets('applies component padding constructor correctly', (tester) async {
+    testWidgets('applies component padding constructor correctly', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer.component(
               child: Text('Content'),
@@ -181,12 +190,17 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      expect(container.padding, const EdgeInsets.all(DesignSpacing.componentSpacing));
+      expect(
+        container.padding,
+        const EdgeInsets.all(DesignSpacing.componentSpacing),
+      );
     });
 
-    testWidgets('applies section padding constructor correctly', (tester) async {
+    testWidgets('applies section padding constructor correctly', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer.section(
               child: Text('Content'),
@@ -196,12 +210,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      expect(container.padding, const EdgeInsets.all(DesignSpacing.sectionSpacing));
+      expect(
+        container.padding,
+        const EdgeInsets.all(DesignSpacing.sectionSpacing),
+      );
     });
 
     testWidgets('applies rounded constructor correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer.rounded(
               child: Text('Content'),
@@ -211,13 +228,16 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
-      expect(decoration.borderRadius, BorderRadius.circular(DesignBorderRadius.lg));
+      final decoration = container.decoration! as BoxDecoration;
+      expect(
+        decoration.borderRadius,
+        BorderRadius.circular(DesignBorderRadius.lg),
+      );
     });
 
     testWidgets('applies pill constructor correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer.pill(
               child: Text('Content'),
@@ -227,16 +247,18 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
-      expect(decoration.borderRadius, BorderRadius.circular(DesignBorderRadius.full));
+      final decoration = container.decoration! as BoxDecoration;
+      expect(
+        decoration.borderRadius,
+        BorderRadius.circular(DesignBorderRadius.full),
+      );
     });
 
     testWidgets('applies no shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
-              shadow: TinaContainerShadow.none,
               child: Text('Content'),
             ),
           ),
@@ -244,13 +266,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, isEmpty);
     });
 
     testWidgets('applies small shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.sm,
@@ -261,13 +283,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.sm]);
     });
 
     testWidgets('applies medium shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.md,
@@ -278,13 +300,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.md]);
     });
 
     testWidgets('applies large shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.lg,
@@ -295,13 +317,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.lg]);
     });
 
     testWidgets('applies extra large shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.xl,
@@ -312,13 +334,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.xl]);
     });
 
     testWidgets('applies inner shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.inner,
@@ -329,13 +351,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.inner]);
     });
 
     testWidgets('applies glass shadow correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               shadow: TinaContainerShadow.glass,
@@ -346,15 +368,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.glass]);
     });
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Content container';
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaContainer(
               semanticLabel: semanticLabel,
@@ -381,24 +403,60 @@ void main() {
         expect(TinaContainerPadding.md, const EdgeInsets.all(DesignSpacing.md));
         expect(TinaContainerPadding.lg, const EdgeInsets.all(DesignSpacing.lg));
         expect(TinaContainerPadding.xl, const EdgeInsets.all(DesignSpacing.xl));
-        expect(TinaContainerPadding.xl2, const EdgeInsets.all(DesignSpacing.xl2));
-        expect(TinaContainerPadding.xl3, const EdgeInsets.all(DesignSpacing.xl3));
+        expect(
+          TinaContainerPadding.xl2,
+          const EdgeInsets.all(DesignSpacing.xl2),
+        );
+        expect(
+          TinaContainerPadding.xl3,
+          const EdgeInsets.all(DesignSpacing.xl3),
+        );
       });
 
       test('has all expected horizontal padding values', () {
-        expect(TinaContainerPadding.horizontalXs, const EdgeInsets.symmetric(horizontal: DesignSpacing.xs));
-        expect(TinaContainerPadding.horizontalSm, const EdgeInsets.symmetric(horizontal: DesignSpacing.sm));
-        expect(TinaContainerPadding.horizontalMd, const EdgeInsets.symmetric(horizontal: DesignSpacing.md));
-        expect(TinaContainerPadding.horizontalLg, const EdgeInsets.symmetric(horizontal: DesignSpacing.lg));
-        expect(TinaContainerPadding.horizontalXl, const EdgeInsets.symmetric(horizontal: DesignSpacing.xl));
+        expect(
+          TinaContainerPadding.horizontalXs,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.xs),
+        );
+        expect(
+          TinaContainerPadding.horizontalSm,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
+        );
+        expect(
+          TinaContainerPadding.horizontalMd,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+        );
+        expect(
+          TinaContainerPadding.horizontalLg,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.lg),
+        );
+        expect(
+          TinaContainerPadding.horizontalXl,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.xl),
+        );
       });
 
       test('has all expected vertical padding values', () {
-        expect(TinaContainerPadding.verticalXs, const EdgeInsets.symmetric(vertical: DesignSpacing.xs));
-        expect(TinaContainerPadding.verticalSm, const EdgeInsets.symmetric(vertical: DesignSpacing.sm));
-        expect(TinaContainerPadding.verticalMd, const EdgeInsets.symmetric(vertical: DesignSpacing.md));
-        expect(TinaContainerPadding.verticalLg, const EdgeInsets.symmetric(vertical: DesignSpacing.lg));
-        expect(TinaContainerPadding.verticalXl, const EdgeInsets.symmetric(vertical: DesignSpacing.xl));
+        expect(
+          TinaContainerPadding.verticalXs,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.xs),
+        );
+        expect(
+          TinaContainerPadding.verticalSm,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.sm),
+        );
+        expect(
+          TinaContainerPadding.verticalMd,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.md),
+        );
+        expect(
+          TinaContainerPadding.verticalLg,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.lg),
+        );
+        expect(
+          TinaContainerPadding.verticalXl,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.xl),
+        );
       });
     });
 
@@ -409,24 +467,60 @@ void main() {
         expect(TinaContainerMargin.md, const EdgeInsets.all(DesignSpacing.md));
         expect(TinaContainerMargin.lg, const EdgeInsets.all(DesignSpacing.lg));
         expect(TinaContainerMargin.xl, const EdgeInsets.all(DesignSpacing.xl));
-        expect(TinaContainerMargin.xl2, const EdgeInsets.all(DesignSpacing.xl2));
-        expect(TinaContainerMargin.xl3, const EdgeInsets.all(DesignSpacing.xl3));
+        expect(
+          TinaContainerMargin.xl2,
+          const EdgeInsets.all(DesignSpacing.xl2),
+        );
+        expect(
+          TinaContainerMargin.xl3,
+          const EdgeInsets.all(DesignSpacing.xl3),
+        );
       });
 
       test('has all expected horizontal margin values', () {
-        expect(TinaContainerMargin.horizontalXs, const EdgeInsets.symmetric(horizontal: DesignSpacing.xs));
-        expect(TinaContainerMargin.horizontalSm, const EdgeInsets.symmetric(horizontal: DesignSpacing.sm));
-        expect(TinaContainerMargin.horizontalMd, const EdgeInsets.symmetric(horizontal: DesignSpacing.md));
-        expect(TinaContainerMargin.horizontalLg, const EdgeInsets.symmetric(horizontal: DesignSpacing.lg));
-        expect(TinaContainerMargin.horizontalXl, const EdgeInsets.symmetric(horizontal: DesignSpacing.xl));
+        expect(
+          TinaContainerMargin.horizontalXs,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.xs),
+        );
+        expect(
+          TinaContainerMargin.horizontalSm,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
+        );
+        expect(
+          TinaContainerMargin.horizontalMd,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+        );
+        expect(
+          TinaContainerMargin.horizontalLg,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.lg),
+        );
+        expect(
+          TinaContainerMargin.horizontalXl,
+          const EdgeInsets.symmetric(horizontal: DesignSpacing.xl),
+        );
       });
 
       test('has all expected vertical margin values', () {
-        expect(TinaContainerMargin.verticalXs, const EdgeInsets.symmetric(vertical: DesignSpacing.xs));
-        expect(TinaContainerMargin.verticalSm, const EdgeInsets.symmetric(vertical: DesignSpacing.sm));
-        expect(TinaContainerMargin.verticalMd, const EdgeInsets.symmetric(vertical: DesignSpacing.md));
-        expect(TinaContainerMargin.verticalLg, const EdgeInsets.symmetric(vertical: DesignSpacing.lg));
-        expect(TinaContainerMargin.verticalXl, const EdgeInsets.symmetric(vertical: DesignSpacing.xl));
+        expect(
+          TinaContainerMargin.verticalXs,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.xs),
+        );
+        expect(
+          TinaContainerMargin.verticalSm,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.sm),
+        );
+        expect(
+          TinaContainerMargin.verticalMd,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.md),
+        );
+        expect(
+          TinaContainerMargin.verticalLg,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.lg),
+        );
+        expect(
+          TinaContainerMargin.verticalXl,
+          const EdgeInsets.symmetric(vertical: DesignSpacing.xl),
+        );
       });
     });
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_badge.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaBadge', () {
     testWidgets('renders badge with custom child correctly', (tester) async {
       const childText = 'Custom';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -28,7 +28,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaBadge(
-              variant: TinaBadgeVariant.primary,
               child: Text('Primary'),
             ),
           ),
@@ -36,7 +35,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.primaryBase);
     });
 
@@ -53,7 +52,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.secondaryBase);
     });
 
@@ -70,7 +69,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.success);
     });
 
@@ -87,7 +86,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.warning);
     });
 
@@ -104,7 +103,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.error);
     });
 
@@ -121,7 +120,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, Colors.transparent);
       expect(decoration.border, isNotNull);
     });
@@ -139,7 +138,7 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.primaryBase.withOpacity(0.1));
     });
 
@@ -156,10 +155,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      expect(container.padding, const EdgeInsets.symmetric(
-        horizontal: DesignSpacing.xs,
-        vertical: 2.0,
-      ));
+      expect(
+        container.padding,
+        const EdgeInsets.symmetric(
+          horizontal: DesignSpacing.xs,
+          vertical: 2,
+        ),
+      );
     });
 
     testWidgets('applies medium size correctly', (tester) async {
@@ -167,7 +169,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaBadge(
-              size: TinaBadgeSize.medium,
               child: Text('Medium'),
             ),
           ),
@@ -175,15 +176,18 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      expect(container.padding, const EdgeInsets.symmetric(
-        horizontal: DesignSpacing.sm,
-        vertical: DesignSpacing.xs,
-      ));
+      expect(
+        container.padding,
+        const EdgeInsets.symmetric(
+          horizontal: DesignSpacing.sm,
+          vertical: DesignSpacing.xs,
+        ),
+      );
     });
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Status badge';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -197,8 +201,11 @@ void main() {
 
       final semanticsWidgets = find.byType(Semantics);
       final targetSemantics = semanticsWidgets.evaluate().firstWhere(
-        (element) => (element.widget as Semantics).properties.label == semanticLabel,
-        orElse: () => throw StateError('No Semantics widget found with label: $semanticLabel'),
+        (element) =>
+            (element.widget as Semantics).properties.label == semanticLabel,
+        orElse: () => throw StateError(
+          'No Semantics widget found with label: $semanticLabel',
+        ),
       );
       expect(targetSemantics, isNotNull);
     });
@@ -206,7 +213,7 @@ void main() {
     group('TinaBadge.text constructor', () {
       testWidgets('renders text badge correctly', (tester) async {
         const badgeText = 'New';
-        
+
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -225,7 +232,7 @@ void main() {
     group('TinaBadge.count constructor', () {
       testWidgets('renders count badge correctly', (tester) async {
         const count = 5;
-        
+
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -240,16 +247,17 @@ void main() {
         expect(find.byType(TinaText), findsOneWidget);
       });
 
-      testWidgets('shows max count with plus when exceeding maxCount', (tester) async {
+      testWidgets('shows max count with plus when exceeding maxCount', (
+        tester,
+      ) async {
         const count = 150;
         const maxCount = 99;
-        
+
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
               body: TinaBadge.count(
                 count: count,
-                maxCount: maxCount,
               ),
             ),
           ),
@@ -260,7 +268,7 @@ void main() {
 
       testWidgets('applies default semantic label for count', (tester) async {
         const count = 3;
-        
+
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -273,8 +281,12 @@ void main() {
 
         final semanticsWidgets = find.byType(Semantics);
         final targetSemantics = semanticsWidgets.evaluate().firstWhere(
-          (element) => (element.widget as Semantics).properties.label == '$count notifications',
-          orElse: () => throw StateError('No Semantics widget found with label: $count notifications'),
+          (element) =>
+              (element.widget as Semantics).properties.label ==
+              '$count notifications',
+          orElse: () => throw StateError(
+            'No Semantics widget found with label: $count notifications',
+          ),
         );
         expect(targetSemantics, isNotNull);
       });
@@ -346,10 +358,13 @@ void main() {
         ),
       );
 
-      expect(find.descendant(
-        of: find.byType(TinaPositionedBadge),
-        matching: find.byType(Stack),
-      ), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(TinaPositionedBadge),
+          matching: find.byType(Stack),
+        ),
+        findsOneWidget,
+      );
       expect(find.byType(Positioned), findsOneWidget);
       expect(find.byIcon(Icons.notifications), findsOneWidget);
       expect(find.byType(TinaBadge), findsOneWidget);
@@ -435,8 +450,8 @@ void main() {
     });
 
     testWidgets('applies custom offset correctly', (tester) async {
-      const customOffset = Offset(5.0, 10.0);
-      
+      const customOffset = Offset(5, 10);
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -459,8 +474,14 @@ void main() {
         expect(TinaBadgePosition.values, hasLength(4));
         expect(TinaBadgePosition.values, contains(TinaBadgePosition.topLeft));
         expect(TinaBadgePosition.values, contains(TinaBadgePosition.topRight));
-        expect(TinaBadgePosition.values, contains(TinaBadgePosition.bottomLeft));
-        expect(TinaBadgePosition.values, contains(TinaBadgePosition.bottomRight));
+        expect(
+          TinaBadgePosition.values,
+          contains(TinaBadgePosition.bottomLeft),
+        );
+        expect(
+          TinaBadgePosition.values,
+          contains(TinaBadgePosition.bottomRight),
+        );
       });
     });
   });

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_typing_indicator.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_typing_indicator.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 void main() {
   group('TinaTypingIndicator', () {
@@ -19,15 +20,18 @@ void main() {
         of: find.byType(TinaTypingIndicator),
         matching: find.byType(Container),
       );
-      
+
       // Should have at least 3 dot containers (plus the main container)
       expect(dotContainers, findsAtLeastNWidgets(3));
     });
 
     testWidgets('shows container by default', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: ThemeData.light().copyWith(
+            extensions: const [TinaTheme.light],
+          ),
+          home: const Scaffold(
             body: TinaTypingIndicator(),
           ),
         ),
@@ -36,11 +40,13 @@ void main() {
       final align = tester.widget<Align>(find.byType(Align));
       expect(align.alignment, Alignment.centerLeft);
 
-      // Should find the main container with background
+      // Should find the main container with background (surfaceVariant in light theme)
       final containers = tester.widgetList<Container>(find.byType(Container));
       final mainContainer = containers.firstWhere(
-        (container) => container.decoration is BoxDecoration &&
-            (container.decoration as BoxDecoration).color == DesignColors.neutral100,
+        (container) =>
+            container.decoration is BoxDecoration &&
+            (container.decoration! as BoxDecoration).color ==
+                DesignColors.neutral100,
       );
       expect(mainContainer, isNotNull);
     });
@@ -56,7 +62,7 @@ void main() {
 
       // Should not find Align widget when container is hidden
       expect(find.byType(Align), findsNothing);
-      
+
       // Should still find the dots
       expect(find.byType(Row), findsOneWidget);
     });
@@ -83,9 +89,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaTypingIndicator(
-              size: TinaTypingIndicatorSize.medium,
-            ),
+            body: TinaTypingIndicator(),
           ),
         ),
       );
@@ -117,7 +121,7 @@ void main() {
 
     testWidgets('applies custom color', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -129,39 +133,51 @@ void main() {
       );
 
       // Find dot containers and check their color
-      final dotContainers = tester.widgetList<Container>(find.byType(Container))
-          .where((container) => 
-              container.decoration is BoxDecoration &&
-              (container.decoration as BoxDecoration).shape == BoxShape.circle)
+      final dotContainers = tester
+          .widgetList<Container>(find.byType(Container))
+          .where(
+            (container) =>
+                container.decoration is BoxDecoration &&
+                (container.decoration! as BoxDecoration).shape ==
+                    BoxShape.circle,
+          )
           .toList();
-      
+
       expect(dotContainers.length, 3);
       for (final container in dotContainers) {
-        final decoration = container.decoration as BoxDecoration;
+        final decoration = container.decoration! as BoxDecoration;
         expect(decoration.color, customColor);
       }
     });
 
     testWidgets('uses default color when none provided', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        MaterialApp(
+          theme: ThemeData.light().copyWith(
+            extensions: const [TinaTheme.light],
+          ),
+          home: const Scaffold(
             body: TinaTypingIndicator(),
           ),
         ),
       );
 
-      // Find dot containers and check they use default color
-      final dotContainers = tester.widgetList<Container>(find.byType(Container))
-          .where((container) => 
-              container.decoration is BoxDecoration &&
-              (container.decoration as BoxDecoration).shape == BoxShape.circle)
+      // Find dot containers and check they use default color (onSurfaceVariant in light theme)
+      final dotContainers = tester
+          .widgetList<Container>(find.byType(Container))
+          .where(
+            (container) =>
+                container.decoration is BoxDecoration &&
+                (container.decoration! as BoxDecoration).shape ==
+                    BoxShape.circle,
+          )
           .toList();
-      
+
       expect(dotContainers.length, 3);
       for (final container in dotContainers) {
-        final decoration = container.decoration as BoxDecoration;
-        expect(decoration.color, DesignColors.neutral500);
+        final decoration = container.decoration! as BoxDecoration;
+        // In light theme, onSurfaceVariant is neutral700
+        expect(decoration.color, DesignColors.neutral700);
       }
     });
 
@@ -189,7 +205,7 @@ void main() {
       // Pump a few frames to let animation start
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
-      
+
       // Find animated builders specifically within the TinaTypingIndicator
       final typingIndicator = find.byType(TinaTypingIndicator);
       final animatedBuilders = find.descendant(
@@ -201,7 +217,7 @@ void main() {
 
     testWidgets('respects custom animation duration', (tester) async {
       const customDuration = Duration(milliseconds: 1000);
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -214,7 +230,7 @@ void main() {
 
       // The animation should be running
       await tester.pump();
-      
+
       // Find animated builders specifically within the TinaTypingIndicator
       final typingIndicator = find.byType(TinaTypingIndicator);
       final animatedBuilders = find.descendant(
@@ -227,9 +243,18 @@ void main() {
     group('TinaTypingIndicatorSize enum', () {
       test('has all expected values', () {
         expect(TinaTypingIndicatorSize.values, hasLength(3));
-        expect(TinaTypingIndicatorSize.values, contains(TinaTypingIndicatorSize.small));
-        expect(TinaTypingIndicatorSize.values, contains(TinaTypingIndicatorSize.medium));
-        expect(TinaTypingIndicatorSize.values, contains(TinaTypingIndicatorSize.large));
+        expect(
+          TinaTypingIndicatorSize.values,
+          contains(TinaTypingIndicatorSize.small),
+        );
+        expect(
+          TinaTypingIndicatorSize.values,
+          contains(TinaTypingIndicatorSize.medium),
+        );
+        expect(
+          TinaTypingIndicatorSize.values,
+          contains(TinaTypingIndicatorSize.large),
+        );
       });
     });
   });

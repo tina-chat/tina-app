@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_icon.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaIcon', () {
@@ -19,7 +19,7 @@ void main() {
 
     testWidgets('applies custom color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -41,7 +41,6 @@ void main() {
           home: Scaffold(
             body: TinaIcon(
               Icons.star,
-              size: TinaIconSize.medium,
             ),
           ),
         ),
@@ -69,7 +68,7 @@ void main() {
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Favorite star';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -99,8 +98,8 @@ void main() {
 
   group('TinaIconButton', () {
     testWidgets('renders icon button correctly', (tester) async {
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -114,7 +113,7 @@ void main() {
 
       expect(find.byIcon(Icons.star), findsOneWidget);
       expect(find.byType(IconButton), findsOneWidget);
-      
+
       await tester.tap(find.byType(TinaIconButton));
       expect(wasPressed, isTrue);
     });
@@ -126,14 +125,16 @@ void main() {
             body: TinaIconButton(
               icon: Icons.star,
               onPressed: () {},
-              variant: TinaIconButtonVariant.ghost,
             ),
           ),
         ),
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), Colors.transparent);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        Colors.transparent,
+      );
     });
 
     testWidgets('applies filled variant styling correctly', (tester) async {
@@ -150,8 +151,10 @@ void main() {
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), 
-             DesignColors.primaryBase);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        DesignColors.primaryBase,
+      );
     });
 
     testWidgets('applies outlined variant styling correctly', (tester) async {
@@ -168,7 +171,10 @@ void main() {
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), Colors.transparent);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        Colors.transparent,
+      );
     });
 
     testWidgets('applies elevated variant styling correctly', (tester) async {
@@ -185,14 +191,16 @@ void main() {
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), 
-             DesignColors.primaryBase);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        DesignColors.primaryBase,
+      );
       expect(iconButton.style?.elevation?.resolve({}), 2);
     });
 
     testWidgets('applies custom color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -211,7 +219,7 @@ void main() {
 
     testWidgets('applies custom background color correctly', (tester) async {
       const customBackgroundColor = Colors.blue;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -225,13 +233,15 @@ void main() {
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), 
-             customBackgroundColor);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        customBackgroundColor,
+      );
     });
 
     testWidgets('shows tooltip when provided', (tester) async {
       const tooltipMessage = 'Star button';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -245,14 +255,14 @@ void main() {
       );
 
       expect(find.byType(Tooltip), findsOneWidget);
-      
+
       final tooltip = tester.widget<Tooltip>(find.byType(Tooltip));
       expect(tooltip.message, tooltipMessage);
     });
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Favorite button';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -288,10 +298,22 @@ void main() {
     group('TinaIconButtonVariant enum', () {
       test('has all expected values', () {
         expect(TinaIconButtonVariant.values, hasLength(4));
-        expect(TinaIconButtonVariant.values, contains(TinaIconButtonVariant.ghost));
-        expect(TinaIconButtonVariant.values, contains(TinaIconButtonVariant.filled));
-        expect(TinaIconButtonVariant.values, contains(TinaIconButtonVariant.outlined));
-        expect(TinaIconButtonVariant.values, contains(TinaIconButtonVariant.elevated));
+        expect(
+          TinaIconButtonVariant.values,
+          contains(TinaIconButtonVariant.ghost),
+        );
+        expect(
+          TinaIconButtonVariant.values,
+          contains(TinaIconButtonVariant.filled),
+        );
+        expect(
+          TinaIconButtonVariant.values,
+          contains(TinaIconButtonVariant.outlined),
+        );
+        expect(
+          TinaIconButtonVariant.values,
+          contains(TinaIconButtonVariant.elevated),
+        );
       });
     });
   });

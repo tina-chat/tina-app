@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable icon component following the Tina design system.
 ///
@@ -29,8 +30,8 @@ class TinaIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final iconColor = color ?? _getDefaultColor(theme);
+    final tinaColors = context.tinaColors;
+    final iconColor = color ?? _getDefaultColor(tinaColors);
     final iconSize = _getIconSize();
 
     return Semantics(
@@ -54,10 +55,8 @@ class TinaIcon extends StatelessWidget {
     };
   }
 
-  Color _getDefaultColor(ThemeData theme) {
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral100
-        : DesignColors.neutral700;
+  Color _getDefaultColor(TinaColorScheme colors) {
+    return colors.onSurface;
   }
 }
 
@@ -91,7 +90,8 @@ class TinaIconButton extends StatelessWidget {
   /// The color of the icon. If null, uses the default color for the variant.
   final Color? color;
 
-  /// The background color of the button. If null, uses the default for the variant.
+  /// The background color of the button. If null, uses the default for the
+  /// variant.
   final Color? backgroundColor;
 
   /// The visual variant of the icon button.
@@ -105,7 +105,7 @@ class TinaIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final tinaColors = context.tinaColors;
     final buttonSize = _getButtonSize();
     final iconSize = _getIconSize();
 
@@ -117,7 +117,7 @@ class TinaIconButton extends StatelessWidget {
         icon: TinaIcon(
           icon,
           size: size,
-          color: color ?? _getIconColor(theme),
+          color: color ?? _getIconColor(tinaColors),
           semanticLabel: semanticLabel,
         ),
         iconSize: iconSize,
@@ -127,14 +127,13 @@ class TinaIconButton extends StatelessWidget {
           minHeight: buttonSize,
         ),
         style: IconButton.styleFrom(
-          backgroundColor: backgroundColor ?? _getBackgroundColor(theme),
-          foregroundColor: color ?? _getIconColor(theme),
+          backgroundColor: backgroundColor ?? _getBackgroundColor(tinaColors),
+          foregroundColor: color ?? _getIconColor(tinaColors),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_getBorderRadius()),
             side: variant == TinaIconButtonVariant.outlined
                 ? BorderSide(
-                    color: DesignColors.neutral300,
-                    width: DesignBorderWidth.thin,
+                    color: tinaColors.outline,
                   )
                 : BorderSide.none,
           ),
@@ -145,7 +144,7 @@ class TinaIconButton extends StatelessWidget {
 
     if (tooltip != null) {
       button = Tooltip(
-        message: tooltip!,
+        message: tooltip,
         child: button,
       );
     }
@@ -186,25 +185,27 @@ class TinaIconButton extends StatelessWidget {
     };
   }
 
-  Color _getIconColor(ThemeData theme) {
-    if (onPressed == null) return DesignColors.neutral400;
+  Color _getIconColor(TinaColorScheme colors) {
+    if (onPressed == null) {
+      return colors.onSurfaceVariant.withValues(alpha: 0.6);
+    }
 
     return switch (variant) {
-      TinaIconButtonVariant.ghost => DesignColors.neutral700,
-      TinaIconButtonVariant.filled => DesignColors.primaryContrast,
-      TinaIconButtonVariant.outlined => DesignColors.neutral700,
-      TinaIconButtonVariant.elevated => DesignColors.primaryContrast,
+      TinaIconButtonVariant.ghost => colors.onSurface,
+      TinaIconButtonVariant.filled => colors.onPrimary,
+      TinaIconButtonVariant.outlined => colors.primary,
+      TinaIconButtonVariant.elevated => colors.onPrimary,
     };
   }
 
-  Color _getBackgroundColor(ThemeData theme) {
+  Color _getBackgroundColor(TinaColorScheme colors) {
     if (onPressed == null) return Colors.transparent;
 
     return switch (variant) {
       TinaIconButtonVariant.ghost => Colors.transparent,
-      TinaIconButtonVariant.filled => DesignColors.primaryBase,
+      TinaIconButtonVariant.filled => colors.primary,
       TinaIconButtonVariant.outlined => Colors.transparent,
-      TinaIconButtonVariant.elevated => DesignColors.primaryBase,
+      TinaIconButtonVariant.elevated => colors.primary,
     };
   }
 }

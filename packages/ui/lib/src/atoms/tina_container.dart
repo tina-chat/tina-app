@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable layout container component following the Tina design system.
 ///
@@ -23,7 +25,7 @@ class TinaContainer extends StatelessWidget {
   });
 
   /// Creates a Tina container with content padding.
-  TinaContainer.content({
+  const TinaContainer.content({
     required this.child,
     super.key,
     this.margin,
@@ -38,7 +40,7 @@ class TinaContainer extends StatelessWidget {
   }) : padding = const EdgeInsets.all(DesignSpacing.contentPadding);
 
   /// Creates a Tina container with component spacing.
-  TinaContainer.component({
+  const TinaContainer.component({
     required this.child,
     super.key,
     this.margin,
@@ -53,7 +55,7 @@ class TinaContainer extends StatelessWidget {
   }) : padding = const EdgeInsets.all(DesignSpacing.componentSpacing);
 
   /// Creates a Tina container with section spacing.
-  TinaContainer.section({
+  const TinaContainer.section({
     required this.child,
     super.key,
     this.margin,
@@ -132,8 +134,8 @@ class TinaContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaTheme = context.tinaTheme;
+
     Widget container = Container(
       width: width,
       height: height,
@@ -141,8 +143,8 @@ class TinaContainer extends StatelessWidget {
       margin: margin,
       alignment: alignment,
       decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: borderRadius != null 
+        color: backgroundColor ?? tinaTheme.colors.surface,
+        borderRadius: borderRadius != null
             ? BorderRadius.circular(borderRadius!)
             : null,
         border: border,
@@ -201,34 +203,54 @@ class TinaContainerPadding {
   static const EdgeInsets xl3 = EdgeInsets.all(DesignSpacing.xl3);
 
   /// Horizontal extra small padding.
-  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(horizontal: DesignSpacing.xs);
+  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.xs,
+  );
 
   /// Horizontal small padding.
-  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(horizontal: DesignSpacing.sm);
+  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.sm,
+  );
 
   /// Horizontal medium padding.
-  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(horizontal: DesignSpacing.md);
+  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.md,
+  );
 
   /// Horizontal large padding.
-  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(horizontal: DesignSpacing.lg);
+  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.lg,
+  );
 
   /// Horizontal extra large padding.
-  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(horizontal: DesignSpacing.xl);
+  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.xl,
+  );
 
   /// Vertical extra small padding.
-  static const EdgeInsets verticalXs = EdgeInsets.symmetric(vertical: DesignSpacing.xs);
+  static const EdgeInsets verticalXs = EdgeInsets.symmetric(
+    vertical: DesignSpacing.xs,
+  );
 
   /// Vertical small padding.
-  static const EdgeInsets verticalSm = EdgeInsets.symmetric(vertical: DesignSpacing.sm);
+  static const EdgeInsets verticalSm = EdgeInsets.symmetric(
+    vertical: DesignSpacing.sm,
+  );
 
   /// Vertical medium padding.
-  static const EdgeInsets verticalMd = EdgeInsets.symmetric(vertical: DesignSpacing.md);
+  static const EdgeInsets verticalMd = EdgeInsets.symmetric(
+    vertical: DesignSpacing.md,
+  );
 
   /// Vertical large padding.
-  static const EdgeInsets verticalLg = EdgeInsets.symmetric(vertical: DesignSpacing.lg);
+  static const EdgeInsets verticalLg = EdgeInsets.symmetric(
+    vertical: DesignSpacing.lg,
+  );
 
   /// Vertical extra large padding.
-  static const EdgeInsets verticalXl = EdgeInsets.symmetric(vertical: DesignSpacing.xl);
+  static const EdgeInsets verticalXl = EdgeInsets.symmetric(
+    vertical: DesignSpacing.xl,
+  );
 }
 
 /// Predefined margin options for [TinaContainer].
@@ -257,34 +279,54 @@ class TinaContainerMargin {
   static const EdgeInsets xl3 = EdgeInsets.all(DesignSpacing.xl3);
 
   /// Horizontal extra small margin.
-  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(horizontal: DesignSpacing.xs);
+  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.xs,
+  );
 
   /// Horizontal small margin.
-  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(horizontal: DesignSpacing.sm);
+  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.sm,
+  );
 
   /// Horizontal medium margin.
-  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(horizontal: DesignSpacing.md);
+  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.md,
+  );
 
   /// Horizontal large margin.
-  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(horizontal: DesignSpacing.lg);
+  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.lg,
+  );
 
   /// Horizontal extra large margin.
-  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(horizontal: DesignSpacing.xl);
+  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(
+    horizontal: DesignSpacing.xl,
+  );
 
   /// Vertical extra small margin.
-  static const EdgeInsets verticalXs = EdgeInsets.symmetric(vertical: DesignSpacing.xs);
+  static const EdgeInsets verticalXs = EdgeInsets.symmetric(
+    vertical: DesignSpacing.xs,
+  );
 
   /// Vertical small margin.
-  static const EdgeInsets verticalSm = EdgeInsets.symmetric(vertical: DesignSpacing.sm);
+  static const EdgeInsets verticalSm = EdgeInsets.symmetric(
+    vertical: DesignSpacing.sm,
+  );
 
   /// Vertical medium margin.
-  static const EdgeInsets verticalMd = EdgeInsets.symmetric(vertical: DesignSpacing.md);
+  static const EdgeInsets verticalMd = EdgeInsets.symmetric(
+    vertical: DesignSpacing.md,
+  );
 
   /// Vertical large margin.
-  static const EdgeInsets verticalLg = EdgeInsets.symmetric(vertical: DesignSpacing.lg);
+  static const EdgeInsets verticalLg = EdgeInsets.symmetric(
+    vertical: DesignSpacing.lg,
+  );
 
   /// Vertical extra large margin.
-  static const EdgeInsets verticalXl = EdgeInsets.symmetric(vertical: DesignSpacing.xl);
+  static const EdgeInsets verticalXl = EdgeInsets.symmetric(
+    vertical: DesignSpacing.xl,
+  );
 }
 
 /// The shadow variant of a [TinaContainer].

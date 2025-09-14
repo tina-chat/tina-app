@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_spinner.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_spinner.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaSpinner', () {
@@ -22,9 +22,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaSpinner(
-              size: TinaSpinnerSize.medium,
-            ),
+            body: TinaSpinner(),
           ),
         ),
       );
@@ -276,9 +274,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaLoadingOverlay(
-              isLoading: true,
-            ),
+            body: TinaLoadingOverlay(),
           ),
         ),
       );
@@ -332,7 +328,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaLoadingOverlay(
-              isLoading: true,
               child: Text(childText),
             ),
           ),
@@ -357,7 +352,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaLoadingOverlay(
-              isLoading: true,
               message: message,
             ),
           ),
@@ -375,7 +369,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaLoadingOverlay(
-              isLoading: true,
               backgroundColor: customBackgroundColor,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable avatar component following the Tina design system.
 ///
@@ -18,8 +19,8 @@ class TinaAvatar extends StatelessWidget {
     this.foregroundColor,
     this.semanticLabel,
     this.onTap,
-  })  : initials = null,
-        icon = null;
+  }) : initials = null,
+       icon = null;
 
   /// Creates a Tina avatar with initials.
   const TinaAvatar.initials({
@@ -30,10 +31,10 @@ class TinaAvatar extends StatelessWidget {
     this.foregroundColor,
     this.semanticLabel,
     this.onTap,
-  })  : imageProvider = null,
-        fallbackText = null,
-        fallbackIcon = null,
-        icon = null;
+  }) : imageProvider = null,
+       fallbackText = null,
+       fallbackIcon = null,
+       icon = null;
 
   /// Creates a Tina avatar with an icon.
   const TinaAvatar.icon({
@@ -44,10 +45,10 @@ class TinaAvatar extends StatelessWidget {
     this.foregroundColor,
     this.semanticLabel,
     this.onTap,
-  })  : imageProvider = null,
-        initials = null,
-        fallbackText = null,
-        fallbackIcon = null;
+  }) : imageProvider = null,
+       initials = null,
+       fallbackText = null,
+       fallbackIcon = null;
 
   /// The image provider for the avatar image.
   final ImageProvider? imageProvider;
@@ -81,10 +82,10 @@ class TinaAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final tinaColors = context.tinaColors;
     final avatarSize = _getAvatarSize();
-    final bgColor = backgroundColor ?? _getDefaultBackgroundColor();
-    final fgColor = foregroundColor ?? _getDefaultForegroundColor();
+    final bgColor = backgroundColor ?? _getDefaultBackgroundColor(tinaColors);
+    final fgColor = foregroundColor ?? _getDefaultForegroundColor(tinaColors);
 
     Widget avatar = Container(
       width: avatarSize,
@@ -92,7 +93,7 @@ class TinaAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         shape: BoxShape.circle,
-        boxShadow: [DesignShadows.sm],
+        boxShadow: const [DesignShadows.sm],
       ),
       child: ClipOval(
         child: _buildAvatarContent(fgColor),
@@ -204,12 +205,12 @@ class TinaAvatar extends StatelessWidget {
     };
   }
 
-  Color _getDefaultBackgroundColor() {
-    return DesignColors.primaryBase;
+  Color _getDefaultBackgroundColor(TinaColorScheme colors) {
+    return colors.primary;
   }
 
-  Color _getDefaultForegroundColor() {
-    return DesignColors.primaryContrast;
+  Color _getDefaultForegroundColor(TinaColorScheme colors) {
+    return colors.onPrimary;
   }
 }
 
@@ -241,7 +242,8 @@ class TinaAvatarGroup extends StatelessWidget {
   /// The spacing between avatars (negative for overlap).
   final double spacing;
 
-  /// Whether to show a count avatar when there are more avatars than maxVisible.
+  /// Whether to show a count avatar when there are more avatars than
+  /// maxVisible.
   final bool showCount;
 
   /// A semantic label for the avatar group for accessibility.
@@ -251,6 +253,7 @@ class TinaAvatarGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     if (avatars.isEmpty) return const SizedBox.shrink();
 
+    final tinaColors = context.tinaColors;
     final visibleAvatars = avatars.take(maxVisible).toList();
     final remainingCount = avatars.length - maxVisible;
     final hasMore = remainingCount > 0 && showCount;
@@ -261,7 +264,7 @@ class TinaAvatarGroup extends StatelessWidget {
         ...visibleAvatars.asMap().entries.map((entry) {
           final index = entry.key;
           final avatar = entry.value;
-          
+
           return Padding(
             padding: EdgeInsets.only(
               left: index > 0 ? spacing : 0,
@@ -275,8 +278,8 @@ class TinaAvatarGroup extends StatelessWidget {
             child: TinaAvatar.initials(
               initials: '+$remainingCount',
               size: size,
-              backgroundColor: DesignColors.neutral200,
-              foregroundColor: DesignColors.neutral700,
+              backgroundColor: tinaColors.surfaceVariant,
+              foregroundColor: tinaColors.onSurfaceVariant,
             ),
           ),
       ],

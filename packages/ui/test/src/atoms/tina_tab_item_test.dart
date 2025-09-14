@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_tab_item.dart';
-import 'package:ui/src/atoms/tina_badge.dart';
-import 'package:ui/src/atoms/tina_icon.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_tab_item.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaTabItem', () {
-    testWidgets('renders tab item with icon and text correctly', (tester) async {
+    testWidgets('renders tab item with icon and text correctly', (
+      tester,
+    ) async {
       const testText = 'Chat';
       const testIcon = Icons.chat;
-      bool wasTapped = false;
-      
+      var wasTapped = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -30,14 +32,14 @@ void main() {
       expect(find.byType(TinaIcon), findsOneWidget);
       expect(find.byType(TinaText), findsOneWidget);
       expect(find.byType(Column), findsOneWidget);
-      
+
       await tester.tap(find.byType(TinaTabItem));
       expect(wasTapped, isTrue);
     });
 
     testWidgets('renders tab item with only icon correctly', (tester) async {
       const testIcon = Icons.chat;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -57,7 +59,7 @@ void main() {
 
     testWidgets('renders tab item with only text correctly', (tester) async {
       const testText = 'Chat';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -79,7 +81,7 @@ void main() {
       const testText = 'Messages';
       const testIcon = Icons.message;
       final testBadge = TinaBadge.count(count: 3);
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -121,10 +123,10 @@ void main() {
       );
 
       expect(container.decoration, isA<BoxDecoration>());
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border, isA<Border>());
-      
-      final border = decoration.border as Border;
+
+      final border = decoration.border! as Border;
       expect(border.bottom.width, 2.0);
       expect(border.bottom.color, DesignColors.primaryBase);
     });
@@ -137,7 +139,6 @@ void main() {
               onTap: () {},
               icon: Icons.chat,
               text: 'Chat',
-              isActive: false,
             ),
           ),
         ),
@@ -151,10 +152,10 @@ void main() {
       );
 
       expect(container.decoration, isA<BoxDecoration>());
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border, isA<Border>());
-      
-      final border = decoration.border as Border;
+
+      final border = decoration.border! as Border;
       expect(border.bottom.width, 0.0);
       expect(border.bottom.color, Colors.transparent);
     });
@@ -183,7 +184,6 @@ void main() {
             body: TinaTabItem(
               onTap: () {},
               text: 'Chat',
-              isActive: false,
             ),
           ),
         ),
@@ -195,7 +195,7 @@ void main() {
 
     testWidgets('handles null onTap correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaTabItem(
               onTap: null,
@@ -212,7 +212,7 @@ void main() {
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Chat tab';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -227,10 +227,12 @@ void main() {
       );
 
       final semantics = tester.widget<Semantics>(
-        find.descendant(
-          of: find.byType(TinaTabItem),
-          matching: find.byType(Semantics),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(TinaTabItem),
+              matching: find.byType(Semantics),
+            )
+            .first,
       );
 
       expect(semantics.properties.label, semanticLabel);
@@ -238,7 +240,9 @@ void main() {
       expect(semantics.properties.selected, isFalse);
     });
 
-    testWidgets('applies selected semantic property when active', (tester) async {
+    testWidgets('applies selected semantic property when active', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -253,18 +257,22 @@ void main() {
       );
 
       final semantics = tester.widget<Semantics>(
-        find.descendant(
-          of: find.byType(TinaTabItem),
-          matching: find.byType(Semantics),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(TinaTabItem),
+              matching: find.byType(Semantics),
+            )
+            .first,
       );
 
       expect(semantics.properties.selected, isTrue);
     });
 
-    testWidgets('uses text as semantic label when no explicit label provided', (tester) async {
+    testWidgets('uses text as semantic label when no explicit label provided', (
+      tester,
+    ) async {
       const testText = 'Chat';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -277,10 +285,12 @@ void main() {
       );
 
       final semantics = tester.widget<Semantics>(
-        find.descendant(
-          of: find.byType(TinaTabItem),
-          matching: find.byType(Semantics),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(TinaTabItem),
+              matching: find.byType(Semantics),
+            )
+            .first,
       );
 
       expect(semantics.properties.label, testText);

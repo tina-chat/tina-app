@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_floating_action_button.dart';
-import 'package:ui/src/atoms/tina_icon.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_floating_action_button.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaFloatingActionButton', () {
     testWidgets('renders regular FAB correctly', (tester) async {
       const testIcon = Icons.add;
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -25,7 +25,7 @@ void main() {
       expect(find.byIcon(testIcon), findsOneWidget);
       expect(find.byType(TinaIcon), findsOneWidget);
       expect(find.byType(FloatingActionButton), findsOneWidget);
-      
+
       await tester.tap(find.byType(FloatingActionButton));
       expect(wasPressed, isTrue);
     });
@@ -33,8 +33,8 @@ void main() {
     testWidgets('renders extended FAB correctly', (tester) async {
       const testIcon = Icons.add;
       const testText = 'Add Item';
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -52,7 +52,7 @@ void main() {
       expect(find.byType(TinaIcon), findsOneWidget);
       expect(find.byType(TinaText), findsOneWidget);
       expect(find.byType(FloatingActionButton), findsOneWidget);
-      
+
       await tester.tap(find.byType(FloatingActionButton));
       expect(wasPressed, isTrue);
     });
@@ -76,7 +76,7 @@ void main() {
           matching: find.byType(SizedBox),
         ),
       );
-      
+
       expect(sizedBox.width, 40.0);
       expect(sizedBox.height, 40.0);
 
@@ -91,7 +91,6 @@ void main() {
             body: TinaFloatingActionButton(
               onPressed: () {},
               icon: Icons.add,
-              size: TinaFABSize.regular,
             ),
           ),
         ),
@@ -120,7 +119,7 @@ void main() {
           matching: find.byType(SizedBox),
         ),
       );
-      
+
       expect(sizedBox.width, 72.0);
       expect(sizedBox.height, 72.0);
 
@@ -130,7 +129,7 @@ void main() {
 
     testWidgets('applies custom background color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -143,13 +142,15 @@ void main() {
         ),
       );
 
-      final fab = tester.widget<FloatingActionButton>(find.byType(FloatingActionButton));
+      final fab = tester.widget<FloatingActionButton>(
+        find.byType(FloatingActionButton),
+      );
       expect(fab.backgroundColor, customColor);
     });
 
     testWidgets('applies custom foreground color correctly', (tester) async {
       const customColor = Colors.black;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -162,7 +163,9 @@ void main() {
         ),
       );
 
-      final fab = tester.widget<FloatingActionButton>(find.byType(FloatingActionButton));
+      final fab = tester.widget<FloatingActionButton>(
+        find.byType(FloatingActionButton),
+      );
       expect(fab.foregroundColor, customColor);
 
       final tinaIcon = tester.widget<TinaIcon>(find.byType(TinaIcon));
@@ -181,7 +184,9 @@ void main() {
         ),
       );
 
-      final fab = tester.widget<FloatingActionButton>(find.byType(FloatingActionButton));
+      final fab = tester.widget<FloatingActionButton>(
+        find.byType(FloatingActionButton),
+      );
       expect(fab.backgroundColor, DesignColors.primaryBase);
       expect(fab.foregroundColor, DesignColors.primaryContrast);
 
@@ -191,7 +196,7 @@ void main() {
 
     testWidgets('handles null onPressed correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaFloatingActionButton(
               onPressed: null,
@@ -201,13 +206,15 @@ void main() {
         ),
       );
 
-      final fab = tester.widget<FloatingActionButton>(find.byType(FloatingActionButton));
+      final fab = tester.widget<FloatingActionButton>(
+        find.byType(FloatingActionButton),
+      );
       expect(fab.onPressed, isNull);
     });
 
     testWidgets('applies tooltip correctly', (tester) async {
       const tooltipMessage = 'Add new item';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -221,14 +228,14 @@ void main() {
       );
 
       expect(find.byType(Tooltip), findsOneWidget);
-      
+
       final tooltip = tester.widget<Tooltip>(find.byType(Tooltip));
       expect(tooltip.message, tooltipMessage);
     });
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Add new item';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -269,7 +276,9 @@ void main() {
         ),
       );
 
-      final fab = tester.widget<FloatingActionButton>(find.byType(FloatingActionButton));
+      final fab = tester.widget<FloatingActionButton>(
+        find.byType(FloatingActionButton),
+      );
       expect(fab.elevation, DesignElevation.md);
       expect(fab.focusElevation, DesignElevation.lg);
       expect(fab.hoverElevation, DesignElevation.lg);

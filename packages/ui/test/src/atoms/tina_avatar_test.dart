@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_avatar.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_avatar.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
 
 void main() {
   group('TinaAvatar', () {
     group('TinaAvatar.initials', () {
       testWidgets('renders initials correctly', (tester) async {
         const initials = 'JD';
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -30,7 +29,6 @@ void main() {
             home: Scaffold(
               body: TinaAvatar.initials(
                 initials: 'JD',
-                size: TinaAvatarSize.medium,
               ),
             ),
           ),
@@ -60,7 +58,7 @@ void main() {
 
       testWidgets('applies custom background color correctly', (tester) async {
         const customColor = Colors.red;
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -73,13 +71,13 @@ void main() {
         );
 
         final container = tester.widget<Container>(find.byType(Container));
-        final decoration = container.decoration as BoxDecoration;
+        final decoration = container.decoration! as BoxDecoration;
         expect(decoration.color, customColor);
       });
 
       testWidgets('applies custom foreground color correctly', (tester) async {
         const customColor = Colors.white;
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -97,7 +95,7 @@ void main() {
 
       testWidgets('applies semantic label correctly', (tester) async {
         const semanticLabel = 'User avatar';
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -112,15 +110,15 @@ void main() {
         // Check that the semantic label is applied correctly
         final semanticsWidgets = find.byType(Semantics);
         expect(semanticsWidgets, findsWidgets);
-        
+
         // Find the TinaAvatar widget and verify it has the semantic label
         final avatarWidget = tester.widget<TinaAvatar>(find.byType(TinaAvatar));
         expect(avatarWidget.semanticLabel, equals(semanticLabel));
       });
 
       testWidgets('handles tap correctly', (tester) async {
-        bool wasTapped = false;
-        
+        var wasTapped = false;
+
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -152,13 +150,14 @@ void main() {
         expect(find.byIcon(Icons.person), findsOneWidget);
       });
 
-      testWidgets('applies correct icon size for medium avatar', (tester) async {
+      testWidgets('applies correct icon size for medium avatar', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
               body: TinaAvatar.icon(
                 icon: Icons.person,
-                size: TinaAvatarSize.medium,
               ),
             ),
           ),
@@ -184,9 +183,11 @@ void main() {
         expect(find.byType(Image), findsOneWidget);
       });
 
-      testWidgets('shows fallback text when image fails to load', (tester) async {
+      testWidgets('shows fallback text when image fails to load', (
+        tester,
+      ) async {
         const fallbackText = 'FB';
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -200,11 +201,13 @@ void main() {
 
         // Trigger image error
         await tester.pump();
-        
+
         expect(find.text(fallbackText.toUpperCase()), findsOneWidget);
       });
 
-      testWidgets('shows fallback icon when image fails to load', (tester) async {
+      testWidgets('shows fallback icon when image fails to load', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -218,7 +221,7 @@ void main() {
 
         // Trigger image error
         await tester.pump();
-        
+
         expect(find.byIcon(Icons.error), findsOneWidget);
       });
     });
@@ -243,7 +246,7 @@ void main() {
         const TinaAvatar.initials(initials: 'AB'),
         const TinaAvatar.initials(initials: 'CD'),
       ];
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -268,13 +271,12 @@ void main() {
         const TinaAvatar.initials(initials: 'EF'),
         const TinaAvatar.initials(initials: 'GH'),
       ];
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: TinaAvatarGroup(
               avatars: avatars,
-              maxVisible: 3,
             ),
           ),
         ),
@@ -291,7 +293,7 @@ void main() {
         const TinaAvatar.initials(initials: 'CD'),
         const TinaAvatar.initials(initials: 'EF'),
       ];
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -314,7 +316,7 @@ void main() {
         const TinaAvatar.initials(initials: 'JD'),
         const TinaAvatar.initials(initials: 'AB'),
       ];
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -329,13 +331,17 @@ void main() {
       // Check that the semantic label is applied correctly
       final semanticsWidgets = find.byType(Semantics);
       expect(semanticsWidgets, findsWidgets);
-      
+
       // Find the TinaAvatarGroup widget and verify it has the semantic label
-      final avatarGroupWidget = tester.widget<TinaAvatarGroup>(find.byType(TinaAvatarGroup));
+      final avatarGroupWidget = tester.widget<TinaAvatarGroup>(
+        find.byType(TinaAvatarGroup),
+      );
       expect(avatarGroupWidget.semanticLabel, equals(semanticLabel));
     });
 
-    testWidgets('returns empty widget when avatars list is empty', (tester) async {
+    testWidgets('returns empty widget when avatars list is empty', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_navigation_item.dart';
-import 'package:ui/src/atoms/tina_badge.dart';
-import 'package:ui/src/atoms/tina_icon.dart';
-import 'package:ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_navigation_item.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
 
 void main() {
   group('TinaNavigationItem', () {
-    testWidgets('renders navigation item with icon and text correctly', (tester) async {
+    testWidgets('renders navigation item with icon and text correctly', (
+      tester,
+    ) async {
       const testText = 'Home';
       const testIcon = Icons.home;
-      bool wasTapped = false;
-      
+      var wasTapped = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -28,14 +30,16 @@ void main() {
       expect(find.byIcon(testIcon), findsOneWidget);
       expect(find.byType(TinaIcon), findsOneWidget);
       expect(find.byType(TinaText), findsOneWidget);
-      
+
       await tester.tap(find.byType(TinaNavigationItem));
       expect(wasTapped, isTrue);
     });
 
-    testWidgets('renders navigation item with only icon correctly', (tester) async {
+    testWidgets('renders navigation item with only icon correctly', (
+      tester,
+    ) async {
       const testIcon = Icons.home;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -52,9 +56,11 @@ void main() {
       expect(find.byType(TinaText), findsNothing);
     });
 
-    testWidgets('renders navigation item with only text correctly', (tester) async {
+    testWidgets('renders navigation item with only text correctly', (
+      tester,
+    ) async {
       const testText = 'Home';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -75,7 +81,7 @@ void main() {
       const testText = 'Messages';
       const testIcon = Icons.message;
       final testBadge = TinaBadge.count(count: 5);
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -117,7 +123,7 @@ void main() {
       );
 
       expect(container.decoration, isA<BoxDecoration>());
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, isNotNull);
       expect(decoration.color!.alpha, greaterThan(0));
     });
@@ -130,7 +136,6 @@ void main() {
               onTap: () {},
               icon: Icons.home,
               text: 'Home',
-              isActive: false,
             ),
           ),
         ),
@@ -144,7 +149,7 @@ void main() {
       );
 
       expect(container.decoration, isA<BoxDecoration>());
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, Colors.transparent);
     });
 
@@ -173,7 +178,6 @@ void main() {
               onTap: () {},
               icon: Icons.home,
               text: 'Home',
-              size: TinaNavigationItemSize.normal,
             ),
           ),
         ),
@@ -181,7 +185,7 @@ void main() {
 
       final tinaIcon = tester.widget<TinaIcon>(find.byType(TinaIcon));
       expect(tinaIcon.size, TinaIconSize.medium);
-      
+
       // Should have Column layout for normal size with icon and text
       expect(find.byType(Column), findsOneWidget);
     });
@@ -202,14 +206,14 @@ void main() {
 
       final tinaIcon = tester.widget<TinaIcon>(find.byType(TinaIcon));
       expect(tinaIcon.size, TinaIconSize.medium);
-      
+
       // Should have Row layout for expanded size with icon and text
       expect(find.byType(Row), findsOneWidget);
     });
 
     testWidgets('handles null onTap correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaNavigationItem(
               onTap: null,
@@ -226,7 +230,7 @@ void main() {
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Navigate to home';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -241,10 +245,12 @@ void main() {
       );
 
       final semantics = tester.widget<Semantics>(
-        find.descendant(
-          of: find.byType(TinaNavigationItem),
-          matching: find.byType(Semantics),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(TinaNavigationItem),
+              matching: find.byType(Semantics),
+            )
+            .first,
       );
 
       expect(semantics.properties.label, semanticLabel);
@@ -254,9 +260,18 @@ void main() {
     group('TinaNavigationItemSize enum', () {
       test('has all expected values', () {
         expect(TinaNavigationItemSize.values, hasLength(3));
-        expect(TinaNavigationItemSize.values, contains(TinaNavigationItemSize.compact));
-        expect(TinaNavigationItemSize.values, contains(TinaNavigationItemSize.normal));
-        expect(TinaNavigationItemSize.values, contains(TinaNavigationItemSize.expanded));
+        expect(
+          TinaNavigationItemSize.values,
+          contains(TinaNavigationItemSize.compact),
+        );
+        expect(
+          TinaNavigationItemSize.values,
+          contains(TinaNavigationItemSize.normal),
+        );
+        expect(
+          TinaNavigationItemSize.values,
+          contains(TinaNavigationItemSize.expanded),
+        );
       });
     });
   });

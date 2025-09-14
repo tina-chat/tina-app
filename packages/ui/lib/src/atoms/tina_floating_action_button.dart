@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_icon.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
-/// A customizable floating action button component following the Tina design system.
+/// A customizable floating action button component following the Tina design
+/// system.
 ///
 /// This FAB supports different sizes, icons, extended variants with text,
 /// and proper elevation and shadows.
@@ -58,13 +60,13 @@ class TinaFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final tinaColors = context.tinaColors;
     final isExtended = size == TinaFABSize.extended;
-    
+
     Widget fab = FloatingActionButton(
       onPressed: onPressed,
-      backgroundColor: backgroundColor ?? DesignColors.primaryBase,
-      foregroundColor: foregroundColor ?? DesignColors.primaryContrast,
+      backgroundColor: backgroundColor ?? tinaColors.primary,
+      foregroundColor: foregroundColor ?? tinaColors.onPrimary,
       elevation: _getElevation(),
       focusElevation: _getFocusElevation(),
       hoverElevation: _getHoverElevation(),
@@ -72,7 +74,9 @@ class TinaFloatingActionButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_getBorderRadius()),
       ),
-      child: isExtended ? _buildExtendedContent() : _buildRegularContent(),
+      child: isExtended
+          ? _buildExtendedContent(tinaColors)
+          : _buildRegularContent(tinaColors),
     );
 
     // Override size for mini and large variants
@@ -82,8 +86,8 @@ class TinaFloatingActionButton extends StatelessWidget {
         height: _getFABSize(),
         child: FloatingActionButton(
           onPressed: onPressed,
-          backgroundColor: backgroundColor ?? DesignColors.primaryBase,
-          foregroundColor: foregroundColor ?? DesignColors.primaryContrast,
+          backgroundColor: backgroundColor ?? tinaColors.primary,
+          foregroundColor: foregroundColor ?? tinaColors.onPrimary,
           elevation: _getElevation(),
           focusElevation: _getFocusElevation(),
           hoverElevation: _getHoverElevation(),
@@ -91,7 +95,7 @@ class TinaFloatingActionButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_getBorderRadius()),
           ),
-          child: _buildRegularContent(),
+          child: _buildRegularContent(tinaColors),
         ),
       );
     }
@@ -99,8 +103,8 @@ class TinaFloatingActionButton extends StatelessWidget {
     if (isExtended) {
       fab = FloatingActionButton.extended(
         onPressed: onPressed,
-        backgroundColor: backgroundColor ?? DesignColors.primaryBase,
-        foregroundColor: foregroundColor ?? DesignColors.primaryContrast,
+        backgroundColor: backgroundColor ?? tinaColors.primary,
+        foregroundColor: foregroundColor ?? tinaColors.onPrimary,
         elevation: _getElevation(),
         focusElevation: _getFocusElevation(),
         hoverElevation: _getHoverElevation(),
@@ -110,13 +114,11 @@ class TinaFloatingActionButton extends StatelessWidget {
         ),
         icon: TinaIcon(
           icon,
-          size: TinaIconSize.medium,
-          color: foregroundColor ?? DesignColors.primaryContrast,
+          color: foregroundColor ?? tinaColors.onPrimary,
         ),
         label: TinaText(
           text!,
-          style: TinaTextStyle.body,
-          color: foregroundColor ?? DesignColors.primaryContrast,
+          color: foregroundColor ?? tinaColors.onPrimary,
           fontWeight: DesignTypography.fontWeightMedium,
         ),
       );
@@ -124,7 +126,7 @@ class TinaFloatingActionButton extends StatelessWidget {
 
     if (tooltip != null) {
       fab = Tooltip(
-        message: tooltip!,
+        message: tooltip,
         child: fab,
       );
     }
@@ -140,28 +142,26 @@ class TinaFloatingActionButton extends StatelessWidget {
     return fab;
   }
 
-  Widget _buildRegularContent() {
+  Widget _buildRegularContent(TinaColorScheme tinaColors) {
     return TinaIcon(
       icon,
       size: _getIconSize(),
-      color: foregroundColor ?? DesignColors.primaryContrast,
+      color: foregroundColor ?? tinaColors.onPrimary,
     );
   }
 
-  Widget _buildExtendedContent() {
+  Widget _buildExtendedContent(TinaColorScheme tinaColors) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         TinaIcon(
           icon,
-          size: TinaIconSize.medium,
-          color: foregroundColor ?? DesignColors.primaryContrast,
+          color: foregroundColor ?? tinaColors.onPrimary,
         ),
         const SizedBox(width: DesignSpacing.sm),
         TinaText(
           text!,
-          style: TinaTextStyle.body,
-          color: foregroundColor ?? DesignColors.primaryContrast,
+          color: foregroundColor ?? tinaColors.onPrimary,
           fontWeight: DesignTypography.fontWeightMedium,
         ),
       ],

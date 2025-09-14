@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_app_bar_action.dart';
-import 'package:ui/src/atoms/tina_badge.dart';
-import 'package:ui/src/atoms/tina_icon.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_app_bar_action.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaAppBarAction', () {
     testWidgets('renders app bar action button correctly', (tester) async {
       const testIcon = Icons.notifications;
-      bool wasPressed = false;
-      
+      var wasPressed = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -25,7 +25,7 @@ void main() {
       expect(find.byIcon(testIcon), findsOneWidget);
       expect(find.byType(TinaIcon), findsOneWidget);
       expect(find.byType(IconButton), findsOneWidget);
-      
+
       await tester.tap(find.byType(IconButton));
       expect(wasPressed, isTrue);
     });
@@ -33,7 +33,7 @@ void main() {
     testWidgets('displays badge when provided', (tester) async {
       const testIcon = Icons.notifications;
       final testBadge = TinaBadge.count(count: 7);
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -54,7 +54,7 @@ void main() {
     testWidgets('applies custom color correctly', (tester) async {
       const testIcon = Icons.notifications;
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -76,7 +76,7 @@ void main() {
 
     testWidgets('applies default color in light theme', (tester) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.light(),
@@ -95,7 +95,7 @@ void main() {
 
     testWidgets('applies default color in dark theme', (tester) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.dark(),
@@ -112,10 +112,12 @@ void main() {
       expect(tinaIcon.color, DesignColors.neutral100);
     });
 
-    testWidgets('uses app bar theme foreground color when available', (tester) async {
+    testWidgets('uses app bar theme foreground color when available', (
+      tester,
+    ) async {
       const testIcon = Icons.notifications;
       const appBarForegroundColor = Colors.purple;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
@@ -138,9 +140,9 @@ void main() {
 
     testWidgets('handles null onPressed correctly', (tester) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaAppBarAction(
               icon: testIcon,
@@ -157,7 +159,7 @@ void main() {
     testWidgets('applies tooltip correctly', (tester) async {
       const testIcon = Icons.notifications;
       const tooltipMessage = 'Notifications';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -171,7 +173,7 @@ void main() {
       );
 
       expect(find.byType(Tooltip), findsOneWidget);
-      
+
       final tooltip = tester.widget<Tooltip>(find.byType(Tooltip));
       expect(tooltip.message, tooltipMessage);
     });
@@ -179,7 +181,7 @@ void main() {
     testWidgets('applies semantic label correctly', (tester) async {
       const testIcon = Icons.notifications;
       const semanticLabel = 'View notifications';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -196,9 +198,11 @@ void main() {
       expect(tinaIcon.semanticLabel, semanticLabel);
     });
 
-    testWidgets('applies proper button constraints and padding', (tester) async {
+    testWidgets('applies proper button constraints and padding', (
+      tester,
+    ) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -213,15 +217,18 @@ void main() {
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
       expect(iconButton.iconSize, 24.0);
       expect(iconButton.padding, const EdgeInsets.all(DesignSpacing.sm));
-      expect(iconButton.constraints, const BoxConstraints(
-        minWidth: 48.0,
-        minHeight: 48.0,
-      ));
+      expect(
+        iconButton.constraints,
+        const BoxConstraints(
+          minWidth: 48,
+          minHeight: 48,
+        ),
+      );
     });
 
     testWidgets('applies proper icon size', (tester) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -239,7 +246,7 @@ void main() {
 
     testWidgets('applies transparent background', (tester) async {
       const testIcon = Icons.notifications;
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -252,7 +259,10 @@ void main() {
       );
 
       final iconButton = tester.widget<IconButton>(find.byType(IconButton));
-      expect(iconButton.style?.backgroundColor?.resolve({}), Colors.transparent);
+      expect(
+        iconButton.style?.backgroundColor?.resolve({}),
+        Colors.transparent,
+      );
     });
   });
 }

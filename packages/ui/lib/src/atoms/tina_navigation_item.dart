@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_badge.dart';
-import 'tina_icon.dart';
-import 'tina_text.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable navigation item component following the Tina design system.
 ///
@@ -44,14 +45,13 @@ class TinaNavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
-    Widget content = _buildContent(theme);
-    
+    final tinaColors = context.tinaColors;
+
+    var content = _buildContent(tinaColors);
+
     if (badge != null) {
       content = TinaPositionedBadge(
         badge: badge!,
-        position: TinaBadgePosition.topRight,
         child: content,
       );
     }
@@ -68,7 +68,7 @@ class TinaNavigationItem extends StatelessWidget {
           child: Container(
             padding: _getPadding(),
             decoration: BoxDecoration(
-              color: _getBackgroundColor(theme),
+              color: _getBackgroundColor(tinaColors),
               borderRadius: BorderRadius.circular(_getBorderRadius()),
             ),
             child: content,
@@ -78,14 +78,23 @@ class TinaNavigationItem extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ThemeData theme) {
-    final iconColor = _getIconColor(theme);
-    final textColor = _getTextColor(theme);
+  Widget _buildContent(TinaColorScheme tinaColors) {
+    final iconColor = _getIconColor(tinaColors);
+    final textColor = _getTextColor(tinaColors);
 
     return switch (size) {
-      TinaNavigationItemSize.compact => _buildCompactContent(iconColor, textColor),
-      TinaNavigationItemSize.normal => _buildNormalContent(iconColor, textColor),
-      TinaNavigationItemSize.expanded => _buildExpandedContent(iconColor, textColor),
+      TinaNavigationItemSize.compact => _buildCompactContent(
+        iconColor,
+        textColor,
+      ),
+      TinaNavigationItemSize.normal => _buildNormalContent(
+        iconColor,
+        textColor,
+      ),
+      TinaNavigationItemSize.expanded => _buildExpandedContent(
+        iconColor,
+        textColor,
+      ),
     };
   }
 
@@ -97,7 +106,7 @@ class TinaNavigationItem extends StatelessWidget {
         color: iconColor,
       );
     }
-    
+
     if (text != null) {
       return TinaText(
         text!,
@@ -107,7 +116,7 @@ class TinaNavigationItem extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       );
     }
-    
+
     return const SizedBox.shrink();
   }
 
@@ -118,7 +127,6 @@ class TinaNavigationItem extends StatelessWidget {
         children: [
           TinaIcon(
             icon!,
-            size: TinaIconSize.medium,
             color: iconColor,
           ),
           const SizedBox(height: DesignSpacing.xs),
@@ -132,15 +140,14 @@ class TinaNavigationItem extends StatelessWidget {
         ],
       );
     }
-    
+
     if (icon != null) {
       return TinaIcon(
         icon!,
-        size: TinaIconSize.medium,
         color: iconColor,
       );
     }
-    
+
     if (text != null) {
       return TinaText(
         text!,
@@ -150,7 +157,7 @@ class TinaNavigationItem extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       );
     }
-    
+
     return const SizedBox.shrink();
   }
 
@@ -161,14 +168,12 @@ class TinaNavigationItem extends StatelessWidget {
         children: [
           TinaIcon(
             icon!,
-            size: TinaIconSize.medium,
             color: iconColor,
           ),
           const SizedBox(width: DesignSpacing.sm),
           Flexible(
             child: TinaText(
               text!,
-              style: TinaTextStyle.body,
               color: textColor,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -177,25 +182,23 @@ class TinaNavigationItem extends StatelessWidget {
         ],
       );
     }
-    
+
     if (icon != null) {
       return TinaIcon(
         icon!,
-        size: TinaIconSize.medium,
         color: iconColor,
       );
     }
-    
+
     if (text != null) {
       return TinaText(
         text!,
-        style: TinaTextStyle.body,
         color: textColor,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       );
     }
-    
+
     return const SizedBox.shrink();
   }
 
@@ -203,13 +206,13 @@ class TinaNavigationItem extends StatelessWidget {
     return switch (size) {
       TinaNavigationItemSize.compact => const EdgeInsets.all(DesignSpacing.xs),
       TinaNavigationItemSize.normal => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.sm,
-          vertical: DesignSpacing.xs,
-        ),
+        horizontal: DesignSpacing.sm,
+        vertical: DesignSpacing.xs,
+      ),
       TinaNavigationItemSize.expanded => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.md,
-          vertical: DesignSpacing.sm,
-        ),
+        horizontal: DesignSpacing.md,
+        vertical: DesignSpacing.sm,
+      ),
     };
   }
 
@@ -221,32 +224,30 @@ class TinaNavigationItem extends StatelessWidget {
     };
   }
 
-  Color _getBackgroundColor(ThemeData theme) {
+  Color _getBackgroundColor(TinaColorScheme tinaColors) {
     if (!isActive) return Colors.transparent;
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.primaryBase.withOpacity(0.2)
-        : DesignColors.primaryBase.withOpacity(0.1);
+
+    return tinaColors.primary.withValues(alpha: 0.1);
   }
 
-  Color _getIconColor(ThemeData theme) {
-    if (onTap == null) return DesignColors.neutral400;
-    
-    if (isActive) return DesignColors.primaryBase;
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral300
-        : DesignColors.neutral600;
+  Color _getIconColor(TinaColorScheme tinaColors) {
+    if (onTap == null) {
+      return tinaColors.onSurfaceVariant.withValues(alpha: 0.6);
+    }
+
+    if (isActive) return tinaColors.primary;
+
+    return tinaColors.onSurfaceVariant;
   }
 
-  Color _getTextColor(ThemeData theme) {
-    if (onTap == null) return DesignColors.neutral400;
-    
-    if (isActive) return DesignColors.primaryBase;
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral300
-        : DesignColors.neutral600;
+  Color _getTextColor(TinaColorScheme tinaColors) {
+    if (onTap == null) {
+      return tinaColors.onSurfaceVariant.withValues(alpha: 0.6);
+    }
+
+    if (isActive) return tinaColors.primary;
+
+    return tinaColors.onSurface;
   }
 }
 

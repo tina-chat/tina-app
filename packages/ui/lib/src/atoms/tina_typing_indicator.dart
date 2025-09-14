@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A typing indicator component that shows animated dots.
 ///
@@ -48,10 +49,10 @@ class _TinaTypingIndicatorState extends State<TinaTypingIndicator>
     _dotAnimations = List.generate(3, (index) {
       final begin = index * 0.2; // Stagger by 20% of the animation
       final end = begin + 0.4; // Each dot animates for 40% of the cycle
-      
+
       return Tween<double>(
         begin: 0.4,
-        end: 1.0,
+        end: 1,
       ).animate(
         CurvedAnimation(
           parent: _animationController,
@@ -75,9 +76,9 @@ class _TinaTypingIndicatorState extends State<TinaTypingIndicator>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final dotColor = widget.color ?? DesignColors.neutral500;
-    
+    final tinaColors = context.tinaColors;
+    final dotColor = widget.color ?? tinaColors.onSurfaceVariant;
+
     final content = Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(3, (index) {
@@ -120,7 +121,7 @@ class _TinaTypingIndicatorState extends State<TinaTypingIndicator>
           bottom: DesignSpacing.sm,
         ),
         decoration: BoxDecoration(
-          color: DesignColors.neutral100,
+          color: tinaColors.surfaceVariant,
           borderRadius: BorderRadius.circular(DesignBorderRadius.lg).copyWith(
             bottomLeft: const Radius.circular(DesignBorderRadius.sm),
           ),
@@ -153,17 +154,17 @@ class _TinaTypingIndicatorState extends State<TinaTypingIndicator>
   EdgeInsets _getContainerPadding() {
     return switch (widget.size) {
       TinaTypingIndicatorSize.small => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.sm,
-          vertical: DesignSpacing.xs,
-        ),
+        horizontal: DesignSpacing.sm,
+        vertical: DesignSpacing.xs,
+      ),
       TinaTypingIndicatorSize.medium => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.md,
-          vertical: DesignSpacing.sm,
-        ),
+        horizontal: DesignSpacing.md,
+        vertical: DesignSpacing.sm,
+      ),
       TinaTypingIndicatorSize.large => const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.lg,
-          vertical: DesignSpacing.md,
-        ),
+        horizontal: DesignSpacing.lg,
+        vertical: DesignSpacing.md,
+      ),
     };
   }
 }

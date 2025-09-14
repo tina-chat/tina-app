@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_divider.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_divider.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaDivider', () {
@@ -15,12 +15,15 @@ void main() {
         ),
       );
 
-      expect(find.byType(Container), findsNWidgets(2)); // Outer and inner container
+      expect(
+        find.byType(Container),
+        findsNWidgets(2),
+      ); // Outer and inner container
     });
 
     testWidgets('applies custom height correctly', (tester) async {
       const customHeight = 32.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -39,7 +42,7 @@ void main() {
 
     testWidgets('applies custom thickness correctly', (tester) async {
       const customThickness = 4.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -58,7 +61,7 @@ void main() {
 
     testWidgets('applies custom color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -77,7 +80,7 @@ void main() {
 
     testWidgets('applies indent correctly', (tester) async {
       const indent = 16.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -91,12 +94,12 @@ void main() {
       final outerContainer = tester.widget<Container>(
         find.byType(Container).first,
       );
-      expect(outerContainer.margin, const EdgeInsets.only(left: indent, right: 0));
+      expect(outerContainer.margin, const EdgeInsets.only(left: indent));
     });
 
     testWidgets('applies endIndent correctly', (tester) async {
       const endIndent = 16.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -110,7 +113,7 @@ void main() {
       final outerContainer = tester.widget<Container>(
         find.byType(Container).first,
       );
-      expect(outerContainer.margin, const EdgeInsets.only(left: 0, right: endIndent));
+      expect(outerContainer.margin, const EdgeInsets.only(right: endIndent));
     });
 
     group('TinaDivider.vertical', () {
@@ -128,7 +131,7 @@ void main() {
 
       testWidgets('applies custom width correctly', (tester) async {
         const customWidth = 32.0;
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -147,7 +150,7 @@ void main() {
 
       testWidgets('applies vertical indent correctly', (tester) async {
         const indent = 16.0;
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -161,14 +164,14 @@ void main() {
         final outerContainer = tester.widget<Container>(
           find.byType(Container).first,
         );
-        expect(outerContainer.margin, const EdgeInsets.only(top: indent, bottom: 0));
+        expect(outerContainer.margin, const EdgeInsets.only(top: indent));
       });
     });
 
     group('TinaDivider.withLabel', () {
       testWidgets('renders labeled divider correctly', (tester) async {
         const labelText = 'OR';
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -188,7 +191,7 @@ void main() {
       testWidgets('applies custom height to labeled divider', (tester) async {
         const customHeight = 48.0;
         const labelText = 'SECTION';
-        
+
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -213,8 +216,14 @@ void main() {
     group('TinaDividerOrientation enum', () {
       test('has all expected values', () {
         expect(TinaDividerOrientation.values, hasLength(2));
-        expect(TinaDividerOrientation.values, contains(TinaDividerOrientation.horizontal));
-        expect(TinaDividerOrientation.values, contains(TinaDividerOrientation.vertical));
+        expect(
+          TinaDividerOrientation.values,
+          contains(TinaDividerOrientation.horizontal),
+        );
+        expect(
+          TinaDividerOrientation.values,
+          contains(TinaDividerOrientation.vertical),
+        );
       });
     });
   });
@@ -249,7 +258,7 @@ void main() {
     testWidgets('applies custom indent and endIndent', (tester) async {
       const customIndent = 8.0;
       const customEndIndent = 24.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -268,7 +277,7 @@ void main() {
 
     testWidgets('applies custom thickness', (tester) async {
       const customThickness = 2.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -301,7 +310,7 @@ void main() {
 
     testWidgets('renders section divider with label correctly', (tester) async {
       const labelText = 'Section Title';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -318,30 +327,33 @@ void main() {
 
     testWidgets('applies custom spacing', (tester) async {
       const customSpacing = 32.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaSectionDivider(
-              spacing: customSpacing,
-            ),
+            body: TinaSectionDivider(),
           ),
         ),
       );
 
       // Find the outermost Padding widget from TinaSectionDivider
       final outerPadding = tester.widget<Padding>(
-        find.ancestor(
-          of: find.byType(TinaDivider),
-          matching: find.byType(Padding),
-        ).first,
+        find
+            .ancestor(
+              of: find.byType(TinaDivider),
+              matching: find.byType(Padding),
+            )
+            .first,
       );
-      expect(outerPadding.padding, EdgeInsets.symmetric(vertical: customSpacing / 2));
+      expect(
+        outerPadding.padding,
+        const EdgeInsets.symmetric(vertical: customSpacing / 2),
+      );
     });
 
     testWidgets('applies custom thickness', (tester) async {
       const customThickness = 3.0;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -358,7 +370,7 @@ void main() {
 
     testWidgets('applies custom color', (tester) async {
       const customColor = Colors.blue;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

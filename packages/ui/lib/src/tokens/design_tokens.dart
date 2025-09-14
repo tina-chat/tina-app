@@ -60,15 +60,15 @@ class DesignTypography {
   static const String monoFontFamily = 'JetBrains Mono';
 
   // Font sizes (in logical pixels)
-  static const double fontSizeXs = 12.0; // 0.75rem
-  static const double fontSizeSm = 14.0; // 0.875rem
-  static const double fontSizeBase = 16.0; // 1rem
-  static const double fontSizeLg = 18.0; // 1.125rem
-  static const double fontSizeXl = 20.0; // 1.25rem
-  static const double fontSize2Xl = 24.0; // 1.5rem
-  static const double fontSize3Xl = 30.0; // 1.875rem
-  static const double fontSize4Xl = 36.0; // 2.25rem
-  static const double fontSize5Xl = 48.0; // 3rem
+  static const double fontSizeXs = 12; // 0.75rem
+  static const double fontSizeSm = 14; // 0.875rem
+  static const double fontSizeBase = 16; // 1rem
+  static const double fontSizeLg = 18; // 1.125rem
+  static const double fontSizeXl = 20; // 1.25rem
+  static const double fontSize2Xl = 24; // 1.5rem
+  static const double fontSize3Xl = 30; // 1.875rem
+  static const double fontSize4Xl = 36; // 2.25rem
+  static const double fontSize5Xl = 48; // 3rem
 
   // Font weights
   static const FontWeight fontWeightLight = FontWeight.w300;
@@ -86,11 +86,11 @@ class DesignTypography {
   static const double lineHeight2Xl = 1.3;
   static const double lineHeight3Xl = 1.2;
   static const double lineHeight4Xl = 1.1;
-  static const double lineHeight5Xl = 1.0;
+  static const double lineHeight5Xl = 1;
 
   // Letter spacing
   static const double letterSpacingTight = -0.025;
-  static const double letterSpacingNormal = 0.0;
+  static const double letterSpacingNormal = 0;
   static const double letterSpacingWide = 0.025;
 }
 
@@ -98,52 +98,52 @@ class DesignTypography {
 class DesignSpacing {
   DesignSpacing._();
 
-  static const double base = 16.0; // 1rem
+  static const double base = 16; // 1rem
 
-  static const double xs = 4.0; // 0.25rem
-  static const double sm = 8.0; // 0.5rem
-  static const double md = 16.0; // 1rem
-  static const double lg = 24.0; // 1.5rem
-  static const double xl = 32.0; // 2rem
-  static const double xl2 = 48.0; // 3rem
-  static const double xl3 = 64.0; // 4rem
+  static const double xs = 4; // 0.25rem
+  static const double sm = 8; // 0.5rem
+  static const double md = 16; // 1rem
+  static const double lg = 24; // 1.5rem
+  static const double xl = 32; // 2rem
+  static const double xl2 = 48; // 3rem
+  static const double xl3 = 64; // 4rem
 
   // Layout spacing
-  static const double contentPadding = 24.0; // 1.5rem
-  static const double sectionSpacing = 64.0; // 4rem
-  static const double componentSpacing = 16.0; // 1rem
+  static const double contentPadding = 24; // 1.5rem
+  static const double sectionSpacing = 64; // 4rem
+  static const double componentSpacing = 16; // 1rem
 }
 
 /// Border radius tokens (in logical pixels)
 class DesignBorderRadius {
   DesignBorderRadius._();
 
-  static const double none = 0.0;
-  static const double sm = 2.0; // 0.125rem
-  static const double md = 6.0; // 0.375rem
-  static const double lg = 8.0; // 0.5rem
-  static const double xl = 16.0; // 1rem
-  static const double full = 9999.0;
+  static const double none = 0;
+  static const double sm = 2; // 0.125rem
+  static const double md = 6; // 0.375rem
+  static const double lg = 8; // 0.5rem
+  static const double xl = 16; // 1rem
+  static const double full = 9999;
 }
 
 /// Border width tokens (in logical pixels)
 class DesignBorderWidth {
   DesignBorderWidth._();
 
-  static const double thin = 1.0;
-  static const double medium = 2.0;
-  static const double thick = 4.0;
+  static const double thin = 1;
+  static const double medium = 2;
+  static const double thick = 4;
 }
 
 /// Elevation tokens
 class DesignElevation {
   DesignElevation._();
 
-  static const double none = 0.0;
-  static const double sm = 1.0;
-  static const double md = 4.0;
-  static const double lg = 8.0;
-  static const double xl = 16.0;
+  static const double none = 0;
+  static const double sm = 1;
+  static const double md = 4;
+  static const double lg = 8;
+  static const double xl = 16;
 }
 
 /// Animation duration tokens
@@ -159,11 +159,11 @@ class DesignDuration {
 class DesignBreakpoints {
   DesignBreakpoints._();
 
-  static const double sm = 640.0;
-  static const double md = 768.0;
-  static const double lg = 1024.0;
-  static const double xl = 1280.0;
-  static const double xl2 = 1536.0;
+  static const double sm = 640;
+  static const double md = 768;
+  static const double lg = 1024;
+  static const double xl = 1280;
+  static const double xl2 = 1536;
 }
 
 /// Z-index values for layering
@@ -187,21 +187,21 @@ class DesignComponentSizes {
 class DesignButtonSizes {
   DesignButtonSizes._();
 
-  static const double heightSm = 32.0; // 2rem
-  static const double heightMd = 40.0; // 2.5rem
-  static const double heightLg = 48.0; // 3rem
+  static const double heightSm = 32; // 2rem
+  static const double heightMd = 40; // 2.5rem
+  static const double heightLg = 48; // 3rem
 
   static const EdgeInsets paddingSm = EdgeInsets.symmetric(
-    horizontal: 16.0,
-    vertical: 8.0,
+    horizontal: 16,
+    vertical: 8,
   );
   static const EdgeInsets paddingMd = EdgeInsets.symmetric(
-    horizontal: 24.0,
-    vertical: 12.0,
+    horizontal: 24,
+    vertical: 12,
   );
   static const EdgeInsets paddingLg = EdgeInsets.symmetric(
-    horizontal: 32.0,
-    vertical: 16.0,
+    horizontal: 32,
+    vertical: 16,
   );
 }
 
@@ -209,21 +209,21 @@ class DesignButtonSizes {
 class DesignInputSizes {
   DesignInputSizes._();
 
-  static const double heightSm = 32.0; // 2rem
-  static const double heightMd = 40.0; // 2.5rem
-  static const double heightLg = 48.0; // 3rem
+  static const double heightSm = 32; // 2rem
+  static const double heightMd = 40; // 2.5rem
+  static const double heightLg = 48; // 3rem
 
   static const EdgeInsets paddingSm = EdgeInsets.symmetric(
-    horizontal: 8.0,
-    vertical: 6.0,
+    horizontal: 8,
+    vertical: 6,
   );
   static const EdgeInsets paddingMd = EdgeInsets.symmetric(
-    horizontal: 12.0,
-    vertical: 8.0,
+    horizontal: 12,
+    vertical: 8,
   );
   static const EdgeInsets paddingLg = EdgeInsets.symmetric(
-    horizontal: 16.0,
-    vertical: 12.0,
+    horizontal: 16,
+    vertical: 12,
   );
 }
 
@@ -231,14 +231,14 @@ class DesignInputSizes {
 class DesignNavigationSizes {
   DesignNavigationSizes._();
 
-  static const double desktopHeight = 64.0; // 4rem
-  static const double mobileHeight = 56.0; // 3.5rem
+  static const double desktopHeight = 64; // 4rem
+  static const double mobileHeight = 56; // 3.5rem
 
   static const EdgeInsets desktopPadding = EdgeInsets.symmetric(
-    horizontal: 24.0,
+    horizontal: 24,
   );
   static const EdgeInsets mobilePadding = EdgeInsets.symmetric(
-    horizontal: 16.0,
+    horizontal: 16,
   );
 }
 
@@ -250,7 +250,6 @@ class DesignShadows {
     color: Color(0x0D000000), // rgba(0, 0, 0, 0.05)
     offset: Offset(0, 1),
     blurRadius: 2,
-    spreadRadius: 0,
   );
 
   static const BoxShadow md = BoxShadow(
@@ -278,13 +277,11 @@ class DesignShadows {
     color: Color(0x0F000000), // rgba(0, 0, 0, 0.06)
     offset: Offset(0, 2),
     blurRadius: 4,
-    spreadRadius: 0,
   );
 
   static const BoxShadow glass = BoxShadow(
     color: Color(0x5F1F2687), // rgba(31, 38, 135, 0.37)
     offset: Offset(0, 8),
     blurRadius: 32,
-    spreadRadius: 0,
   );
 }

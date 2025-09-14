@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_text.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaText', () {
     testWidgets('renders text correctly', (tester) async {
       const testText = 'Hello, World!';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -21,7 +21,7 @@ void main() {
 
     testWidgets('applies correct style for heading1', (tester) async {
       const testText = 'Heading 1';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -41,13 +41,12 @@ void main() {
 
     testWidgets('applies correct style for body text', (tester) async {
       const testText = 'Body text';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             body: TinaText(
               testText,
-              style: TinaTextStyle.body,
             ),
           ),
         ),
@@ -62,7 +61,7 @@ void main() {
     testWidgets('applies custom color when provided', (tester) async {
       const testText = 'Custom color text';
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -80,7 +79,7 @@ void main() {
 
     testWidgets('applies text alignment correctly', (tester) async {
       const testText = 'Centered text';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -98,7 +97,7 @@ void main() {
 
     testWidgets('applies maxLines correctly', (tester) async {
       const testText = 'Text with max lines';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -116,7 +115,7 @@ void main() {
 
     testWidgets('applies overflow correctly', (tester) async {
       const testText = 'Text with overflow';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -135,7 +134,7 @@ void main() {
     testWidgets('applies semantic label correctly', (tester) async {
       const testText = 'Text with semantic label';
       const semanticLabel = 'Custom semantic label';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -153,7 +152,7 @@ void main() {
 
     testWidgets('applies code style correctly', (tester) async {
       const testText = 'console.log("Hello");';
-      
+
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

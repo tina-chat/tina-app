@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui/src/atoms/tina_card.dart';
-import 'package:ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/atoms/tina_card.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 void main() {
   group('TinaCard', () {
     testWidgets('renders card with child correctly', (tester) async {
       const testText = 'Card Content';
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               child: Text(testText),
@@ -24,7 +25,7 @@ void main() {
 
     testWidgets('applies default styling correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               child: Text('Content'),
@@ -35,16 +36,19 @@ void main() {
 
       final container = tester.widget<Container>(find.byType(Container));
       expect(container.decoration, isA<BoxDecoration>());
-      
-      final decoration = container.decoration as BoxDecoration;
-      expect(decoration.borderRadius, BorderRadius.circular(DesignBorderRadius.lg));
+
+      final decoration = container.decoration! as BoxDecoration;
+      expect(
+        decoration.borderRadius,
+        BorderRadius.circular(DesignBorderRadius.lg),
+      );
       expect(decoration.boxShadow, isNotEmpty);
       expect(decoration.boxShadow!.first, DesignShadows.sm);
     });
 
     testWidgets('applies medium padding by default', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               child: Text('Content'),
@@ -59,7 +63,7 @@ void main() {
 
     testWidgets('applies no padding variant correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard.noPadding(
               child: Text('Content'),
@@ -74,7 +78,7 @@ void main() {
 
     testWidgets('applies compact padding variant correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard.compact(
               child: Text('Content'),
@@ -89,7 +93,7 @@ void main() {
 
     testWidgets('applies spacious padding variant correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard.spacious(
               child: Text('Content'),
@@ -104,7 +108,7 @@ void main() {
 
     testWidgets('applies no elevation correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               elevation: TinaCardElevation.none,
@@ -115,16 +119,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, isEmpty);
     });
 
     testWidgets('applies small elevation correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
-              elevation: TinaCardElevation.sm,
               child: Text('Content'),
             ),
           ),
@@ -132,13 +135,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.sm]);
     });
 
     testWidgets('applies medium elevation correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               elevation: TinaCardElevation.md,
@@ -149,13 +152,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.md]);
     });
 
     testWidgets('applies large elevation correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               elevation: TinaCardElevation.lg,
@@ -166,13 +169,13 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.lg]);
     });
 
     testWidgets('applies extra large elevation correctly', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               elevation: TinaCardElevation.xl,
@@ -183,15 +186,15 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, [DesignShadows.xl]);
     });
 
     testWidgets('applies custom background color correctly', (tester) async {
       const customColor = Colors.red;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               backgroundColor: customColor,
@@ -202,15 +205,17 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, customColor);
     });
 
-    testWidgets('applies default background color in light theme', (tester) async {
+    testWidgets('applies default background color in light theme', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.light(),
-          home: Scaffold(
+          home: const Scaffold(
             body: TinaCard(
               child: Text('Content'),
             ),
@@ -219,15 +224,19 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.neutral50);
     });
 
-    testWidgets('applies default background color in dark theme', (tester) async {
+    testWidgets('applies default background color in dark theme', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
-          theme: ThemeData.dark(),
-          home: Scaffold(
+          theme: ThemeData.dark().copyWith(
+            extensions: const [TinaTheme.dark],
+          ),
+          home: const Scaffold(
             body: TinaCard(
               child: Text('Content'),
             ),
@@ -236,15 +245,16 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
+      // In dark theme, surface color should be neutral800
       expect(decoration.color, DesignColors.neutral800);
     });
 
     testWidgets('applies border color correctly', (tester) async {
       const borderColor = Colors.blue;
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               borderColor: borderColor,
@@ -255,37 +265,37 @@ void main() {
       );
 
       final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration as BoxDecoration;
+      final decoration = container.decoration! as BoxDecoration;
       expect(decoration.border, isA<Border>());
-      
-      final border = decoration.border as Border;
+
+      final border = decoration.border! as Border;
       expect(border.top.color, borderColor);
       expect(border.top.width, DesignBorderWidth.thin);
     });
 
     testWidgets('handles tap correctly', (tester) async {
-      bool wasTapped = false;
-      
+      var wasTapped = false;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: TinaCard(
               onTap: () => wasTapped = true,
-              child: Text('Tappable Card'),
+              child: const Text('Tappable Card'),
             ),
           ),
         ),
       );
 
       expect(find.byType(InkWell), findsOneWidget);
-      
+
       await tester.tap(find.byType(TinaCard));
       expect(wasTapped, isTrue);
     });
 
     testWidgets('does not show InkWell when onTap is null', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               child: Text('Non-tappable Card'),
@@ -299,9 +309,9 @@ void main() {
 
     testWidgets('applies semantic label correctly', (tester) async {
       const semanticLabel = 'Product card';
-      
+
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: TinaCard(
               semanticLabel: semanticLabel,

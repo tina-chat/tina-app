@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// An attachment preview component for file attachments.
 ///
@@ -49,32 +50,31 @@ class TinaAttachmentPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+    final tinaColors = context.tinaColors;
+
     return Container(
       constraints: BoxConstraints(
         maxWidth: _getMaxWidth(),
       ),
       decoration: BoxDecoration(
-        color: DesignColors.neutral50,
+        color: tinaColors.surfaceVariant,
         border: Border.all(
-          color: DesignColors.neutral200,
-          width: DesignBorderWidth.thin,
+          color: tinaColors.outline,
         ),
         borderRadius: BorderRadius.circular(DesignBorderRadius.md),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeader(),
-          _buildContent(theme),
-          if (onDownload != null || onRemove != null) _buildActions(theme),
+          _buildHeader(tinaColors),
+          _buildContent(tinaColors),
+          if (onDownload != null || onRemove != null) _buildActions(tinaColors),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(TinaColorScheme tinaColors) {
     if (thumbnailUrl != null && fileType == TinaAttachmentType.image) {
       return ClipRRect(
         borderRadius: const BorderRadius.vertical(
@@ -85,28 +85,29 @@ class TinaAttachmentPreview extends StatelessWidget {
           child: Image.network(
             thumbnailUrl!,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => _buildFileIcon(),
+            errorBuilder: (context, error, stackTrace) =>
+                _buildFileIcon(tinaColors),
           ),
         ),
       );
     }
-    
+
     return Container(
       height: _getIconContainerHeight(),
-      decoration: const BoxDecoration(
-        color: DesignColors.neutral100,
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        color: tinaColors.surfaceVariant,
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(DesignBorderRadius.md),
         ),
       ),
-      child: Center(child: _buildFileIcon()),
+      child: Center(child: _buildFileIcon(tinaColors)),
     );
   }
 
-  Widget _buildFileIcon() {
+  Widget _buildFileIcon(TinaColorScheme tinaColors) {
     final iconData = _getFileTypeIcon();
-    final iconColor = _getFileTypeColor();
-    
+    final iconColor = _getFileTypeColor(tinaColors);
+
     return Icon(
       iconData,
       size: _getIconSize(),
@@ -115,7 +116,7 @@ class TinaAttachmentPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ThemeData theme) {
+  Widget _buildContent(TinaColorScheme tinaColors) {
     return Padding(
       padding: EdgeInsets.all(_getContentPadding()),
       child: Column(
@@ -127,7 +128,7 @@ class TinaAttachmentPreview extends StatelessWidget {
               fontSize: _getFileNameFontSize(),
               fontWeight: DesignTypography.fontWeightMedium,
               fontFamily: DesignTypography.bodyFontFamily,
-              color: DesignColors.neutral800,
+              color: tinaColors.onSurface,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -138,29 +139,29 @@ class TinaAttachmentPreview extends StatelessWidget {
               _formatFileSize(fileSize!),
               style: TextStyle(
                 fontSize: _getFileSizeFontSize(),
-                color: DesignColors.neutral500,
+                color: tinaColors.onSurfaceVariant,
                 fontFamily: DesignTypography.bodyFontFamily,
               ),
             ),
           ],
           if (isDownloading) ...[
             const SizedBox(height: DesignSpacing.sm),
-            _buildProgressIndicator(),
+            _buildProgressIndicator(tinaColors),
           ],
         ],
       ),
     );
   }
 
-  Widget _buildProgressIndicator() {
+  Widget _buildProgressIndicator(TinaColorScheme tinaColors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LinearProgressIndicator(
           value: downloadProgress,
-          backgroundColor: DesignColors.neutral200,
-          valueColor: const AlwaysStoppedAnimation<Color>(
-            DesignColors.primaryBase,
+          backgroundColor: tinaColors.outline,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            tinaColors.primary,
           ),
         ),
         if (downloadProgress != null) ...[
@@ -169,7 +170,7 @@ class TinaAttachmentPreview extends StatelessWidget {
             '${(downloadProgress! * 100).toInt()}%',
             style: TextStyle(
               fontSize: DesignTypography.fontSizeXs,
-              color: DesignColors.neutral500,
+              color: tinaColors.onSurfaceVariant,
               fontFamily: DesignTypography.bodyFontFamily,
             ),
           ),
@@ -178,14 +179,13 @@ class TinaAttachmentPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildActions(ThemeData theme) {
+  Widget _buildActions(TinaColorScheme tinaColors) {
     return Container(
       padding: EdgeInsets.all(_getActionsPadding()),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: DesignColors.neutral200,
-            width: DesignBorderWidth.thin,
+            color: tinaColors.outline,
           ),
         ),
       ),
@@ -200,7 +200,7 @@ class TinaAttachmentPreview extends StatelessWidget {
                 size: _getActionIconSize(),
               ),
               tooltip: isDownloading ? 'Downloading...' : 'Download',
-              color: DesignColors.primaryBase,
+              color: tinaColors.primary,
             ),
           ],
           if (onRemove != null) ...[
@@ -212,7 +212,7 @@ class TinaAttachmentPreview extends StatelessWidget {
                 size: _getActionIconSize(),
               ),
               tooltip: 'Remove',
-              color: DesignColors.error,
+              color: tinaColors.error,
             ),
           ],
         ],
@@ -299,18 +299,18 @@ class TinaAttachmentPreview extends StatelessWidget {
     };
   }
 
-  Color _getFileTypeColor() {
+  Color _getFileTypeColor(TinaColorScheme tinaColors) {
     return switch (fileType) {
-      TinaAttachmentType.image => DesignColors.success,
-      TinaAttachmentType.video => DesignColors.primaryBase,
-      TinaAttachmentType.audio => DesignColors.accentBase,
-      TinaAttachmentType.document => DesignColors.info,
-      TinaAttachmentType.pdf => DesignColors.error,
-      TinaAttachmentType.spreadsheet => DesignColors.success,
-      TinaAttachmentType.presentation => DesignColors.warning,
-      TinaAttachmentType.archive => DesignColors.neutral600,
-      TinaAttachmentType.code => DesignColors.neutral700,
-      TinaAttachmentType.other => DesignColors.neutral500,
+      TinaAttachmentType.image => tinaColors.success,
+      TinaAttachmentType.video => tinaColors.primary,
+      TinaAttachmentType.audio => tinaColors.secondary,
+      TinaAttachmentType.document => tinaColors.info,
+      TinaAttachmentType.pdf => tinaColors.error,
+      TinaAttachmentType.spreadsheet => tinaColors.success,
+      TinaAttachmentType.presentation => tinaColors.warning,
+      TinaAttachmentType.archive => tinaColors.onSurfaceVariant,
+      TinaAttachmentType.code => tinaColors.onSurface,
+      TinaAttachmentType.other => tinaColors.onSurfaceVariant,
     };
   }
 

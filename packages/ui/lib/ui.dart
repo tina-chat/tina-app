@@ -3,6 +3,7 @@
 /// This library provides a comprehensive set of UI components organized
 /// using atomic design principles, along with design tokens for consistent
 /// styling across the application.
+library;
 
 // Export atomic design components
 export 'src/atoms/atoms.dart';

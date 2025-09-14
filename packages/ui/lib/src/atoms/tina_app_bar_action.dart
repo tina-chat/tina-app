@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../tokens/design_tokens.dart';
-import 'tina_badge.dart';
-import 'tina_icon.dart';
+import 'package:tina_ui/src/atoms/tina_badge.dart';
+import 'package:tina_ui/src/atoms/tina_icon.dart';
+import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/tokens/tina_theme.dart';
 
-/// A customizable app bar action button component following the Tina design system.
+/// A customizable app bar action button component following the Tina design
+/// system.
 ///
 /// This action button is specifically designed for use in app bars and provides
 /// proper touch targets, badge support, and accessibility features.
@@ -39,22 +41,21 @@ class TinaAppBarAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final iconColor = color ?? _getDefaultIconColor(theme);
-    
+    final tinaColors = context.tinaColors;
+    final iconColor = color ?? _getDefaultIconColor(tinaColors);
+
     Widget actionButton = IconButton(
       onPressed: onPressed,
       icon: TinaIcon(
         icon,
-        size: TinaIconSize.medium,
         color: iconColor,
         semanticLabel: semanticLabel,
       ),
-      iconSize: 24.0,
+      iconSize: 24,
       padding: const EdgeInsets.all(DesignSpacing.sm),
       constraints: const BoxConstraints(
-        minWidth: 48.0,
-        minHeight: 48.0,
+        minWidth: 48,
+        minHeight: 48,
       ),
       style: IconButton.styleFrom(
         foregroundColor: iconColor,
@@ -68,7 +69,6 @@ class TinaAppBarAction extends StatelessWidget {
     if (badge != null) {
       actionButton = TinaPositionedBadge(
         badge: badge!,
-        position: TinaBadgePosition.topRight,
         offset: const Offset(-4, 4),
         child: actionButton,
       );
@@ -76,7 +76,7 @@ class TinaAppBarAction extends StatelessWidget {
 
     if (tooltip != null) {
       actionButton = Tooltip(
-        message: tooltip!,
+        message: tooltip,
         child: actionButton,
       );
     }
@@ -84,15 +84,7 @@ class TinaAppBarAction extends StatelessWidget {
     return actionButton;
   }
 
-  Color _getDefaultIconColor(ThemeData theme) {
-    // Use the app bar's foreground color if available, otherwise use neutral colors
-    final appBarTheme = theme.appBarTheme;
-    if (appBarTheme.foregroundColor != null) {
-      return appBarTheme.foregroundColor!;
-    }
-    
-    return theme.brightness == Brightness.dark
-        ? DesignColors.neutral100
-        : DesignColors.neutral700;
+  Color _getDefaultIconColor(TinaColorScheme tinaColors) {
+    return tinaColors.onSurface;
   }
 }

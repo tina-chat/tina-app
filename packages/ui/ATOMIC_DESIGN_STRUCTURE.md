@@ -60,7 +60,7 @@ A fully-featured button component demonstrating:
 
 ### Importing the UI Package
 ```dart
-import 'package:ui/ui.dart';
+import 'package:tina_ui/ui.dart';
 
 // Use design tokens
 Container(
