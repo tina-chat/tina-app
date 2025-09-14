@@ -5,6 +5,7 @@ environment:
 
 workspace:
   - apps/tina_app
+  - packages/ui
 
 dev_dependencies:
   melos: ^7.1.0
