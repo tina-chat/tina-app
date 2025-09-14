@@ -5,7 +5,6 @@ environment:
 
 workspace:
   - apps/tina_app
-  - packages/core/tina_core
 
 dev_dependencies:
   melos: ^7.1.0

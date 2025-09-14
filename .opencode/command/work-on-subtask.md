@@ -7,7 +7,7 @@ model: anthropic/claude-sonnet-4-20250514
 # Single Subtask Implementation Workflow
 
 ## 1. Identify Next Available Subtask
-!`task-master-ai_next_task"`
+`task-master-ai_next_task"`
 
 ## 1.1 Select Specific Subtask
 Based on the task returned above, I will:
@@ -20,8 +20,8 @@ Based on the task returned above, I will:
 
 ## 2. Pre-Implementation Validation
 - Confirm the selected subtask ID and its requirements
-- Mark ONLY that specific subtask as in-progress: !`task-master-ai_set_task_status --id="X.Y" --status="in-progress"`
-- Run status check: !`melos bootstrap && melos run analyze`
+- Mark ONLY that specific subtask as in-progress: `task-master-ai_set_task_status --id="X.Y" --status="in-progress"`
+- Run status check: `melos bootstrap && melos run analyze`
 
 ## 3. Context Loading
 @docs/monorepo-architecture-guide.md
@@ -45,12 +45,12 @@ Based on the task returned above, I will:
 
 ### Validation
 - Run package-specific tests for affected packages
-- Verify no regressions: !`melos run validate:quick`
+- Verify no regressions: `melos run validate:quick`
 - Confirm the subtask requirements are met
 - Ask user for validation if needed
 
 ## 5. Subtask Completion
-- Update ONLY the completed subtask status: !`task-master-ai_set_task_status --id="X.Y" --status="done"`
+- Update ONLY the completed subtask status: `task-master-ai_set_task_status --id="X.Y" --status="done"`
 - Document any important decisions made
 - Stop - do not automatically continue to the next subtask
 
