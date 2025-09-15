@@ -249,6 +249,17 @@ class TinaAvatarGroup extends StatelessWidget {
   /// A semantic label for the avatar group for accessibility.
   final String? semanticLabel;
 
+  double _getAvatarSize(TinaAvatarSize size) {
+    return switch (size) {
+      TinaAvatarSize.extraSmall => 24,
+      TinaAvatarSize.small => 32,
+      TinaAvatarSize.medium => 40,
+      TinaAvatarSize.large => 48,
+      TinaAvatarSize.extraLarge => 64,
+      TinaAvatarSize.huge => 96,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     if (avatars.isEmpty) return const SizedBox.shrink();
@@ -258,32 +269,70 @@ class TinaAvatarGroup extends StatelessWidget {
     final remainingCount = avatars.length - maxVisible;
     final hasMore = remainingCount > 0 && showCount;
 
-    Widget group = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ...visibleAvatars.asMap().entries.map((entry) {
-          final index = entry.key;
-          final avatar = entry.value;
+    Widget group;
+    
+    if (spacing < 0) {
+      // For negative spacing (overlapping), use Stack
+      final avatarSize = _getAvatarSize(size);
+      final totalAvatars = visibleAvatars.length + (hasMore ? 1 : 0);
+      final overlap = spacing.abs();
+      final totalWidth = avatarSize + (totalAvatars - 1) * (avatarSize - overlap);
+      
+      group = SizedBox(
+        width: totalWidth,
+        child: Stack(
+          children: [
+            ...visibleAvatars.asMap().entries.map((entry) {
+              final index = entry.key;
+              final avatar = entry.value;
+              
+              return Positioned(
+                left: index * (avatarSize - overlap),
+                child: avatar,
+              );
+            }),
+            if (hasMore)
+              Positioned(
+                left: visibleAvatars.length * (avatarSize - overlap),
+                child: TinaAvatar.initials(
+                  initials: '+$remainingCount',
+                  size: size,
+                  backgroundColor: tinaColors.surfaceVariant,
+                  foregroundColor: tinaColors.onSurfaceVariant,
+                ),
+              ),
+          ],
+        ),
+      );
+    } else {
+      // For positive spacing, use Row with padding
+      group = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ...visibleAvatars.asMap().entries.map((entry) {
+            final index = entry.key;
+            final avatar = entry.value;
 
-          return Padding(
-            padding: EdgeInsets.only(
-              left: index > 0 ? spacing : 0,
+            return Padding(
+              padding: EdgeInsets.only(
+                left: index > 0 ? spacing : 0,
+              ),
+              child: avatar,
+            );
+          }),
+          if (hasMore)
+            Padding(
+              padding: EdgeInsets.only(left: spacing),
+              child: TinaAvatar.initials(
+                initials: '+$remainingCount',
+                size: size,
+                backgroundColor: tinaColors.surfaceVariant,
+                foregroundColor: tinaColors.onSurfaceVariant,
+              ),
             ),
-            child: avatar,
-          );
-        }),
-        if (hasMore)
-          Padding(
-            padding: EdgeInsets.only(left: spacing),
-            child: TinaAvatar.initials(
-              initials: '+$remainingCount',
-              size: size,
-              backgroundColor: tinaColors.surfaceVariant,
-              foregroundColor: tinaColors.onSurfaceVariant,
-            ),
-          ),
-      ],
-    );
+        ],
+      );
+    }
 
     if (semanticLabel != null) {
       group = Semantics(
