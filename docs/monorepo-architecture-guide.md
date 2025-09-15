@@ -4,6 +4,8 @@
 
 This document synthesizes insights from 8 different architectural analyses to define the optimal monorepo structure for the Tina AI Assistant project. After comprehensive evaluation, we recommend a **Hybrid Architecture** that combines the best aspects of Clean Architecture, Domain-Driven Design, and Hexagonal Architecture, organized in a layered-modular structure with plugin capabilities.
 
+**Important Note**: Tina AI Assistant is a **client-only Flutter application** that connects to external AI services (OpenAI, Anthropic, etc.) and workflow platforms (n8n, Flowise, etc.). This architecture does NOT involve building a traditional backend server - it's about managing connections and configurations for external service providers.
+
 ## Architecture Overview
 
 ### Core Principles
@@ -31,14 +33,14 @@ tina/
 │   │
 │   ├── domain/                      # Business logic (pure Dart, no Flutter)
 │   │   ├── chat_domain/             # Chat entities, value objects, aggregates
-│   │   ├── backend_domain/          # Backend management business logic
+│   │   ├── service_providers_domain/ # External service provider management logic
 │   │   ├── tool_domain/             # Tool entities and execution logic
 │   │   ├── workflow_domain/         # Workflow entities and orchestration
 │   │   └── security_domain/         # Credentials, permissions, policies
 │   │
 │   ├── application/                 # Use cases and application services
 │   │   ├── chat_application/        # Chat-related use cases
-│   │   ├── backend_application/     # Backend management use cases
+│   │   ├── service_providers_application/ # Service provider management use cases
 │   │   ├── tool_application/        # Tool execution use cases
 │   │   ├── workflow_application/    # Workflow orchestration use cases
 │   │   └── security_application/    # Authentication/authorization use cases
@@ -85,10 +87,10 @@ tina/
 │       │   ├── bloc/                # Chat state management
 │       │   └── adapters/            # Chat-specific adapters
 │       │
-│       ├── backend_management/      # Backend configuration feature
-│       │   ├── ui/                  # Backend management screens
-│       │   ├── bloc/                # Backend state management
-│       │   └── adapters/            # Backend-specific adapters
+│       ├── service_configuration/   # External service configuration feature
+│       │   ├── ui/                  # Service configuration screens
+│       │   ├── bloc/                # Service configuration state management
+│       │   └── adapters/            # Service provider adapters
 │       │
 │       ├── tool_execution/          # Tool execution feature
 │       │   ├── ui/                  # Tool UI components
@@ -172,15 +174,15 @@ Features → Application → Domain ← Infrastructure
 - Business rules and invariants
 - Domain events (MessageSent, ChatCreated, etc.)
 
-#### `backend_domain`
-**Purpose**: Backend management domain logic
+#### `service_providers_domain`
+**Purpose**: External service provider management domain logic
 **Dependencies**: None (pure Dart)
 **Key Components**:
-- Backend entity and value objects
-- Backend types (LLM, Orchestrator, MCP)
+- ExternalServiceClient entity and value objects
+- Service provider types (LLM, Orchestrator, MCP)
 - Configuration value objects
-- Backend repository interface
-- Backend capability definitions
+- Service provider repository interface
+- Service provider capability definitions
 
 #### `tool_domain`
 **Purpose**: Tool execution domain logic
@@ -319,7 +321,7 @@ class DriftChatRepository implements ChatRepository {
 ```dart
 class SendMessageUseCase {
   final ChatRepository _chatRepository;
-  final BackendService _backendService;
+  final ExternalServiceClient _serviceClient;
   final EventBus _eventBus;
   
   Future<Result<Message>> execute(SendMessageParams params) async {
@@ -341,8 +343,8 @@ class SendMessageUseCase {
     // Publish event
     await _eventBus.publish(MessageSentEvent(message));
     
-    // Get AI response (streaming)
-    await _backendService.streamResponse(message);
+    // Get AI response from external service (streaming)
+    await _serviceClient.streamResponse(message);
     
     return Success(message);
   }
@@ -391,7 +393,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 // Port definition
 abstract class AIServicePort {
   Future<Result<StreamController<String>>> streamCompletion(
-    BackendId backendId,
+    ServiceProviderId serviceProviderId,
     List<Message> messages,
   );
 }
@@ -402,7 +404,7 @@ class OpenAIAdapter implements AIServicePort {
   
   @override
   Future<Result<StreamController<String>>> streamCompletion(
-    BackendId backendId,
+    ServiceProviderId serviceProviderId,
     List<Message> messages,
   ) async {
     try {
@@ -470,7 +472,7 @@ melos exec --scope="chat_domain" -- flutter test
 4. Set up CI/CD pipeline
 
 ### Phase 2: Domain & Application (Weeks 3-4)
-1. Implement domain packages (chat, backend, tool, workflow, security)
+1. Implement domain packages (chat, service_providers, tool, workflow, security)
 2. Create application layer use cases
 3. Define repository interfaces
 4. Set up event bus and domain events
@@ -577,6 +579,8 @@ This monorepo architecture provides a scalable, maintainable foundation for the 
 
 The architecture balances complexity with pragmatism, providing structure without over-engineering. It positions Tina for growth while maintaining development velocity and code quality.
 
+**Key Clarification**: This is a client-only architecture for managing connections to external AI services and workflow platforms. No traditional backend server is required - all "service provider" functionality refers to configuring and communicating with external APIs and services.
+
 ## Next Steps
 
 1. **Review & Approval**: Review this architecture with stakeholders
@@ -613,14 +617,14 @@ sequenceDiagram
     participant UseCase
     participant Repository
     participant EventBus
-    participant Backend
+    participant ServiceClient
     
     UI->>BLoC: Send Message
     BLoC->>UseCase: Execute
     UseCase->>Repository: Save Message
     UseCase->>EventBus: Publish MessageSent
-    UseCase->>Backend: Stream Response
-    Backend-->>EventBus: Stream Events
+    UseCase->>ServiceClient: Stream Response
+    ServiceClient-->>EventBus: Stream Events
     EventBus-->>BLoC: Update State
     BLoC-->>UI: Render Updates
 ```

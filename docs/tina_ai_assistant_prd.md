@@ -39,15 +39,15 @@ Create a seamless AI conversation platform that allows users to:
 - Automatic chat titling based on conversation content
 - Search functionality across all chats
 
-### 3. Backend Management
+### 3. Service Provider Configuration
 **User Stories:**
-- As a user, I want to choose from different backend types (LLM, Orchestrator, MCP)
-- As a user, I want to configure API keys and settings for each backend
+- As a user, I want to choose from different service provider types (LLM, Orchestrator, MCP)
+- As a user, I want to configure API keys and settings for each service provider
 - As a user, I want to switch between different models and workflows
 
 **Acceptance Criteria:**
-- Backend configuration screen with secure credential vault
-- Model selection for LLM backends (OpenAI, Anthropic, etc.)
+- Service provider configuration screen with secure credential vault
+- Model selection for LLM service providers (OpenAI, Anthropic, etc.)
 - Orchestrator setup for n8n/Flowise/Sim Studio
 - MCP server discovery and registration
 - Connection testing with visual feedback
@@ -77,17 +77,19 @@ Create a seamless AI conversation platform that allows users to:
 
 ## Technical Architecture
 
-### Enhanced Architecture: Backends, Tools & Workflows
+### Enhanced Architecture: Service Providers, Tools & Workflows
+
+**Important Note**: This is a client-only Flutter application that connects to external services. No traditional backend server needs to be built. All "service providers" refer to external AI services and platforms that the app connects to via their APIs.
 
 #### Taxonomy & Concepts
-**Backend Types** (where inference runs):
-- **LLM Backend**: OpenAI, OpenRouter, Anthropic, Gemini
-- **Orchestrator**: n8n, Flowise, Sim Studio (chain tools/agents with SSE/JSONL)
-- **MCP Server**: Remote servers via HTTP/SSE with JSON-RPC 2.0
+**Service Provider Types** (external services where inference runs):
+- **LLM Service Provider**: OpenAI, OpenRouter, Anthropic, Gemini APIs
+- **Orchestrator Service**: n8n, Flowise, Sim Studio platforms (chain tools/agents with SSE/JSONL)
+- **MCP Server**: Remote tool servers via HTTP/SSE with JSON-RPC 2.0
 
 **Core Concepts**:
 - **Tool**: Invocable capability (memory, search, web) from host/orchestrator/MCP
-- **Workflow**: Reusable Backend + Tools + Policies + Credentials
+- **Workflow**: Reusable Service Provider + Tools + Policies + Credentials
 - **Policy**: Permission levels (Allow once, session, chat, workflow, or Deny)
 - **Session**: UI lifecycle scope (cleared on app close/reset)
 
@@ -120,25 +122,25 @@ dependencies:
 ### Enhanced Data Model
 
 **Core Tables**:
-- `backends`: id, type ∈ {llm, orchestrator, mcp}, name, base_url, credential_id, created_at
-- `tools`: id, name, source ∈ {builtin, orchestrator, mcp}, backend_id, schema_json, redact_on_export
-- `workflows`: id, name, backend_id, created_at, updated_at
+- `service_providers`: id, type ∈ {llm, orchestrator, mcp}, name, base_url, credential_id, created_at
+- `tools`: id, name, source ∈ {builtin, orchestrator, mcp}, service_provider_id, schema_json, redact_on_export
+- `workflows`: id, name, service_provider_id, created_at, updated_at
 - `sessions`: id, created_at, ended_at
 - `chats`: id, title, workflow_id, created_at
-- `messages`: id, chat_id, role, content TEXT (FTS5), tool_trace_json, backend_id, backend_type, backend_params_json, created_at
+- `messages`: id, chat_id, role, content TEXT (FTS5), tool_trace_json, service_provider_id, service_provider_type, service_provider_params_json, created_at
 
 **Relation Tables** (with constraints):
 - `workflow_tools`: workflow_id, tool_id, enabled, policy_override_json (UNIQUE composite)
 - `workflow_credentials`: workflow_id, credential_id, scope
 - `tool_permissions`: scope_type, scope_id, tool_id, decision, expires_at, created_at (PRIMARY KEY: scope_type, scope_id, tool_id)
 
-**Backend Configuration**:
-- `llm_options`: backend_id, provider, model, params_json
-- `orchestrators`: backend_id, platform, stream_format ∈ {sse, jsonl}
-- `mcp_servers`: backend_id, url, headers_json
+**Service Provider Configuration**:
+- `llm_options`: service_provider_id, provider, model, params_json
+- `orchestrators`: service_provider_id, platform, stream_format ∈ {sse, jsonl}
+- `mcp_servers`: service_provider_id, url, headers_json
 
 **Security & Storage**:
-- `credentials`: id, name, type, encrypted_secret, allowed_backends_json
+- `credentials`: id, name, type, encrypted_secret, allowed_service_providers_json
 - `attachments`: id, message_id, kind, path, metadata_json
 
 **Indices**:
@@ -158,12 +160,12 @@ dependencies:
 
 ### Recommended Architecture Implementation
 
-#### 1. Backend Architecture (LLM, Orchestrator, MCP)
-**Backend Abstraction Layer**
-- Unified interface for LLM, Orchestrator, and MCP backends
-- SSE/JSONL streaming support across all backend types
+#### 1. Service Provider Architecture (LLM, Orchestrator, MCP)
+**External Service Abstraction Layer**
+- Unified interface for LLM, Orchestrator, and MCP service providers
+- SSE/JSONL streaming support across all service provider types
 - JSON-RPC 2.0 for MCP communication
-- Dynamic backend switching with hot-reload capabilities
+- Dynamic service provider switching with hot-reload capabilities
 
 **Integration Points**:
 - **OpenRouter**: Drop-in OpenAI replacement with SSE streaming
@@ -179,7 +181,7 @@ dependencies:
 - JSON-Schema validation for all tool inputs
 
 **Workflow System**
-- Reusable combinations of Backend + Tools + Policies
+- Reusable combinations of Service Provider + Tools + Policies
 - Credential bindings per workflow
 - Policy inheritance and overrides
 - Session-scoped tool permissions
@@ -201,8 +203,8 @@ dependencies:
 **Credential Vault**:
 - Encrypted storage with flutter_secure_storage
 - Exports exclude secrets (only references)
-- Test connection per backend/tool
-- Clear data boundaries per backend
+- Test connection per service provider/tool
+- Clear data boundaries per service provider
 
 #### 4. Streaming & Data Architecture
 **Unified Stream Event Contract**:
@@ -228,7 +230,7 @@ dependencies:
 
 **SQLite with FTS5**:
 - Messages table with content TEXT for FTS5
-- Message provenance (backend_id, type, params) frozen at send time
+- Message provenance (service_provider_id, type, params) frozen at send time
 - Foreign key constraints with CASCADE where appropriate
 - Efficient pagination (<100ms for 10k messages)
 - Version migration with snapshot testing
@@ -251,7 +253,7 @@ dependencies:
 1. **UI Layer** → User interactions trigger state changes
 2. **State Layer** → Providers coordinate business operations
 3. **Repository Layer** → Data access with caching strategies
-4. **Service Layer** → External API communication
+4. **Service Layer** → External service communication
 5. **Data Layer** → Persistent storage and retrieval
 
 #### Design Patterns Integration
@@ -319,9 +321,9 @@ dependencies:
 
 ### Credential Vault
 - Encrypted storage with flutter_secure_storage
-- Credential scoping with allowed_backends[] validation
+- Credential scoping with allowed_service_providers[] validation
 - Exports exclude secrets (only references)
-- Test connection validation per backend
+- Test connection validation per service provider
 - BYO API key philosophy
 
 ### Data Protection
@@ -342,7 +344,7 @@ dependencies:
 ## Acceptance Criteria
 
 ### Core Functionality
-- **Backend switching**: In-chat changes freeze backend_params_json in message for audit trail
+- **Service provider switching**: In-chat changes freeze service_provider_params_json in message for audit trail
 - **Run Steps Panel**: Tool name, source, duration, I/O (collapsible), permission decision, errors
 - **Permissions**: Five scopes with precedence testing; deny blocks with one-click override
 - **Search**: FTS5 returns results across all chats in <100ms on 10k messages
@@ -366,7 +368,7 @@ dependencies:
 ### User Engagement
 - Daily active users and session duration
 - Messages per conversation depth
-- Backend/tool usage distribution
+- Service provider/tool usage distribution
 - Permission grant/deny ratios
 
 ### Technical Performance
@@ -379,29 +381,29 @@ dependencies:
 
 ### Sprint A: Unify & Stream
 **Deliverables**:
-- BackendClient adapters (LLM/Orchestrator SSE-JSONL/MCP HTTP-SSE)
+- ExternalServiceClient adapters (LLM/Orchestrator SSE-JSONL/MCP HTTP-SSE)
 - Unified stream event contract with normalization
 - Permission prompts (5 scopes) with precedence store
 - Run Steps panel (collapsible I/O, errors, timings)
 - Credential vault MVP with "Test connection"
-- Message provenance snapshot (backend_params_json)
+- Message provenance snapshot (service_provider_params_json)
 
 ### Sprint B: Workflows & Governance
 **Deliverables**:
 - Relation tables with foreign keys, indices, migrations
 - Sessions table wired to permission expiry
-- Workflow picker with backend override badges
+- Workflow picker with service provider override badges
 - Usage meters with soft/hard limit enforcement
 - Export without secrets + optional I/O redaction
 - Accessibility improvements (virtualization, labels)
 
 ### Phase 1: Core MVP (Current Status)
 - ✅ Basic chat interface and message handling
-- ✅ Initial backend integration (n8n)
+- ✅ Initial service provider integration (n8n)
 - ✅ Local storage and persistence
 - ✅ Multi-chat management
 
-### Phase 2: Backend & Tool Integration
+### Phase 2: Service Provider & Tool Integration
 **Packages to implement:**
 - `flutter_client_sse: ^2.0.0` - SSE streaming for orchestrators
 - `json_rpc_2: ^3.0.2` - MCP server communication
@@ -409,7 +411,7 @@ dependencies:
 - `flutter_markdown: ^0.6.18` - Rich message formatting
 
 **Implementation focus:**
-- Multi-backend support (LLM, Orchestrator, MCP)
+- Multi-service provider support (LLM, Orchestrator, MCP)
 - Tool discovery and registration
 - Permission prompts with scoped persistence
 - Tool trace panel with step visualization
@@ -549,13 +551,13 @@ This project is licensed under the **MIT License** - a permissive open-source li
 
 ### Open Source Philosophy
 - **BYO API Keys**: Users maintain control of their AI service costs
-- **Self-hostable backends**: Support for local/private orchestrators
+- **Self-hostable services**: Support for local/private orchestrators
 - **Extensible architecture**: Plugin points for community contributions
 - **Privacy-first**: No vendor lock-in or data collection
 
 ### Community & Contributions
 - Public repository with clear contribution guidelines
-- Modular design for third-party backend integrations
+- Modular design for third-party service provider integrations
 - Extension points for custom tools and workflows
 - Documentation for self-hosted deployments
 
@@ -563,6 +565,6 @@ This project is licensed under the **MIT License** - a permissive open-source li
 
 Tina represents a well-architected, user-focused AI assistant application with a solid foundation for growth and enhancement. The current implementation demonstrates thoughtful technical decisions, clean code organization, and a clear path forward for feature development.
 
-The combination of Flutter's cross-platform capabilities, Riverpod's reactive state management, and a flexible backend system (LLM/Orchestrator/MCP) positions Tina as a competitive and extensible solution in the AI assistant space.
+The combination of Flutter's cross-platform capabilities, Riverpod's reactive state management, and a flexible external service system (LLM/Orchestrator/MCP) positions Tina as a competitive and extensible solution in the AI assistant space.
 
 The MIT license ensures the project remains open and accessible, fostering community contributions while enabling commercial use cases. Future development should focus on UI/UX polish, performance optimization, and strategic feature additions that enhance the core conversation experience while maintaining the application's simplicity, privacy, and reliability principles.
