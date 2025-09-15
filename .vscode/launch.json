@@ -23,6 +23,13 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        }
+        },
+
+        {
+            "name": "tina_widgetbook",
+            "cwd": "widgetbook",
+            "request": "launch",
+            "type": "dart"
+        },
     ]
 }

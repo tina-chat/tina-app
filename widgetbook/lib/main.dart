@@ -22,8 +22,24 @@ class WidgetbookApp extends StatelessWidget {
       addons: [
         InspectorAddon(enabled: true),
         AlignmentAddon(),
+        ViewportAddon([
+          Viewports.none, 
+          IosViewports.iPhone13, 
+          AndroidViewports.samsungGalaxyNote20, 
+          MacosViewports.macbookPro, 
+          WindowsViewports.desktop, 
+          LinuxViewports.desktop, 
+        ]),
         ThemeAddon(
-          themeBuilder: (context, theme, child) => child,
+          themeBuilder: (context, theme, child) => Theme(
+            data: theme,
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+              ),
+              child: child,
+            ),
+          ),
           themes: [
             WidgetbookTheme(
               name: 'Tina Light Theme',
@@ -38,11 +54,20 @@ class WidgetbookApp extends StatelessWidget {
   }
 
   ThemeData _createLightTheme() {
+    final tinaColors = TinaTheme.light.colors;
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: DesignColors.primaryBase,
+      colorScheme: ColorScheme(
         brightness: Brightness.light,
+        primary: tinaColors.primary,
+        onPrimary: tinaColors.onPrimary,
+        secondary: tinaColors.secondary,
+        onSecondary: tinaColors.onSecondary,
+        surface: tinaColors.surface,
+        onSurface: tinaColors.onSurface,
+        error: tinaColors.error,
+        onError: tinaColors.onError,
+        outline: tinaColors.outline,
       ),
       textTheme: GoogleFonts.interTextTheme(),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -57,11 +82,20 @@ class WidgetbookApp extends StatelessWidget {
   }
 
   ThemeData _createDarkTheme() {
+    final tinaColors = TinaTheme.dark.colors;
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: DesignColors.primaryBase,
+      colorScheme: ColorScheme(
         brightness: Brightness.dark,
+        primary: tinaColors.primary,
+        onPrimary: tinaColors.onPrimary,
+        secondary: tinaColors.secondary,
+        onSecondary: tinaColors.onSecondary,
+        surface: tinaColors.surface,
+        onSurface: tinaColors.onSurface,
+        error: tinaColors.error,
+        onError: tinaColors.onError,
+        outline: tinaColors.outline,
       ),
       textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
       elevatedButtonTheme: ElevatedButtonThemeData(

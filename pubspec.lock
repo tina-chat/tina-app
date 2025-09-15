@@ -1101,6 +1101,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.16.0"
+  widgetbook_golden_test:
+    dependency: transitive
+    description:
+      name: widgetbook_golden_test
+      sha256: d1cba66a85bed3c89ab08c7ef23e55929d01d13a6f9634644ecc323693273bcf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   xdg_directories:
     dependency: transitive
     description:

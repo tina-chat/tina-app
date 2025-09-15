@@ -91,6 +91,7 @@ Widget disabledButtonUseCase(BuildContext context) {
 Widget buttonSizesUseCase(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       TinaButton(
         onPressed: () {},
@@ -118,14 +119,11 @@ Widget buttonSizesUseCase(BuildContext context) {
 
 @widgetbook.UseCase(name: 'Full Width Button', type: TinaButton)
 Widget fullWidthButtonUseCase(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: TinaButton(
-      onPressed: () {},
-      variant: TinaButtonVariant.primary,
-      size: TinaButtonSize.medium,
-      isFullWidth: true,
-      child: const Text('Full Width Button'),
-    ),
+  return TinaButton(
+    onPressed: () {},
+    variant: TinaButtonVariant.primary,
+    size: TinaButtonSize.medium,
+    isFullWidth: true,
+    child: const Text('Full Width Button'),
   );
 }
