@@ -27,4 +27,4 @@ dev_dependencies:
   # Widget testing utilities
   golden_toolkit: ^0.15.0
   mocktail: ^1.0.4
-  very_good_analysis: ^9.0.0
+  very_good_analysis: ^10.0.0
