@@ -17,6 +17,7 @@ import 'tina_message_bubble_test.dart' as tina_message_bubble_test;
 import 'tina_message_status_test.dart' as tina_message_status_test;
 import 'tina_spinner_test.dart' as tina_spinner_test;
 import 'tina_text_test.dart' as tina_text_test;
+import 'tina_tile_test.dart' as tina_tile_test;
 import 'tina_typing_indicator_test.dart' as tina_typing_indicator_test;
 
 void main() {
@@ -29,6 +30,7 @@ void main() {
   tina_input_test.main();
   tina_spinner_test.main();
   tina_text_test.main();
+  tina_tile_test.main();
 
   // Chat-specific atoms
   tina_attachment_preview_test.main();
