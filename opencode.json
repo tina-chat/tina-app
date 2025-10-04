@@ -36,7 +36,7 @@
     },
     "documentation-researcher": {
       "description": "Analyzes project documentation in docs/ folder",
-      "mode": "subagent", 
+      "mode": "subagent",
       "model": "{env:OPENCODE_SMALL_MODEL}",
       "prompt": "{file:./prompts/documentation-researcher.txt}",
       "temperature": 0.1,
@@ -246,17 +246,13 @@
     }
   },
   "mcp": {
-    "firecrawl-mcp": {
+    "dart": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "firecrawl-mcp"
-      ],
-      "enabled": true,
-      "environment": {
-        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
-      }
+        "dart",
+        "mcp-server",
+        "--force-roots-fallback"
+      ]
     }
   }
 }
