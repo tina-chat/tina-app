@@ -326,15 +326,15 @@ class DesignDuration {
   DesignDuration._();
 
   /// Fast animation duration (150ms) for quick transitions and
-/// micro-interactions.
+  /// micro-interactions.
   static const Duration fast = Duration(milliseconds: 150);
 
   /// Normal animation duration (200ms) for standard transitions and
-/// state changes.
+  /// state changes.
   static const Duration normal = Duration(milliseconds: 200);
 
   /// Slow animation duration (300ms) for deliberate animations and
-/// page transitions.
+  /// page transitions.
   static const Duration slow = Duration(milliseconds: 300);
 }
 
