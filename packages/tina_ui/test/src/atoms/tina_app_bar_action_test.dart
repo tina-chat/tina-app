@@ -90,7 +90,7 @@ void main() {
       );
 
       final tinaIcon = tester.widget<TinaIcon>(find.byType(TinaIcon));
-      expect(tinaIcon.color, DesignColors.neutral700);
+      expect(tinaIcon.color, const Color(0xFF0F172A));
     });
 
     testWidgets('applies default color in dark theme', (tester) async {
@@ -109,7 +109,7 @@ void main() {
       );
 
       final tinaIcon = tester.widget<TinaIcon>(find.byType(TinaIcon));
-      expect(tinaIcon.color, DesignColors.neutral100);
+      expect(tinaIcon.color, const Color(0xFF0F172A));
     });
 
     testWidgets('uses app bar theme foreground color when available', (

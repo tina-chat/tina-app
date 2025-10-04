@@ -21,17 +21,17 @@ melos exec -- <command>     # Run command in all packages
 
 ```bash
 # Add runtime dependencies
-flutter pub add package_name
+fvm flutter pub add package_name
 
 # Add development dependencies  
-flutter pub add dev:package_name
+fvm flutter pub add dev:package_name
 
 # Add dependencies with version constraints
-flutter pub add package_name:^1.0.0
+fvm flutter pub add package_name:^1.0.0
 
 # Examples:
-flutter pub add flutter_bloc dio flutter_markdown equatable
-flutter pub add dev:build_runner dev:json_serializable
+fvm flutter pub add flutter_bloc dio flutter_markdown equatable
+fvm flutter pub add dev:build_runner dev:json_serializable
 ```
 
 ### Quality & Testing
@@ -48,12 +48,12 @@ melos run validate           # Full CI validation
 
 ```bash
 # Create pure Dart packages (domain/core layers - no Flutter dependencies)
-dart create --template=package packages/domain/chat_domain
-dart create --template=package packages/core/tina_contracts
+fvm dart create --template=package packages/domain/chat_domain
+fvm dart create --template=package packages/core/tina_contracts
 
 # Create Flutter packages (features/presentation - with Flutter dependencies)
-flutter create --template=package packages/features/chat
-flutter create --template=package packages/presentation/design_system
+fvm flutter create --template=package packages/features/chat
+fvm flutter create --template=package packages/presentation/design_system
 
 # After creating any package, ALWAYS run bootstrap
 melos bootstrap                      # Links all packages and installs dependencies
@@ -76,7 +76,7 @@ melos list                          # Verify new package is discovered
 ### Development
 ```bash
 cd apps/tina_shell && flutter run    # Run main app
-flutter test path/to/test.dart       # Run specific test
+fvm flutter test path/to/test.dart       # Run specific test
 ```
 
 ## Workspace Management
@@ -193,7 +193,7 @@ All must pass:
 ### 📋 **Package Creation Example:**
 ```bash
 # Create new domain package
-dart create --template=package packages/domain/chat_domain
+fvm dart create --template=package packages/domain/chat_domain
 cd packages/domain/chat_domain
 
 # Add workspace resolution to pubspec.yaml

@@ -282,8 +282,8 @@ void main() {
       expect(find.byType(TinaSpinner), findsOneWidget);
       expect(
         find.byType(Container),
-        findsNWidgets(2),
-      ); // Overlay and inner container
+        findsOneWidget,
+      ); // Inner container only (overlay uses ColoredBox)
     });
 
     testWidgets('hides overlay when isLoading is false', (tester) async {
@@ -376,8 +376,8 @@ void main() {
         ),
       );
 
-      final container = tester.widget<Container>(find.byType(Container).first);
-      expect(container.color, customBackgroundColor);
+      final coloredBox = tester.widget<ColoredBox>(find.byType(ColoredBox));
+      expect(coloredBox.color, customBackgroundColor);
     });
   });
 

@@ -42,7 +42,7 @@ class TinaAppBarAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
-    final iconColor = color ?? _getDefaultIconColor(tinaColors);
+    final iconColor = color ?? _getDefaultIconColor(context, tinaColors);
 
     Widget actionButton = IconButton(
       onPressed: onPressed,
@@ -84,7 +84,12 @@ class TinaAppBarAction extends StatelessWidget {
     return actionButton;
   }
 
-  Color _getDefaultIconColor(TinaColorScheme tinaColors) {
+  Color _getDefaultIconColor(BuildContext context, TinaColorScheme tinaColors) {
+    // Check if there's an AppBar theme with foreground color
+    final appBarTheme = Theme.of(context).appBarTheme;
+    if (appBarTheme.foregroundColor != null) {
+      return appBarTheme.foregroundColor!;
+    }
     return tinaColors.onSurface;
   }
 }

@@ -139,7 +139,7 @@ void main() {
 
       final container = tester.widget<Container>(find.byType(Container));
       final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.primaryBase.withAlpha(25));
+      expect(decoration.color, DesignColors.primaryBase.withValues(alpha: 0.1));
     });
 
     testWidgets('applies small size correctly', (tester) async {

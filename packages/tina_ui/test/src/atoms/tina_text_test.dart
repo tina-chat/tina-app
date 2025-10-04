@@ -36,7 +36,7 @@ void main() {
       final textWidget = tester.widget<Text>(find.text(testText));
       expect(textWidget.style?.fontSize, DesignTypography.fontSize5Xl);
       expect(textWidget.style?.fontWeight, DesignTypography.fontWeightBold);
-      expect(textWidget.style?.color, DesignColors.neutral900);
+      expect(textWidget.style?.color, const Color(0xFF0F172A)); // tinaColors.onBackground
     });
 
     testWidgets('applies correct style for body text', (tester) async {
@@ -55,7 +55,7 @@ void main() {
       final textWidget = tester.widget<Text>(find.text(testText));
       expect(textWidget.style?.fontSize, DesignTypography.fontSizeBase);
       expect(textWidget.style?.fontWeight, DesignTypography.fontWeightRegular);
-      expect(textWidget.style?.color, DesignColors.neutral700);
+      expect(textWidget.style?.color, const Color(0xFF0F172A)); // tinaColors.onSurface
     });
 
     testWidgets('applies custom color when provided', (tester) async {
