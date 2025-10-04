@@ -16,7 +16,10 @@
         "list": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "sequential-thinking": true,
+        "context7": true,
+        "serena": true
       }
     },
     "online-researcher": {
@@ -31,7 +34,10 @@
         "grep": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "tavily-mcp": true,
+        "firecrawl-mcp": true,
+        "context7": true
       }
     },
     "documentation-researcher": {
@@ -47,7 +53,9 @@
         "list": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "context7": true,
+        "serena": true
       }
     },
     "code-researcher": {
@@ -63,7 +71,8 @@
         "list": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "serena": true
       }
     },
     "solution-brainstormer": {
@@ -76,7 +85,8 @@
         "read": false,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "sequential-thinking": true
       }
     },
     "solution-decision-maker": {
@@ -89,7 +99,9 @@
         "read": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "sequential-thinking": true,
+        "context7": true
       }
     },
     "package-builder": {
@@ -105,7 +117,9 @@
         "bash": true,
         "grep": true,
         "glob": true,
-        "list": true
+        "list": true,
+        "serena": true,
+        "dart": true
       }
     },
     "tina-app-builder": {
@@ -121,7 +135,11 @@
         "bash": true,
         "grep": true,
         "glob": true,
-        "list": true
+        "list": true,
+        "serena": true,
+        "dart": true,
+        "tavily-mcp": true,
+        "firecrawl-mcp": true
       }
     },
     "widget-builder": {
@@ -137,7 +155,10 @@
         "bash": true,
         "grep": true,
         "glob": true,
-        "list": true
+        "list": true,
+        "serena": true,
+        "dart": true,
+        "context7": true
       }
     },
     "tina-ui-builder": {
@@ -153,7 +174,10 @@
         "bash": true,
         "grep": true,
         "glob": true,
-        "list": true
+        "list": true,
+        "serena": true,
+        "dart": true,
+        "context7": true
       }
     },
     "reviewer": {
@@ -169,7 +193,9 @@
         "list": true,
         "bash": false,
         "edit": false,
-        "write": false
+        "write": false,
+        "serena": true,
+        "context7": true
       }
     },
     "tester": {
@@ -185,7 +211,9 @@
         "bash": true,
         "grep": true,
         "glob": true,
-        "list": true
+        "list": true,
+        "serena": true,
+        "dart": true
       }
     }
   },
