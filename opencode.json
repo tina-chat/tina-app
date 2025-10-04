@@ -3,25 +3,189 @@
   "model": "{env:OPENCODE_MODEL}",
   "small_model": "{env:OPENCODE_SMALL_MODEL}",
   "agent": {
-    "code-reviewer": {
-      "description": "Reviews code for best practices and potential issues",
-      "model": "{env:OPENCODE_MODEL}",
-      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    },
-    "readonly": {
-      "model": "{env:OPENCODE_MODEL}",
+    "orchestrator": {
+      "description": "Master coordinator for Tina AI Assistant development, orchestrates all specialized agents",
       "mode": "primary",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/orchestrator.txt}",
+      "temperature": 0.3,
       "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false,
         "read": true,
         "grep": true,
-        "glob": true
+        "glob": true,
+        "list": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "online-researcher": {
+      "description": "Researches online documentation, APIs, and external resources",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_SMALL_MODEL}",
+      "prompt": "{file:./prompts/online-researcher.txt}",
+      "temperature": 0.2,
+      "tools": {
+        "webfetch": true,
+        "read": true,
+        "grep": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "documentation-researcher": {
+      "description": "Analyzes project documentation in docs/ folder",
+      "mode": "subagent", 
+      "model": "{env:OPENCODE_SMALL_MODEL}",
+      "prompt": "{file:./prompts/documentation-researcher.txt}",
+      "temperature": 0.1,
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "code-researcher": {
+      "description": "Researches existing code patterns and implementations",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_SMALL_MODEL}",
+      "prompt": "{file:./prompts/code-researcher.txt}",
+      "temperature": 0.1,
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "solution-brainstormer": {
+      "description": "Generates 6 creative solution approaches for any problem",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/solution-brainstormer.txt}",
+      "temperature": 0.8,
+      "tools": {
+        "read": false,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "solution-decision-maker": {
+      "description": "Spawns brainstormers 6 times and selects optimal solution",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/solution-decision-maker.txt}",
+      "temperature": 0.5,
+      "tools": {
+        "read": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "package-builder": {
+      "description": "Specialized for Melos package management and dependencies",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/package-builder.txt}",
+      "temperature": 0.0,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "tina-app-builder": {
+      "description": "Specialized for apps/tina_app Flutter development",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/tina-app-builder.txt}",
+      "temperature": 0.3,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "widget-builder": {
+      "description": "Specialized for general Flutter widget development",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/widget-builder.txt}",
+      "temperature": 0.3,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "tina-ui-builder": {
+      "description": "Specialized for packages/tina_ui design system components",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/tina-ui-builder.txt}",
+      "temperature": 0.3,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "reviewer": {
+      "description": "Reviews code for best practices and potential issues",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/reviewer.txt}",
+      "temperature": 0.0,
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "bash": false,
+        "edit": false,
+        "write": false
+      }
+    },
+    "tester": {
+      "description": "Implements comprehensive testing strategies",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_MODEL}",
+      "prompt": "{file:./prompts/tester.txt}",
+      "temperature": 0.0,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true
       }
     }
   },
