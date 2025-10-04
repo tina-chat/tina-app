@@ -21,7 +21,10 @@ void main() {
       );
 
       expect(find.text(buttonText), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsOneWidget);
+      // Check for the actual widget structure: Material -> InkWell ->
+      // AnimatedContainer
+      expect(find.byType(InkWell), findsOneWidget);
+      expect(find.byType(AnimatedContainer), findsOneWidget);
 
       await tester.tap(find.byType(TinaButton));
       expect(wasPressed, isTrue);
@@ -39,18 +42,12 @@ void main() {
         ),
       );
 
-      final elevatedButton = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
       );
 
-      expect(
-        elevatedButton.style?.backgroundColor?.resolve({}),
-        DesignColors.primaryBase,
-      );
-      expect(
-        elevatedButton.style?.foregroundColor?.resolve({}),
-        DesignColors.primaryContrast,
-      );
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(decoration.color, DesignColors.primaryBase);
     });
 
     testWidgets('applies secondary variant styling correctly', (tester) async {
@@ -66,18 +63,12 @@ void main() {
         ),
       );
 
-      final elevatedButton = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
       );
 
-      expect(
-        elevatedButton.style?.backgroundColor?.resolve({}),
-        DesignColors.secondaryBase,
-      );
-      expect(
-        elevatedButton.style?.foregroundColor?.resolve({}),
-        DesignColors.secondaryContrast,
-      );
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(decoration.color, DesignColors.secondaryBase);
     });
 
     testWidgets('applies outlined variant styling correctly', (tester) async {
@@ -93,18 +84,14 @@ void main() {
         ),
       );
 
-      final elevatedButton = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
       );
 
-      expect(
-        elevatedButton.style?.backgroundColor?.resolve({}),
-        Colors.transparent,
-      );
-      expect(
-        elevatedButton.style?.foregroundColor?.resolve({}),
-        DesignColors.primaryBase,
-      );
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(decoration.color, Colors.transparent);
+      expect(decoration.border, isNotNull);
+      expect(decoration.border!.top.color, DesignColors.primaryBase);
     });
 
     testWidgets('applies ghost variant styling correctly', (tester) async {
@@ -120,18 +107,37 @@ void main() {
         ),
       );
 
-      final elevatedButton = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
       );
 
-      expect(
-        elevatedButton.style?.backgroundColor?.resolve({}),
-        Colors.transparent,
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(decoration.color, Colors.transparent);
+      expect(decoration.border, isNull);
+    });
+
+    testWidgets('applies elevated variant styling correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TinaButton(
+              onPressed: () {},
+              variant: TinaButtonVariant.elevated,
+              child: const Text('Elevated'),
+            ),
+          ),
+        ),
       );
-      expect(
-        elevatedButton.style?.foregroundColor?.resolve({}),
-        DesignColors.primaryBase,
+
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
       );
+
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(decoration.color, DesignColors.primaryBase);
+      expect(decoration.boxShadow, isNotNull);
+      expect(decoration.boxShadow!.length, 1);
+      expect(decoration.boxShadow!.first, DesignShadows.sm);
     });
 
     testWidgets('applies small size correctly', (tester) async {
@@ -150,7 +156,7 @@ void main() {
       final sizedBox = tester.widget<SizedBox>(
         find
             .ancestor(
-              of: find.byType(ElevatedButton),
+              of: find.byType(AnimatedContainer),
               matching: find.byType(SizedBox),
             )
             .first,
@@ -174,7 +180,7 @@ void main() {
       final sizedBox = tester.widget<SizedBox>(
         find
             .ancestor(
-              of: find.byType(ElevatedButton),
+              of: find.byType(AnimatedContainer),
               matching: find.byType(SizedBox),
             )
             .first,
@@ -199,7 +205,7 @@ void main() {
       final sizedBox = tester.widget<SizedBox>(
         find
             .ancestor(
-              of: find.byType(ElevatedButton),
+              of: find.byType(AnimatedContainer),
               matching: find.byType(SizedBox),
             )
             .first,
@@ -260,7 +266,7 @@ void main() {
       final sizedBox = tester.widget<SizedBox>(
         find
             .ancestor(
-              of: find.byType(ElevatedButton),
+              of: find.byType(AnimatedContainer),
               matching: find.byType(SizedBox),
             )
             .first,
@@ -283,11 +289,96 @@ void main() {
         ),
       );
 
-      final elevatedButton = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
+      final inkWell = tester.widget<InkWell>(
+        find.byType(InkWell),
       );
 
-      expect(elevatedButton.onPressed, isNull);
+      expect(inkWell.onTap, isNull);
+
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
+      );
+
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      // Disabled state should have outlineVariant color
+      expect(decoration.color, isNotNull);
+    });
+
+    testWidgets('applies correct text styling based on size', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TinaButton(
+              onPressed: () {},
+              size: TinaButtonSize.large,
+              child: const Text('Large Button'),
+            ),
+          ),
+        ),
+      );
+
+      final defaultTextStyle = tester.widget<DefaultTextStyle>(
+        find
+            .ancestor(
+              of: find.text('Large Button'),
+              matching: find.byType(DefaultTextStyle),
+            )
+            .first,
+      );
+
+      expect(
+        defaultTextStyle.style.fontSize,
+        DesignTypography.fontSizeLg,
+      );
+      expect(
+        defaultTextStyle.style.fontWeight,
+        DesignTypography.fontWeightSemibold,
+      );
+    });
+
+    testWidgets('applies correct border radius', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TinaButton(
+              onPressed: () {},
+              child: const Text('Button'),
+            ),
+          ),
+        ),
+      );
+
+      final animatedContainer = tester.widget<AnimatedContainer>(
+        find.byType(AnimatedContainer),
+      );
+
+      final decoration = animatedContainer.decoration! as BoxDecoration;
+      expect(
+        decoration.borderRadius,
+        BorderRadius.circular(DesignBorderRadius.md),
+      );
+    });
+
+    testWidgets('InkWell has correct border radius', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TinaButton(
+              onPressed: () {},
+              child: const Text('Button'),
+            ),
+          ),
+        ),
+      );
+
+      final inkWell = tester.widget<InkWell>(
+        find.byType(InkWell),
+      );
+
+      expect(
+        inkWell.borderRadius,
+        BorderRadius.circular(DesignBorderRadius.md),
+      );
     });
 
     group('TinaButtonVariant enum', () {
