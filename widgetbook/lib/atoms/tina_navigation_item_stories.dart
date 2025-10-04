@@ -40,15 +40,14 @@ Widget iconOnlyNavigationItemUseCase(BuildContext context) {
 @widgetbook.UseCase(name: 'Text Only Navigation Item', type: TinaNavigationItem)
 Widget textOnlyNavigationItemUseCase(BuildContext context) {
   return Center(
-    child: TinaNavigationItem(
-      text: 'Profile',
-      isActive: false,
-      onTap: () {},
-    ),
+    child: TinaNavigationItem(text: 'Profile', isActive: false, onTap: () {}),
   );
 }
 
-@widgetbook.UseCase(name: 'Navigation Item with Badge', type: TinaNavigationItem)
+@widgetbook.UseCase(
+  name: 'Navigation Item with Badge',
+  type: TinaNavigationItem,
+)
 Widget navigationItemWithBadgeUseCase(BuildContext context) {
   return Center(
     child: TinaNavigationItem(
@@ -61,7 +60,10 @@ Widget navigationItemWithBadgeUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Navigation Item with Dot Badge', type: TinaNavigationItem)
+@widgetbook.UseCase(
+  name: 'Navigation Item with Dot Badge',
+  type: TinaNavigationItem,
+)
 Widget navigationItemWithDotBadgeUseCase(BuildContext context) {
   return Center(
     child: TinaNavigationItem(
@@ -119,7 +121,10 @@ Widget navigationItemSizesUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Navigation Item States Comparison', type: TinaNavigationItem)
+@widgetbook.UseCase(
+  name: 'Navigation Item States Comparison',
+  type: TinaNavigationItem,
+)
 Widget navigationItemStatesComparisonUseCase(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +253,10 @@ Widget compactNavigationRailUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Expanded Navigation Drawer', type: TinaNavigationItem)
+@widgetbook.UseCase(
+  name: 'Expanded Navigation Drawer',
+  type: TinaNavigationItem,
+)
 Widget expandedNavigationDrawerUseCase(BuildContext context) {
   return Container(
     width: 280,

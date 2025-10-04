@@ -90,10 +90,7 @@ Widget fabWithTooltipUseCase(BuildContext context) {
 @widgetbook.UseCase(name: 'Disabled FAB', type: TinaFloatingActionButton)
 Widget disabledFABUseCase(BuildContext context) {
   return Center(
-    child: TinaFloatingActionButton(
-      onPressed: null,
-      icon: Icons.block,
-    ),
+    child: TinaFloatingActionButton(onPressed: null, icon: Icons.block),
   );
 }
 

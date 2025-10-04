@@ -5,10 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 @widgetbook.UseCase(name: 'Basic App Bar Action', type: TinaAppBarAction)
 Widget basicAppBarActionUseCase(BuildContext context) {
   return Center(
-    child: TinaAppBarAction(
-      icon: Icons.search,
-      onPressed: () {},
-    ),
+    child: TinaAppBarAction(icon: Icons.search, onPressed: () {}),
   );
 }
 
@@ -35,7 +32,10 @@ Widget appBarActionWithBadgeUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'App Bar Action with Dot Badge', type: TinaAppBarAction)
+@widgetbook.UseCase(
+  name: 'App Bar Action with Dot Badge',
+  type: TinaAppBarAction,
+)
 Widget appBarActionWithDotBadgeUseCase(BuildContext context) {
   return Center(
     child: TinaAppBarAction(
@@ -58,7 +58,10 @@ Widget disabledAppBarActionUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'App Bar Action with Custom Color', type: TinaAppBarAction)
+@widgetbook.UseCase(
+  name: 'App Bar Action with Custom Color',
+  type: TinaAppBarAction,
+)
 Widget appBarActionWithCustomColorUseCase(BuildContext context) {
   return Center(
     child: TinaAppBarAction(
@@ -70,7 +73,10 @@ Widget appBarActionWithCustomColorUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'App Bar Action with Semantic Label', type: TinaAppBarAction)
+@widgetbook.UseCase(
+  name: 'App Bar Action with Semantic Label',
+  type: TinaAppBarAction,
+)
 Widget appBarActionWithSemanticLabelUseCase(BuildContext context) {
   return Center(
     child: TinaAppBarAction(
@@ -154,7 +160,10 @@ Widget appBarWithNotificationsUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'App Bar Actions with Various Badges', type: TinaAppBarAction)
+@widgetbook.UseCase(
+  name: 'App Bar Actions with Various Badges',
+  type: TinaAppBarAction,
+)
 Widget appBarActionsWithVariousBadgesUseCase(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -280,21 +289,13 @@ Widget commonAppBarIconsUseCase(BuildContext context) {
           onPressed: () {},
           tooltip: 'Filter',
         ),
-        TinaAppBarAction(
-          icon: Icons.sort,
-          onPressed: () {},
-          tooltip: 'Sort',
-        ),
+        TinaAppBarAction(icon: Icons.sort, onPressed: () {}, tooltip: 'Sort'),
         TinaAppBarAction(
           icon: Icons.refresh,
           onPressed: () {},
           tooltip: 'Refresh',
         ),
-        TinaAppBarAction(
-          icon: Icons.share,
-          onPressed: () {},
-          tooltip: 'Share',
-        ),
+        TinaAppBarAction(icon: Icons.share, onPressed: () {}, tooltip: 'Share'),
         TinaAppBarAction(
           icon: Icons.bookmark,
           onPressed: () {},
@@ -305,11 +306,7 @@ Widget commonAppBarIconsUseCase(BuildContext context) {
           onPressed: () {},
           tooltip: 'Download',
         ),
-        TinaAppBarAction(
-          icon: Icons.edit,
-          onPressed: () {},
-          tooltip: 'Edit',
-        ),
+        TinaAppBarAction(icon: Icons.edit, onPressed: () {}, tooltip: 'Edit'),
         TinaAppBarAction(
           icon: Icons.delete,
           onPressed: () {},
@@ -325,7 +322,10 @@ Widget commonAppBarIconsUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'App Bar with High Badge Count', type: TinaAppBarAction)
+@widgetbook.UseCase(
+  name: 'App Bar with High Badge Count',
+  type: TinaAppBarAction,
+)
 Widget appBarWithHighBadgeCountUseCase(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

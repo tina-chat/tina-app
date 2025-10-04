@@ -159,7 +159,10 @@ Widget downloadingStateUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Downloading Indeterminate', type: TinaAttachmentPreview)
+@widgetbook.UseCase(
+  name: 'Downloading Indeterminate',
+  type: TinaAttachmentPreview,
+)
 Widget downloadingIndeterminateUseCase(BuildContext context) {
   return Center(
     child: TinaAttachmentPreview(
@@ -248,7 +251,8 @@ Widget removeOnlyUseCase(BuildContext context) {
 Widget longFilenameUseCase(BuildContext context) {
   return Center(
     child: TinaAttachmentPreview(
-      fileName: 'this_is_a_very_long_filename_that_should_be_truncated_properly_in_the_ui.pdf',
+      fileName:
+          'this_is_a_very_long_filename_that_should_be_truncated_properly_in_the_ui.pdf',
       fileType: TinaAttachmentType.pdf,
       fileSize: 1048576, // 1MB
       size: TinaAttachmentPreviewSize.medium,
@@ -272,7 +276,10 @@ Widget noFileSizeUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Image with Broken Thumbnail', type: TinaAttachmentPreview)
+@widgetbook.UseCase(
+  name: 'Image with Broken Thumbnail',
+  type: TinaAttachmentPreview,
+)
 Widget brokenThumbnailUseCase(BuildContext context) {
   return Center(
     child: TinaAttachmentPreview(

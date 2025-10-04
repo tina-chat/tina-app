@@ -44,7 +44,10 @@ Widget cardElevationsUseCase(BuildContext context) {
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.md,
-            child: const TinaText('Medium Elevation', style: TinaTextStyle.body),
+            child: const TinaText(
+              'Medium Elevation',
+              style: TinaTextStyle.body,
+            ),
           ),
           const SizedBox(height: 16),
           TinaCard(
@@ -54,7 +57,10 @@ Widget cardElevationsUseCase(BuildContext context) {
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.xl,
-            child: const TinaText('Extra Large Elevation', style: TinaTextStyle.body),
+            child: const TinaText(
+              'Extra Large Elevation',
+              style: TinaTextStyle.body,
+            ),
           ),
         ],
       ),
@@ -70,7 +76,10 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TinaText('Card Padding Variants', style: TinaTextStyle.heading5),
+          const TinaText(
+            'Card Padding Variants',
+            style: TinaTextStyle.heading5,
+          ),
           const SizedBox(height: 24),
           TinaCard.noPadding(
             child: Container(
@@ -82,21 +91,30 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
           TinaCard.compact(
             child: Container(
               color: Colors.green.withValues(alpha: 0.1),
-              child: const TinaText('Compact Padding', style: TinaTextStyle.body),
+              child: const TinaText(
+                'Compact Padding',
+                style: TinaTextStyle.body,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           TinaCard(
             child: Container(
               color: Colors.orange.withValues(alpha: 0.1),
-              child: const TinaText('Medium Padding (Default)', style: TinaTextStyle.body),
+              child: const TinaText(
+                'Medium Padding (Default)',
+                style: TinaTextStyle.body,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           TinaCard.spacious(
             child: Container(
               color: Colors.purple.withValues(alpha: 0.1),
-              child: const TinaText('Spacious Padding', style: TinaTextStyle.body),
+              child: const TinaText(
+                'Spacious Padding',
+                style: TinaTextStyle.body,
+              ),
             ),
           ),
         ],
@@ -110,9 +128,9 @@ Widget interactiveCardUseCase(BuildContext context) {
   return Center(
     child: TinaCard(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Card tapped!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Card tapped!')));
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -256,28 +274,33 @@ Widget listCardUseCase(BuildContext context) {
         children: [
           const TinaText('Settings', style: TinaTextStyle.heading6),
           const SizedBox(height: 16),
-          ...List.generate(4, (index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                Icon(
-                  [Icons.person, Icons.notifications, Icons.security, Icons.help][index],
-                  color: Colors.grey.shade600,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TinaText(
-                    ['Profile', 'Notifications', 'Security', 'Help'][index],
-                    style: TinaTextStyle.body,
+          ...List.generate(
+            4,
+            (index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    [
+                      Icons.person,
+                      Icons.notifications,
+                      Icons.security,
+                      Icons.help,
+                    ][index],
+                    color: Colors.grey.shade600,
                   ),
-                ),
-                Icon(
-                  Icons.chevron_right,
-                  color: Colors.grey.shade400,
-                ),
-              ],
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TinaText(
+                      ['Profile', 'Notifications', 'Security', 'Help'][index],
+                      style: TinaTextStyle.body,
+                    ),
+                  ),
+                  Icon(Icons.chevron_right, color: Colors.grey.shade400),
+                ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
     ),
@@ -291,10 +314,7 @@ Widget semanticCardUseCase(BuildContext context) {
       semanticLabel: 'User profile card for John Doe',
       child: Row(
         children: [
-          TinaAvatar.initials(
-            initials: 'JD',
-            size: TinaAvatarSize.large,
-          ),
+          TinaAvatar.initials(initials: 'JD', size: TinaAvatarSize.large),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

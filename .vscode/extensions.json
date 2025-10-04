@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+      "dart-code.dart-code",
+      "gaetschwartz.build-runner",
+      "blaxou.freezed",
+      "unifiedjs.vscode-mdx",
+    ]
+  }

@@ -23,24 +23,15 @@ Widget inputSizesUseCase(BuildContext context) {
       children: [
         TinaText('Small Input', style: TinaTextStyle.caption),
         SizedBox(height: 8),
-        TinaInput(
-          size: TinaInputSize.small,
-          placeholder: 'Small input',
-        ),
+        TinaInput(size: TinaInputSize.small, placeholder: 'Small input'),
         SizedBox(height: 24),
         TinaText('Medium Input (Default)', style: TinaTextStyle.caption),
         SizedBox(height: 8),
-        TinaInput(
-          size: TinaInputSize.medium,
-          placeholder: 'Medium input',
-        ),
+        TinaInput(size: TinaInputSize.medium, placeholder: 'Medium input'),
         SizedBox(height: 24),
         TinaText('Large Input', style: TinaTextStyle.caption),
         SizedBox(height: 8),
-        TinaInput(
-          size: TinaInputSize.large,
-          placeholder: 'Large input',
-        ),
+        TinaInput(size: TinaInputSize.large, placeholder: 'Large input'),
       ],
     ),
   );
@@ -281,9 +272,9 @@ Widget interactiveInputUseCase(BuildContext context) {
             // Handle change
           },
           onSubmitted: (value) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Submitted: $value')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Submitted: $value')));
           },
           helperText: 'Press enter to submit',
         ),
@@ -308,8 +299,6 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    return newValue.copyWith(
-      text: newValue.text.toUpperCase(),
-    );
+    return newValue.copyWith(text: newValue.text.toUpperCase());
   }
 }

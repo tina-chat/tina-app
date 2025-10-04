@@ -280,10 +280,7 @@ Widget messageTimelineUseCase(BuildContext context) {
         children: [
           Text(
             'Message Status Timeline',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 24),
           Row(
@@ -362,9 +359,9 @@ Widget chatInterfaceContextUseCase(BuildContext context) {
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(16).copyWith(
-                      bottomRight: const Radius.circular(4),
-                    ),
+                    borderRadius: BorderRadius.circular(
+                      16,
+                    ).copyWith(bottomRight: const Radius.circular(4)),
                   ),
                   child: const Text(
                     'Hey! How are you doing?',
@@ -398,9 +395,9 @@ Widget chatInterfaceContextUseCase(BuildContext context) {
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(16).copyWith(
-                      bottomRight: const Radius.circular(4),
-                    ),
+                    borderRadius: BorderRadius.circular(
+                      16,
+                    ).copyWith(bottomRight: const Radius.circular(4)),
                   ),
                   child: const Text(
                     'This message is still sending...',

@@ -4,9 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Basic Spinner', type: TinaSpinner)
 Widget basicSpinnerUseCase(BuildContext context) {
-  return const Center(
-    child: TinaSpinner(),
-  );
+  return const Center(child: TinaSpinner());
 }
 
 @widgetbook.UseCase(name: 'Spinner Sizes', type: TinaSpinner)

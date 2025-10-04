@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+printf "\e[33;1m%s\e[0m\n" 'Running dart format'
+
+result=$(fvm dart run import_sorter:main)
+exitCode=$?
+
+echo "$result"
+if [ $exitCode -ne 0 ]; then
+  echo "dart import sorter command failed to execute."
+  exit 1
+fi
+
+#dart format
+# \e[33;1m%s\e[0m\n: 
+# This is an example of using ANSI escape codes to colorize the output text in the terminal. 
+#\e[33;1m changes the color of the following text to yellow. 
+# %s is a placeholder for a string that will be supplied later. 
+# \e[0m resets the color back to the terminal's default. 
+# \n is a newline character that moves the terminal cursor to the next line.
+printf "\e[33;1m%s\e[0m\n" 'Running dart format'
+
+result=$(fvm dart format --line-length 80 .)
+
+exitCode=$?
+if [ $exitCode -ne 0 ]; then
+  echo "dart format command failed to execute."
+  exit 1
+fi
+
+# result_lines=$(echo "$result" | wc -l) This command is counting the lines of the result. 
+# In detail: echo "$result" prints the contents of the analyze variable. 
+# | is a pipe character that takes the output of the command to its left and supplies it as input to the command on its right. 
+# wc -l counts the number of lines.
+result_lines=$(echo "$result" | wc -l)
+
+if [ "$result_lines" -gt 1 ]; then
+  echo "$result"
+  printf "\e[31;1m%s\e[0m\n" 'Dart format applied changes, please recommit'
+  exit 1
+fi
+
+echo "$result"
+printf "\e[32;1m%s\e[0m\n" 'Finished running dart format'
+
+#flutter analyze
+# \e[33;1m%s\e[0m\n: 
+# This is an example of using ANSI escape codes to colorize the output text in the terminal. 
+#\e[31;1m changes the color of the following text to bright red. 
+# %s is a placeholder for a string that will be supplied later. 
+# \e[0m resets the color back to the terminal's default. 
+# \n is a newline character that moves the terminal cursor to the next line.
+printf "\e[33;1m%s\e[0m\n" 'Running flutter analyze'
+analyze=$(fvm flutter analyze)
+analyzet_lines=$(echo "$analyze" | wc -l)
+# Subtract 2 from the line count
+real_analyzet_lines=$((analyzet_lines - 2))
+
+if [ "$real_analyzet_lines" -gt 1 ]; then
+  echo -e "$analyze \n"
+  printf "\e[31;1m%s %s\e[0m\n" "Flutter analyze found issues"
+  printf "\e[31;1m%s %s\e[0m\n" "$real_analyzet_lines" "issues"
+
+  printf "\e[33;1m%s\e[0m\n" 'Running dart fix - Trying to fix above issues'
+  dart_fix=$(dart fix --apply)
+  if [ $? -ne 0 ]; then
+    echo -e "$dart_fix \n"
+    printf "\e[31;1m%s\e[0m\n" 'Dart fix applied changes, please recommit'
+    exit 1
+  fi
+
+  echo "$dart_fix"
+  printf "\e[31;1m%s\e[0m\n" 'Finished running dart fix - 0 issues fixed, Please fix it manually'
+  exit 1
+fi
+
+
+echo "$analyze"
+printf "\e[32;1m%s\e[0m\n" 'Finished running Flutter analyze with 0 issues'
+
+

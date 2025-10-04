@@ -65,7 +65,10 @@ Widget connectingWithLabelUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Custom Label - Connected', type: TinaConnectionStatus)
+@widgetbook.UseCase(
+  name: 'Custom Label - Connected',
+  type: TinaConnectionStatus,
+)
 Widget customLabelConnectedUseCase(BuildContext context) {
   return const Center(
     child: TinaConnectionStatus(
@@ -77,7 +80,10 @@ Widget customLabelConnectedUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Custom Label - Disconnected', type: TinaConnectionStatus)
+@widgetbook.UseCase(
+  name: 'Custom Label - Disconnected',
+  type: TinaConnectionStatus,
+)
 Widget customLabelDisconnectedUseCase(BuildContext context) {
   return const Center(
     child: TinaConnectionStatus(
@@ -89,7 +95,10 @@ Widget customLabelDisconnectedUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Custom Label - Reconnecting', type: TinaConnectionStatus)
+@widgetbook.UseCase(
+  name: 'Custom Label - Reconnecting',
+  type: TinaConnectionStatus,
+)
 Widget customLabelReconnectingUseCase(BuildContext context) {
   return const Center(
     child: TinaConnectionStatus(
@@ -156,7 +165,10 @@ Widget allSizesComparisonUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Status States Comparison', type: TinaConnectionStatus)
+@widgetbook.UseCase(
+  name: 'Status States Comparison',
+  type: TinaConnectionStatus,
+)
 Widget statusStatesComparisonUseCase(BuildContext context) {
   return const Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -204,10 +216,30 @@ Widget indicatorOnlyGridUseCase(BuildContext context) {
         children: [
           const TableRow(
             children: [
-              Center(child: Text('Size', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Online', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Offline', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Connecting', style: TextStyle(fontWeight: FontWeight.bold))),
+              Center(
+                child: Text(
+                  'Size',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Online',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Offline',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Connecting',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
           TableRow(
@@ -300,10 +332,30 @@ Widget withLabelsGridUseCase(BuildContext context) {
         children: [
           const TableRow(
             children: [
-              Center(child: Text('Size', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Online', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Offline', style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('Connecting', style: TextStyle(fontWeight: FontWeight.bold))),
+              Center(
+                child: Text(
+                  'Size',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Online',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Offline',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Connecting',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
           TableRow(
@@ -407,9 +459,7 @@ Widget inAppBarContextUseCase(BuildContext context) {
         ),
       ],
     ),
-    body: const Center(
-      child: Text('Connection status shown in app bar'),
-    ),
+    body: const Center(child: Text('Connection status shown in app bar')),
   );
 }
 
@@ -443,9 +493,7 @@ Widget inChatContextUseCase(BuildContext context) {
         ),
         const SizedBox(height: 16),
         const Expanded(
-          child: Center(
-            child: Text('Chat messages would appear here'),
-          ),
+          child: Center(child: Text('Chat messages would appear here')),
         ),
       ],
     ),

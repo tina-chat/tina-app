@@ -49,7 +49,11 @@ Widget coloredIconsUseCase(BuildContext context) {
     children: [
       TinaIcon(Icons.favorite, color: Colors.red, size: TinaIconSize.large),
       TinaIcon(Icons.star, color: Colors.orange, size: TinaIconSize.large),
-      TinaIcon(Icons.check_circle, color: Colors.green, size: TinaIconSize.large),
+      TinaIcon(
+        Icons.check_circle,
+        color: Colors.green,
+        size: TinaIconSize.large,
+      ),
       TinaIcon(Icons.info, color: Colors.blue, size: TinaIconSize.large),
       TinaIcon(Icons.warning, color: Colors.amber, size: TinaIconSize.large),
       TinaIcon(Icons.error, color: Colors.red, size: TinaIconSize.large),
@@ -63,9 +67,9 @@ Widget iconButtonBasicUseCase(BuildContext context) {
     child: TinaIconButton(
       icon: Icons.favorite,
       onPressed: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Icon button pressed!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Icon button pressed!')));
       },
       tooltip: 'Add to favorites',
     ),
@@ -188,11 +192,31 @@ Widget iconCategoriesUseCase(BuildContext context) {
             spacing: 16,
             runSpacing: 16,
             children: [
-              TinaIcon(Icons.check, color: Colors.green, size: TinaIconSize.large),
-              TinaIcon(Icons.close, color: Colors.red, size: TinaIconSize.large),
-              TinaIcon(Icons.info, color: Colors.blue, size: TinaIconSize.large),
-              TinaIcon(Icons.warning, color: Colors.orange, size: TinaIconSize.large),
-              TinaIcon(Icons.error, color: Colors.red, size: TinaIconSize.large),
+              TinaIcon(
+                Icons.check,
+                color: Colors.green,
+                size: TinaIconSize.large,
+              ),
+              TinaIcon(
+                Icons.close,
+                color: Colors.red,
+                size: TinaIconSize.large,
+              ),
+              TinaIcon(
+                Icons.info,
+                color: Colors.blue,
+                size: TinaIconSize.large,
+              ),
+              TinaIcon(
+                Icons.warning,
+                color: Colors.orange,
+                size: TinaIconSize.large,
+              ),
+              TinaIcon(
+                Icons.error,
+                color: Colors.red,
+                size: TinaIconSize.large,
+              ),
             ],
           ),
         ],

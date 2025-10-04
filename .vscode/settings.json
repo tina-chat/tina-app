@@ -1,8 +1,31 @@
 {
-    "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
-    "yaml.schemaStore.enable": true,
-    "yaml.schemas": {
-        "https://raw.githubusercontent.com/weaveworks/eksctl/main/pkg/apis/eksctl.io/v1alpha5/assets/schema.json": "*.eksctl.yaml",
-        "https://codemagic.io/codemagic-schema.json": "codemagic.yaml"
+  "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
+  "yaml.schemaStore.enable": true,
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/weaveworks/eksctl/main/pkg/apis/eksctl.io/v1alpha5/assets/schema.json": "*.eksctl.yaml",
+    "https://codemagic.io/codemagic-schema.json": "codemagic.yaml"
+  },
+  "dart.flutterSdkPath": ".fvm/versions/3.35.0",
+  "search.exclude": {
+    "**/.fvm": true
+  },
+  "files.watcherExclude": {
+    "**/.fvm": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.dart": "${capture}.g.dart, ${capture}.freezed.dart,${capture}.gr.dart"
+  },
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
     }
+  },
+  "files.exclude": {
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true
+  },
+  "editor.rulers": [80]
 }

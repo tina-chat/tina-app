@@ -65,10 +65,7 @@ Widget textStylesUseCase(BuildContext context) {
             style: TinaTextStyle.overline,
           ),
           SizedBox(height: 12),
-          TinaText(
-            'Button - Button text style',
-            style: TinaTextStyle.button,
-          ),
+          TinaText('Button - Button text style', style: TinaTextStyle.button),
           SizedBox(height: 12),
           TinaText(
             'Code - Monospace code text style',
@@ -320,10 +317,7 @@ Widget codeTextUseCase(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
-        TinaText(
-          'Regular text for comparison',
-          style: TinaTextStyle.body,
-        ),
+        TinaText('Regular text for comparison', style: TinaTextStyle.body),
         SizedBox(height: 16),
         TinaText(
           'function helloWorld() {\n  console.log("Hello, World!");\n}',
@@ -335,10 +329,7 @@ Widget codeTextUseCase(BuildContext context) {
           style: TinaTextStyle.code,
         ),
         SizedBox(height: 16),
-        TinaText(
-          'npm install flutter_bloc',
-          style: TinaTextStyle.code,
-        ),
+        TinaText('npm install flutter_bloc', style: TinaTextStyle.code),
       ],
     ),
   );
@@ -366,7 +357,8 @@ Widget semanticLabelsUseCase(BuildContext context) {
         TinaText(
           'Phone: (555) 123-4567',
           style: TinaTextStyle.body,
-          semanticsLabel: 'Phone number: five five five, one two three, four five six seven',
+          semanticsLabel:
+              'Phone number: five five five, one two three, four five six seven',
         ),
       ],
     ),

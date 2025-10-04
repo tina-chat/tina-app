@@ -40,11 +40,7 @@ Widget iconOnlyTabItemUseCase(BuildContext context) {
 @widgetbook.UseCase(name: 'Text Only Tab Item', type: TinaTabItem)
 Widget textOnlyTabItemUseCase(BuildContext context) {
   return Center(
-    child: TinaTabItem(
-      text: 'Profile',
-      isActive: false,
-      onTap: () {},
-    ),
+    child: TinaTabItem(text: 'Profile', isActive: false, onTap: () {}),
   );
 }
 
@@ -173,27 +169,15 @@ Widget textOnlyTabBarUseCase(BuildContext context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        TinaTabItem(
-          text: 'Overview',
-          isActive: true,
-          onTap: () {},
-        ),
-        TinaTabItem(
-          text: 'Details',
-          isActive: false,
-          onTap: () {},
-        ),
+        TinaTabItem(text: 'Overview', isActive: true, onTap: () {}),
+        TinaTabItem(text: 'Details', isActive: false, onTap: () {}),
         TinaTabItem(
           text: 'History',
           badge: TinaBadge.count(count: 12),
           isActive: false,
           onTap: () {},
         ),
-        TinaTabItem(
-          text: 'Settings',
-          isActive: false,
-          onTap: () {},
-        ),
+        TinaTabItem(text: 'Settings', isActive: false, onTap: () {}),
       ],
     ),
   );

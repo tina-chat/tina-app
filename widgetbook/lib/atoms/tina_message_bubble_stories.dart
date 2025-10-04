@@ -22,7 +22,8 @@ Widget aiTextMessageUseCase(BuildContext context) {
     width: double.infinity,
     padding: const EdgeInsets.all(16),
     child: const TinaMessageBubble(
-      content: 'I\'d be happy to help you with your Flutter project! What specific area would you like assistance with?',
+      content:
+          'I\'d be happy to help you with your Flutter project! What specific area would you like assistance with?',
       isUser: false,
       status: TinaMessageDeliveryStatus.delivered,
       contentType: TinaMessageContentType.text,
@@ -30,7 +31,10 @@ Widget aiTextMessageUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'User Message with Timestamp', type: TinaMessageBubble)
+@widgetbook.UseCase(
+  name: 'User Message with Timestamp',
+  type: TinaMessageBubble,
+)
 Widget userMessageWithTimestampUseCase(BuildContext context) {
   return Container(
     width: double.infinity,
@@ -51,7 +55,8 @@ Widget aiMessageWithTimestampUseCase(BuildContext context) {
     width: double.infinity,
     padding: const EdgeInsets.all(16),
     child: TinaMessageBubble(
-      content: 'Of course! Please share the code snippet and I\'ll provide feedback on best practices, potential improvements, and any issues I notice.',
+      content:
+          'Of course! Please share the code snippet and I\'ll provide feedback on best practices, potential improvements, and any issues I notice.',
       isUser: false,
       status: TinaMessageDeliveryStatus.delivered,
       contentType: TinaMessageContentType.text,
@@ -121,7 +126,8 @@ Widget imageMessageUseCase(BuildContext context) {
         ),
         SizedBox(height: 16),
         TinaMessageBubble(
-          content: 'That\'s a beautiful image! What would you like to know about it?',
+          content:
+              'That\'s a beautiful image! What would you like to know about it?',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,
@@ -146,7 +152,8 @@ Widget fileAttachmentMessageUseCase(BuildContext context) {
         ),
         SizedBox(height: 16),
         TinaMessageBubble(
-          content: 'I\'ve received your project requirements document. Let me review it and provide feedback.',
+          content:
+              'I\'ve received your project requirements document. Let me review it and provide feedback.',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,
@@ -164,14 +171,16 @@ Widget longMessageContentUseCase(BuildContext context) {
     child: const Column(
       children: [
         TinaMessageBubble(
-          content: 'I need help with implementing a complex state management solution in Flutter. I\'m working on a large-scale application that needs to handle multiple data sources, real-time updates, and complex user interactions. What would be the best approach?',
+          content:
+              'I need help with implementing a complex state management solution in Flutter. I\'m working on a large-scale application that needs to handle multiple data sources, real-time updates, and complex user interactions. What would be the best approach?',
           isUser: true,
           status: TinaMessageDeliveryStatus.read,
           contentType: TinaMessageContentType.text,
         ),
         SizedBox(height: 16),
         TinaMessageBubble(
-          content: 'For a large-scale Flutter application with complex state management needs, I\'d recommend considering the following approaches:\n\n1. **BLoC Pattern**: Excellent for complex business logic and testing\n2. **Riverpod**: Great for dependency injection and reactive programming\n3. **Redux**: If you need predictable state updates\n4. **GetX**: For rapid development with less boilerplate\n\nThe choice depends on your team\'s experience, project requirements, and long-term maintenance considerations. Would you like me to elaborate on any of these options?',
+          content:
+              'For a large-scale Flutter application with complex state management needs, I\'d recommend considering the following approaches:\n\n1. **BLoC Pattern**: Excellent for complex business logic and testing\n2. **Riverpod**: Great for dependency injection and reactive programming\n3. **Redux**: If you need predictable state updates\n4. **GetX**: For rapid development with less boilerplate\n\nThe choice depends on your team\'s experience, project requirements, and long-term maintenance considerations. Would you like me to elaborate on any of these options?',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,
@@ -197,7 +206,8 @@ Widget conversationFlowUseCase(BuildContext context) {
         ),
         const SizedBox(height: 8),
         TinaMessageBubble(
-          content: 'Hello! I\'m Tina, your AI assistant. How can I help you today?',
+          content:
+              'Hello! I\'m Tina, your AI assistant. How can I help you today?',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,
@@ -213,7 +223,8 @@ Widget conversationFlowUseCase(BuildContext context) {
         ),
         const SizedBox(height: 8),
         TinaMessageBubble(
-          content: 'Perfect! I\'d love to help with your Flutter development. What specific aspect are you working on?',
+          content:
+              'Perfect! I\'d love to help with your Flutter development. What specific aspect are you working on?',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,
@@ -265,7 +276,8 @@ Widget customWidthMessagesUseCase(BuildContext context) {
         ),
         SizedBox(height: 16),
         TinaMessageBubble(
-          content: 'This is a longer message with custom max width that demonstrates how the bubble adapts to different width constraints.',
+          content:
+              'This is a longer message with custom max width that demonstrates how the bubble adapts to different width constraints.',
           isUser: false,
           status: TinaMessageDeliveryStatus.delivered,
           contentType: TinaMessageContentType.text,

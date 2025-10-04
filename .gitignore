@@ -18,7 +18,6 @@ migrate_working_dir/
 *.iws
 .idea/
 
-
 .env
 
 # The .vscode folder contains launch configuration and tasks you configure in
@@ -68,3 +67,6 @@ node_modules/
 # Task files
 # tasks.json
 # tasks/ 
+
+# FVM Version Cache
+.fvm/

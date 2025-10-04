@@ -23,20 +23,18 @@ class WidgetbookApp extends StatelessWidget {
         InspectorAddon(enabled: true),
         AlignmentAddon(),
         ViewportAddon([
-          Viewports.none, 
-          IosViewports.iPhone13, 
-          AndroidViewports.samsungGalaxyNote20, 
-          MacosViewports.macbookPro, 
-          WindowsViewports.desktop, 
-          LinuxViewports.desktop, 
+          Viewports.none,
+          IosViewports.iPhone13,
+          AndroidViewports.samsungGalaxyNote20,
+          MacosViewports.macbookPro,
+          WindowsViewports.desktop,
+          LinuxViewports.desktop,
         ]),
         ThemeAddon(
           themeBuilder: (context, theme, child) => Theme(
             data: theme,
             child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-              ),
+              decoration: BoxDecoration(color: theme.colorScheme.surface),
               child: child,
             ),
           ),

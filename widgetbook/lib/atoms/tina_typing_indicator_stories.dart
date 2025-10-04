@@ -4,35 +4,27 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Default Typing Indicator', type: TinaTypingIndicator)
 Widget defaultTypingIndicatorUseCase(BuildContext context) {
-  return const Center(
-    child: TinaTypingIndicator(),
-  );
+  return const Center(child: TinaTypingIndicator());
 }
 
 @widgetbook.UseCase(name: 'Small Typing Indicator', type: TinaTypingIndicator)
 Widget smallTypingIndicatorUseCase(BuildContext context) {
   return const Center(
-    child: TinaTypingIndicator(
-      size: TinaTypingIndicatorSize.small,
-    ),
+    child: TinaTypingIndicator(size: TinaTypingIndicatorSize.small),
   );
 }
 
 @widgetbook.UseCase(name: 'Medium Typing Indicator', type: TinaTypingIndicator)
 Widget mediumTypingIndicatorUseCase(BuildContext context) {
   return const Center(
-    child: TinaTypingIndicator(
-      size: TinaTypingIndicatorSize.medium,
-    ),
+    child: TinaTypingIndicator(size: TinaTypingIndicatorSize.medium),
   );
 }
 
 @widgetbook.UseCase(name: 'Large Typing Indicator', type: TinaTypingIndicator)
 Widget largeTypingIndicatorUseCase(BuildContext context) {
   return const Center(
-    child: TinaTypingIndicator(
-      size: TinaTypingIndicatorSize.large,
-    ),
+    child: TinaTypingIndicator(size: TinaTypingIndicatorSize.large),
   );
 }
 
@@ -45,9 +37,7 @@ Widget allSizesComparisonUseCase(BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TinaTypingIndicator(
-              size: TinaTypingIndicatorSize.small,
-            ),
+            TinaTypingIndicator(size: TinaTypingIndicatorSize.small),
             SizedBox(width: 16),
             Text('Small'),
           ],
@@ -56,9 +46,7 @@ Widget allSizesComparisonUseCase(BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TinaTypingIndicator(
-              size: TinaTypingIndicatorSize.medium,
-            ),
+            TinaTypingIndicator(size: TinaTypingIndicatorSize.medium),
             SizedBox(width: 16),
             Text('Medium'),
           ],
@@ -67,9 +55,7 @@ Widget allSizesComparisonUseCase(BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TinaTypingIndicator(
-              size: TinaTypingIndicatorSize.large,
-            ),
+            TinaTypingIndicator(size: TinaTypingIndicatorSize.large),
             SizedBox(width: 16),
             Text('Large'),
           ],
@@ -161,7 +147,10 @@ Widget withoutContainerUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Custom Animation Duration', type: TinaTypingIndicator)
+@widgetbook.UseCase(
+  name: 'Custom Animation Duration',
+  type: TinaTypingIndicator,
+)
 Widget customAnimationDurationUseCase(BuildContext context) {
   return const Center(
     child: Column(
@@ -223,9 +212,9 @@ Widget chatInterfaceContextUseCase(BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(16).copyWith(
-                bottomRight: const Radius.circular(4),
-              ),
+              borderRadius: BorderRadius.circular(
+                16,
+              ).copyWith(bottomRight: const Radius.circular(4)),
             ),
             child: const Text(
               'Can you help me with Flutter development?',
@@ -243,7 +232,10 @@ Widget chatInterfaceContextUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Multiple Typing Indicators', type: TinaTypingIndicator)
+@widgetbook.UseCase(
+  name: 'Multiple Typing Indicators',
+  type: TinaTypingIndicator,
+)
 Widget multipleTypingIndicatorsUseCase(BuildContext context) {
   return Container(
     width: double.infinity,
@@ -274,7 +266,10 @@ Widget multipleTypingIndicatorsUseCase(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Conversation Flow with Typing', type: TinaTypingIndicator)
+@widgetbook.UseCase(
+  name: 'Conversation Flow with Typing',
+  type: TinaTypingIndicator,
+)
 Widget conversationFlowWithTypingUseCase(BuildContext context) {
   return Container(
     width: double.infinity,
@@ -290,18 +285,15 @@ Widget conversationFlowWithTypingUseCase(BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(16).copyWith(
-                bottomRight: const Radius.circular(4),
-              ),
+              borderRadius: BorderRadius.circular(
+                16,
+              ).copyWith(bottomRight: const Radius.circular(4)),
             ),
-            child: const Text(
-              'Hello!',
-              style: TextStyle(color: Colors.white),
-            ),
+            child: const Text('Hello!', style: TextStyle(color: Colors.white)),
           ),
         ),
         const SizedBox(height: 8),
-        
+
         // AI response
         Align(
           alignment: Alignment.centerLeft,
@@ -311,9 +303,9 @@ Widget conversationFlowWithTypingUseCase(BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(16).copyWith(
-                bottomLeft: const Radius.circular(4),
-              ),
+              borderRadius: BorderRadius.circular(
+                16,
+              ).copyWith(bottomLeft: const Radius.circular(4)),
             ),
             child: const Text(
               'Hi there! How can I help you today?',
@@ -322,7 +314,7 @@ Widget conversationFlowWithTypingUseCase(BuildContext context) {
           ),
         ),
         const SizedBox(height: 8),
-        
+
         // User message 2
         Align(
           alignment: Alignment.centerRight,
@@ -332,9 +324,9 @@ Widget conversationFlowWithTypingUseCase(BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(16).copyWith(
-                bottomRight: const Radius.circular(4),
-              ),
+              borderRadius: BorderRadius.circular(
+                16,
+              ).copyWith(bottomRight: const Radius.circular(4)),
             ),
             child: const Text(
               'I need help with state management in Flutter.',
@@ -342,7 +334,7 @@ Widget conversationFlowWithTypingUseCase(BuildContext context) {
             ),
           ),
         ),
-        
+
         // AI typing indicator
         const TinaTypingIndicator(
           size: TinaTypingIndicatorSize.medium,

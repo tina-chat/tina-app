@@ -70,7 +70,10 @@ Widget containerTypesUseCase(BuildContext context) {
         const SizedBox(height: 16),
         TinaContainer.component(
           backgroundColor: Colors.green.shade50,
-          child: const TinaText('Component Container', style: TinaTextStyle.body),
+          child: const TinaText(
+            'Component Container',
+            style: TinaTextStyle.body,
+          ),
         ),
       ],
     ),

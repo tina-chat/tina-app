@@ -38,11 +38,7 @@ Widget highCountBadgeUseCase(BuildContext context) {
 
 @widgetbook.UseCase(name: 'Dot Badge', type: TinaBadge)
 Widget dotBadgeUseCase(BuildContext context) {
-  return Center(
-    child: TinaBadge.dot(
-      variant: TinaBadgeVariant.error,
-    ),
-  );
+  return Center(child: TinaBadge.dot(variant: TinaBadgeVariant.error));
 }
 
 @widgetbook.UseCase(name: 'Badge Variants', type: TinaBadge)

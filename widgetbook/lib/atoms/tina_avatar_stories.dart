@@ -42,35 +42,17 @@ Widget avatarSizesUseCase(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      TinaAvatar.initials(
-        initials: 'XS',
-        size: TinaAvatarSize.extraSmall,
-      ),
+      TinaAvatar.initials(initials: 'XS', size: TinaAvatarSize.extraSmall),
       const SizedBox(height: 16),
-      TinaAvatar.initials(
-        initials: 'S',
-        size: TinaAvatarSize.small,
-      ),
+      TinaAvatar.initials(initials: 'S', size: TinaAvatarSize.small),
       const SizedBox(height: 16),
-      TinaAvatar.initials(
-        initials: 'M',
-        size: TinaAvatarSize.medium,
-      ),
+      TinaAvatar.initials(initials: 'M', size: TinaAvatarSize.medium),
       const SizedBox(height: 16),
-      TinaAvatar.initials(
-        initials: 'L',
-        size: TinaAvatarSize.large,
-      ),
+      TinaAvatar.initials(initials: 'L', size: TinaAvatarSize.large),
       const SizedBox(height: 16),
-      TinaAvatar.initials(
-        initials: 'XL',
-        size: TinaAvatarSize.extraLarge,
-      ),
+      TinaAvatar.initials(initials: 'XL', size: TinaAvatarSize.extraLarge),
       const SizedBox(height: 16),
-      TinaAvatar.initials(
-        initials: 'XXL',
-        size: TinaAvatarSize.huge,
-      ),
+      TinaAvatar.initials(initials: 'XXL', size: TinaAvatarSize.huge),
     ],
   );
 }
@@ -82,9 +64,9 @@ Widget interactiveAvatarUseCase(BuildContext context) {
       initials: 'IA',
       size: TinaAvatarSize.large,
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Avatar tapped!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Avatar tapped!')));
       },
       semanticLabel: 'Tap to interact',
     ),
@@ -156,7 +138,9 @@ Widget avatarGroupNoCountUseCase(BuildContext context) {
 Widget errorFallbackAvatarUseCase(BuildContext context) {
   return Center(
     child: TinaAvatar.image(
-      imageProvider: const NetworkImage('https://invalid-url-that-will-fail.com/image.jpg'),
+      imageProvider: const NetworkImage(
+        'https://invalid-url-that-will-fail.com/image.jpg',
+      ),
       size: TinaAvatarSize.medium,
       fallbackText: 'FB',
       fallbackIcon: Icons.error_outline,
