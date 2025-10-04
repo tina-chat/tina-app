@@ -47,6 +47,8 @@ import 'package:widgetbook_workspace/atoms/tina_tab_item_stories.dart'
     as _widgetbook_workspace_atoms_tina_tab_item_stories;
 import 'package:widgetbook_workspace/atoms/tina_text_stories.dart'
     as _widgetbook_workspace_atoms_tina_text_stories;
+import 'package:widgetbook_workspace/atoms/tina_tile_stories.dart'
+    as _widgetbook_workspace_atoms_tina_tile_stories;
 import 'package:widgetbook_workspace/atoms/tina_typing_indicator_stories.dart'
     as _widgetbook_workspace_atoms_tina_typing_indicator_stories;
 
@@ -1105,6 +1107,36 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Text Styles',
             builder:
                 _widgetbook_workspace_atoms_tina_text_stories.textStylesUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TinaTile',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Primary Tile',
+            builder: _widgetbook_workspace_atoms_tina_tile_stories
+                .primaryTileUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Secondary Tile',
+            builder: _widgetbook_workspace_atoms_tina_tile_stories
+                .secondaryTileUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Semantic Tiles',
+            builder: _widgetbook_workspace_atoms_tina_tile_stories
+                .semanticTilesUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Tile Sizes',
+            builder:
+                _widgetbook_workspace_atoms_tina_tile_stories.tileSizesUseCase,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Tile States',
+            builder:
+                _widgetbook_workspace_atoms_tina_tile_stories.tileStatesUseCase,
           ),
         ],
       ),

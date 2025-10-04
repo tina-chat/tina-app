@@ -18,18 +18,12 @@ class PromptsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const Text(
               'Prompts Screen',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             const Text(
               'Prompt templates and management',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF64748B),
-              ),
+              style: TextStyle(fontSize: 16, color: Color(0xFF64748B)),
             ),
           ],
         ),

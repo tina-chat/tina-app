@@ -39,42 +39,44 @@ class TinaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
+    final tinaTheme = context.tinaTheme;
 
     return SizedBox(
       width: isFullWidth ? double.infinity : null,
       height: _getHeight(),
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: _getButtonStyle(tinaColors),
-        child: isLoading
-            ? SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    _getLoadingColor(tinaColors),
-                  ),
-                ),
-              )
-            : child,
-      ),
-    );
-  }
-
-  ButtonStyle _getButtonStyle(TinaColorScheme colors) {
-    return ElevatedButton.styleFrom(
-      backgroundColor: _getBackgroundColor(colors),
-      foregroundColor: _getForegroundColor(colors),
-      elevation: variant == TinaButtonVariant.elevated ? 2 : 0,
-      padding: _getPadding(),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(DesignBorderRadius.md),
-        side: variant == TinaButtonVariant.outlined
-            ? BorderSide(
-                color: colors.primary,
-              )
-            : BorderSide.none,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: isLoading ? null : onPressed,
+          borderRadius: BorderRadius.circular(tinaTheme.borderRadius.md),
+          child: AnimatedContainer(
+            duration: tinaTheme.animation.normal,
+            padding: _getPadding(tinaTheme.spacing),
+            decoration: BoxDecoration(
+              color: _getBackgroundColor(tinaColors),
+              borderRadius: BorderRadius.circular(tinaTheme.borderRadius.md),
+              border: _getBorder(tinaColors),
+              boxShadow: _getBoxShadow(),
+            ),
+            child: Center(
+              child: isLoading
+                  ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          _getLoadingColor(tinaColors),
+                        ),
+                      ),
+                    )
+                  : DefaultTextStyle(
+                      style: _getTextStyle(tinaColors, tinaTheme.typography),
+                      child: child,
+                    ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -121,12 +123,61 @@ class TinaButton extends StatelessWidget {
     };
   }
 
-  EdgeInsets _getPadding() {
+  EdgeInsets _getPadding(TinaSpacingTheme spacing) {
     return switch (size) {
-      TinaButtonSize.small => DesignButtonSizes.paddingSm,
-      TinaButtonSize.medium => DesignButtonSizes.paddingMd,
-      TinaButtonSize.large => DesignButtonSizes.paddingLg,
+      TinaButtonSize.small => EdgeInsets.symmetric(
+        horizontal: spacing.md,
+        vertical: spacing.sm,
+      ),
+      TinaButtonSize.medium => EdgeInsets.symmetric(
+        horizontal: spacing.lg,
+        vertical: spacing.md,
+      ),
+      TinaButtonSize.large => EdgeInsets.symmetric(
+        horizontal: spacing.xl,
+        vertical: spacing.lg,
+      ),
     };
+  }
+
+  Border? _getBorder(TinaColorScheme colors) {
+    if (variant == TinaButtonVariant.outlined) {
+      return Border.all(
+        color: onPressed == null ? colors.outlineVariant : colors.primary,
+      );
+    }
+    return null;
+  }
+
+  List<BoxShadow> _getBoxShadow() {
+    if (variant == TinaButtonVariant.elevated) {
+      return [DesignShadows.sm];
+    }
+    return [];
+  }
+
+  TextStyle _getTextStyle(
+    TinaColorScheme colors,
+    TinaTypographyTheme typography,
+  ) {
+    final fontSize = switch (size) {
+      TinaButtonSize.small => typography.sizes.sm,
+      TinaButtonSize.medium => typography.sizes.base,
+      TinaButtonSize.large => typography.sizes.lg,
+    };
+
+    final fontWeight = switch (size) {
+      TinaButtonSize.small => typography.weights.medium,
+      TinaButtonSize.medium => typography.weights.medium,
+      TinaButtonSize.large => typography.weights.semibold,
+    };
+
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: _getForegroundColor(colors),
+      height: typography.lineHeights.base,
+    );
   }
 }
 

@@ -13,10 +13,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text(
               'Home Screen',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             const Text('Welcome to Tina AI Assistant'),

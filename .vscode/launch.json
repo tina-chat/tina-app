@@ -6,20 +6,20 @@
     "configurations": [
         {
             "name": "tina_shell",
-            "cwd": "apps/tina_shell",
+            "cwd": "apps/tina_app",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "tina_shell (profile mode)",
-            "cwd": "apps/tina_shell",
+            "cwd": "apps/tina_app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "tina_shell (release mode)",
-            "cwd": "apps/tina_shell",
+            "cwd": "apps/tina_app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

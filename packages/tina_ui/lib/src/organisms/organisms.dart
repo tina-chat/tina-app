@@ -15,3 +15,4 @@
 // export 'product_listing.dart';
 // export 'chat_interface.dart';
 // export 'settings_panel.dart';
+export 'tina_sidebar.dart';

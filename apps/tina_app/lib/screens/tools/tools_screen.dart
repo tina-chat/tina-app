@@ -18,18 +18,12 @@ class ToolsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const Text(
               'Tools Screen',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             const Text(
               'AI-powered tools and utilities',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF64748B),
-              ),
+              style: TextStyle(fontSize: 16, color: Color(0xFF64748B)),
             ),
           ],
         ),

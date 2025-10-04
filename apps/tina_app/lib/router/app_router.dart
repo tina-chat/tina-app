@@ -13,10 +13,7 @@ final appRouter = GoRouter(
     ShellRoute(
       builder: (context, state, child) => AppLayout(child: child),
       routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeScreen(),
-        ),
+        GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
         GoRoute(
           path: '/chats',
           builder: (context, state) => const ChatScreen(),

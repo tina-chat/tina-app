@@ -13,10 +13,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             const Text(
               'Settings Screen',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             const Text('Configure your preferences'),

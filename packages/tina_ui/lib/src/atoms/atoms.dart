@@ -33,4 +33,5 @@ export 'tina_navigation_item.dart';
 export 'tina_spinner.dart';
 export 'tina_tab_item.dart';
 export 'tina_text.dart';
+export 'tina_tile.dart';
 export 'tina_typing_indicator.dart';
