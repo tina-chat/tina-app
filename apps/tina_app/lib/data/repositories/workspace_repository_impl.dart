@@ -1,0 +1,277 @@
+import 'package:drift/drift.dart';
+import '../database/drift/app_database.dart';
+import '../database/drift/tables/workspaces_table.dart';
+import '../../domain/entities/workspace.dart';
+import '../../domain/enums/workspace_type.dart';
+import '../../domain/repositories/workspace_repository.dart';
+
+/// Implementation of the [WorkspaceRepository] interface.
+///
+/// This class provides a concrete implementation of workspace data operations
+/// using the Drift database. It handles the mapping between domain entities
+/// and database records, and provides proper error handling using exceptions.
+class WorkspaceRepositoryImpl implements WorkspaceRepository {
+  /// The database instance for workspace operations.
+  final AppDatabase _database;
+
+  /// Creates a new [WorkspaceRepositoryImpl] instance.
+  ///
+  /// [database] The database instance for workspace operations.
+  WorkspaceRepositoryImpl(this._database);
+
+  @override
+  Future<List<Workspace>> getAllWorkspaces() async {
+    try {
+      final workspaceTables = await _database.workspaceDao.getAllWorkspaces();
+      return workspaceTables.map(_mapToWorkspace).toList();
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to retrieve all workspaces',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<Workspace?> getWorkspaceById(int id) async {
+    try {
+      final workspaceTable = await _database.workspaceDao.getWorkspaceById(id);
+      return workspaceTable != null ? _mapToWorkspace(workspaceTable) : null;
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to retrieve workspace with ID $id',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<List<Workspace>> getWorkspacesByType(WorkspaceType type) async {
+    try {
+      final workspaceTables = await _database.workspaceDao.getWorkspacesByType(
+        type,
+      );
+      return workspaceTables.map(_mapToWorkspace).toList();
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to retrieve workspaces of type $type',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<Workspace> createWorkspace(WorkspaceToCreate workspace) async {
+    try {
+      // Validate workspace before creating
+      if (!await validateWorkspace(workspace)) {
+        throw const WorkspaceValidationException('Invalid workspace data');
+      }
+
+      final workspaceCompanion = _mapToWorkspacesCompanion(workspace);
+      final createdId = await _database.workspaceDao.insertWorkspace(
+        workspaceCompanion,
+      );
+
+      final createdWorkspace = await _database.workspaceDao.getWorkspaceById(
+        createdId,
+      );
+
+      if (createdWorkspace == null) {
+        throw WorkspaceException('Failed to create workspace');
+      }
+
+      return _mapToWorkspace(createdWorkspace);
+    } catch (e) {
+      if (e is WorkspaceException) rethrow;
+      throw WorkspaceException('Failed to create workspace', e as Exception);
+    }
+  }
+
+  @override
+  Future<Workspace> updateWorkspace(int id, WorkspaceToCreate workspace) async {
+    try {
+      // Validate workspace before updating
+      if (!await validateWorkspace(workspace)) {
+        throw const WorkspaceValidationException('Invalid workspace data');
+      }
+
+      // Check if workspace exists
+      if (!await workspaceExists(id)) {
+        throw WorkspaceNotFoundException(id);
+      }
+
+      final workspaceCompanion = _mapToWorkspacesCompanion(
+        workspace,
+        forUpdate: true,
+      );
+      final updated = await _database.workspaceDao.updateWorkspace(
+        id,
+        workspaceCompanion,
+      );
+
+      if (!updated) {
+        throw WorkspaceException('Failed to update workspace with ID $id');
+      }
+
+      final updatedWorkspace = await _database.workspaceDao.getWorkspaceById(
+        id,
+      );
+
+      if (updatedWorkspace == null) {
+        throw WorkspaceException(
+          'Failed to retrieve updated workspace with ID $id',
+        );
+      }
+
+      return _mapToWorkspace(updatedWorkspace);
+    } catch (e) {
+      if (e is WorkspaceException) rethrow;
+      throw WorkspaceException('Failed to update workspace', e as Exception);
+    }
+  }
+
+  @override
+  Future<bool> deleteWorkspace(int id) async {
+    try {
+      // Check if workspace exists
+      if (!await workspaceExists(id)) {
+        return false; // Return false instead of throwing for delete operations
+      }
+
+      final deleted = await _database.workspaceDao.deleteWorkspace(id);
+      return deleted;
+    } catch (e) {
+      throw WorkspaceException('Failed to delete workspace', e as Exception);
+    }
+  }
+
+  @override
+  Future<bool> workspaceExists(int id) async {
+    try {
+      return await _database.workspaceDao.workspaceExists(id);
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to check workspace existence',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<List<Workspace>> searchWorkspacesByName(String query) async {
+    try {
+      final workspaceTables = await _database.workspaceDao
+          .searchWorkspacesByName(query);
+      return workspaceTables.map(_mapToWorkspace).toList();
+    } catch (e) {
+      throw WorkspaceException('Failed to search workspaces', e as Exception);
+    }
+  }
+
+  @override
+  Future<int> getWorkspaceCount() async {
+    try {
+      return await _database.workspaceDao.getWorkspaceCount();
+    } catch (e) {
+      throw WorkspaceException('Failed to get workspace count', e as Exception);
+    }
+  }
+
+  @override
+  Future<int> getWorkspaceCountByType(WorkspaceType type) async {
+    try {
+      return await _database.workspaceDao.getWorkspaceCountByType(type);
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to get workspace count by type',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<bool> validateWorkspace(WorkspaceToCreate workspace) async {
+    try {
+      if (!workspace.isValid) {
+        throw WorkspaceValidationException(
+          _getValidationErrorToCreate(workspace),
+        );
+      }
+      return true;
+    } catch (e) {
+      if (e is WorkspaceValidationException) rethrow;
+      throw WorkspaceValidationException(
+        'Workspace validation failed',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<bool> updateWorkspaceTimestamp(int id) async {
+    try {
+      // Check if workspace exists
+      if (!await workspaceExists(id)) {
+        return false; // Return false instead of throwing for update operations
+      }
+
+      final updated = await _database.workspaceDao.updateWorkspaceTimestamp(id);
+      return updated;
+    } catch (e) {
+      throw WorkspaceException(
+        'Failed to update workspace timestamp',
+        e as Exception,
+      );
+    }
+  }
+
+  /// Maps a [WorkspaceTable] database record to a [Workspace] domain entity.
+  ///
+  /// [workspaceTable] The database record to map.
+  /// Returns the corresponding [Workspace] entity.
+  Workspace _mapToWorkspace(WorkspaceTable workspaceTable) {
+    return Workspace(
+      id: workspaceTable.id,
+      name: workspaceTable.name,
+      type: Workspaces.stringToWorkspaceType(workspaceTable.type),
+      url: workspaceTable.url,
+      createdAt: workspaceTable.createdAt,
+      updatedAt: workspaceTable.updatedAt,
+    );
+  }
+
+  /// Maps a [Workspace] domain entity to a [WorkspacesCompanion] for database operations.
+  ///
+  /// [workspace] The workspace entity to map.
+  /// [forUpdate] Whether this mapping is for an update operation.
+  /// Returns the corresponding [WorkspacesCompanion].
+  WorkspacesCompanion _mapToWorkspacesCompanion(
+    WorkspaceToCreate workspace, {
+    bool forUpdate = false,
+  }) {
+    return WorkspacesCompanion(
+      name: forUpdate ? Value(workspace.name) : Value(workspace.name),
+      type: forUpdate
+          ? Value(Workspaces.workspaceTypeToString(workspace.type))
+          : Value(Workspaces.workspaceTypeToString(workspace.type)),
+      url: forUpdate ? Value(workspace.url) : Value(workspace.url),
+    );
+  }
+
+  /// Gets validation error message for a workspace.
+  ///
+  /// [workspace] The workspace to validate.
+  /// Returns a string describing the validation error.
+  String _getValidationErrorToCreate(WorkspaceToCreate workspace) {
+    if (workspace.name.isEmpty) return 'Workspace name cannot be empty';
+    if (workspace.type == WorkspaceType.local && workspace.url != null) {
+      return 'Local workspace cannot have a URL';
+    }
+    if (workspace.type == WorkspaceType.remote &&
+        (workspace.url == null || workspace.url!.isEmpty)) {
+      return 'Remote workspace must have a URL';
+    }
+    return 'Unknown validation error';
+  }
+}
