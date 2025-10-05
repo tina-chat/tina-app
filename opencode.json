@@ -37,7 +37,19 @@
         "write": false,
         "tavily-mcp": true,
         "firecrawl-mcp": true,
-        "context7": true
+        "context7": true,
+        "serena_write_memory": false,
+        "serena_delete_memory": false,
+        "serena_replace_symbol_body": false,
+        "serena_insert_after_symbol": false,
+        "serena_insert_before_symbol": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_collected_information": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "documentation-researcher": {
@@ -55,7 +67,20 @@
         "edit": false,
         "write": false,
         "context7": true,
-        "serena": true
+        "serena_read_memory": true,
+        "serena_list_memories": true,
+        "serena_write_memory": false,
+        "serena_delete_memory": false,
+        "serena_replace_symbol_body": false,
+        "serena_insert_after_symbol": false,
+        "serena_insert_before_symbol": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_collected_information": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "code-researcher": {
@@ -72,7 +97,20 @@
         "bash": false,
         "edit": false,
         "write": false,
-        "serena": true
+        "serena_read_memory": true,
+        "serena_list_memories": true,
+        "serena_write_memory": false,
+        "serena_delete_memory": false,
+        "serena_replace_symbol_body": false,
+        "serena_insert_after_symbol": false,
+        "serena_insert_before_symbol": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_collected_information": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "solution-brainstormer": {
@@ -101,7 +139,21 @@
         "edit": false,
         "write": false,
         "sequential-thinking": true,
-        "context7": true
+        "context7": true,
+        "serena_read_memory": true,
+        "serena_list_memories": true,
+        "serena_write_memory": false,
+        "serena_delete_memory": false,
+        "serena_replace_symbol_body": false,
+        "serena_insert_after_symbol": false,
+        "serena_insert_before_symbol": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_collected_information": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "package-builder": {
@@ -119,7 +171,14 @@
         "glob": true,
         "list": true,
         "serena": true,
-        "dart": true
+        "dart": true,
+        "serena_delete_memory": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "tina-app-builder": {
@@ -139,7 +198,14 @@
         "serena": true,
         "dart": true,
         "tavily-mcp": true,
-        "firecrawl-mcp": true
+        "firecrawl-mcp": true,
+        "serena_delete_memory": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "widget-builder": {
@@ -158,7 +224,14 @@
         "list": true,
         "serena": true,
         "dart": true,
-        "context7": true
+        "context7": true,
+        "serena_delete_memory": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "tina-ui-builder": {
@@ -177,7 +250,14 @@
         "list": true,
         "serena": true,
         "dart": true,
-        "context7": true
+        "context7": true,
+        "serena_delete_memory": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "reviewer": {
@@ -195,7 +275,16 @@
         "edit": false,
         "write": false,
         "serena": true,
-        "context7": true
+        "context7": true,
+        "serena_replace_symbol_body": false,
+        "serena_insert_after_symbol": false,
+        "serena_insert_before_symbol": false,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     },
     "tester": {
@@ -213,7 +302,13 @@
         "glob": true,
         "list": true,
         "serena": true,
-        "dart": true
+        "dart": true,
+        "serena_activate_project": false,
+        "serena_onboarding": false,
+        "serena_get_current_config": false,
+        "serena_check_onboarding_performed": false,
+        "serena_think_about_task_adherence": false,
+        "serena_think_about_whether_you_are_done": false
       }
     }
   },

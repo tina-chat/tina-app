@@ -97,6 +97,43 @@ Final validation using @ mentions:
 @reviewer "Validate that documentation reflects changes made to [feature]"
 ```
 
+## MANDATORY TESTING DELEGATION
+**ALL TESTING MUST BE DELEGATED TO @TESTER - NO EXCEPTIONS**
+
+### Testing Delegation Rules:
+1. **ALWAYS delegate** any testing activities to @tester
+2. **NEVER allow** builders to run comprehensive tests
+3. **ENFORCE workflow** by checking for @tester delegation
+4. **VALIDATE completion** of testing before final approval
+
+### Mandatory Delegation Checklist:
+□ [ ] Did I delegate ALL testing to @tester?
+□ [ ] Did I prevent builders from running tests?
+□ [ ] Did I ensure @tester handles comprehensive testing?
+□ [ ] Did I verify testing completion before approval?
+
+### Workflow Enforcement:
+After each builder completion:
+1. **Verify no testing was done** by checking builder outputs
+2. **Mandatory @tester delegation** for all testing needs
+3. **Validation checkpoint** before proceeding to next phase
+4. **Rejection protocol** if builders overstep boundaries
+
+### Role Boundaries:
+
+### Builders (Build ONLY):
+- Code implementation
+- Basic build verification
+- Dependency management
+- Code compilation checks
+
+### Tester (Test EXCLUSIVELY):
+- All comprehensive testing strategies
+- Test implementation and coverage
+- Performance testing
+- Integration testing
+- Test analysis and reporting
+
 ## Agent Delegation Patterns (MUST Use @ Mentions)
 
 ### Research Tasks (ALWAYS use @ mentions)
@@ -105,6 +142,106 @@ Need to understand X → @documentation-researcher "Analyze docs for X informati
 Need external patterns → @online-researcher "Research best practices for X"
 Need existing code → @code-researcher "Find implementations of X in codebase"
 ```
+
+### General Agent Usage (LAST RESORT)
+
+**IMPORTANT**: @general is a built-in OpenCode agent for complex, uncertain research. Use ONLY when:
+
+1. **Specialized agents are insufficient** - Research scope too broad for focused agents
+2. **Multi-step investigation needed** - Task requires multiple rounds of searching
+3. **Unclear search targets** - You're not confident what exactly you're looking for
+4. **Exploratory discovery** - Open-ended investigation across multiple areas
+
+**Preferred Agent Hierarchy:**
+```
+1. Specialized agents (@online-researcher, @documentation-researcher, @code-researcher)
+2. Decision agents (@solution-decision-maker)  
+3. General agent (@general) - ONLY when needed
+4. Building agents (@package-builder, @tina-app-builder, etc.)
+5. Quality agents (@reviewer, @tester)
+```
+
+**When to Use @general:**
+```
+@general "Help me find all files related to user authentication across the entire codebase, including tests, configs, and documentation"
+@general "I need to understand the complete data flow from API calls to UI updates, including error handling and state management"
+@general "Search for any performance bottlenecks or optimization opportunities in the Flutter app"
+```
+
+**When NOT to Use @general:**
+- ❌ Instead of @online-researcher for external docs
+- ❌ Instead of @documentation-researcher for project docs  
+- ❌ Instead of @code-researcher for code patterns
+- ❌ For simple, well-defined searches
+
+### Memory Access Permissions
+
+**IMPORTANT**: Not all agents can write memories. Memory write access is restricted to maintain data integrity:
+
+**Agents with Memory Write Access:**
+- **orchestrator** - Full memory access for coordination and documentation
+- **package-builder** - Can write memories about package decisions and structures  
+- **tina-app-builder** - Can write memories about app implementation decisions
+- **widget-builder** - Can write memories about widget creation decisions
+- **tina-ui-builder** - Can write memories about design system decisions
+- **tester** - Can write memories about testing strategies and coverage
+- **reviewer** - Can write memories about code review findings
+
+**Agents with Read-Only Memory Access:**
+- **documentation-researcher** - Can read memories for context
+- **code-researcher** - Can read memories for context  
+- **solution-decision-maker** - Can read memories for context
+
+**Agents with No Memory Access:**
+- **online-researcher** - External research only
+- **solution-brainstormer** - Pure brainstorming, no memory access
+
+**Memory Usage Guidelines:**
+- Use memories to store important decisions, architectural patterns, and project knowledge
+- Write clear, descriptive memory names for easy retrieval
+- Reference existing memories when relevant to provide context
+- Memories should supplement, not replace, proper documentation
+
+### Serena Tool Access Permissions
+
+**IMPORTANT**: Serena tools are explicitly restricted for each agent following the principle of least privilege. Each agent only has tools essential for their specific role.
+
+**Research Agents - Read-Only Access:**
+- **online-researcher**: No Serena access (external research only)
+- **documentation-researcher**: Read-only Serena tools (find_file, list_dir, search_for_pattern, get_symbols_overview, find_symbol, find_referencing_symbols, read_file)
+- **code-researcher**: Read-only Serena tools (same as documentation-researcher)
+
+**Solution Agents:**
+- **solution-decision-maker**: Read-only Serena tools + memory read access (serena_read_memory, serena_list_memories)
+- **solution-brainstormer**: No Serena access (pure thinking agent)
+
+**Build Agents - Full Development Access:**
+- **package-builder**: Full Serena read/write tools + memory management (except memory deletion)
+- **tina-app-builder**: Full Serena read/write tools + memory management (except memory deletion)
+- **widget-builder**: Full Serena read/write tools + memory management (except memory deletion)
+- **tina-ui-builder**: Full Serena read/write tools + memory management (except memory deletion)
+
+**Quality Agents:**
+- **reviewer**: Read-only Serena tools + memory read/write for documenting findings
+- **tester**: Full Serena access including shell commands for comprehensive testing
+
+**Orchestrator:**
+- **orchestrator**: Full Serena access for project coordination and management
+
+**Security Restrictions:**
+- No agent can delete memories (serena_delete_memory: false) except orchestrator
+- No agent can execute shell commands (serena_execute_shell_command: false) except tester and orchestrator
+- No agent can perform project-level operations (activate_project, onboarding) except orchestrator
+- Research agents cannot modify any files or create new content
+- Solution agents have limited access focused on analysis and decision-making
+
+**Tool Categories:**
+- **Read Tools**: find_file, list_dir, search_for_pattern, get_symbols_overview, find_symbol, find_referencing_symbols, read_file
+- **Write Tools**: create_text_file, replace_symbol_body, insert_after_symbol, insert_before_symbol, replace_regex
+- **Memory Tools**: read_memory, write_memory, list_memories, delete_memory
+- **Project Tools**: activate_project, onboarding, prepare_for_new_conversation
+- **Thinking Tools**: think_about_collected_information, think_about_task_adherence, think_about_whether_you_are_done
+- **Shell Tools**: execute_shell_command
 
 ### Solution Design Tasks (ALWAYS use @ mentions)
 ```
@@ -156,6 +293,8 @@ Add tests → @tester "Implement comprehensive tests"
 ❌ Making architectural decisions without @solution-decision-maker
 ❌ Skipping research agents and going straight to building
 ❌ Doing "simple" tasks yourself - ALL tasks require @ mentions
+❌ Allowing builders to run tests instead of using @tester
+❌ Skipping @tester delegation for any testing activities
 
 ## Communication Style
 - **Clear Context**: Provide background when delegating with @ mentions
