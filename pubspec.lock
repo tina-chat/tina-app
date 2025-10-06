@@ -69,10 +69,10 @@ packages:
     dependency: transitive
     description:
       name: build
-      sha256: ce76b1d48875e3233fde17717c23d1f60a91cc631597e49a400c89b475395b1d
+      sha256: "825fed4d63050252a0b6e74f2d75844c4a85b664814be6993bd3493fb5239779"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.1"
   build_config:
     dependency: transitive
     description:
@@ -89,30 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.4"
-  build_resolvers:
-    dependency: transitive
-    description:
-      name: build_resolvers
-      sha256: d1d57f7807debd7349b4726a19fd32ec8bc177c71ad0febf91a20f84cd2d4b46
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
   build_runner:
     dependency: transitive
     description:
       name: build_runner
-      sha256: b24597fceb695969d47025c958f3837f9f0122e237c6a22cb082a5ac66c3ca30
+      sha256: "4e54dbeefdc70691ba80b3bce3976af63b5425c8c07dface348dfee664a0edc1"
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.1"
-  build_runner_core:
-    dependency: transitive
-    description:
-      name: build_runner_core
-      sha256: "066dda7f73d8eb48ba630a55acb50c4a84a2e6b453b1cb4567f581729e794f7b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.3.1"
+    version: "2.9.0"
   built_collection:
     dependency: transitive
     description:
@@ -416,14 +400,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  frontend_server_client:
-    dependency: transitive
-    description:
-      name: frontend_server_client
-      sha256: f64a0333a82f30b0cca061bc3d143813a486dc086b574bfb233b7c1372427694
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
   get_it:
     dependency: transitive
     description:
@@ -905,10 +881,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: "7b19d6ba131c6eb98bfcbf8d56c1a7002eba438af2e7ae6f8398b2b0f4f381e3"
+      sha256: ccf30b0c9fbcd79d8b6f5bfac23199fb354938436f62475e14aea0f29ee0f800
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.1"
   source_helper:
     dependency: transitive
     description:
@@ -1005,14 +981,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.6"
-  timing:
-    dependency: transitive
-    description:
-      name: timing
-      sha256: "62ee18aca144e4a9f29d212f5a4c6a053be252b895ab14b5821996cff4ed90fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   tint:
     dependency: transitive
     description:
@@ -1201,10 +1169,10 @@ packages:
     dependency: transitive
     description:
       name: widgetbook_generator
-      sha256: "17556f26f786881aa7346935e1314a95c52dabb99bdee8407b8385f934ea5e69"
+      sha256: e3c08eaae3c2f0ddf59ffb081a4ccf27676ca9007658965250c7432500fae568
       url: "https://pub.dev"
     source: hosted
-    version: "3.16.0"
+    version: "3.17.0"
   widgetbook_golden_test:
     dependency: transitive
     description:
@@ -1247,4 +1215,4 @@ packages:
     version: "2.2.2"
 sdks:
   dart: ">=3.9.0 <4.0.0"
-  flutter: ">=3.35.0 <4.0.0"
+  flutter: ">=3.35.0"
