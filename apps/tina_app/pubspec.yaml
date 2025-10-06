@@ -46,7 +46,7 @@ dependencies:
   path: ^1.9.0
   get_it: ^8.2.0
 
-  bloc: any
+  bloc: 9.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
