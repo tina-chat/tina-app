@@ -7,14 +7,9 @@ import '../screens/tools/tools_screen.dart';
 import '../screens/models/models_screen.dart';
 import '../screens/agents/agents_screen.dart';
 import '../screens/prompts/prompts_screen.dart';
-import '../screens/welcome/welcome_screen.dart';
 
 final appRouter = GoRouter(
   routes: [
-    GoRoute(
-      path: '/welcome',
-      builder: (context, state) => const WelcomeScreen(),
-    ),
     ShellRoute(
       builder: (context, state, child) => AppLayout(child: child),
       routes: [
@@ -46,5 +41,5 @@ final appRouter = GoRouter(
       ],
     ),
   ],
-  initialLocation: '/welcome',
+  initialLocation: '/',
 );
