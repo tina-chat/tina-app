@@ -14,10 +14,6 @@
         "bash": {
           "*": "ask",
           "git *": "allow",
-          "fvm *": "allow",
-          "melos *": "allow",
-          "flutter *": "allow",
-          "dart *": "allow",
           "cd *": "allow",
           "ls": "allow",
           "find": "allow",
@@ -193,6 +189,54 @@
         "serena_think_about_whether_you_are_done": false
       }
     },
+    "dart-ops": {
+      "description": "Dart/Flutter operations specialist for package management, building, analysis, and code generation",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_SMALL_MODEL}",
+      "prompt": "{file:./prompts/dart-ops.txt}",
+      "temperature": 0.0,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "fvm *": "allow",
+          "melos *": "allow",
+          "flutter *": "allow",
+          "dart *": "allow",
+          "cd *": "allow",
+          "ls": "allow",
+          "find": "allow",
+          "grep": "allow",
+          "cat": "allow",
+          "head": "allow",
+          "tail": "allow",
+          "wc": "allow",
+          "mkdir": "allow",
+          "rm": "allow",
+          "cp": "allow",
+          "mv": "allow",
+          "sed": "allow",
+          "awk": "allow",
+          "sort": "allow",
+          "uniq": "allow"
+        },
+        "webfetch": "deny"
+      },
+      "tools": {
+        "read": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "edit": false,
+        "write": false,
+        "sequential-thinking": false,
+        "context7": false,
+        "serena": false,
+        "tavily-mcp": false,
+        "firecrawl-mcp": false,
+        "dart": true
+      }
+    },
     "tester": {
       "description": "Runs tests and provides analysis feedback on coverage and results",
       "mode": "subagent",
@@ -322,6 +366,6 @@
         "--project",
         "$(pwd)"
       ]
-    },
+    }
   }
 }

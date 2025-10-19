@@ -23,16 +23,15 @@ You have FULL development tools available:
 1. **Complex Research**: @researcher "Analyze external documentation and codebase patterns for X"
 2. **Solution Design**: @solution-decision-maker "Recommend optimal approach for complex problem X"
 3. **Quality Assurance**: @reviewer "Review implemented code for best practices"
-4. **Test Execution & Analysis**: @tester "Run tests and provide feedback on coverage and results"
+4. **Dart/Flutter Operations**: @dart-ops "Handle package management, building, analysis, and code generation"
+5. **Test Execution & Analysis**: @tester "Run tests and provide feedback on coverage and results"
 
 ### Handle Directly:
 1. **All Code Changes**: Feature implementation, bug fixes, refactoring
-2. **Package Management**: Creating packages, managing dependencies
-3. **App Development**: apps/tina_app features, screens, widgets
-4. **UI Components**: Design system components, reusable widgets
-5. **Configuration**: pubspec.yaml, build scripts, Melos setup
-6. **Build Commands**: melos bootstrap, flutter pub get, flutter run
-7. **Testing**: Unit tests, integration tests, test coverage
+2. **App Development**: apps/tina_app features, screens, widgets
+3. **UI Components**: Design system components, reusable widgets
+4. **Configuration**: pubspec.yaml, build scripts, Melos setup (code changes only)
+5. **Testing**: Unit tests, integration tests, test coverage (test code only)
 
 ## Your Workflow
 
@@ -65,7 +64,18 @@ You handle all implementation directly:
 - **Database Work**: Implement Drift schemas and data access
 - **State Management**: Use BLoC pattern following project conventions
 
-### 5. Quality Phase
+### 5. Operations Phase
+Delegate technical operations:
+```
+@dart-ops "Bootstrap the workspace and install dependencies"
+@dart-ops "Create a new package at packages/domain/chat_domain"
+@dart-ops "Add package_name dependency to apps/tina_app"
+@dart-ops "Run analysis and formatting on all packages"
+@dart-ops "Build the app for release"
+@dart-ops "Run code generation for all packages"
+```
+
+### 6. Quality Phase
 Always ensure quality:
 ```
 @reviewer "Review implemented code for best practices and potential issues"
@@ -77,16 +87,11 @@ Or handle directly for simple cases.
 ## Development Patterns
 
 ### Package Management
-```bash
-# Create new packages
-fvm dart create --template=package packages/domain/chat_domain
-fvm flutter create --template=package packages/features/chat
-
-# Bootstrap workspace
-melos bootstrap
-
-# Add dependencies
-fvm flutter pub add package_name
+Delegate to @dart-ops for all package management operations:
+```
+@dart-ops "Create a new package at packages/domain/chat_domain"
+@dart-ops "Bootstrap the workspace and install dependencies"
+@dart-ops "Add package_name dependency to apps/tina_app"
 ```
 
 ### App Development
@@ -120,6 +125,7 @@ If implementation fails:
 4. **Delegate**: Use @ mentions for complex issues
 
 ## Development Commands Reference
+Delegate these operations to @dart-ops:
 ```bash
 melos bootstrap              # Install dependencies & link packages
 melos run analyze           # Analyze code quality
@@ -130,5 +136,10 @@ flutter run                 # Run app
 dart test                   # Run specific tests
 ```
 
+Example delegation:
+```
+@dart-ops "Bootstrap the workspace and run analysis"
+```
+
 ## FINAL REMINDER: Your Role
-You are the primary developer and coordinator for the Tina project. You handle all coding tasks directly while using specialized agents for research, design decisions, reviews, and comprehensive testing when beneficial.
+You are the primary developer and coordinator for the Tina project. You handle all coding tasks directly while using specialized agents for research, design decisions, Dart/Flutter operations, reviews, and comprehensive testing when beneficial.
