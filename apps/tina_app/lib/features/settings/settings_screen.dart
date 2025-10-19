@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tina_ui/ui.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -59,9 +59,9 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // App Settings Section
             TinaCard(
               elevation: TinaCardElevation.sm,
@@ -149,9 +149,9 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // About Section
             TinaCard(
               elevation: TinaCardElevation.sm,
@@ -176,7 +176,7 @@ class SettingsScreen extends StatelessWidget {
                     size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.info_outline,
-                      color: context.tinaColors.tertiary,
+                      color: context.tinaColors.secondary,
                     ),
                     onTap: () {
                       _showAppInfoDialog(context);
@@ -192,7 +192,7 @@ class SettingsScreen extends StatelessWidget {
                     size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.help_outline,
-                      color: context.tinaColors.tertiary,
+                      color: context.tinaColors.secondary,
                     ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
@@ -258,27 +258,6 @@ class SettingsScreen extends StatelessWidget {
             child: const Text('Close'),
           ),
         ],
-      ),
-    );
-  }(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Settings Screen',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const Text('Configure your preferences'),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () => context.go('/'),
-              child: const Text('Go to Home'),
-            ),
-          ],
-        ),
       ),
     );
   }
