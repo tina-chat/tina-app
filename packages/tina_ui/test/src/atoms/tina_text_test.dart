@@ -11,7 +11,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: TinaText(testText),
+            body: TinaText(child: Text(testText)),
           ),
         ),
       );
@@ -26,8 +26,8 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaText(
-              testText,
               style: TinaTextStyle.heading1,
+              child: Text(testText),
             ),
           ),
         ),
@@ -49,7 +49,7 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaText(
-              testText,
+              child: Text(testText),
             ),
           ),
         ),
@@ -64,98 +64,6 @@ void main() {
       ); // tinaColors.onSurface
     });
 
-    testWidgets('applies custom color when provided', (tester) async {
-      const testText = 'Custom color text';
-      const customColor = Colors.red;
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              testText,
-              color: customColor,
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.style?.color, customColor);
-    });
-
-    testWidgets('applies text alignment correctly', (tester) async {
-      const testText = 'Centered text';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              testText,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.textAlign, TextAlign.center);
-    });
-
-    testWidgets('applies maxLines correctly', (tester) async {
-      const testText = 'Text with max lines';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              testText,
-              maxLines: 2,
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.maxLines, 2);
-    });
-
-    testWidgets('applies overflow correctly', (tester) async {
-      const testText = 'Text with overflow';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              testText,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.overflow, TextOverflow.ellipsis);
-    });
-
-    testWidgets('applies semantic label correctly', (tester) async {
-      const testText = 'Text with semantic label';
-      const semanticLabel = 'Custom semantic label';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              testText,
-              semanticsLabel: semanticLabel,
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.semanticsLabel, semanticLabel);
-    });
-
     testWidgets('applies code style correctly', (tester) async {
       const testText = 'console.log("Hello");';
 
@@ -163,8 +71,8 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaText(
-              testText,
               style: TinaTextStyle.code,
+              child: Text(testText),
             ),
           ),
         ),

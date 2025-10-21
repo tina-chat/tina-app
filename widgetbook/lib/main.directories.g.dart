@@ -1074,34 +1074,9 @@ final directories = <_widgetbook.WidgetbookNode>[
                 _widgetbook_workspace_atoms_tina_text_stories.codeTextUseCase,
           ),
           _widgetbook.WidgetbookUseCase(
-            name: 'Custom Colors',
-            builder: _widgetbook_workspace_atoms_tina_text_stories
-                .customColorsUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'Font Weights',
-            builder: _widgetbook_workspace_atoms_tina_text_stories
-                .fontWeightsUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
             name: 'Headings',
             builder:
                 _widgetbook_workspace_atoms_tina_text_stories.headingsUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'Semantic Labels',
-            builder: _widgetbook_workspace_atoms_tina_text_stories
-                .semanticLabelsUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'Text Alignment',
-            builder: _widgetbook_workspace_atoms_tina_text_stories
-                .textAlignmentUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'Text Overflow',
-            builder: _widgetbook_workspace_atoms_tina_text_stories
-                .textOverflowUseCase,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'Text Styles',

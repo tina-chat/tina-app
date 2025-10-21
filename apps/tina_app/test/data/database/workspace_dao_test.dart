@@ -21,7 +21,7 @@ void main() {
 
       final workspace = WorkspacesCompanion.insert(
         name: 'Test Workspace',
-        type: WorkspaceType.local.value,
+        type: WorkspaceType.local,
       );
 
       // Insert the workspace
@@ -43,14 +43,14 @@ void main() {
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Workspace 1',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Workspace 2',
-          type: WorkspaceType.remote.value,
+          type: WorkspaceType.remote,
           url: Value('https://example.com'),
         ),
       );
@@ -70,7 +70,7 @@ void main() {
       final idCreated = await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Original Name',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
@@ -97,7 +97,7 @@ void main() {
       final createdId = await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Test Workspace',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
@@ -117,14 +117,14 @@ void main() {
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Development Workspace',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Production Workspace',
-          type: WorkspaceType.remote.value,
+          type: WorkspaceType.remote,
           url: Value('https://prod.example.com'),
         ),
       );
@@ -143,21 +143,21 @@ void main() {
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Local Workspace 1',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Local Workspace 2',
-          type: WorkspaceType.local.value,
+          type: WorkspaceType.local,
         ),
       );
 
       await workspaceDao.insertWorkspace(
         WorkspacesCompanion.insert(
           name: 'Remote Workspace 1',
-          type: WorkspaceType.remote.value,
+          type: WorkspaceType.remote,
           url: Value('https://example.com'),
         ),
       );

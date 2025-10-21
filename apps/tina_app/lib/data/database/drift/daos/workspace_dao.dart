@@ -35,7 +35,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Returns a list of workspaces with the specified [type].
   Future<List<WorkspaceTable>> getWorkspacesByType(WorkspaceType type) {
     return (select(workspaces)
-          ..where((t) => t.type.equals(Workspaces.workspaceTypeToString(type)))
+          ..where((t) => t.type.equals(type.value))
           ..orderBy([(t) => OrderingTerm(expression: t.name)]))
         .get();
   }
@@ -109,9 +109,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   Future<int> getWorkspaceCountByType(WorkspaceType type) {
     return (selectOnly(workspaces)
           ..addColumns([workspaces.id])
-          ..where(
-            workspaces.type.equals(Workspaces.workspaceTypeToString(type)),
-          ))
+          ..where(workspaces.type.equals(type.value)))
         .get()
         .then((rows) => rows.length);
   }

@@ -81,7 +81,7 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaInput(
-              helperText: helperText,
+              hint: Text(helperText),
             ),
           ),
         ),
@@ -97,7 +97,7 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaInput(
-              errorText: errorText,
+              error: Text(errorText),
               state: TinaInputState.error,
             ),
           ),
@@ -118,8 +118,8 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaInput(
-              helperText: helperText,
-              errorText: errorText,
+              hint: Text(helperText),
+              error: Text(errorText),
             ),
           ),
         ),

@@ -132,9 +132,14 @@ class TinaAvatar extends StatelessWidget {
     if (initials != null) {
       return Center(
         child: TinaText(
-          initials!.toUpperCase(),
           style: _getTextStyle(),
-          color: foregroundColor,
+          child: Text(
+            initials!.toUpperCase(),
+            // TODO(style): check color
+            style: TextStyle(
+              color: foregroundColor,
+            ),
+          ),
         ),
       );
     }
@@ -156,9 +161,14 @@ class TinaAvatar extends StatelessWidget {
     if (fallbackText != null) {
       return Center(
         child: TinaText(
-          fallbackText!.toUpperCase(),
           style: _getTextStyle(),
-          color: foregroundColor,
+          child: Text(
+            fallbackText!.toUpperCase(),
+            // TODO(style): check color
+            style: TextStyle(
+              color: foregroundColor,
+            ),
+          ),
         ),
       );
     }

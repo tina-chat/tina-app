@@ -30,10 +30,10 @@ class TinaBadge extends StatelessWidget {
          size: size,
          semanticLabel: semanticLabel,
          child: TinaText(
-           text,
            style: size == TinaBadgeSize.small
                ? TinaTextStyle.caption
                : TinaTextStyle.bodySmall,
+           child: Text(text),
          ),
        );
 
@@ -51,10 +51,10 @@ class TinaBadge extends StatelessWidget {
          size: size,
          semanticLabel: semanticLabel ?? '$count notifications',
          child: TinaText(
-           count > maxCount ? '$maxCount+' : count.toString(),
            style: size == TinaBadgeSize.small
                ? TinaTextStyle.caption
                : TinaTextStyle.bodySmall,
+           child: Text(count > maxCount ? '$maxCount+' : count.toString()),
          ),
        );
 

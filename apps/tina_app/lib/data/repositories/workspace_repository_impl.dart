@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import '../database/drift/app_database.dart';
-import '../database/drift/tables/workspaces_table.dart';
 import '../../domain/entities/workspace.dart';
 import '../../domain/enums/workspace_type.dart';
 import '../../domain/repositories/workspace_repository.dart';
@@ -20,7 +19,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   WorkspaceRepositoryImpl(this._database);
 
   @override
-  Future<List<Workspace>> getAllWorkspaces() async {
+  Future<List<WorkspaceModel>> getAllWorkspaces() async {
     try {
       final workspaceTables = await _database.workspaceDao.getAllWorkspaces();
       return workspaceTables.map(_mapToWorkspace).toList();
@@ -33,7 +32,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<Workspace?> getWorkspaceById(int id) async {
+  Future<WorkspaceModel?> getWorkspaceById(int id) async {
     try {
       final workspaceTable = await _database.workspaceDao.getWorkspaceById(id);
       return workspaceTable != null ? _mapToWorkspace(workspaceTable) : null;
@@ -46,7 +45,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<List<Workspace>> getWorkspacesByType(WorkspaceType type) async {
+  Future<List<WorkspaceModel>> getWorkspacesByType(WorkspaceType type) async {
     try {
       final workspaceTables = await _database.workspaceDao.getWorkspacesByType(
         type,
@@ -61,7 +60,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<Workspace> createWorkspace(WorkspaceToCreate workspace) async {
+  Future<WorkspaceModel> createWorkspace(WorkspaceToCreate workspace) async {
     try {
       // Validate workspace before creating
       if (!await validateWorkspace(workspace)) {
@@ -89,7 +88,10 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<Workspace> updateWorkspace(int id, WorkspaceToCreate workspace) async {
+  Future<WorkspaceModel> updateWorkspace(
+    int id,
+    WorkspaceToCreate workspace,
+  ) async {
     try {
       // Validate workspace before updating
       if (!await validateWorkspace(workspace)) {
@@ -159,7 +161,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<List<Workspace>> searchWorkspacesByName(String query) async {
+  Future<List<WorkspaceModel>> searchWorkspacesByName(String query) async {
     try {
       final workspaceTables = await _database.workspaceDao
           .searchWorkspacesByName(query);
@@ -226,22 +228,22 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     }
   }
 
-  /// Maps a [WorkspaceTable] database record to a [Workspace] domain entity.
+  /// Maps a [WorkspaceTable] database record to a [WorkspaceModel] domain entity.
   ///
   /// [workspaceTable] The database record to map.
-  /// Returns the corresponding [Workspace] entity.
-  Workspace _mapToWorkspace(WorkspaceTable workspaceTable) {
-    return Workspace(
+  /// Returns the corresponding [WorkspaceModel] entity.
+  WorkspaceModel _mapToWorkspace(WorkspaceTable workspaceTable) {
+    return WorkspaceModel(
       id: workspaceTable.id,
       name: workspaceTable.name,
-      type: Workspaces.stringToWorkspaceType(workspaceTable.type),
+      type: workspaceTable.type,
       url: workspaceTable.url,
       createdAt: workspaceTable.createdAt,
       updatedAt: workspaceTable.updatedAt,
     );
   }
 
-  /// Maps a [Workspace] domain entity to a [WorkspacesCompanion] for database operations.
+  /// Maps a [WorkspaceModel] domain entity to a [WorkspacesCompanion] for database operations.
   ///
   /// [workspace] The workspace entity to map.
   /// [forUpdate] Whether this mapping is for an update operation.
@@ -251,11 +253,9 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     bool forUpdate = false,
   }) {
     return WorkspacesCompanion(
-      name: forUpdate ? Value(workspace.name) : Value(workspace.name),
-      type: forUpdate
-          ? Value(Workspaces.workspaceTypeToString(workspace.type))
-          : Value(Workspaces.workspaceTypeToString(workspace.type)),
-      url: forUpdate ? Value(workspace.url) : Value(workspace.url),
+      name: Value(workspace.name),
+      type: Value(workspace.type),
+      url: Value(workspace.url),
     );
   }
 

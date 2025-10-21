@@ -96,14 +96,19 @@ class TinaTabItem extends StatelessWidget {
           ),
           const SizedBox(height: DesignSpacing.xs),
           TinaText(
-            text!,
             style: TinaTextStyle.caption,
-            color: textColor,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            fontWeight: isActive
-                ? DesignTypography.fontWeightMedium
-                : DesignTypography.fontWeightRegular,
+            child: Text(
+              text!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                // TODO(style): check color
+                color: textColor,
+                fontWeight: isActive
+                    ? DesignTypography.fontWeightMedium
+                    : DesignTypography.fontWeightRegular,
+              ),
+            ),
           ),
         ],
       );
@@ -118,13 +123,18 @@ class TinaTabItem extends StatelessWidget {
 
     if (text != null) {
       return TinaText(
-        text!,
-        color: textColor,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        fontWeight: isActive
-            ? DesignTypography.fontWeightMedium
-            : DesignTypography.fontWeightRegular,
+        child: Text(
+          text!,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          // TODO(style): check color
+          style: TextStyle(
+            color: textColor,
+            fontWeight: isActive
+                ? DesignTypography.fontWeightMedium
+                : DesignTypography.fontWeightRegular,
+          ),
+        ),
       );
     }
 

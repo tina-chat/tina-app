@@ -27,15 +27,17 @@ class SettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TinaText(
-                    'Workspace Management',
                     style: TinaTextStyle.heading6,
-                    color: context.tinaColors.onSurface,
+                    color: TinaTextColor.onSurface,
+                    child: Text('Workspace Management'),
                   ),
                   const SizedBox(height: 8),
                   TinaText(
-                    'Manage your workspaces and switch between different environments',
                     style: TinaTextStyle.bodySmall,
-                    color: context.tinaColors.onSurfaceVariant,
+                    color: TinaTextColor.onSurfaceVariant,
+                    child: Text(
+                      'Manage your workspaces and switch between different environments',
+                    ),
                   ),
                   const SizedBox(height: 16),
                   TinaTile(
@@ -52,8 +54,8 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     onTap: () => context.go('/workspaces'),
                     child: TinaText(
-                      'Manage Workspaces',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('Manage Workspaces'),
                     ),
                   ),
                 ],
@@ -70,15 +72,15 @@ class SettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TinaText(
-                    'App Settings',
                     style: TinaTextStyle.heading6,
-                    color: context.tinaColors.onSurface,
+                    color: TinaTextColor.onSurface,
+                    child: Text('App Settings'),
                   ),
                   const SizedBox(height: 8),
                   TinaText(
-                    'Configure your app preferences and behavior',
                     style: TinaTextStyle.bodySmall,
-                    color: context.tinaColors.onSurfaceVariant,
+                    color: TinaTextColor.onSurfaceVariant,
+                    child: Text('Configure your app preferences and behavior'),
                   ),
                   const SizedBox(height: 16),
                   TinaTile(
@@ -98,8 +100,8 @@ class SettingsScreen extends StatelessWidget {
                       _showComingSoonDialog(context, 'Theme Settings');
                     },
                     child: TinaText(
-                      'Theme & Appearance',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('Theme & Appearance'),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -120,8 +122,8 @@ class SettingsScreen extends StatelessWidget {
                       _showComingSoonDialog(context, 'Notification Settings');
                     },
                     child: TinaText(
-                      'Notifications',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('Notifications'),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -142,8 +144,8 @@ class SettingsScreen extends StatelessWidget {
                       _showComingSoonDialog(context, 'Privacy Settings');
                     },
                     child: TinaText(
-                      'Privacy & Security',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('Privacy & Security'),
                     ),
                   ),
                 ],
@@ -160,15 +162,15 @@ class SettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TinaText(
-                    'About',
                     style: TinaTextStyle.heading6,
-                    color: context.tinaColors.onSurface,
+                    color: TinaTextColor.onSurface,
+                    child: Text('About'),
                   ),
                   const SizedBox(height: 8),
                   TinaText(
-                    'App information and version details',
                     style: TinaTextStyle.bodySmall,
-                    color: context.tinaColors.onSurfaceVariant,
+                    color: TinaTextColor.onSurfaceVariant,
+                    child: Text('App information and version details'),
                   ),
                   const SizedBox(height: 16),
                   TinaTile(
@@ -182,8 +184,8 @@ class SettingsScreen extends StatelessWidget {
                       _showAppInfoDialog(context);
                     },
                     child: TinaText(
-                      'App Version',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('App Version'),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -204,8 +206,8 @@ class SettingsScreen extends StatelessWidget {
                       _showComingSoonDialog(context, 'Help & Support');
                     },
                     child: TinaText(
-                      'Help & Support',
                       style: TinaTextStyle.bodyLarge,
+                      child: Text('Help & Support'),
                     ),
                   ),
                 ],

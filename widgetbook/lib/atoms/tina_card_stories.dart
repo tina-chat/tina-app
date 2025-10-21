@@ -10,11 +10,13 @@ Widget basicCardUseCase(BuildContext context) {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          TinaText('Card Title', style: TinaTextStyle.heading6),
+          TinaText(style: TinaTextStyle.heading6, child: Text('Card Title')),
           SizedBox(height: 8),
           TinaText(
-            'This is a basic card with some content inside it. Cards are great for organizing information.',
             style: TinaTextStyle.body,
+            child: Text(
+              'This is a basic card with some content inside it. Cards are great for organizing information.',
+            ),
           ),
         ],
       ),
@@ -30,36 +32,48 @@ Widget cardElevationsUseCase(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TinaText('Card Elevations', style: TinaTextStyle.heading5),
+          const TinaText(
+            style: TinaTextStyle.heading5,
+            child: Text('Card Elevations'),
+          ),
           const SizedBox(height: 24),
           TinaCard(
             elevation: TinaCardElevation.none,
-            child: const TinaText('No Elevation', style: TinaTextStyle.body),
+            child: const TinaText(
+              style: TinaTextStyle.body,
+              child: Text('No Elevation'),
+            ),
           ),
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.sm,
-            child: const TinaText('Small Elevation', style: TinaTextStyle.body),
+            child: const TinaText(
+              style: TinaTextStyle.body,
+              child: Text('Small Elevation'),
+            ),
           ),
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.md,
             child: const TinaText(
-              'Medium Elevation',
               style: TinaTextStyle.body,
+              child: Text('Medium Elevation'),
             ),
           ),
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.lg,
-            child: const TinaText('Large Elevation', style: TinaTextStyle.body),
+            child: const TinaText(
+              style: TinaTextStyle.body,
+              child: Text('Large Elevation'),
+            ),
           ),
           const SizedBox(height: 16),
           TinaCard(
             elevation: TinaCardElevation.xl,
             child: const TinaText(
-              'Extra Large Elevation',
               style: TinaTextStyle.body,
+              child: Text('Extra Large Elevation'),
             ),
           ),
         ],
@@ -77,14 +91,17 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const TinaText(
-            'Card Padding Variants',
             style: TinaTextStyle.heading5,
+            child: Text('Card Padding Variants'),
           ),
           const SizedBox(height: 24),
           TinaCard.noPadding(
             child: Container(
               color: Colors.blue.withValues(alpha: 0.1),
-              child: const TinaText('No Padding', style: TinaTextStyle.body),
+              child: const TinaText(
+                style: TinaTextStyle.body,
+                child: Text('No Padding'),
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -92,8 +109,8 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
             child: Container(
               color: Colors.green.withValues(alpha: 0.1),
               child: const TinaText(
-                'Compact Padding',
                 style: TinaTextStyle.body,
+                child: Text('Compact Padding'),
               ),
             ),
           ),
@@ -102,8 +119,8 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
             child: Container(
               color: Colors.orange.withValues(alpha: 0.1),
               child: const TinaText(
-                'Medium Padding (Default)',
                 style: TinaTextStyle.body,
+                child: Text('Medium Padding (Default)'),
               ),
             ),
           ),
@@ -112,8 +129,8 @@ Widget cardPaddingVariantsUseCase(BuildContext context) {
             child: Container(
               color: Colors.purple.withValues(alpha: 0.1),
               child: const TinaText(
-                'Spacious Padding',
                 style: TinaTextStyle.body,
+                child: Text('Spacious Padding'),
               ),
             ),
           ),
@@ -137,12 +154,14 @@ Widget interactiveCardUseCase(BuildContext context) {
         children: const [
           Icon(Icons.touch_app, size: 48, color: Colors.blue),
           SizedBox(height: 16),
-          TinaText('Tap Me!', style: TinaTextStyle.heading6),
+          TinaText(style: TinaTextStyle.heading6, child: Text('Tap Me!')),
           SizedBox(height: 8),
           TinaText(
-            'This card is interactive. Tap it to see the response.',
             style: TinaTextStyle.body,
             textAlign: TextAlign.center,
+            child: Text(
+              'This card is interactive. Tap it to see the response.',
+            ),
           ),
         ],
       ),
@@ -161,11 +180,11 @@ Widget customColorsCardUseCase(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              TinaText('Info Card', style: TinaTextStyle.heading6),
+              TinaText(style: TinaTextStyle.heading6, child: Text('Info Card')),
               SizedBox(height: 8),
               TinaText(
-                'This card has a custom light blue background.',
                 style: TinaTextStyle.body,
+                child: Text('This card has a custom light blue background.'),
               ),
             ],
           ),
@@ -177,11 +196,14 @@ Widget customColorsCardUseCase(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              TinaText('Success Card', style: TinaTextStyle.heading6),
+              TinaText(
+                style: TinaTextStyle.heading6,
+                child: Text('Success Card'),
+              ),
               SizedBox(height: 8),
               TinaText(
-                'This card has a green background and border.',
                 style: TinaTextStyle.body,
+                child: Text('This card has a green background and border.'),
               ),
             ],
           ),
@@ -193,11 +215,14 @@ Widget customColorsCardUseCase(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              TinaText('Error Card', style: TinaTextStyle.heading6),
+              TinaText(
+                style: TinaTextStyle.heading6,
+                child: Text('Error Card'),
+              ),
               SizedBox(height: 8),
               TinaText(
-                'This card has a red background and border.',
                 style: TinaTextStyle.body,
+                child: Text('This card has a red background and border.'),
               ),
             ],
           ),
@@ -232,22 +257,23 @@ Widget contentCardUseCase(BuildContext context) {
             ),
             const SizedBox(height: 16),
             const TinaText(
-              'Card with Image Placeholder',
               style: TinaTextStyle.heading6,
+              child: Text('Card with Image Placeholder'),
             ),
             const SizedBox(height: 8),
             const TinaText(
-              'This card demonstrates how to structure content with images, titles, and descriptions. Perfect for product cards or article previews.',
               style: TinaTextStyle.body,
+              child: Text(
+                'This card demonstrates how to structure content with images, titles, and descriptions. Perfect for product cards or article previews.',
+              ),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const TinaText(
-                  '\$29.99',
                   style: TinaTextStyle.heading6,
-                  color: Colors.green,
+                  child: Text('\$29.99', style: TextStyle(color: Colors.green)),
                 ),
                 TinaButton(
                   onPressed: () {},
@@ -272,7 +298,10 @@ Widget listCardUseCase(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TinaText('Settings', style: TinaTextStyle.heading6),
+          const TinaText(
+            style: TinaTextStyle.heading6,
+            child: Text('Settings'),
+          ),
           const SizedBox(height: 16),
           ...List.generate(
             4,
@@ -292,8 +321,10 @@ Widget listCardUseCase(BuildContext context) {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TinaText(
-                      ['Profile', 'Notifications', 'Security', 'Help'][index],
                       style: TinaTextStyle.body,
+                      child: Text(
+                        ['Profile', 'Notifications', 'Security', 'Help'][index],
+                      ),
                     ),
                   ),
                   Icon(Icons.chevron_right, color: Colors.grey.shade400),
@@ -320,14 +351,22 @@ Widget semanticCardUseCase(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                TinaText('John Doe', style: TinaTextStyle.heading6),
-                SizedBox(height: 4),
-                TinaText('Software Engineer', style: TinaTextStyle.body),
+                TinaText(
+                  style: TinaTextStyle.heading6,
+                  child: Text('John Doe'),
+                ),
                 SizedBox(height: 4),
                 TinaText(
-                  'john.doe@example.com',
+                  style: TinaTextStyle.body,
+                  child: Text('Software Engineer'),
+                ),
+                SizedBox(height: 4),
+                TinaText(
                   style: TinaTextStyle.bodySmall,
-                  color: Colors.grey,
+                  child: Text(
+                    'john.doe@example.com',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
               ],
             ),

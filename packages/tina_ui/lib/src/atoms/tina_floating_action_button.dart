@@ -117,9 +117,14 @@ class TinaFloatingActionButton extends StatelessWidget {
           color: foregroundColor ?? tinaColors.onPrimary,
         ),
         label: TinaText(
-          text!,
-          color: foregroundColor ?? tinaColors.onPrimary,
-          fontWeight: DesignTypography.fontWeightMedium,
+          child: Text(
+            text!,
+            // TODO(style): check style
+            style: TextStyle(
+              color: foregroundColor ?? tinaColors.onPrimary,
+              fontWeight: DesignTypography.fontWeightMedium,
+            ),
+          ),
         ),
       );
     }
@@ -160,9 +165,14 @@ class TinaFloatingActionButton extends StatelessWidget {
         ),
         const SizedBox(width: DesignSpacing.sm),
         TinaText(
-          text!,
-          color: foregroundColor ?? tinaColors.onPrimary,
-          fontWeight: DesignTypography.fontWeightMedium,
+          child: Text(
+            text!,
+            style: TextStyle(
+              // TODO(style): check style
+              color: foregroundColor ?? tinaColors.onPrimary,
+              fontWeight: DesignTypography.fontWeightMedium,
+            ),
+          ),
         ),
       ],
     );

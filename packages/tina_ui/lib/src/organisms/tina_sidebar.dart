@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tina_ui/src/atoms/atoms.dart';
+import 'package:tina_ui/src/internal/tina_pressable.dart';
 import 'package:tina_ui/src/tokens/tokens.dart';
 
 /// A generic sidebar organism component that provides navigation functionality.
@@ -7,9 +8,9 @@ import 'package:tina_ui/src/tokens/tokens.dart';
 /// This component handles the visual presentation of the sidebar including
 /// customizable header, navigation items, and footer sections. It is designed
 /// to be a pure UI component that receives all necessary data and callbacks.
-class TinaSidebarOrganism extends StatelessWidget {
+class TinaSidebar extends StatelessWidget {
   /// Creates a Tina sidebar organism.
-  const TinaSidebarOrganism({
+  const TinaSidebar({
     required this.isExpanded,
     required this.animation,
     required this.navigationItems,
@@ -91,26 +92,13 @@ class TinaSidebarOrganism extends StatelessWidget {
               horizontal: context.tinaTheme.spacing.sm,
               vertical: context.tinaTheme.spacing.xs,
             ),
-            child: TinaTile(
-              variant: item.isActive
-                  ? TinaTileVariant.primary
-                  : TinaTileVariant.ghost,
-              leading: Icon(
+            child: _TinaSidebarItem(
+              selected: item.isActive,
+              icon: Icon(
                 item.icon,
-                color: item.isActive
-                    ? context.tinaColors.onPrimary
-                    : context.tinaColors.onSurfaceVariant,
               ),
               onTap: () => onNavigationTap(item.route),
-              child: isExpanded
-                  ? TinaText(
-                      item.label,
-                      style: TinaTextStyle.bodySmall,
-                      color: item.isActive
-                          ? context.tinaColors.onPrimary
-                          : context.tinaColors.onSurface,
-                    )
-                  : const SizedBox.shrink(),
+              label: isExpanded ? Text(item.label) : const SizedBox.shrink(),
             ),
           );
         }).toList(),
@@ -147,4 +135,46 @@ class NavigationItem {
 
   /// Whether this item is currently active/selected.
   final bool isActive;
+}
+
+class _TinaSidebarItem extends StatelessWidget {
+  const _TinaSidebarItem({
+    required this.label,
+    required this.onTap,
+    this.icon,
+    this.selected = false,
+  });
+
+  final Widget label;
+
+  final Widget? icon;
+
+  final bool selected;
+
+  final void Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.tinaColors;
+    return TinaPressable(
+      color: colors.primary,
+      onPressed: onTap,
+      clipBehavior: Clip.hardEdge,
+      padding: EdgeInsets.all(context.tinaTheme.spacing.sm),
+      decoration: BoxDecoration(
+        color: selected ? colors.primary.withValues(alpha: .1) : null,
+        borderRadius: BorderRadius.circular(context.tinaTheme.borderRadius.xl),
+      ),
+      child: TinaText(
+        color: selected ? TinaTextColor.primary : null,
+        child: TinaRow(
+          spacing: TinaSpacing.sm,
+          children: [
+            if (icon != null) icon!,
+            label,
+          ],
+        ),
+      ),
+    );
+  }
 }

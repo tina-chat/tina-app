@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:tina_ui/src/internal/tina_loading.dart';
+import 'package:tina_ui/src/internal/tina_pressable.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
 
@@ -43,39 +45,31 @@ class TinaButton extends StatelessWidget {
 
     return SizedBox(
       width: isFullWidth ? double.infinity : null,
-      height: _getHeight(),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(tinaTheme.borderRadius.md),
-          child: AnimatedContainer(
-            duration: tinaTheme.animation.normal,
-            padding: _getPadding(tinaTheme.spacing),
-            decoration: BoxDecoration(
-              color: _getBackgroundColor(tinaColors),
-              borderRadius: BorderRadius.circular(tinaTheme.borderRadius.md),
-              border: _getBorder(tinaColors),
-              boxShadow: _getBoxShadow(),
-            ),
-            child: Center(
-              child: isLoading
-                  ? SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          _getLoadingColor(tinaColors),
-                        ),
-                      ),
-                    )
-                  : DefaultTextStyle(
-                      style: _getTextStyle(tinaColors, tinaTheme.typography),
-                      child: child,
-                    ),
-            ),
-          ),
+      // height: _getHeight(),
+      child: TinaPressable(
+        padding: _getPadding(tinaTheme.spacing),
+        color: DesignColors.transparent,
+        onPressed: isLoading ? null : onPressed,
+        decoration: BoxDecoration(
+          color: _getBackgroundColor(tinaColors),
+          borderRadius: BorderRadius.circular(tinaTheme.borderRadius.xl),
+          boxShadow: _getBoxShadow(),
+          border: _getBorder(tinaColors),
+        ),
+        // decoration: DecoratedBox(decoration: decoration),
+        child: Center(
+          child: isLoading
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: TinaLoadingCircle(
+                    color: _getLoadingColor(tinaColors),
+                  ),
+                )
+              : DefaultTextStyle(
+                  style: _getTextStyle(tinaColors, tinaTheme.typography),
+                  child: child,
+                ),
         ),
       ),
     );
@@ -87,8 +81,8 @@ class TinaButton extends StatelessWidget {
     return switch (variant) {
       TinaButtonVariant.primary => colors.primary,
       TinaButtonVariant.secondary => colors.secondary,
-      TinaButtonVariant.outlined => Colors.transparent,
-      TinaButtonVariant.ghost => Colors.transparent,
+      TinaButtonVariant.outlined => DesignColors.transparent,
+      TinaButtonVariant.ghost => DesignColors.transparent,
       TinaButtonVariant.elevated => colors.primary,
     };
   }
@@ -112,14 +106,6 @@ class TinaButton extends StatelessWidget {
       TinaButtonVariant.outlined => colors.primary,
       TinaButtonVariant.ghost => colors.primary,
       TinaButtonVariant.elevated => colors.onPrimary,
-    };
-  }
-
-  double _getHeight() {
-    return switch (size) {
-      TinaButtonSize.small => DesignButtonSizes.heightSm,
-      TinaButtonSize.medium => DesignButtonSizes.heightMd,
-      TinaButtonSize.large => DesignButtonSizes.heightLg,
     };
   }
 

@@ -12,21 +12,21 @@ abstract class WorkspaceRepository {
   ///
   /// Returns a list of all workspaces ordered by their creation date.
   /// Throws [WorkspaceException] if there's an error retrieving workspaces.
-  Future<List<Workspace>> getAllWorkspaces();
+  Future<List<WorkspaceModel>> getAllWorkspaces();
 
   /// Retrieves a workspace by its unique identifier.
   ///
   /// [id] The unique identifier of the workspace to retrieve.
   /// Returns the workspace with the given [id], or null if not found.
   /// Throws [WorkspaceException] if there's an error retrieving the workspace.
-  Future<Workspace?> getWorkspaceById(int id);
+  Future<WorkspaceModel?> getWorkspaceById(int id);
 
   /// Retrieves workspaces filtered by their type.
   ///
   /// [type] The type of workspaces to retrieve.
   /// Returns a list of workspaces with the specified [type] ordered by name.
   /// Throws [WorkspaceException] if there's an error retrieving workspaces.
-  Future<List<Workspace>> getWorkspacesByType(WorkspaceType type);
+  Future<List<WorkspaceModel>> getWorkspacesByType(WorkspaceType type);
 
   /// Creates a new workspace in the data source.
   ///
@@ -35,7 +35,7 @@ abstract class WorkspaceRepository {
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
   /// Throws [WorkspaceDuplicateException] if a workspace with the same ID already exists.
   /// Throws [WorkspaceException] if there's an error creating the workspace.
-  Future<Workspace> createWorkspace(WorkspaceToCreate workspace);
+  Future<WorkspaceModel> createWorkspace(WorkspaceToCreate workspace);
 
   /// Updates an existing workspace in the data source.
   ///
@@ -45,7 +45,7 @@ abstract class WorkspaceRepository {
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
   /// Throws [WorkspaceNotFoundException] if no workspace with the given ID exists.
   /// Throws [WorkspaceException] if there's an error updating the workspace.
-  Future<Workspace> updateWorkspace(int id, WorkspaceToCreate workspace);
+  Future<WorkspaceModel> updateWorkspace(int id, WorkspaceToCreate workspace);
 
   /// Deletes a workspace from the data source.
   ///
@@ -67,7 +67,7 @@ abstract class WorkspaceRepository {
   /// matches workspaces whose names contain the query.
   /// Returns a list of matching workspaces ordered by name.
   /// Throws [WorkspaceException] if there's an error searching workspaces.
-  Future<List<Workspace>> searchWorkspacesByName(String query);
+  Future<List<WorkspaceModel>> searchWorkspacesByName(String query);
 
   /// Gets the total count of all workspaces.
   ///

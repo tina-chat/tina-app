@@ -45,7 +45,7 @@ Widget loadingStateUseCase(BuildContext context) {
       children: [
         TinaSpinner(),
         SizedBox(height: 16),
-        TinaText('Loading...', style: TinaTextStyle.body),
+        TinaText(style: TinaTextStyle.body, child: Text('Loading...')),
       ],
     ),
   );

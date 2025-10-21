@@ -4,7 +4,7 @@ import '../enums/workspace_type.dart';
 ///
 /// A workspace is a container for organizing and managing different
 /// projects or environments within the Tina application.
-class Workspace {
+class WorkspaceModel {
   /// Unique identifier for the workspace
   final int id;
 
@@ -24,7 +24,7 @@ class Workspace {
   final DateTime updatedAt;
 
   /// Creates a new Workspace instance
-  const Workspace({
+  const WorkspaceModel({
     required this.id,
     required this.name,
     required this.type,
@@ -34,7 +34,7 @@ class Workspace {
   });
 
   /// Creates a copy of this Workspace with updated values
-  Workspace copyWith({
+  WorkspaceModel copyWith({
     int? id,
     String? name,
     WorkspaceType? type,
@@ -42,7 +42,7 @@ class Workspace {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
-    return Workspace(
+    return WorkspaceModel(
       id: id ?? this.id,
       name: name ?? this.name,
       type: type ?? this.type,
@@ -75,7 +75,7 @@ class Workspace {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Workspace &&
+    return other is WorkspaceModel &&
         other.id == id &&
         other.name == name &&
         other.type == type &&
@@ -114,8 +114,8 @@ class Workspace {
   }
 
   /// Creates a Workspace from a JSON map
-  factory Workspace.fromJson(Map<String, dynamic> json) {
-    return Workspace(
+  factory WorkspaceModel.fromJson(Map<String, dynamic> json) {
+    return WorkspaceModel(
       id: json['id'] as int,
       name: json['name'] as String,
       type: WorkspaceType.fromString(json['type'] as String),

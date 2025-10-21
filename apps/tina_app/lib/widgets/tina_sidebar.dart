@@ -9,9 +9,9 @@ import 'package:tina_ui/ui.dart';
 /// - Desktop: Shows persistent collapsible sidebar
 /// - Mobile: Uses Scaffold's drawer pattern for native platform behavior
 /// It delegates the visual presentation to TinaSidebarOrganism from the tina_ui package.
-class TinaSidebar extends StatefulWidget {
+class TinaSidebarWrapper extends StatefulWidget {
   /// Creates a Tina sidebar widget.
-  const TinaSidebar({
+  const TinaSidebarWrapper({
     super.key,
     required this.child,
     this.isInitiallyExpanded = true,
@@ -24,10 +24,10 @@ class TinaSidebar extends StatefulWidget {
   final bool isInitiallyExpanded;
 
   @override
-  State<TinaSidebar> createState() => _TinaSidebarState();
+  State<TinaSidebarWrapper> createState() => _TinaSidebarWrapperState();
 }
 
-class _TinaSidebarState extends State<TinaSidebar>
+class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
     with SingleTickerProviderStateMixin {
   late bool _isExpanded;
   late AnimationController _animationController;
@@ -115,9 +115,9 @@ class _TinaSidebarState extends State<TinaSidebar>
       ),
       child: Center(
         child: TinaText(
-          isDrawer ? 'TINA' : (_isExpanded ? 'TINA' : 'T'),
           style: TinaTextStyle.heading5,
-          color: context.tinaColors.onPrimary,
+          color: TinaTextColor.onPrimary,
+          child: Text(isDrawer ? 'TINA' : (_isExpanded ? 'TINA' : 'T')),
         ),
       ),
     );
@@ -140,11 +140,11 @@ class _TinaSidebarState extends State<TinaSidebar>
       onTap: _handleSettingsNavigation,
       child: (isDrawer || _isExpanded)
           ? TinaText(
-              'Settings',
               style: TinaTextStyle.bodySmall,
               color: isActive
-                  ? context.tinaColors.onPrimary
-                  : context.tinaColors.onSurface,
+                  ? TinaTextColor.onPrimary
+                  : TinaTextColor.onSurface,
+              child: const Text('Settings'),
             )
           : const SizedBox.shrink(),
     );
@@ -187,7 +187,7 @@ class _TinaSidebarState extends State<TinaSidebar>
         ),
         drawer: Drawer(
           backgroundColor: context.tinaColors.surface,
-          child: TinaSidebarOrganism(
+          child: TinaSidebar(
             isExpanded: true, // Always expanded in drawer mode
             animation: const AlwaysStoppedAnimation(1.0),
             navigationItems: _buildNavigationItems(),
@@ -204,7 +204,7 @@ class _TinaSidebarState extends State<TinaSidebar>
         body: Row(
           children: [
             // Sidebar UI Component
-            TinaSidebarOrganism(
+            TinaSidebar(
               isExpanded: _isExpanded,
               animation: _animation,
               navigationItems: _buildNavigationItems(),

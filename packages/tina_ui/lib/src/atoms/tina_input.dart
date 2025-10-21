@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tina_ui/src/atoms/tina_field_wrapper.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
 
 /// A customizable input field component following the Tina design system.
 ///
 /// This input field supports multiple sizes, validation states, and provides
-/// consistent styling across the application.
+/// consistent styling across the application by using the TinaFieldWrapper.
 class TinaInput extends StatefulWidget {
   /// Creates a Tina input field.
   const TinaInput({
@@ -14,8 +15,10 @@ class TinaInput extends StatefulWidget {
     this.controller,
     this.initialValue,
     this.placeholder,
-    this.helperText,
-    this.errorText,
+    this.label,
+    this.hint,
+    this.error,
+    this.isRequired = false,
     this.prefixIcon,
     this.suffixIcon,
     this.size = TinaInputSize.medium,
@@ -48,11 +51,17 @@ class TinaInput extends StatefulWidget {
   /// Placeholder text to display when the input is empty.
   final String? placeholder;
 
-  /// Helper text to display below the input.
-  final String? helperText;
+  /// Optional label text to display above the field.
+  final Widget? label;
 
-  /// Error text to display below the input.
-  final String? errorText;
+  /// Optional hint text to display below the field.
+  final Widget? hint;
+
+  /// Optional error text to display below the field.
+  final Widget? error;
+
+  /// Whether the field is required.
+  final bool isRequired;
 
   /// Widget to display before the input text.
   final Widget? prefixIcon;
@@ -144,86 +153,80 @@ class _TinaInputState extends State<TinaInput> {
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
+    final fieldSize = _convertToFieldSize(widget.size);
+    final fieldState = _convertToFieldState(widget.state);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          height: _getHeight(),
-          decoration: BoxDecoration(
-            color: _getBackgroundColor(tinaColors),
-            border: Border.all(
-              color: _getBorderColor(tinaColors),
-            ),
-            borderRadius: BorderRadius.circular(DesignBorderRadius.md),
-            boxShadow: _isFocused && widget.state != TinaInputState.error
-                ? [
-                    BoxShadow(
-                      color: tinaColors.primary.withValues(alpha: 0.1),
-                      blurRadius: 4,
-                      spreadRadius: 3,
-                    ),
-                  ]
-                : null,
-          ),
-          child: TextFormField(
-            controller: widget.controller,
-            initialValue: widget.initialValue,
-            focusNode: _focusNode,
-            keyboardType: widget.keyboardType,
-            textInputAction: widget.textInputAction,
-            obscureText: widget.obscureText,
-            enabled: widget.enabled,
-            readOnly: widget.readOnly,
-            autofocus: widget.autofocus,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            inputFormatters: widget.inputFormatters,
-            onChanged: widget.onChanged,
-            onFieldSubmitted: widget.onSubmitted,
-            onTap: widget.onTap,
-            style: _getTextStyle(tinaColors),
-            decoration: InputDecoration(
-              hintText: widget.placeholder,
-              hintStyle: _getHintStyle(tinaColors),
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: widget.suffixIcon,
-              contentPadding: _getPadding(),
-              border: InputBorder.none,
-              counterText: '',
-              semanticCounterText: widget.semanticLabel,
-            ),
-          ),
-        ),
-        if (widget.errorText != null || widget.helperText != null)
-          Padding(
-            padding: const EdgeInsets.only(
-              top: DesignSpacing.xs,
-              left: DesignSpacing.sm,
-            ),
-            child: Text(
-              widget.errorText ?? widget.helperText!,
-              style: TextStyle(
-                fontFamily: DesignTypography.bodyFontFamily,
-                fontSize: DesignTypography.fontSizeXs,
-                fontWeight: DesignTypography.fontWeightRegular,
-                height: DesignTypography.lineHeightXs,
-                color: widget.errorText != null
-                    ? tinaColors.error
-                    : tinaColors.onSurfaceVariant,
+    return TinaFieldWrapper(
+      label: widget.label,
+      hint: widget.hint,
+      error: widget.error,
+      isRequired: widget.isRequired,
+      size: fieldSize,
+      state: fieldState,
+      isEnabled: widget.enabled,
+      isReadOnly: widget.readOnly,
+      isFocused: _isFocused,
+      semanticLabel: widget.semanticLabel,
+      child: Padding(
+        padding: _getPadding(),
+        child: Row(
+          children: [
+            if (widget.prefixIcon != null) ...[
+              widget.prefixIcon!,
+              const SizedBox(width: DesignSpacing.sm),
+            ],
+            Expanded(
+              child: TextFormField(
+                controller: widget.controller,
+                initialValue: widget.initialValue,
+                focusNode: _focusNode,
+                keyboardType: widget.keyboardType,
+                textInputAction: widget.textInputAction,
+                obscureText: widget.obscureText,
+                enabled: widget.enabled,
+                readOnly: widget.readOnly,
+                autofocus: widget.autofocus,
+                maxLines: widget.maxLines,
+                maxLength: widget.maxLength,
+                inputFormatters: widget.inputFormatters,
+                onChanged: widget.onChanged,
+                onFieldSubmitted: widget.onSubmitted,
+                onTap: widget.onTap,
+                style: _getTextStyle(tinaColors),
+                decoration: InputDecoration(
+                  hintText: widget.placeholder,
+                  hintStyle: _getHintStyle(tinaColors),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                  semanticCounterText: widget.semanticLabel,
+                  isDense: false,
+                ),
               ),
             ),
-          ),
-      ],
+            if (widget.suffixIcon != null) ...[
+              const SizedBox(width: DesignSpacing.sm),
+              widget.suffixIcon!,
+            ],
+          ],
+        ),
+      ),
     );
   }
 
-  double _getHeight() {
-    return switch (widget.size) {
-      TinaInputSize.small => DesignInputSizes.heightSm,
-      TinaInputSize.medium => DesignInputSizes.heightMd,
-      TinaInputSize.large => DesignInputSizes.heightLg,
+  TinaFieldSize _convertToFieldSize(TinaInputSize size) {
+    return switch (size) {
+      TinaInputSize.small => TinaFieldSize.small,
+      TinaInputSize.medium => TinaFieldSize.medium,
+      TinaInputSize.large => TinaFieldSize.large,
+    };
+  }
+
+  TinaFieldState _convertToFieldState(TinaInputState state) {
+    return switch (state) {
+      TinaInputState.normal => TinaFieldState.normal,
+      TinaInputState.success => TinaFieldState.success,
+      TinaInputState.warning => TinaFieldState.warning,
+      TinaInputState.error => TinaFieldState.error,
     };
   }
 
@@ -232,23 +235,6 @@ class _TinaInputState extends State<TinaInput> {
       TinaInputSize.small => DesignInputSizes.paddingSm,
       TinaInputSize.medium => DesignInputSizes.paddingMd,
       TinaInputSize.large => DesignInputSizes.paddingLg,
-    };
-  }
-
-  Color _getBackgroundColor(TinaColorScheme colors) {
-    if (!widget.enabled) return colors.surfaceVariant.withValues(alpha: 0.5);
-    if (widget.readOnly) return colors.surfaceVariant;
-    return colors.surface;
-  }
-
-  Color _getBorderColor(TinaColorScheme colors) {
-    if (!widget.enabled) return colors.outlineVariant;
-
-    return switch (widget.state) {
-      TinaInputState.normal => _isFocused ? colors.primary : colors.outline,
-      TinaInputState.success => colors.success,
-      TinaInputState.warning => colors.warning,
-      TinaInputState.error => colors.error,
     };
   }
 

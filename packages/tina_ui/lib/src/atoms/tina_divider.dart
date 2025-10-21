@@ -141,9 +141,9 @@ class TinaDivider extends StatelessWidget {
               horizontal: DesignSpacing.md,
             ),
             child: TinaText(
-              label!,
               style: TinaTextStyle.caption,
-              color: tinaTheme.colors.onSurfaceVariant,
+              color: TinaTextColor.onSurfaceVariant,
+              child: Text(label!),
             ),
           ),
           Expanded(

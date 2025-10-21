@@ -8,59 +8,39 @@ import 'package:tina_ui/src/tokens/tina_theme.dart';
 /// predefined text styles based on the design tokens.
 class TinaText extends StatelessWidget {
   /// Creates a Tina text widget.
-  const TinaText(
-    this.text, {
+  const TinaText({
+    required this.child,
     super.key,
     this.style = TinaTextStyle.body,
-    this.color,
-    this.fontWeight,
     this.textAlign,
-    this.maxLines,
-    this.overflow,
-    this.semanticsLabel,
+    this.color,
   });
 
   /// The text to display.
-  final String text;
+  final Widget child;
 
   /// The style variant to apply to the text.
   final TinaTextStyle style;
 
-  /// The color to use for the text. If null, uses the default color for the
-  /// style.
-  final Color? color;
-
-  /// The font weight to use for the text. If null, uses the default weight for
-  /// the style.
-  final FontWeight? fontWeight;
-
-  /// How the text should be aligned horizontally.
+  /// Aligmnet
   final TextAlign? textAlign;
 
-  /// An optional maximum number of lines for the text to span.
-  final int? maxLines;
-
-  /// How visual overflow should be handled.
-  final TextOverflow? overflow;
-
-  /// An alternative semantics label for this text.
-  final String? semanticsLabel;
+  /// enum color options
+  final TinaTextColor? color;
 
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
-    final textStyle = _getTextStyle(tinaColors);
+    final textStyle = _getTextStyle(
+      tinaColors,
+    ).copyWith(color: _getColor(context));
 
-    return Text(
-      text,
-      style: textStyle.copyWith(
-        color: color,
-        fontWeight: fontWeight,
-      ),
+    final iconData = IconThemeData(color: _getColor(context));
+
+    return DefaultTextStyle.merge(
+      style: textStyle,
+      child: IconTheme(data: iconData, child: child),
       textAlign: textAlign,
-      maxLines: maxLines,
-      overflow: overflow,
-      semanticsLabel: semanticsLabel,
     );
   }
 
@@ -173,6 +153,18 @@ class TinaText extends StatelessWidget {
       ),
     };
   }
+
+  Color? _getColor(BuildContext context) {
+    final tinaColors = context.tinaColors;
+    return switch (color) {
+      null => null,
+      TinaTextColor.primary => tinaColors.primary,
+      TinaTextColor.onSurface => tinaColors.onSurface,
+      TinaTextColor.error => tinaColors.error,
+      TinaTextColor.onSurfaceVariant => tinaColors.onSurfaceVariant,
+      TinaTextColor.onPrimary => tinaColors.onSurfaceVariant,
+    };
+  }
 }
 
 /// The style variant for [TinaText].
@@ -215,4 +207,22 @@ enum TinaTextStyle {
 
   /// Code text (14px, monospace).
   code,
+}
+
+/// Options for colors
+enum TinaTextColor {
+  /// primary
+  primary,
+
+  /// on surface option
+  onSurface,
+
+  /// on surface variant option
+  onSurfaceVariant,
+
+  /// error option
+  error,
+
+  /// on primary option
+  onPrimary,
 }

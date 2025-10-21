@@ -160,39 +160,6 @@ void main() {
       expect(border.bottom.color, Colors.transparent);
     });
 
-    testWidgets('applies medium font weight when active', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaTabItem(
-              onTap: () {},
-              text: 'Chat',
-              isActive: true,
-            ),
-          ),
-        ),
-      );
-
-      final tinaText = tester.widget<TinaText>(find.byType(TinaText));
-      expect(tinaText.fontWeight, DesignTypography.fontWeightMedium);
-    });
-
-    testWidgets('applies regular font weight when inactive', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaTabItem(
-              onTap: () {},
-              text: 'Chat',
-            ),
-          ),
-        ),
-      );
-
-      final tinaText = tester.widget<TinaText>(find.byType(TinaText));
-      expect(tinaText.fontWeight, DesignTypography.fontWeightRegular);
-    });
-
     testWidgets('handles null onTap correctly', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(

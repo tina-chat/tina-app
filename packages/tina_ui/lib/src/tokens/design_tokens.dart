@@ -103,6 +103,9 @@ class DesignColors {
 
   /// Info color for informational messages and neutral feedback.
   static const Color info = Color(0xFF3B82F6);
+
+  /// Transparent color
+  static const Color transparent = Color(0x00000000);
 }
 
 /// Typography tokens for consistent text styling.

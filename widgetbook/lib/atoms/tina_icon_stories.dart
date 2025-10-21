@@ -158,7 +158,10 @@ Widget iconCategoriesUseCase(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TinaText('Navigation', style: TinaTextStyle.heading6),
+          const TinaText(
+            style: TinaTextStyle.heading6,
+            child: Text('Navigation'),
+          ),
           const SizedBox(height: 12),
           const Wrap(
             spacing: 16,
@@ -172,7 +175,7 @@ Widget iconCategoriesUseCase(BuildContext context) {
             ],
           ),
           const SizedBox(height: 24),
-          const TinaText('Actions', style: TinaTextStyle.heading6),
+          const TinaText(style: TinaTextStyle.heading6, child: Text('Actions')),
           const SizedBox(height: 12),
           const Wrap(
             spacing: 16,
@@ -186,7 +189,7 @@ Widget iconCategoriesUseCase(BuildContext context) {
             ],
           ),
           const SizedBox(height: 24),
-          const TinaText('Status', style: TinaTextStyle.heading6),
+          const TinaText(style: TinaTextStyle.heading6, child: Text('Status')),
           const SizedBox(height: 12),
           const Wrap(
             spacing: 16,

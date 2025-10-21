@@ -109,11 +109,17 @@ class TinaNavigationItem extends StatelessWidget {
 
     if (text != null) {
       return TinaText(
-        text!,
         style: TinaTextStyle.caption,
-        color: textColor,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        child: Text(
+          text!,
+
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          // TODO(style): check color
+          style: TextStyle(
+            color: textColor,
+          ),
+        ),
       );
     }
 
@@ -131,11 +137,17 @@ class TinaNavigationItem extends StatelessWidget {
           ),
           const SizedBox(height: DesignSpacing.xs),
           TinaText(
-            text!,
             style: TinaTextStyle.caption,
-            color: textColor,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            child: Text(
+              text!,
+
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              // TODO(style): check color
+              style: TextStyle(
+                color: textColor,
+              ),
+            ),
           ),
         ],
       );
@@ -150,11 +162,14 @@ class TinaNavigationItem extends StatelessWidget {
 
     if (text != null) {
       return TinaText(
-        text!,
         style: TinaTextStyle.bodySmall,
-        color: textColor,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        child: Text(
+          text!,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          // TODO(style): check color
+          style: TextStyle(color: textColor),
+        ),
       );
     }
 
@@ -173,10 +188,13 @@ class TinaNavigationItem extends StatelessWidget {
           const SizedBox(width: DesignSpacing.sm),
           Flexible(
             child: TinaText(
-              text!,
-              color: textColor,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              child: Text(
+                text!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                // TODO(style): check color
+                style: TextStyle(color: textColor),
+              ),
             ),
           ),
         ],
@@ -192,10 +210,15 @@ class TinaNavigationItem extends StatelessWidget {
 
     if (text != null) {
       return TinaText(
-        text!,
-        color: textColor,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        child: Text(
+          text!,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          // TODO(style): check color
+          style: TextStyle(
+            color: textColor,
+          ),
+        ),
       );
     }
 
