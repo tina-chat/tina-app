@@ -31,10 +31,6 @@ _$AntropicResponseModelsErrorMessageFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
     );
 
-Map<String, dynamic> _$AntropicResponseModelsErrorMessageToJson(
-  _AntropicResponseModelsErrorMessage instance,
-) => <String, dynamic>{'message': instance.message, 'type': instance.type};
-
 AntropicResponseModelsData _$AntropicResponseModelsDataFromJson(
   Map<String, dynamic> json,
 ) => AntropicResponseModelsData(
@@ -48,15 +44,6 @@ AntropicResponseModelsData _$AntropicResponseModelsDataFromJson(
   lastId: json['last_id'] as String,
 );
 
-Map<String, dynamic> _$AntropicResponseModelsDataToJson(
-  AntropicResponseModelsData instance,
-) => <String, dynamic>{
-  'data': instance.data,
-  'first_id': instance.firstId,
-  'has_more': instance.hasMore,
-  'last_id': instance.lastId,
-};
-
 AntropicResponseModelsError _$AntropicResponseModelsErrorFromJson(
   Map<String, dynamic> json,
 ) => AntropicResponseModelsError(
@@ -66,11 +53,3 @@ AntropicResponseModelsError _$AntropicResponseModelsErrorFromJson(
   requestId: json['request_id'] as String,
   type: json['type'] as String,
 );
-
-Map<String, dynamic> _$AntropicResponseModelsErrorToJson(
-  AntropicResponseModelsError instance,
-) => <String, dynamic>{
-  'error': instance.error,
-  'request_id': instance.requestId,
-  'type': instance.type,
-};

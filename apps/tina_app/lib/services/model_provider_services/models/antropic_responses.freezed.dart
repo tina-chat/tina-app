@@ -294,8 +294,6 @@ mixin _$AntropicResponseModelsErrorMessage {
 @pragma('vm:prefer-inline')
 $AntropicResponseModelsErrorMessageCopyWith<AntropicResponseModelsErrorMessage> get copyWith => _$AntropicResponseModelsErrorMessageCopyWithImpl<AntropicResponseModelsErrorMessage>(this as AntropicResponseModelsErrorMessage, _$identity);
 
-  /// Serializes this AntropicResponseModelsErrorMessage to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -480,7 +478,7 @@ return $default(_that.message,_that.type);case _:
 
 /// @nodoc
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class _AntropicResponseModelsErrorMessage implements AntropicResponseModelsErrorMessage {
   const _AntropicResponseModelsErrorMessage({required this.message, required this.type});
   factory _AntropicResponseModelsErrorMessage.fromJson(Map<String, dynamic> json) => _$AntropicResponseModelsErrorMessageFromJson(json);
@@ -494,10 +492,7 @@ class _AntropicResponseModelsErrorMessage implements AntropicResponseModelsError
 @pragma('vm:prefer-inline')
 _$AntropicResponseModelsErrorMessageCopyWith<_AntropicResponseModelsErrorMessage> get copyWith => __$AntropicResponseModelsErrorMessageCopyWithImpl<_AntropicResponseModelsErrorMessage>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AntropicResponseModelsErrorMessageToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
@@ -717,7 +712,7 @@ return error(_that.error,_that.requestId,_that.type);case _:
 
 /// @nodoc
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class AntropicResponseModelsData implements AntropicResponseModels {
   const AntropicResponseModelsData({required final  List<AntropicResponseModelsItem> data, required this.firstId, required this.hasMore, required this.lastId}): _data = data;
   
@@ -795,7 +790,7 @@ as String,
 
 /// @nodoc
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class AntropicResponseModelsError implements AntropicResponseModels {
   const AntropicResponseModelsError({required this.error, required this.requestId, required this.type});
   

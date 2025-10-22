@@ -18,11 +18,11 @@ abstract class AntropicResponseModelsItem with _$AntropicResponseModelsItem {
       _$AntropicResponseModelsItemFromJson(json);
 }
 
-@freezed
+@Freezed(toJson: false)
 abstract class AntropicResponseModelsErrorMessage
     with _$AntropicResponseModelsErrorMessage {
   // ignore: invalid_annotation_target
-  @JsonSerializable(fieldRename: FieldRename.snake)
+  @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
   const factory AntropicResponseModelsErrorMessage({
     required String message,
     required String type,
@@ -33,10 +33,10 @@ abstract class AntropicResponseModelsErrorMessage
   ) => _$AntropicResponseModelsErrorMessageFromJson(json);
 }
 
-@freezed
+@Freezed(toJson: false)
 abstract class AntropicResponseModels with _$AntropicResponseModels {
   // ignore: invalid_annotation_target
-  @JsonSerializable(fieldRename: FieldRename.snake)
+  @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
   const factory AntropicResponseModels.data({
     required List<AntropicResponseModelsItem> data,
     required String firstId,
@@ -45,7 +45,7 @@ abstract class AntropicResponseModels with _$AntropicResponseModels {
   }) = AntropicResponseModelsData;
 
   // ignore: invalid_annotation_target
-  @JsonSerializable(fieldRename: FieldRename.snake)
+  @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
   const factory AntropicResponseModels.error({
     required AntropicResponseModelsErrorMessage error,
     required String requestId,
