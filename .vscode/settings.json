@@ -6,6 +6,8 @@
     "https://codemagic.io/codemagic-schema.json": "codemagic.yaml"
   },
   "dart.flutterSdkPath": ".fvm/versions/3.35.0",
+  "dart.lineLength": 80,
+  "dart.previewFlutterUiGuides": true,
   "search.exclude": {
     "**/.fvm": true
   },
@@ -15,17 +17,27 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "*.dart": "${capture}.g.dart, ${capture}.freezed.dart,${capture}.gr.dart"
+    "*.dart": "$(capture).freezed.dart, $(capture).g.dart, $(capture).gr.dart",
+    "*": "${capture}.lock",
+    "pubspec.yaml": ".metadata, .packages, all_lint_rules.yaml, analysis_options.yaml, build.yaml, pubspec.lock, pubspec_overrides.yaml",
+
   },
   "[dart]": {
+    "editor.rulers": [80],
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit"
-    }
+      "source.fixAll": "explicit",
+      "source.organizeImports": "always",
+      "source.quickFix": "always",
+      "quickfix.add.required": "always",
+      "quickfix.create.constructorForFinalFields": "always",
+    },
   },
   "files.exclude": {
     "**/*.freezed.dart": true,
     "**/*.g.dart": true
   },
-  "editor.rulers": [80]
+  "editor.rulers": [120],
+  "window.commandCenter": true,
+  "debug.toolBarLocation": "commandCenter",
 }
