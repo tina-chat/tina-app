@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:tina_app/config/config.dart';
 
 export 'package:easy_localization/easy_localization.dart'
     show BuildContextEasyLocalizationExtension;
@@ -20,7 +21,7 @@ class MainLocale extends StatelessWidget {
       fallbackLocale: supportedLocales.first,
       useFallbackTranslations: true,
       useOnlyLangCode: true,
-      saveLocale: false,
+      saveLocale: AppConfig.storeLocale,
       child: child,
     );
   }
