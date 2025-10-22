@@ -1410,6 +1410,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final ModelProvidersDao modelProvidersDao = ModelProvidersDao(
     this as AppDatabase,
   );
+  late final ChatModelsDao chatModelsDao = ChatModelsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

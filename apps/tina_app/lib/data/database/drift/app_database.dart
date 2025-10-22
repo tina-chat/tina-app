@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tina_app/data/database/drift/daos/chat_models_dao.dart';
 import 'package:tina_app/data/database/drift/daos/model_providers_dao.dart';
 import 'package:tina_app/data/database/drift/tables/chat_models_table.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
@@ -18,7 +19,7 @@ part 'app_database.g.dart';
 /// including workspaces and other application data.
 @DriftDatabase(
   tables: [Workspaces, ModelProviders, ChatModels],
-  daos: [WorkspaceDao, ModelProvidersDao],
+  daos: [WorkspaceDao, ModelProvidersDao, ChatModelsDao],
 )
 class AppDatabase extends _$AppDatabase {
   /// Creates a new [AppDatabase] instance.

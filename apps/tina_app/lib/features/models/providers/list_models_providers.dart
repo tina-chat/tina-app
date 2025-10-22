@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tina_app/domain/entities/chat_model_model.dart';
+import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:tina_app/features/workspaces/providers/workspace_repository_providers.dart';
 

@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tina_app/domain/entities/chat_model_model.dart';
+import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
 import 'package:tina_app/features/models/models/add_model_provider_model.dart';
 import 'package:tina_app/features/models/providers/model_providers_repository_providers.dart';
@@ -46,7 +46,7 @@ class AddModelProviderState extends _$AddModelProviderState {
       return null;
     }
 
-    return await repo.createModelProvider(
+    final provider = await repo.createModelProvider(
       ModelProviderToCreate(
         name: name,
         type: typeModel,
@@ -55,7 +55,8 @@ class AddModelProviderState extends _$AddModelProviderState {
         workspaceId: firstWorkspace.id,
       ),
     );
-    // ref.read(listenable)
+
+    return provider;
   }
 }
 

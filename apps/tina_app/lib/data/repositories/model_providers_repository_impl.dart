@@ -1,5 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:tina_app/domain/entities/chat_model_model.dart';
+import 'package:tina_app/domain/entities/chat_models_entities.dart';
+import 'package:tina_app/domain/entities/model_providers_entities.dart';
+import 'package:tina_app/services/model_provider_services/model_provider_services.dart';
 import '../database/drift/app_database.dart';
 import '../../domain/repositories/model_providers_repository.dart';
 
@@ -17,6 +19,17 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
   Future<ModelProviderEntity> createModelProvider(
     ModelProviderToCreate workspace,
   ) async {
+    final models = await ModelProviderServices().getChatModels(
+      ModelProvider(
+        type: workspace.type,
+        key: workspace.key,
+        url: workspace.url,
+      ),
+    );
+    if (models == null) {
+      throw ModelProviderNotModelsException(workspace.type);
+    }
+
     final createdId = await _database.modelProvidersDao.insertModelProvider(
       _modelProviderToCreateToCompanion(workspace),
     );
@@ -27,6 +40,14 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
     if (createdChatModel == null) {
       throw ModelProviderNotFoundException(createdId);
     }
+
+    final chatModels = models
+        .map((model) => model.copyWith(modelProvider: createdChatModel.id))
+        .toList();
+
+    await _database.chatModelsDao.insertChatModels(
+      chatModels.map(_chatModelToCreateToCompanion).toList(),
+    );
 
     return _modelProviderTableToEntity(createdChatModel);
   }
@@ -68,6 +89,17 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
       createdAt: chatModel.createdAt,
       updatedAt: chatModel.updatedAt,
       workspaceId: chatModel.workspace,
+    );
+  }
+
+  ChatModelsCompanion _chatModelToCreateToCompanion(
+    ChatModelToCreate chatModel,
+  ) {
+    return ChatModelsCompanion(
+      displayName: Value(chatModel.displayName),
+      modelId: Value(chatModel.modelId),
+      modelProvider: Value(chatModel.modelProvider),
+      modelType: Value(chatModel.modelType),
     );
   }
 }

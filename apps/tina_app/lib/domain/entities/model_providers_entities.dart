@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
 
-part 'chat_model_model.freezed.dart';
+part 'model_providers_entities.freezed.dart';
 
 @freezed
 abstract class ModelProviderEntity with _$ModelProviderEntity {

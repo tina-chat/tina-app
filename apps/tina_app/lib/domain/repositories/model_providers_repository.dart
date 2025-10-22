@@ -1,4 +1,5 @@
-import 'package:tina_app/domain/entities/chat_model_model.dart';
+import 'package:tina_app/domain/entities/model_providers_entities.dart';
+import 'package:tina_app/domain/enums/chat_models_type.dart';
 
 /// Repository interface for chatModel data operations.
 ///
@@ -12,7 +13,7 @@ abstract class ModelProvidersRepository {
   );
 
   Future<ModelProviderEntity> createModelProvider(
-    ModelProviderToCreate workspace,
+    ModelProviderToCreate modelProvider,
   );
 }
 
@@ -46,4 +47,14 @@ class ModelProviderNotFoundException extends ModelProviderException {
   /// Creates a new ModelProviderNotFoundException
   const ModelProviderNotFoundException(this.modelProviderId, [Exception? cause])
     : super('ModelProvider with ID "$modelProviderId" not found', cause);
+}
+
+/// Exception thrown when a modelProvider is not found.
+class ModelProviderNotModelsException extends ModelProviderException {
+  /// ID of the chatModel that was not found
+  final ChatModelType modelType;
+
+  /// Creates a new ModelProviderNotModelsException
+  const ModelProviderNotModelsException(this.modelType, [Exception? cause])
+    : super('ModelProvider with type "$modelType" not found models', cause);
 }
