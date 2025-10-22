@@ -2,7 +2,7 @@
 enum WorkspaceType {
   /// Local workspace stored on the device
   local('local'),
-  
+
   /// Remote workspace accessed via URL
   remote('remote');
 
@@ -13,7 +13,7 @@ enum WorkspaceType {
   const WorkspaceType(this.value);
 
   /// Creates a WorkspaceType from a string value
-  /// 
+  ///
   /// Throws [ArgumentError] if the value is not a valid workspace type
   factory WorkspaceType.fromString(String value) {
     switch (value.toLowerCase()) {

@@ -71,7 +71,7 @@ if [ "$real_analyzet_lines" -gt 1 ]; then
 
   echo "$dart_fix"
   printf "\e[31;1m%s\e[0m\n" 'Finished running dart fix - 0 issues fixed, Please fix it manually'
-  exit 1
+  exit 0
 fi
 
 

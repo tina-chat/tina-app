@@ -15,7 +15,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Retrieves all workspaces from the database.
   ///
   /// Returns a list of all workspaces ordered by their creation date.
-  Future<List<WorkspaceTable>> getAllWorkspaces() {
+  Future<List<WorkspacesTable>> getAllWorkspaces() {
     return (select(
       workspaces,
     )..orderBy([(t) => OrderingTerm(expression: t.createdAt)])).get();
@@ -24,7 +24,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Retrieves a workspace by its ID.
   ///
   /// Returns the workspace with the given [id], or null if not found.
-  Future<WorkspaceTable?> getWorkspaceById(int id) {
+  Future<WorkspacesTable?> getWorkspaceById(int id) {
     return (select(
       workspaces,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
@@ -33,7 +33,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Retrieves workspaces by their type.
   ///
   /// Returns a list of workspaces with the specified [type].
-  Future<List<WorkspaceTable>> getWorkspacesByType(WorkspaceType type) {
+  Future<List<WorkspacesTable>> getWorkspacesByType(WorkspaceType type) {
     return (select(workspaces)
           ..where((t) => t.type.equals(type.value))
           ..orderBy([(t) => OrderingTerm(expression: t.name)]))
@@ -87,7 +87,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   ///
   /// Returns a list of workspaces whose names contain the [query] string.
   /// The search is case-insensitive.
-  Future<List<WorkspaceTable>> searchWorkspacesByName(String query) {
+  Future<List<WorkspacesTable>> searchWorkspacesByName(String query) {
     return (select(workspaces)
           ..where((t) => t.name.contains(query))
           ..orderBy([(t) => OrderingTerm(expression: t.name)]))

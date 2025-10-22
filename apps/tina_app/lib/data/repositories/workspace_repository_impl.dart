@@ -34,8 +34,8 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   @override
   Future<WorkspaceModel?> getWorkspaceById(int id) async {
     try {
-      final workspaceTable = await _database.workspaceDao.getWorkspaceById(id);
-      return workspaceTable != null ? _mapToWorkspace(workspaceTable) : null;
+      final workspacesTable = await _database.workspaceDao.getWorkspaceById(id);
+      return workspacesTable != null ? _mapToWorkspace(workspacesTable) : null;
     } catch (e) {
       throw WorkspaceException(
         'Failed to retrieve workspace with ID $id',
@@ -228,18 +228,18 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     }
   }
 
-  /// Maps a [WorkspaceTable] database record to a [WorkspaceModel] domain entity.
+  /// Maps a [workspacesTable] database record to a [WorkspaceModel] domain entity.
   ///
-  /// [workspaceTable] The database record to map.
+  /// [workspacesTable] The database record to map.
   /// Returns the corresponding [WorkspaceModel] entity.
-  WorkspaceModel _mapToWorkspace(WorkspaceTable workspaceTable) {
+  WorkspaceModel _mapToWorkspace(WorkspacesTable workspacesTable) {
     return WorkspaceModel(
-      id: workspaceTable.id,
-      name: workspaceTable.name,
-      type: workspaceTable.type,
-      url: workspaceTable.url,
-      createdAt: workspaceTable.createdAt,
-      updatedAt: workspaceTable.updatedAt,
+      id: workspacesTable.id,
+      name: workspacesTable.name,
+      type: workspacesTable.type,
+      url: workspacesTable.url,
+      createdAt: workspacesTable.createdAt,
+      updatedAt: workspacesTable.updatedAt,
     );
   }
 

@@ -40,7 +40,7 @@ lib/
 **File**: `lib/data/database/drift/tables/workspaces_table.dart`
 
 ```dart
-@DataClassName('WorkspaceTable')
+@DataClassName('WorkspacesTable')
 class Workspaces extends Table with TableMixin {
   TextColumn get name => text()();
   TextColumn get type => text()();
@@ -84,15 +84,15 @@ mixin TableMixin on Table {
 @DriftAccessor(tables: [Workspaces])
 class WorkspaceDao extends DatabaseAccessor<AppDatabase> with _$WorkspaceDaoMixin {
   // CRUD operations
-  Future<List<WorkspaceTable>> getAllWorkspaces();
-  Future<WorkspaceTable?> getWorkspaceById(int id);
+  Future<List<WorkspacesTable>> getAllWorkspaces();
+  Future<WorkspacesTable?> getWorkspaceById(int id);
   Future<int> insertWorkspace(WorkspacesCompanion workspace);
   Future<bool> updateWorkspace(int id, WorkspacesCompanion workspace);
   Future<bool> deleteWorkspace(int id);
   
   // Business-specific queries
-  Future<List<WorkspaceTable>> getWorkspacesByType(WorkspaceType type);
-  Future<List<WorkspaceTable>> searchWorkspacesByName(String query);
+  Future<List<WorkspacesTable>> getWorkspacesByType(WorkspaceType type);
+  Future<List<WorkspacesTable>> searchWorkspacesByName(String query);
   Future<int> getWorkspaceCountByType(WorkspaceType type);
 }
 ```

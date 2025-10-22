@@ -11,7 +11,7 @@ class ListModelsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatModelsAsync = ref.watch(listModelsProvider);
+    final chatModelsAsync = ref.watch(listModelProvidersProvider);
 
     return switch (chatModelsAsync) {
       AsyncData(value: final chatModels) => () {
@@ -73,7 +73,7 @@ class ListModelsWidget extends ConsumerWidget {
 class _ChatModelCard extends StatelessWidget {
   const _ChatModelCard({required this.chatModel});
 
-  final ChatModelEntity chatModel;
+  final ModelProviderEntity chatModel;
 
   @override
   Widget build(BuildContext context) {

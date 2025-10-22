@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'add_chat_model_model.dart';
+part of 'add_model_provider_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'add_chat_model_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$AddChatModelModel {
+mixin _$AddModelProviderModel {
 
  String? get name; ChatModelType? get type; String? get key; String? get url;
-/// Create a copy of AddChatModelModel
+/// Create a copy of AddModelProviderModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AddChatModelModelCopyWith<AddChatModelModel> get copyWith => _$AddChatModelModelCopyWithImpl<AddChatModelModel>(this as AddChatModelModel, _$identity);
+$AddModelProviderModelCopyWith<AddModelProviderModel> get copyWith => _$AddModelProviderModelCopyWithImpl<AddModelProviderModel>(this as AddModelProviderModel, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddChatModelModel&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddModelProviderModel&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.url, url) || other.url == url));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,name,type,key,url);
 
 @override
 String toString() {
-  return 'AddChatModelModel(name: $name, type: $type, key: $key, url: $url)';
+  return 'AddModelProviderModel(name: $name, type: $type, key: $key, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AddChatModelModelCopyWith<$Res>  {
-  factory $AddChatModelModelCopyWith(AddChatModelModel value, $Res Function(AddChatModelModel) _then) = _$AddChatModelModelCopyWithImpl;
+abstract mixin class $AddModelProviderModelCopyWith<$Res>  {
+  factory $AddModelProviderModelCopyWith(AddModelProviderModel value, $Res Function(AddModelProviderModel) _then) = _$AddModelProviderModelCopyWithImpl;
 @useResult
 $Res call({
  String? name, ChatModelType? type, String? key, String? url
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$AddChatModelModelCopyWithImpl<$Res>
-    implements $AddChatModelModelCopyWith<$Res> {
-  _$AddChatModelModelCopyWithImpl(this._self, this._then);
+class _$AddModelProviderModelCopyWithImpl<$Res>
+    implements $AddModelProviderModelCopyWith<$Res> {
+  _$AddModelProviderModelCopyWithImpl(this._self, this._then);
 
-  final AddChatModelModel _self;
-  final $Res Function(AddChatModelModel) _then;
+  final AddModelProviderModel _self;
+  final $Res Function(AddModelProviderModel) _then;
 
-/// Create a copy of AddChatModelModel
+/// Create a copy of AddModelProviderModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = freezed,Object? type = freezed,Object? key = freezed,Object? url = freezed,}) {
   return _then(_self.copyWith(
@@ -75,8 +75,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [AddChatModelModel].
-extension AddChatModelModelPatterns on AddChatModelModel {
+/// Adds pattern-matching-related methods to [AddModelProviderModel].
+extension AddModelProviderModelPatterns on AddModelProviderModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -89,10 +89,10 @@ extension AddChatModelModelPatterns on AddChatModelModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AddChatModelModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AddModelProviderModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AddChatModelModel() when $default != null:
+case _AddModelProviderModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -111,10 +111,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AddChatModelModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AddModelProviderModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _AddChatModelModel():
+case _AddModelProviderModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -132,10 +132,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AddChatModelModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AddModelProviderModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _AddChatModelModel() when $default != null:
+case _AddModelProviderModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? name,  ChatModelType? type,  String? key,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AddChatModelModel() when $default != null:
+case _AddModelProviderModel() when $default != null:
 return $default(_that.name,_that.type,_that.key,_that.url);case _:
   return orElse();
 
@@ -176,7 +176,7 @@ return $default(_that.name,_that.type,_that.key,_that.url);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? name,  ChatModelType? type,  String? key,  String? url)  $default,) {final _that = this;
 switch (_that) {
-case _AddChatModelModel():
+case _AddModelProviderModel():
 return $default(_that.name,_that.type,_that.key,_that.url);case _:
   throw StateError('Unexpected subclass');
 
@@ -196,7 +196,7 @@ return $default(_that.name,_that.type,_that.key,_that.url);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? name,  ChatModelType? type,  String? key,  String? url)?  $default,) {final _that = this;
 switch (_that) {
-case _AddChatModelModel() when $default != null:
+case _AddModelProviderModel() when $default != null:
 return $default(_that.name,_that.type,_that.key,_that.url);case _:
   return null;
 
@@ -208,8 +208,8 @@ return $default(_that.name,_that.type,_that.key,_that.url);case _:
 /// @nodoc
 
 
-class _AddChatModelModel implements AddChatModelModel {
-  const _AddChatModelModel({this.name, this.type, this.key, this.url});
+class _AddModelProviderModel implements AddModelProviderModel {
+  const _AddModelProviderModel({this.name, this.type, this.key, this.url});
   
 
 @override final  String? name;
@@ -217,17 +217,17 @@ class _AddChatModelModel implements AddChatModelModel {
 @override final  String? key;
 @override final  String? url;
 
-/// Create a copy of AddChatModelModel
+/// Create a copy of AddModelProviderModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$AddChatModelModelCopyWith<_AddChatModelModel> get copyWith => __$AddChatModelModelCopyWithImpl<_AddChatModelModel>(this, _$identity);
+_$AddModelProviderModelCopyWith<_AddModelProviderModel> get copyWith => __$AddModelProviderModelCopyWithImpl<_AddModelProviderModel>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddChatModelModel&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddModelProviderModel&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.url, url) || other.url == url));
 }
 
 
@@ -236,15 +236,15 @@ int get hashCode => Object.hash(runtimeType,name,type,key,url);
 
 @override
 String toString() {
-  return 'AddChatModelModel(name: $name, type: $type, key: $key, url: $url)';
+  return 'AddModelProviderModel(name: $name, type: $type, key: $key, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$AddChatModelModelCopyWith<$Res> implements $AddChatModelModelCopyWith<$Res> {
-  factory _$AddChatModelModelCopyWith(_AddChatModelModel value, $Res Function(_AddChatModelModel) _then) = __$AddChatModelModelCopyWithImpl;
+abstract mixin class _$AddModelProviderModelCopyWith<$Res> implements $AddModelProviderModelCopyWith<$Res> {
+  factory _$AddModelProviderModelCopyWith(_AddModelProviderModel value, $Res Function(_AddModelProviderModel) _then) = __$AddModelProviderModelCopyWithImpl;
 @override @useResult
 $Res call({
  String? name, ChatModelType? type, String? key, String? url
@@ -255,17 +255,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$AddChatModelModelCopyWithImpl<$Res>
-    implements _$AddChatModelModelCopyWith<$Res> {
-  __$AddChatModelModelCopyWithImpl(this._self, this._then);
+class __$AddModelProviderModelCopyWithImpl<$Res>
+    implements _$AddModelProviderModelCopyWith<$Res> {
+  __$AddModelProviderModelCopyWithImpl(this._self, this._then);
 
-  final _AddChatModelModel _self;
-  final $Res Function(_AddChatModelModel) _then;
+  final _AddModelProviderModel _self;
+  final $Res Function(_AddModelProviderModel) _then;
 
-/// Create a copy of AddChatModelModel
+/// Create a copy of AddModelProviderModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? name = freezed,Object? type = freezed,Object? key = freezed,Object? url = freezed,}) {
-  return _then(_AddChatModelModel(
+  return _then(_AddModelProviderModel(
 name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatModelType?,key: freezed == key ? _self.key : key // ignore: cast_nullable_to_non_nullable

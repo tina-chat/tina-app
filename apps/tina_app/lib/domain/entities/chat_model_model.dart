@@ -4,8 +4,8 @@ import 'package:tina_app/domain/enums/chat_models_type.dart';
 part 'chat_model_model.freezed.dart';
 
 @freezed
-abstract class ChatModelEntity with _$ChatModelEntity {
-  const factory ChatModelEntity({
+abstract class ModelProviderEntity with _$ModelProviderEntity {
+  const factory ModelProviderEntity({
     required int id,
     required String name,
     required ChatModelType type,
@@ -14,24 +14,24 @@ abstract class ChatModelEntity with _$ChatModelEntity {
     required DateTime createdAt,
     required DateTime updatedAt,
     required int workspaceId,
-  }) = _ChatModelEntity;
+  }) = _ModelProviderEntity;
 }
 
 @freezed
-abstract class ChatModelToCreate with _$ChatModelToCreate {
-  const factory ChatModelToCreate({
+abstract class ModelProviderToCreate with _$ModelProviderToCreate {
+  const factory ModelProviderToCreate({
     required String name,
     required ChatModelType type,
     required String key,
     required int workspaceId,
     String? url,
-  }) = _ChatModelToCreate;
+  }) = _ModelProviderToCreate;
 }
 
 @freezed
-abstract class ChatModelFilter with _$ChatModelFilter {
-  const factory ChatModelFilter({
+abstract class ModelProviderFilter with _$ModelProviderFilter {
+  const factory ModelProviderFilter({
     List<int>? workspaces,
     List<ChatModelType>? types,
-  }) = _ChatModelFilter;
+  }) = _ModelProviderFilter;
 }

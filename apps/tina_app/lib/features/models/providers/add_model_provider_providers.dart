@@ -1,19 +1,19 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tina_app/domain/entities/chat_model_model.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
-import 'package:tina_app/features/models/models/add_chat_model_model.dart';
-import 'package:tina_app/features/models/providers/chat_models_repository_providers.dart';
+import 'package:tina_app/features/models/models/add_model_provider_model.dart';
+import 'package:tina_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:tina_app/features/workspaces/providers/workspace_repository_providers.dart';
 // ignore: depend_on_referenced_packages
 import 'package:riverpod/experimental/mutation.dart';
 
-part 'add_chat_model_providers.g.dart';
+part 'add_model_provider_providers.g.dart';
 
 @riverpod
-class AddChatModelState extends _$AddChatModelState {
+class AddModelProviderState extends _$AddModelProviderState {
   @override
-  AddChatModelModel build() {
-    return AddChatModelModel();
+  AddModelProviderModel build() {
+    return AddModelProviderModel();
   }
 
   void setName(String newName) {
@@ -28,8 +28,8 @@ class AddChatModelState extends _$AddChatModelState {
     state = state.copyWith(type: newValue);
   }
 
-  Future<ChatModelEntity?> createChatModel() async {
-    final repo = ref.read(chatModelRepositoryProvider);
+  Future<ModelProviderEntity?> addModelProvider() async {
+    final repo = ref.read(modelProvidersRepositoryProvider);
     final wRepo = ref.read(workspaceRepositoryProvider);
 
     final name = state.name;
@@ -46,8 +46,8 @@ class AddChatModelState extends _$AddChatModelState {
       return null;
     }
 
-    return await repo.createChatModel(
-      ChatModelToCreate(
+    return await repo.createModelProvider(
+      ModelProviderToCreate(
         name: name,
         type: typeModel,
         key: key,

@@ -25,7 +25,7 @@ class WorkspaceLocalDataSource {
   ///
   /// Returns a list of all workspace records.
   /// Throws [Exception] if the database operation fails.
-  Future<List<WorkspaceTable>> getAllWorkspaces() async {
+  Future<List<WorkspacesTable>> getAllWorkspaces() async {
     try {
       return await _workspaceDao.getAllWorkspaces();
     } catch (e) {
@@ -38,7 +38,7 @@ class WorkspaceLocalDataSource {
   /// [id] The unique identifier of the workspace.
   /// Returns the workspace record if found, null otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<WorkspaceTable?> getWorkspaceById(int id) async {
+  Future<WorkspacesTable?> getWorkspaceById(int id) async {
     try {
       return await _workspaceDao.getWorkspaceById(id);
     } catch (e) {
@@ -51,7 +51,7 @@ class WorkspaceLocalDataSource {
   /// [type] The type of workspaces to retrieve.
   /// Returns a list of workspace records of the specified type.
   /// Throws [Exception] if the database operation fails.
-  Future<List<WorkspaceTable>> getWorkspacesByType(WorkspaceType type) async {
+  Future<List<WorkspacesTable>> getWorkspacesByType(WorkspaceType type) async {
     try {
       return await _workspaceDao.getWorkspacesByType(type);
     } catch (e) {
@@ -117,7 +117,7 @@ class WorkspaceLocalDataSource {
   /// [query] The search query string.
   /// Returns a list of workspace records whose names contain the query.
   /// Throws [Exception] if the database operation fails.
-  Future<List<WorkspaceTable>> searchWorkspacesByName(String query) async {
+  Future<List<WorkspacesTable>> searchWorkspacesByName(String query) async {
     try {
       return await _workspaceDao.searchWorkspacesByName(query);
     } catch (e) {

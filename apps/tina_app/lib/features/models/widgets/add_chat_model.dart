@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
-import 'package:tina_app/features/models/providers/add_chat_model_providers.dart';
+import 'package:tina_app/features/models/providers/add_model_provider_providers.dart';
 import 'package:tina_ui/ui.dart';
 
-class AddChatModelWidget extends ConsumerWidget {
-  const AddChatModelWidget({super.key});
+class AddModelProviderWidget extends ConsumerWidget {
+  const AddModelProviderWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,7 +16,7 @@ class AddChatModelWidget extends ConsumerWidget {
         _NameInput(),
         _KeyInput(),
         _TypeSelctor(),
-        _AddChatModelButton(),
+        _AddModelProviderButton(),
       ],
     );
   }
@@ -25,7 +25,7 @@ class AddChatModelWidget extends ConsumerWidget {
 class _NameInput extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final name = ref.watch(addChatModelStateProvider.select((s) => s.name));
+    final name = ref.watch(addModelProviderStateProvider.select((s) => s.name));
 
     final controller = useTextEditingController(text: name);
 
@@ -33,7 +33,7 @@ class _NameInput extends HookConsumerWidget {
       controller: controller,
       placeholder: 'Name',
       label: Text("Name"),
-      onChanged: ref.watch(addChatModelStateProvider.notifier).setName,
+      onChanged: ref.watch(addModelProviderStateProvider.notifier).setName,
     );
   }
 }
@@ -41,14 +41,14 @@ class _NameInput extends HookConsumerWidget {
 class _KeyInput extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final name = ref.watch(addChatModelStateProvider.select((s) => s.key));
+    final name = ref.watch(addModelProviderStateProvider.select((s) => s.key));
 
     final controller = useTextEditingController(text: name);
 
     return TinaInput(
       controller: controller,
       placeholder: 'Key',
-      onChanged: ref.watch(addChatModelStateProvider.notifier).setKey,
+      onChanged: ref.watch(addModelProviderStateProvider.notifier).setKey,
     );
   }
 }
@@ -56,11 +56,11 @@ class _KeyInput extends HookConsumerWidget {
 class _TypeSelctor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final type = ref.watch(addChatModelStateProvider.select((s) => s.type));
+    final type = ref.watch(addModelProviderStateProvider.select((s) => s.type));
 
     return TinaDropdownSelector<ChatModelType>(
       value: type,
-      onChanged: ref.watch(addChatModelStateProvider.notifier).setType,
+      onChanged: ref.watch(addModelProviderStateProvider.notifier).setType,
       label: Text('Select Model'),
       options: [
         TinaDropdownOption(
@@ -73,14 +73,14 @@ class _TypeSelctor extends ConsumerWidget {
   }
 }
 
-class _AddChatModelButton extends ConsumerWidget {
+class _AddModelProviderButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TinaButton(
       onPressed: () {
         final createChatModel = ref
-            .read(addChatModelStateProvider.notifier)
-            .createChatModel;
+            .read(addModelProviderStateProvider.notifier)
+            .addModelProvider;
 
         addChatModelMutation.run(ref, (transaction) async {
           final created = await createChatModel();

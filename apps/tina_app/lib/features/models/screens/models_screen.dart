@@ -34,9 +34,9 @@ class _AddModelModalButton extends ConsumerWidget {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (ctx) => AlertDialog(content: AddChatModelWidget()),
+              builder: (ctx) => AlertDialog(content: AddModelProviderWidget()),
             ).then((onValue) {
-              ref.invalidate(listModelsProvider);
+              ref.invalidate(listModelProvidersProvider);
             });
             // context.go(location)
           },

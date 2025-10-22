@@ -3,7 +3,7 @@ import 'package:tina_app/data/database/drift/tables/common.dart';
 import '../../../../domain/enums/workspace_type.dart';
 
 /// Table definition for workspaces in the database.
-@DataClassName('WorkspaceTable')
+@DataClassName('WorkspacesTable')
 class Workspaces extends Table with TableMixin {
   /// Human-readable name of the workspace
   TextColumn get name => text()();

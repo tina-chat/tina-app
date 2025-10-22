@@ -4,11 +4,11 @@ import 'package:tina_app/domain/enums/chat_models_type.dart';
 part 'add_chat_model_model.freezed.dart';
 
 @freezed
-abstract class AddChatModelModel with _$AddChatModelModel {
-  const factory AddChatModelModel({
+abstract class AddModelProviderModel with _$AddModelProviderModel {
+  const factory AddModelProviderModel({
     String? name,
     ChatModelType? type,
     String? key,
     String? url,
-  }) = _AddChatModelModel;
+  }) = _AddModelProviderModel;
 }
