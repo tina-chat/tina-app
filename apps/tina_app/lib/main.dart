@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/main/locale.dart';
 
@@ -8,11 +9,11 @@ import 'widgets/tina_sidebar.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MainLocale.ensureInitialized();
-  runApp(ProviderScope(child: MainLocale(child: const MyApp())));
+  runApp(ProviderScope(child: MainLocale(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
         useMaterial3: true,
       ),
-      routerConfig: appRouter,
+      routerConfig: _router,
     );
   }
+
+  final GoRouter _router = GoRouter(
+    routes: $appRoutes,
+    initialLocation: '/home',
+    navigatorKey: rootNavigatorKey,
+  );
 }
 
 class AppLayout extends StatelessWidget {

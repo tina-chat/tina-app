@@ -1,45 +1,91 @@
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import '../main.dart';
-import '../features/home/home_screen.dart';
-import '../features/settings/settings_screen.dart';
-import '../features/chats/chat_screen.dart';
-import '../features/tools/tools_screen.dart';
-import '../features/models/screens/models_screen.dart';
-import '../features/agents/agents_screen.dart';
-import '../features/prompts/prompts_screen.dart';
 
-final appRouter = GoRouter(
-  routes: [
-    ShellRoute(
-      builder: (context, state, child) => AppLayout(child: child),
-      routes: [
-        GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
-        GoRoute(
-          path: '/chats',
-          builder: (context, state) => const ChatScreen(),
-        ),
-        GoRoute(
-          path: '/tools',
-          builder: (context, state) => const ToolsScreen(),
-        ),
-        GoRoute(
-          path: '/models',
-          builder: (context, state) => const ModelsScreen(),
-        ),
-        GoRoute(
-          path: '/agents',
-          builder: (context, state) => const AgentsScreen(),
-        ),
-        GoRoute(
-          path: '/prompts',
-          builder: (context, state) => const PromptsScreen(),
-        ),
-        GoRoute(
-          path: '/settings',
-          builder: (context, state) => const SettingsScreen(),
-        ),
-      ],
-    ),
+import '../features/agents/agents_screen.dart';
+import '../features/chats/chat_screen.dart';
+import '../features/home/home_screen.dart';
+import '../features/models/screens/models_screen.dart';
+import '../features/prompts/prompts_screen.dart';
+import '../features/settings/settings_screen.dart';
+import '../features/tools/tools_screen.dart';
+import '../main.dart';
+
+part 'app_router.g.dart';
+
+final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
+@TypedShellRoute<MyShellRouteData>(
+  routes: <TypedGoRoute<GoRouteData>>[
+    TypedGoRoute<HomeRoute>(path: '/home'),
+    TypedGoRoute<ChatsRoute>(path: '/chats'),
+    TypedGoRoute<ToolsRoute>(path: '/tools'),
+    TypedGoRoute<ModelsRoute>(path: '/models'),
+    TypedGoRoute<AgentsRoute>(path: '/agents'),
+    TypedGoRoute<PromptsRoute>(path: '/prompts'),
+    TypedGoRoute<SettingsRoute>(path: '/settings'),
   ],
-  initialLocation: '/',
-);
+)
+class MyShellRouteData extends ShellRouteData {
+  const MyShellRouteData();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
+
+  @override
+  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
+    return AppLayout(child: navigator);
+  }
+}
+
+class HomeRoute extends GoRouteData with $HomeRoute {
+  const HomeRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
+}
+
+class ChatsRoute extends GoRouteData with $ChatsRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ChatScreen();
+  }
+}
+
+class ToolsRoute extends GoRouteData with $ToolsRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ToolsScreen();
+  }
+}
+
+class ModelsRoute extends GoRouteData with $ModelsRoute {
+  // There is no need to implement [build] when this [redirect] is unconditional.
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ModelsScreen();
+  }
+}
+
+class AgentsRoute extends GoRouteData with $AgentsRoute {
+  // There is no need to implement [build] when this [redirect] is unconditional.
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AgentsScreen();
+  }
+}
+
+class PromptsRoute extends GoRouteData with $PromptsRoute {
+  // There is no need to implement [build] when this [redirect] is unconditional.
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return PromptsScreen();
+  }
+}
+
+class SettingsRoute extends GoRouteData with $SettingsRoute {
+  // There is no need to implement [build] when this [redirect] is unconditional.
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return SettingsScreen();
+  }
+}

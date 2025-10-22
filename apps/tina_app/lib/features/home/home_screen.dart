@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:tina_app/router/app_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
             const Text('Welcome to Tina AI Assistant'),
             const SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () => context.go('/settings'),
+              onPressed: () => SettingsRoute().go(context),
               child: const Text('Go to Settings'),
             ),
           ],

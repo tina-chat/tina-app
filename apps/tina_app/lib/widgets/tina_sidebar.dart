@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tina_app/i18n/locale_keys.dart';
+import 'package:tina_app/router/app_router.dart';
+import 'package:tina_app/widgets/text_locale.dart';
 import 'package:tina_ui/ui.dart';
 
 /// A sidebar widget that handles business logic and navigation state.
@@ -27,6 +30,26 @@ class TinaSidebarWrapper extends StatefulWidget {
   State<TinaSidebarWrapper> createState() => _TinaSidebarWrapperState();
 }
 
+enum NavigationItemType {
+  home,
+  chats,
+  tools,
+  models,
+  agents,
+  prompts;
+
+  GoRouteData router() {
+    return switch (this) {
+      NavigationItemType.home => HomeRoute(),
+      NavigationItemType.chats => ChatsRoute(),
+      NavigationItemType.tools => ToolsRoute(),
+      NavigationItemType.models => ModelsRoute(),
+      NavigationItemType.agents => AgentsRoute(),
+      NavigationItemType.prompts => PromptsRoute(),
+    };
+  }
+}
+
 class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
     with SingleTickerProviderStateMixin {
   late bool _isExpanded;
@@ -34,18 +57,37 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
   late Animation<double> _animation;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Navigation configuration
-  static const List<Map<String, dynamic>> _navigationConfig = [
-    {'icon': Icons.dashboard_outlined, 'label': 'Home', 'route': '/'},
-    {'icon': Icons.chat_outlined, 'label': 'Chats', 'route': '/chats'},
-    {'icon': Icons.build_circle_outlined, 'label': 'Tools', 'route': '/tools'},
-    {'icon': Icons.memory_outlined, 'label': 'Models', 'route': '/models'},
-    {'icon': Icons.smart_toy_outlined, 'label': 'Agents', 'route': '/agents'},
-    {
-      'icon': Icons.description_outlined,
-      'label': 'Prompts',
-      'route': '/prompts',
-    },
+  final List<TinaNavigationData<NavigationItemType>> _navigationItems = [
+    TinaNavigationData(
+      icon: Icons.dashboard_outlined,
+      label: TextLocale(LocaleKeys.menu_home),
+      value: NavigationItemType.home,
+    ),
+    TinaNavigationData(
+      icon: Icons.chat_outlined,
+      label: TextLocale(LocaleKeys.menu_chats),
+      value: NavigationItemType.chats,
+    ),
+    TinaNavigationData(
+      icon: Icons.build_circle_outlined,
+      label: TextLocale(LocaleKeys.menu_tools),
+      value: NavigationItemType.tools,
+    ),
+    TinaNavigationData(
+      icon: Icons.memory_outlined,
+      label: TextLocale(LocaleKeys.menu_models),
+      value: NavigationItemType.models,
+    ),
+    TinaNavigationData(
+      icon: Icons.smart_toy_outlined,
+      label: TextLocale(LocaleKeys.menu_agents),
+      value: NavigationItemType.agents,
+    ),
+    TinaNavigationData(
+      icon: Icons.description_outlined,
+      label: TextLocale(LocaleKeys.menu_prompts),
+      value: NavigationItemType.prompts,
+    ),
   ];
 
   @override
@@ -73,35 +115,28 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
   }
 
   /// Handles navigation when a navigation item is tapped.
-  void _handleNavigation(String route) {
+  void _handleNavigation(NavigationItemType route) {
     // Close drawer if open (mobile)
     if (_scaffoldKey.currentState?.isDrawerOpen == true) {
       Navigator.pop(context);
     }
-    context.go(route);
+
+    route.router().go(context);
   }
 
   /// Handles settings navigation.
   void _handleSettingsNavigation() {
-    context.go('/settings');
+    SettingsRoute().go(context);
   }
 
   /// Builds the list of navigation items with active state.
-  List<NavigationItem> _buildNavigationItems() {
+  List<TinaNavigationData<NavigationItemType>> _buildNavigationItems() {
     final currentRoute = GoRouterState.of(context).uri.toString();
 
-    return _navigationConfig.map((item) {
-      final route = item['route'] as String;
-      final isActive =
-          currentRoute == route ||
-          (route != '/' && currentRoute.startsWith(route));
+    return _navigationItems.map((item) {
+      final isActive = item.value.router().location.startsWith(currentRoute);
 
-      return NavigationItem(
-        icon: item['icon'] as IconData,
-        label: item['label'] as String,
-        route: route,
-        isActive: isActive,
-      );
+      return item.copyWith(isActive: isActive);
     }).toList();
   }
 
@@ -187,7 +222,7 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
         ),
         drawer: Drawer(
           backgroundColor: context.tinaColors.surface,
-          child: TinaSidebar(
+          child: TinaSidebar<NavigationItemType>(
             isExpanded: true, // Always expanded in drawer mode
             animation: const AlwaysStoppedAnimation(1.0),
             navigationItems: _buildNavigationItems(),

@@ -2,7 +2,10 @@
   "menu": {
     "home": "Home",
     "chats": "Chats",
-    "models": "Models"
+    "tools": "Tools",
+    "models": "Models",
+    "agents": "Agents",
+    "prompts": "Prompts"
   },
   "models_screens": {
     "add_provider": {

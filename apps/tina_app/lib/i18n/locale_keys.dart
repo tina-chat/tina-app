@@ -5,7 +5,10 @@
 abstract class LocaleKeys {
   static const menu_home = 'menu.home';
   static const menu_chats = 'menu.chats';
+  static const menu_tools = 'menu.tools';
   static const menu_models = 'menu.models';
+  static const menu_agents = 'menu.agents';
+  static const menu_prompts = 'menu.prompts';
   static const models_screens_add_provider_open_button =
       'models_screens.add_provider.open_button';
   static const chats_screens_chats_list_title =

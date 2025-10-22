@@ -8,7 +8,7 @@ import 'package:tina_ui/src/tokens/tokens.dart';
 /// This component handles the visual presentation of the sidebar including
 /// customizable header, navigation items, and footer sections. It is designed
 /// to be a pure UI component that receives all necessary data and callbacks.
-class TinaSidebar extends StatelessWidget {
+class TinaSidebar<T> extends StatelessWidget {
   /// Creates a Tina sidebar organism.
   const TinaSidebar({
     required this.isExpanded,
@@ -27,10 +27,10 @@ class TinaSidebar extends StatelessWidget {
   final Animation<double> animation;
 
   /// List of navigation items to display.
-  final List<NavigationItem> navigationItems;
+  final List<TinaNavigationData<T>> navigationItems;
 
   /// Callback when a navigation item is tapped.
-  final void Function(String route) onNavigationTap;
+  final void Function(T value) onNavigationTap;
 
   /// Optional header widget to display at the top of the sidebar.
   final Widget? header;
@@ -97,8 +97,8 @@ class TinaSidebar extends StatelessWidget {
               icon: Icon(
                 item.icon,
               ),
-              onTap: () => onNavigationTap(item.route),
-              label: isExpanded ? Text(item.label) : const SizedBox.shrink(),
+              onTap: () => onNavigationTap(item.value),
+              label: isExpanded ? item.label : const SizedBox.shrink(),
             ),
           );
         }).toList(),
@@ -115,26 +115,40 @@ class TinaSidebar extends StatelessWidget {
 }
 
 /// Represents a navigation item in the sidebar.
-class NavigationItem {
+class TinaNavigationData<T> {
   /// Creates a navigation item.
-  const NavigationItem({
+  const TinaNavigationData({
     required this.icon,
     required this.label,
-    required this.route,
-    required this.isActive,
+    required this.value,
+    this.isActive = false,
   });
 
   /// Icon to display for the navigation item.
   final IconData icon;
 
   /// Label text for the navigation item.
-  final String label;
+  final Widget label;
 
-  /// Route path for navigation.
-  final String route;
+  /// unique value to diferentiate
+  final T value;
 
   /// Whether this item is currently active/selected.
   final bool isActive;
+
+  TinaNavigationData<T> copyWith({
+    IconData? icon,
+    Widget? label,
+    T? value,
+    bool? isActive,
+  }) {
+    return TinaNavigationData<T>(
+      icon: icon ?? this.icon,
+      label: label ?? this.label,
+      value: value ?? this.value,
+      isActive: isActive ?? this.isActive,
+    );
+  }
 }
 
 class _TinaSidebarItem extends StatelessWidget {

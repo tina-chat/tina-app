@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:tina_app/main.dart';
 
 void main() {
   testWidgets('Tina sidebar smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that the app loads with TINA branding
     expect(find.text('TINA'), findsWidgets);
@@ -26,7 +25,7 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(400, 800));
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
     await tester.pumpAndSettle();
 
     // Should find TINA text somewhere in the app
