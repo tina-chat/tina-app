@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/features/models/providers/list_models_providers.dart';
 import 'package:tina_app/features/models/widgets/add_chat_model.dart';
 import 'package:tina_app/features/models/widgets/list_models.dart';
+import 'package:tina_app/i18n/locale_keys.dart';
+import 'package:tina_app/widgets/text_locale.dart';
 import 'package:tina_ui/ui.dart';
 
 class ModelsScreen extends StatelessWidget {
@@ -40,7 +42,7 @@ class _AddModelModalButton extends ConsumerWidget {
             });
             // context.go(location)
           },
-          child: Text('Add Model Credentials'),
+          child: TextLocale(LocaleKeys.models_screens_add_provider_open_button),
         ),
       ],
     );

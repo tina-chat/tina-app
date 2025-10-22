@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tina_app/main/locale.dart';
+
 import 'router/app_router.dart';
 import 'widgets/tina_sidebar.dart';
 
-void main() {
-  runApp(ProviderScope(child: const MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MainLocale.ensureInitialized();
+  runApp(ProviderScope(child: MainLocale(child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,6 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Tina App',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
         useMaterial3: true,

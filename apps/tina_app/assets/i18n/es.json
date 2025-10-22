@@ -1,0 +1,9 @@
+
+
+{
+  "models_screens": {
+    "add_provider": {
+      "open_button": "Agregar Proveedor"
+    }
+  }
+}

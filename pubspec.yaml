@@ -79,6 +79,16 @@ melos:
     generate:watch:
       run: melos exec --depends-on="build_runner" -- "dart run build_runner watch --delete-conflicting-outputs"
       description: Run code generation in watch mode
+    
+    localization:
+      # Run build_runner and format only the generated files
+      exec: dart pub run easy_localization:generate -S assets/i18n -f keys -O lib/i18n -o locale_keys.dart --skip-unnecessary-keys
+      concurrency: 1
+      orderDependents: true
+      failFast: true
+      packageFilters:
+        dependsOn:
+          - easy_localization
 
     # Dependency Management
     pub-get:
