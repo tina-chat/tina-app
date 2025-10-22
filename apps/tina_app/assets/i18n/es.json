@@ -1,9 +1,22 @@
-
-
 {
+  "menu": {
+    "home": "Inicio",
+    "chats": "Chats",
+    "models": "Modelos"
+  },
   "models_screens": {
     "add_provider": {
       "open_button": "Agregar Proveedor"
+    }
+  },
+  "chats_screens": {
+    "chats_list": {
+      "title": "Chats",
+      "add_chat": "Agregar Chat"
+    },
+    "chat_conversation": {
+      "select_model_selctor": "Selecionar Modelo",
+      "message_placeholder": "Escribe tu mensaje..."
     }
   }
 }
