@@ -13,7 +13,17 @@ RouteBase get $myShellRouteData => ShellRouteData.$route(
   factory: $MyShellRouteDataExtension._fromState,
   routes: [
     GoRouteData.$route(path: '/home', factory: $HomeRoute._fromState),
-    GoRouteData.$route(path: '/chats', factory: $ChatsRoute._fromState),
+    GoRouteData.$route(
+      path: '/chats',
+      factory: $ChatsRoute._fromState,
+      routes: [
+        GoRouteData.$route(path: 'new', factory: $NewChatRoute._fromState),
+        GoRouteData.$route(
+          path: ':chatId',
+          factory: $CoversationRoute._fromState,
+        ),
+      ],
+    ),
     GoRouteData.$route(path: '/tools', factory: $ToolsRoute._fromState),
     GoRouteData.$route(path: '/models', factory: $ModelsRoute._fromState),
     GoRouteData.$route(path: '/agents', factory: $AgentsRoute._fromState),
@@ -52,6 +62,50 @@ mixin $ChatsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/chats');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $NewChatRoute on GoRouteData {
+  static NewChatRoute _fromState(GoRouterState state) => NewChatRoute();
+
+  @override
+  String get location => GoRouteData.$location('/chats/new');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $CoversationRoute on GoRouteData {
+  static CoversationRoute _fromState(GoRouterState state) =>
+      CoversationRoute(chatId: state.pathParameters['chatId']!);
+
+  CoversationRoute get _self => this as CoversationRoute;
+
+  @override
+  String get location =>
+      GoRouteData.$location('/chats/${Uri.encodeComponent(_self.chatId)}');
 
   @override
   void go(BuildContext context) => context.go(location);

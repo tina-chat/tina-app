@@ -19,7 +19,7 @@ class TinaBadge extends StatelessWidget {
 
   /// Creates a Tina badge with text content.
   TinaBadge.text({
-    required String text,
+    required Widget child,
     Key? key,
     TinaBadgeVariant variant = TinaBadgeVariant.primary,
     TinaBadgeSize size = TinaBadgeSize.medium,
@@ -33,7 +33,7 @@ class TinaBadge extends StatelessWidget {
            style: size == TinaBadgeSize.small
                ? TinaTextStyle.caption
                : TinaTextStyle.bodySmall,
-           child: Text(text),
+           child: child,
          ),
        );
 

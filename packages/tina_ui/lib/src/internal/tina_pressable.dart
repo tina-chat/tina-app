@@ -14,7 +14,7 @@ class TinaPressable extends StatefulWidget {
     this.onPressed,
     this.onLongPress,
     this.padding,
-    this.clipBehavior,
+    this.clipBehavior = Clip.hardEdge,
   });
 
   /// child

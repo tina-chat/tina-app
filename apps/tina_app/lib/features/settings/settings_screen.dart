@@ -21,7 +21,6 @@ class SettingsScreen extends StatelessWidget {
           children: [
             // Workspace Management Section
             TinaCard(
-              elevation: TinaCardElevation.sm,
               padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +65,6 @@ class SettingsScreen extends StatelessWidget {
 
             // App Settings Section
             TinaCard(
-              elevation: TinaCardElevation.sm,
               padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +154,6 @@ class SettingsScreen extends StatelessWidget {
 
             // About Section
             TinaCard(
-              elevation: TinaCardElevation.sm,
               padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

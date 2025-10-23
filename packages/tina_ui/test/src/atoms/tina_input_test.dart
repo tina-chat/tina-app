@@ -10,7 +10,7 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaInput(
-              placeholder: 'Enter text',
+              placeholder: Text('Enter text'),
             ),
           ),
         ),

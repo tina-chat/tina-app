@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tina_app/features/models/providers/list_models_providers.dart';
 import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
+import 'package:tina_app/features/models/providers/list_models_providers.dart';
 // ignore: implementation_imports
 import 'package:tina_ui/src/atoms/atoms.dart';
 
@@ -78,7 +78,6 @@ class _ChatModelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TinaCard(
-      elevation: TinaCardElevation.sm,
       padding: TinaCardPadding.medium,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,8 +106,8 @@ class _ChatModelCard extends StatelessWidget {
                 ),
               ),
               TinaBadge.text(
-                text: chatModel.type.value.toUpperCase(),
                 variant: _getBadgeVariant(),
+                child: Text(chatModel.type.value.toUpperCase()),
               ),
             ],
           ),

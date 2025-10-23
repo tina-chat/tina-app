@@ -6,9 +6,9 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget textBadgeUseCase(BuildContext context) {
   return Center(
     child: TinaBadge.text(
-      text: 'Badge',
       variant: TinaBadgeVariant.primary,
       size: TinaBadgeSize.medium,
+      child: Text('Badge'),
     ),
   );
 }
@@ -47,15 +47,21 @@ Widget badgeVariantsUseCase(BuildContext context) {
     spacing: 12,
     runSpacing: 12,
     children: [
-      TinaBadge.text(text: 'Primary', variant: TinaBadgeVariant.primary),
-      TinaBadge.text(text: 'Secondary', variant: TinaBadgeVariant.secondary),
-      TinaBadge.text(text: 'Success', variant: TinaBadgeVariant.success),
-      TinaBadge.text(text: 'Warning', variant: TinaBadgeVariant.warning),
-      TinaBadge.text(text: 'Error', variant: TinaBadgeVariant.error),
-      TinaBadge.text(text: 'Info', variant: TinaBadgeVariant.info),
-      TinaBadge.text(text: 'Neutral', variant: TinaBadgeVariant.neutral),
-      TinaBadge.text(text: 'Outlined', variant: TinaBadgeVariant.outlined),
-      TinaBadge.text(text: 'Soft', variant: TinaBadgeVariant.soft),
+      TinaBadge.text(variant: TinaBadgeVariant.primary, child: Text('Primary')),
+      TinaBadge.text(
+        variant: TinaBadgeVariant.secondary,
+        child: Text('Secondary'),
+      ),
+      TinaBadge.text(variant: TinaBadgeVariant.success, child: Text('Success')),
+      TinaBadge.text(variant: TinaBadgeVariant.warning, child: Text('Warning')),
+      TinaBadge.text(variant: TinaBadgeVariant.error, child: Text('Error')),
+      TinaBadge.text(variant: TinaBadgeVariant.info, child: Text('Info')),
+      TinaBadge.text(variant: TinaBadgeVariant.neutral, child: Text('Neutral')),
+      TinaBadge.text(
+        variant: TinaBadgeVariant.outlined,
+        child: Text('Outlined'),
+      ),
+      TinaBadge.text(variant: TinaBadgeVariant.soft, child: Text('Soft')),
     ],
   );
 }
@@ -66,11 +72,11 @@ Widget badgeSizesUseCase(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      TinaBadge.text(text: 'Small', size: TinaBadgeSize.small),
+      TinaBadge.text(size: TinaBadgeSize.small, child: Text('Small')),
       const SizedBox(height: 16),
-      TinaBadge.text(text: 'Medium', size: TinaBadgeSize.medium),
+      TinaBadge.text(size: TinaBadgeSize.medium, child: Text('Medium')),
       const SizedBox(height: 16),
-      TinaBadge.text(text: 'Large', size: TinaBadgeSize.large),
+      TinaBadge.text(size: TinaBadgeSize.large, child: Text('Large')),
     ],
   );
 }
@@ -81,9 +87,12 @@ Widget successBadgesUseCase(BuildContext context) {
     spacing: 12,
     runSpacing: 12,
     children: [
-      TinaBadge.text(text: 'Active', variant: TinaBadgeVariant.success),
-      TinaBadge.text(text: 'Verified', variant: TinaBadgeVariant.success),
-      TinaBadge.text(text: 'Online', variant: TinaBadgeVariant.success),
+      TinaBadge.text(variant: TinaBadgeVariant.success, child: Text('Active')),
+      TinaBadge.text(
+        variant: TinaBadgeVariant.success,
+        child: Text('Verified'),
+      ),
+      TinaBadge.text(variant: TinaBadgeVariant.success, child: Text('Online')),
       TinaBadge.dot(variant: TinaBadgeVariant.success),
     ],
   );
@@ -95,8 +104,8 @@ Widget errorBadgesUseCase(BuildContext context) {
     spacing: 12,
     runSpacing: 12,
     children: [
-      TinaBadge.text(text: 'Error', variant: TinaBadgeVariant.error),
-      TinaBadge.text(text: 'Failed', variant: TinaBadgeVariant.error),
+      TinaBadge.text(variant: TinaBadgeVariant.error, child: Text('Error')),
+      TinaBadge.text(variant: TinaBadgeVariant.error, child: Text('Failed')),
       TinaBadge.count(count: 3, variant: TinaBadgeVariant.error),
       TinaBadge.dot(variant: TinaBadgeVariant.error),
     ],
@@ -132,7 +141,7 @@ Widget positionedBadgeCornersUseCase(BuildContext context) {
         children: [
           TinaPositionedBadge(
             position: TinaBadgePosition.topLeft,
-            badge: TinaBadge.text(text: 'TL', size: TinaBadgeSize.small),
+            badge: TinaBadge.text(size: TinaBadgeSize.small, child: Text('TL')),
             child: Container(
               width: 50,
               height: 50,
@@ -144,7 +153,7 @@ Widget positionedBadgeCornersUseCase(BuildContext context) {
           ),
           TinaPositionedBadge(
             position: TinaBadgePosition.topRight,
-            badge: TinaBadge.text(text: 'TR', size: TinaBadgeSize.small),
+            badge: TinaBadge.text(size: TinaBadgeSize.small, child: Text('TR')),
             child: Container(
               width: 50,
               height: 50,
@@ -162,7 +171,7 @@ Widget positionedBadgeCornersUseCase(BuildContext context) {
         children: [
           TinaPositionedBadge(
             position: TinaBadgePosition.bottomLeft,
-            badge: TinaBadge.text(text: 'BL', size: TinaBadgeSize.small),
+            badge: TinaBadge.text(size: TinaBadgeSize.small, child: Text('BL')),
             child: Container(
               width: 50,
               height: 50,
@@ -174,7 +183,7 @@ Widget positionedBadgeCornersUseCase(BuildContext context) {
           ),
           TinaPositionedBadge(
             position: TinaBadgePosition.bottomRight,
-            badge: TinaBadge.text(text: 'BR', size: TinaBadgeSize.small),
+            badge: TinaBadge.text(size: TinaBadgeSize.small, child: Text('BR')),
             child: Container(
               width: 50,
               height: 50,

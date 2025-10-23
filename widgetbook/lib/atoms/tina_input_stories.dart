@@ -8,7 +8,7 @@ Widget basicInputUseCase(BuildContext context) {
   return const Padding(
     padding: EdgeInsets.all(16.0),
     child: TinaInput(
-      placeholder: 'Enter your text here',
+      placeholder: Text('Enter your text here'),
       hint: Text('This is a basic input field'),
     ),
   );
@@ -23,18 +23,21 @@ Widget inputSizesUseCase(BuildContext context) {
       children: [
         TinaText(style: TinaTextStyle.caption, child: Text('Small Input')),
         SizedBox(height: 8),
-        TinaInput(size: TinaInputSize.small, placeholder: 'Small input'),
+        TinaInput(size: TinaInputSize.small, placeholder: Text('Small input')),
         SizedBox(height: 24),
         TinaText(
           style: TinaTextStyle.caption,
           child: Text('Medium Input (Default)'),
         ),
         SizedBox(height: 8),
-        TinaInput(size: TinaInputSize.medium, placeholder: 'Medium input'),
+        TinaInput(
+          size: TinaInputSize.medium,
+          placeholder: Text('Medium input'),
+        ),
         SizedBox(height: 24),
         TinaText(style: TinaTextStyle.caption, child: Text('Large Input')),
         SizedBox(height: 8),
-        TinaInput(size: TinaInputSize.large, placeholder: 'Large input'),
+        TinaInput(size: TinaInputSize.large, placeholder: Text('Large input')),
       ],
     ),
   );
@@ -51,7 +54,7 @@ Widget inputStatesUseCase(BuildContext context) {
         SizedBox(height: 8),
         TinaInput(
           state: TinaInputState.normal,
-          placeholder: 'Normal input',
+          placeholder: Text('Normal input'),
           hint: Text('This is a normal input field'),
         ),
         SizedBox(height: 24),
@@ -59,7 +62,7 @@ Widget inputStatesUseCase(BuildContext context) {
         SizedBox(height: 8),
         TinaInput(
           state: TinaInputState.success,
-          placeholder: 'Success input',
+          placeholder: Text('Success input'),
           hint: Text('Input validation successful'),
           initialValue: 'Valid input',
         ),
@@ -68,7 +71,7 @@ Widget inputStatesUseCase(BuildContext context) {
         SizedBox(height: 8),
         TinaInput(
           state: TinaInputState.warning,
-          placeholder: 'Warning input',
+          placeholder: Text('Warning input'),
           hint: Text('Please review your input'),
           initialValue: 'Warning example',
         ),
@@ -77,7 +80,7 @@ Widget inputStatesUseCase(BuildContext context) {
         SizedBox(height: 8),
         TinaInput(
           state: TinaInputState.error,
-          placeholder: 'Error input',
+          placeholder: Text('Error input'),
           error: Text('This field is required'),
           initialValue: 'Invalid input',
         ),
@@ -94,20 +97,20 @@ Widget inputWithIconsUseCase(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         TinaInput(
-          placeholder: 'Search...',
+          placeholder: Text('Search...'),
           prefixIcon: Icon(Icons.search),
           hint: Text('Input with prefix icon'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Enter password',
+          placeholder: Text('Enter password'),
           suffixIcon: Icon(Icons.visibility_off),
           hint: Text('Input with suffix icon'),
           obscureText: true,
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Email address',
+          placeholder: Text('Email address'),
           prefixIcon: Icon(Icons.email),
           suffixIcon: Icon(Icons.check_circle, color: Colors.green),
           hint: Text('Input with both prefix and suffix icons'),
@@ -125,25 +128,25 @@ Widget inputTypesUseCase(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TinaInput(
-          placeholder: 'Enter your email',
+          placeholder: Text('Enter your email'),
           keyboardType: TextInputType.emailAddress,
           hint: Text('Email input type'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Enter phone number',
+          placeholder: Text('Enter phone number'),
           keyboardType: TextInputType.phone,
           hint: Text('Phone input type'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Enter a number',
+          placeholder: Text('Enter a number'),
           keyboardType: TextInputType.number,
           hint: Text('Number input type'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Enter password',
+          placeholder: Text('Enter password'),
           obscureText: true,
           hint: Text('Password input (obscured)'),
         ),
@@ -160,13 +163,13 @@ Widget multilineInputUseCase(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TinaInput(
-          placeholder: 'Enter your message...',
+          placeholder: Text('Enter your message...'),
           maxLines: 4,
           hint: Text('Multiline text input'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Enter description...',
+          placeholder: Text('Enter description...'),
           maxLines: 3,
           maxLength: 200,
           hint: Text('Multiline with character limit'),
@@ -184,20 +187,20 @@ Widget inputFormattersUseCase(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TinaInput(
-          placeholder: 'UPPERCASE ONLY',
+          placeholder: Text('UPPERCASE ONLY'),
           inputFormatters: [UpperCaseTextFormatter()],
           hint: Text('Converts input to uppercase'),
         ),
         const SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Numbers only',
+          placeholder: Text('Numbers only'),
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           hint: Text('Only accepts numbers'),
         ),
         const SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Max 10 characters',
+          placeholder: Text('Max 10 characters'),
           inputFormatters: [LengthLimitingTextInputFormatter(10)],
           hint: Text('Limited to 10 characters'),
         ),
@@ -215,7 +218,7 @@ Widget disabledInputUseCase(BuildContext context) {
       children: [
         TinaInput(
           enabled: false,
-          placeholder: 'Disabled input',
+          placeholder: Text('Disabled input'),
           hint: Text('This input is disabled'),
         ),
         SizedBox(height: 24),
@@ -244,17 +247,17 @@ Widget inputFocusUseCase(BuildContext context) {
       children: [
         TinaInput(
           autofocus: true,
-          placeholder: 'Auto-focused input',
+          placeholder: Text('Auto-focused input'),
           hint: Text('This input is auto-focused'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Regular input',
+          placeholder: Text('Regular input'),
           hint: Text('Regular input field'),
         ),
         SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Another input',
+          placeholder: Text('Another input'),
           hint: Text('Another input field'),
         ),
       ],
@@ -270,7 +273,7 @@ Widget interactiveInputUseCase(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TinaInput(
-          placeholder: 'Type something...',
+          placeholder: Text('Type something...'),
           onChanged: (value) {
             // Handle change
           },
@@ -283,7 +286,7 @@ Widget interactiveInputUseCase(BuildContext context) {
         ),
         const SizedBox(height: 24),
         TinaInput(
-          placeholder: 'Tap to interact',
+          placeholder: Text('Tap to interact'),
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Input field tapped!')),

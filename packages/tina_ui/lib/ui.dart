@@ -5,6 +5,8 @@
 /// styling across the application.
 library;
 
+export 'package:flutter_portal/flutter_portal.dart' show Portal;
+
 // Export atomic design components
 export 'src/atoms/atoms.dart';
 export 'src/molecules/molecules.dart';

@@ -113,14 +113,7 @@ class TinaMessageBubble extends StatelessWidget {
 
     return BoxDecoration(
       color: errorColor ?? baseColor,
-      borderRadius: BorderRadius.circular(DesignBorderRadius.lg).copyWith(
-        bottomRight: isUser
-            ? const Radius.circular(DesignBorderRadius.sm)
-            : null,
-        bottomLeft: !isUser
-            ? const Radius.circular(DesignBorderRadius.sm)
-            : null,
-      ),
+      borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
       border: status == TinaMessageDeliveryStatus.error
           ? Border.all(color: tinaColors.error)
           : null,

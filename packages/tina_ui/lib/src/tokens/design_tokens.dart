@@ -102,7 +102,7 @@ class DesignColors {
   static const Color error = Color(0xFFEF4444);
 
   /// Info color for informational messages and neutral feedback.
-  static const Color info = Color(0xFF3B82F6);
+  static const Color info = Color.fromARGB(255, 112, 163, 244);
 
   /// Transparent color
   static const Color transparent = Color(0x00000000);

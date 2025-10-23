@@ -16,6 +16,7 @@ dependencies:
   # Animation and interaction
   flutter_animate: ^4.5.0
   # Responsive design
+  flutter_portal: ^1.1.4
   flutter_screenutil: ^5.9.3
   # Design system dependencies
   flutter_svg: ^2.0.10+1

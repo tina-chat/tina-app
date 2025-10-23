@@ -31,7 +31,7 @@ class _NameInput extends HookConsumerWidget {
 
     return TinaInput(
       controller: controller,
-      placeholder: 'Name',
+      placeholder: Text('Name'),
       label: Text("Name"),
       onChanged: ref.watch(addModelProviderStateProvider.notifier).setName,
     );
@@ -47,7 +47,7 @@ class _KeyInput extends HookConsumerWidget {
 
     return TinaInput(
       controller: controller,
-      placeholder: 'Key',
+      placeholder: Text('Key'),
       onChanged: ref.watch(addModelProviderStateProvider.notifier).setKey,
     );
   }

@@ -193,9 +193,9 @@ Widget appBarActionsWithVariousBadgesUseCase(BuildContext context) {
             icon: Icons.warning,
             onPressed: () {},
             badge: TinaBadge.text(
-              text: 'NEW',
               variant: TinaBadgeVariant.warning,
               size: TinaBadgeSize.small,
+              child: Text('NEW'),
             ),
             tooltip: 'Warnings',
           ),

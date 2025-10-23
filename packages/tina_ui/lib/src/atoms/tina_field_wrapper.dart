@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tina_ui/src/atoms/tina_field_hint.dart';
 import 'package:tina_ui/src/atoms/tina_field_label.dart';
+import 'package:tina_ui/src/internal/tina_pressable.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
 
@@ -17,7 +18,6 @@ class TinaFieldWrapper extends StatefulWidget {
     this.hint,
     this.error,
     this.isRequired = false,
-    this.size = TinaFieldSize.medium,
     this.state = TinaFieldState.normal,
     this.isEnabled = true,
     this.isReadOnly = false,
@@ -41,9 +41,6 @@ class TinaFieldWrapper extends StatefulWidget {
 
   /// Whether the field is required.
   final bool isRequired;
-
-  /// The size of the field wrapper.
-  final TinaFieldSize size;
 
   /// The visual state of the field.
   final TinaFieldState state;
@@ -90,10 +87,8 @@ class _TinaFieldWrapperState extends State<TinaFieldWrapper> {
           if (widget.label != null) const SizedBox(height: DesignSpacing.xs),
           _buildFieldContainer(tinaColors),
           if (widget.hint != null || widget.error != null)
-            SizedBox(
-              height: widget.size == TinaFieldSize.small
-                  ? DesignSpacing.xs
-                  : DesignSpacing.sm,
+            const SizedBox(
+              height: DesignSpacing.xs,
             ),
           if (widget.hint != null || widget.error != null)
             TinaFieldHint(
@@ -106,33 +101,27 @@ class _TinaFieldWrapperState extends State<TinaFieldWrapper> {
   }
 
   Widget _buildFieldContainer(TinaColorScheme tinaColors) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: widget.isEnabled ? widget.onTap : null,
-        borderRadius: BorderRadius.circular(_getBorderRadius()),
-        child: AnimatedContainer(
-          duration: DesignDuration.normal,
-          decoration: BoxDecoration(
-            color: _getBackgroundColor(tinaColors),
-            border: Border.all(
-              color: _getBorderColor(tinaColors),
-            ),
-            borderRadius: BorderRadius.circular(_getBorderRadius()),
-            boxShadow: _getBoxShadow(tinaColors),
+    return TinaPressable(
+      color: tinaColors.primary,
+      onPressed: widget.isEnabled ? widget.onTap : null,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
+        color: _getBackgroundColor(tinaColors),
+        // color: tinaColors.primary,
+      ),
+      child: AnimatedContainer(
+        duration: DesignDuration.normal,
+        decoration: BoxDecoration(
+          // color: _getBackgroundColor(tinaColors),
+          border: Border.all(
+            color: _getBorderColor(tinaColors),
           ),
-          child: widget.child,
+          borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
+          boxShadow: _getBoxShadow(tinaColors),
         ),
+        child: widget.child,
       ),
     );
-  }
-
-  double _getBorderRadius() {
-    return switch (widget.size) {
-      TinaFieldSize.small => DesignBorderRadius.sm,
-      TinaFieldSize.medium => DesignBorderRadius.md,
-      TinaFieldSize.large => DesignBorderRadius.lg,
-    };
   }
 
   Color _getBackgroundColor(TinaColorScheme colors) {
@@ -178,18 +167,6 @@ class _TinaFieldWrapperState extends State<TinaFieldWrapper> {
 
     return null;
   }
-}
-
-/// The size of a [TinaFieldWrapper].
-enum TinaFieldSize {
-  /// Small size for compact layouts.
-  small,
-
-  /// Medium size (default).
-  medium,
-
-  /// Large size for prominent fields.
-  large,
 }
 
 /// The visual state of a [TinaFieldWrapper].

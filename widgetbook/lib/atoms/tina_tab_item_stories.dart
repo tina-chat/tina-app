@@ -260,8 +260,8 @@ Widget tabWithVariousBadgesUseCase(BuildContext context) {
             icon: Icons.warning,
             text: 'Warning',
             badge: TinaBadge.text(
-              text: 'NEW',
               variant: TinaBadgeVariant.warning,
+              child: Text('NEW'),
             ),
             isActive: false,
             onTap: () {},

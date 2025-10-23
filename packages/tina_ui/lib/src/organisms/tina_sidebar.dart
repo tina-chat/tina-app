@@ -136,6 +136,7 @@ class TinaNavigationData<T> {
   /// Whether this item is currently active/selected.
   final bool isActive;
 
+  /// copy with
   TinaNavigationData<T> copyWith({
     IconData? icon,
     Widget? label,
@@ -173,7 +174,6 @@ class _TinaSidebarItem extends StatelessWidget {
     return TinaPressable(
       color: colors.primary,
       onPressed: onTap,
-      clipBehavior: Clip.hardEdge,
       padding: EdgeInsets.all(context.tinaTheme.spacing.sm),
       decoration: BoxDecoration(
         color: selected ? colors.primary.withValues(alpha: .1) : null,

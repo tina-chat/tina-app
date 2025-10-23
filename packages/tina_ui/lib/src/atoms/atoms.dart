@@ -35,6 +35,7 @@ export 'tina_input.dart';
 export 'tina_message_bubble.dart';
 export 'tina_message_status.dart';
 export 'tina_navigation_item.dart';
+export 'tina_screen.dart';
 export 'tina_spinner.dart';
 export 'tina_tab_item.dart';
 export 'tina_text.dart';

@@ -218,7 +218,7 @@ void main() {
           MaterialApp(
             home: Scaffold(
               body: TinaBadge.text(
-                text: badgeText,
+                child: const Text(badgeText),
               ),
             ),
           ),

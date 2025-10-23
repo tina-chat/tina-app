@@ -420,11 +420,6 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .contentCardUseCase,
           ),
           _widgetbook.WidgetbookUseCase(
-            name: 'Custom Colors Card',
-            builder: _widgetbook_workspace_atoms_tina_card_stories
-                .customColorsCardUseCase,
-          ),
-          _widgetbook.WidgetbookUseCase(
             name: 'Interactive Card',
             builder: _widgetbook_workspace_atoms_tina_card_stories
                 .interactiveCardUseCase,

@@ -111,7 +111,6 @@ void main() {
         const MaterialApp(
           home: Scaffold(
             body: TinaCard(
-              elevation: TinaCardElevation.none,
               child: Text('Content'),
             ),
           ),
@@ -121,92 +120,6 @@ void main() {
       final container = tester.widget<Container>(find.byType(Container));
       final decoration = container.decoration! as BoxDecoration;
       expect(decoration.boxShadow, isEmpty);
-    });
-
-    testWidgets('applies small elevation correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.boxShadow, [DesignShadows.sm]);
-    });
-
-    testWidgets('applies medium elevation correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              elevation: TinaCardElevation.md,
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.boxShadow, [DesignShadows.md]);
-    });
-
-    testWidgets('applies large elevation correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              elevation: TinaCardElevation.lg,
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.boxShadow, [DesignShadows.lg]);
-    });
-
-    testWidgets('applies extra large elevation correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              elevation: TinaCardElevation.xl,
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.boxShadow, [DesignShadows.xl]);
-    });
-
-    testWidgets('applies custom background color correctly', (tester) async {
-      const customColor = Colors.red;
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              backgroundColor: customColor,
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.color, customColor);
     });
 
     testWidgets('applies default background color in light theme', (
@@ -248,29 +161,6 @@ void main() {
       final decoration = container.decoration! as BoxDecoration;
       // In dark theme, surface color should be neutral800
       expect(decoration.color, DesignColors.neutral800);
-    });
-
-    testWidgets('applies border color correctly', (tester) async {
-      const borderColor = Colors.blue;
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaCard(
-              borderColor: borderColor,
-              child: Text('Content'),
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(find.byType(Container));
-      final decoration = container.decoration! as BoxDecoration;
-      expect(decoration.border, isA<Border>());
-
-      final border = decoration.border! as Border;
-      expect(border.top.color, borderColor);
-      expect(border.top.width, DesignBorderWidth.thin);
     });
 
     testWidgets('handles tap correctly', (tester) async {
@@ -329,17 +219,6 @@ void main() {
       );
 
       expect(semantics.properties.label, semanticLabel);
-    });
-
-    group('TinaCardElevation enum', () {
-      test('has all expected values', () {
-        expect(TinaCardElevation.values, hasLength(5));
-        expect(TinaCardElevation.values, contains(TinaCardElevation.none));
-        expect(TinaCardElevation.values, contains(TinaCardElevation.sm));
-        expect(TinaCardElevation.values, contains(TinaCardElevation.md));
-        expect(TinaCardElevation.values, contains(TinaCardElevation.lg));
-        expect(TinaCardElevation.values, contains(TinaCardElevation.xl));
-      });
     });
 
     group('TinaCardPadding enum', () {

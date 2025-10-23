@@ -37,6 +37,7 @@ class TinaInput extends StatefulWidget {
     this.onTap,
     this.focusNode,
     this.semanticLabel,
+    this.footer,
   }) : assert(
          controller == null || initialValue == null,
          'Cannot provide both controller and initialValue',
@@ -49,7 +50,7 @@ class TinaInput extends StatefulWidget {
   final String? initialValue;
 
   /// Placeholder text to display when the input is empty.
-  final String? placeholder;
+  final Widget? placeholder;
 
   /// Optional label text to display above the field.
   final Widget? label;
@@ -119,6 +120,9 @@ class TinaInput extends StatefulWidget {
   /// A semantic label for the input field.
   final String? semanticLabel;
 
+  ///
+  final Widget? footer;
+
   @override
   State<TinaInput> createState() => _TinaInputState();
 }
@@ -153,7 +157,6 @@ class _TinaInputState extends State<TinaInput> {
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
-    final fieldSize = _convertToFieldSize(widget.size);
     final fieldState = _convertToFieldState(widget.state);
 
     return TinaFieldWrapper(
@@ -161,7 +164,7 @@ class _TinaInputState extends State<TinaInput> {
       hint: widget.hint,
       error: widget.error,
       isRequired: widget.isRequired,
-      size: fieldSize,
+
       state: fieldState,
       isEnabled: widget.enabled,
       isReadOnly: widget.readOnly,
@@ -169,56 +172,53 @@ class _TinaInputState extends State<TinaInput> {
       semanticLabel: widget.semanticLabel,
       child: Padding(
         padding: _getPadding(),
-        child: Row(
+        child: Column(
           children: [
-            if (widget.prefixIcon != null) ...[
-              widget.prefixIcon!,
-              const SizedBox(width: DesignSpacing.sm),
-            ],
-            Expanded(
-              child: TextFormField(
-                controller: widget.controller,
-                initialValue: widget.initialValue,
-                focusNode: _focusNode,
-                keyboardType: widget.keyboardType,
-                textInputAction: widget.textInputAction,
-                obscureText: widget.obscureText,
-                enabled: widget.enabled,
-                readOnly: widget.readOnly,
-                autofocus: widget.autofocus,
-                maxLines: widget.maxLines,
-                maxLength: widget.maxLength,
-                inputFormatters: widget.inputFormatters,
-                onChanged: widget.onChanged,
-                onFieldSubmitted: widget.onSubmitted,
-                onTap: widget.onTap,
-                style: _getTextStyle(tinaColors),
-                decoration: InputDecoration(
-                  hintText: widget.placeholder,
-                  hintStyle: _getHintStyle(tinaColors),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
-                  semanticCounterText: widget.semanticLabel,
-                  isDense: false,
+            Row(
+              children: [
+                if (widget.prefixIcon != null) ...[
+                  widget.prefixIcon!,
+                  const SizedBox(width: DesignSpacing.sm),
+                ],
+                Expanded(
+                  child: TextFormField(
+                    controller: widget.controller,
+                    initialValue: widget.initialValue,
+                    focusNode: _focusNode,
+                    keyboardType: widget.keyboardType,
+                    textInputAction: widget.textInputAction,
+                    obscureText: widget.obscureText,
+                    enabled: widget.enabled,
+                    readOnly: widget.readOnly,
+                    autofocus: widget.autofocus,
+                    maxLines: widget.maxLines,
+                    maxLength: widget.maxLength,
+                    inputFormatters: widget.inputFormatters,
+                    onChanged: widget.onChanged,
+                    onFieldSubmitted: widget.onSubmitted,
+                    onTap: widget.onTap,
+                    style: _getTextStyle(tinaColors),
+                    decoration: InputDecoration(
+                      hint: widget.placeholder,
+                      hintStyle: _getHintStyle(tinaColors),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                      semanticCounterText: widget.semanticLabel,
+                      isDense: false,
+                    ),
+                  ),
                 ),
-              ),
+                if (widget.suffixIcon != null) ...[
+                  const SizedBox(width: DesignSpacing.sm),
+                  widget.suffixIcon!,
+                ],
+              ],
             ),
-            if (widget.suffixIcon != null) ...[
-              const SizedBox(width: DesignSpacing.sm),
-              widget.suffixIcon!,
-            ],
+            if (widget.footer != null) widget.footer!,
           ],
         ),
       ),
     );
-  }
-
-  TinaFieldSize _convertToFieldSize(TinaInputSize size) {
-    return switch (size) {
-      TinaInputSize.small => TinaFieldSize.small,
-      TinaInputSize.medium => TinaFieldSize.medium,
-      TinaInputSize.large => TinaFieldSize.large,
-    };
   }
 
   TinaFieldState _convertToFieldState(TinaInputState state) {

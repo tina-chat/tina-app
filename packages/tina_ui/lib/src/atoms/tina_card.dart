@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tina_ui/src/internal/tina_pressable.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
 
@@ -12,61 +13,45 @@ class TinaCard extends StatelessWidget {
   const TinaCard({
     required this.child,
     super.key,
-    this.elevation = TinaCardElevation.sm,
     this.padding = TinaCardPadding.medium,
-    this.backgroundColor,
-    this.borderColor,
     this.onTap,
     this.semanticLabel,
+    this.style = TinaCardStyle.border,
   });
 
   /// Creates a Tina card with no padding.
   const TinaCard.noPadding({
     required this.child,
     super.key,
-    this.elevation = TinaCardElevation.sm,
-    this.backgroundColor,
-    this.borderColor,
     this.onTap,
     this.semanticLabel,
+    this.style,
   }) : padding = TinaCardPadding.none;
 
   /// Creates a Tina card with compact padding.
   const TinaCard.compact({
     required this.child,
     super.key,
-    this.elevation = TinaCardElevation.sm,
-    this.backgroundColor,
-    this.borderColor,
+
     this.onTap,
     this.semanticLabel,
+    this.style,
   }) : padding = TinaCardPadding.small;
 
   /// Creates a Tina card with spacious padding.
   const TinaCard.spacious({
     required this.child,
     super.key,
-    this.elevation = TinaCardElevation.sm,
-    this.backgroundColor,
-    this.borderColor,
     this.onTap,
     this.semanticLabel,
+    this.style,
   }) : padding = TinaCardPadding.large;
 
   /// The widget to display inside the card.
   final Widget child;
 
-  /// The elevation of the card.
-  final TinaCardElevation elevation;
-
   /// The padding inside the card.
   final TinaCardPadding padding;
-
-  /// The background color of the card. If null, uses the surface color.
-  final Color? backgroundColor;
-
-  /// The border color of the card. If null, no border is displayed.
-  final Color? borderColor;
 
   /// The callback that is called when the card is tapped.
   final VoidCallback? onTap;
@@ -74,37 +59,50 @@ class TinaCard extends StatelessWidget {
   /// A semantic label for the card for accessibility.
   final String? semanticLabel;
 
+  /// style of card
+  final TinaCardStyle? style;
+
   @override
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
-    final cardBackgroundColor =
-        backgroundColor ?? _getDefaultBackgroundColor(tinaColors);
+    final cardBackgroundColor = _getDefaultBackgroundColor(tinaColors);
 
-    Widget card = Container(
-      padding: _getPadding(),
+    final isBorder = style == TinaCardStyle.border;
+
+    Widget card = TinaPressable(
+      color: tinaColors.primary,
       decoration: BoxDecoration(
         color: cardBackgroundColor,
-        borderRadius: BorderRadius.circular(DesignBorderRadius.lg),
-        border: borderColor != null
+        borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
+        border: isBorder
             ? Border.all(
-                color: borderColor!,
+                // ~6–8% black on light surfaces looks like the mock
+                color: Colors.black.withValues(alpha: .06),
               )
             : null,
-        boxShadow: _getBoxShadow(),
+        boxShadow: isBorder
+            ? const [] // border-only, almost flush
+            : [
+                // wide ambient
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: .06),
+                  blurRadius: 28,
+                  offset: const Offset(0, 12),
+                ),
+                // tiny contact shadow for crisp edge
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: .02),
+                  blurRadius: 4,
+                  offset: const Offset(0, 1),
+                ),
+              ],
       ),
-      child: child,
+      onPressed: onTap,
+      child: Container(
+        padding: _getPadding(),
+        child: child,
+      ),
     );
-
-    if (onTap != null) {
-      card = Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(DesignBorderRadius.lg),
-          child: card,
-        ),
-      );
-    }
 
     if (semanticLabel != null) {
       card = Semantics(
@@ -126,37 +124,15 @@ class TinaCard extends StatelessWidget {
     };
   }
 
-  List<BoxShadow> _getBoxShadow() {
-    return switch (elevation) {
-      TinaCardElevation.none => [],
-      TinaCardElevation.sm => [DesignShadows.sm],
-      TinaCardElevation.md => [DesignShadows.md],
-      TinaCardElevation.lg => [DesignShadows.lg],
-      TinaCardElevation.xl => [DesignShadows.xl],
-    };
-  }
-
   Color _getDefaultBackgroundColor(TinaColorScheme colors) {
     return colors.surface;
   }
 }
 
-/// The elevation of a [TinaCard].
-enum TinaCardElevation {
-  /// No elevation.
-  none,
-
-  /// Small elevation with subtle shadow.
-  sm,
-
-  /// Medium elevation (default).
-  md,
-
-  /// Large elevation with prominent shadow.
-  lg,
-
-  /// Extra large elevation with strong shadow.
-  xl,
+/// Tina Card Style
+enum TinaCardStyle {
+  /// Card With border
+  border,
 }
 
 /// The padding of a [TinaCard].
