@@ -22,7 +22,6 @@ Before considering any task complete, ALL of these must pass:
 - [ ] Proper layer separation maintained
 - [ ] Dependencies flow in correct direction
 - [ ] No circular dependencies
-- [ ] BLoC pattern implemented correctly (if applicable)
 
 ### 4. Functionality
 - [ ] Feature works as specified in requirements
