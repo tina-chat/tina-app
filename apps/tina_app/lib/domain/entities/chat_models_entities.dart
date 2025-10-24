@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tina_app/domain/entities/model_providers_entities.dart';
+import 'package:tina_app/domain/enums/chat_models_type.dart';
 
 part 'chat_models_entities.freezed.dart';
 
@@ -13,6 +15,22 @@ abstract class ChatModelEntity with _$ChatModelEntity {
     required DateTime updatedAt,
     required int modelProviderId,
   }) = _ChatModelEntity;
+}
+
+@freezed
+abstract class ChatModelWithProviderEntity with _$ChatModelWithProviderEntity {
+  const factory ChatModelWithProviderEntity({
+    required ChatModelEntity chatModel,
+    required ModelProviderEntity modelProvider,
+  }) = _ChatModelWithProviderEntity;
+}
+
+@freezed
+abstract class ChatModelsFilter with _$ChatModelsFilter {
+  const factory ChatModelsFilter({
+    List<int>? workspaces,
+    List<ChatModelType>? types,
+  }) = _ChatModelsFilter;
 }
 
 @freezed

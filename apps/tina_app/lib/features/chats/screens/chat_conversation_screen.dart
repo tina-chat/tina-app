@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/features/chats/providers/chat_providers.dart';
 import 'package:tina_app/features/chats/widgets/chat_input_widget.dart';
 import 'package:tina_app/features/chats/widgets/chat_messages_widget.dart';
-import 'package:tina_app/i18n/locale_keys.dart';
-import 'package:tina_app/widgets/text_locale.dart';
+import 'package:tina_app/features/models/widgets/select_chat_model.dart';
+import 'package:tina_app/widgets/app_error.dart';
 import 'package:tina_ui/ui.dart';
 
 class ChatConversationScreen extends ConsumerStatefulWidget {
@@ -21,13 +21,6 @@ class _ChatConversationScreenState
     extends ConsumerState<ChatConversationScreen> {
   String? _selectedModelId;
 
-  final List<String> _mockModels = [
-    'gpt-4',
-    'gpt-3.5-turbo',
-    'claude-3',
-    'claude-3-haiku',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final messagesAsync = ref.watch(chatMessagesProvider(widget.chatId));
@@ -42,22 +35,7 @@ class _ChatConversationScreenState
             },
           ),
         ],
-        footer: TinaDropdownSelector<String>(
-          value: _selectedModelId,
-          onChanged: (value) {
-            setState(() {
-              _selectedModelId = value;
-            });
-          },
-          placeholder: const TextLocale(
-            LocaleKeys.chats_screens_chat_conversation_select_model_selctor,
-          ),
-          options: _mockModels
-              .map(
-                (model) => TinaDropdownOption(value: model, child: Text(model)),
-              )
-              .toList(),
-        ),
+        footer: SelectChatModelWidget(),
       ),
       child: switch (messagesAsync) {
         AsyncData(value: final messages) => Column(
@@ -84,11 +62,9 @@ class _ChatConversationScreenState
           ],
         ),
         AsyncLoading() => const Center(child: TinaSpinner()),
-        AsyncError(error: final error, stackTrace: _) => Center(
-          child: TinaText(
-            style: TinaTextStyle.body,
-            child: Text('Error loading messages: ${error.toString()}'),
-          ),
+        AsyncError(:final error, :final stackTrace) => AppErrorWidget(
+          error: error,
+          stackTrace: stackTrace,
         ),
       },
     );

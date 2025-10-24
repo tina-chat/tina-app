@@ -287,6 +287,578 @@ as int,
 }
 
 /// @nodoc
+mixin _$ChatModelWithProviderEntity {
+
+ ChatModelEntity get chatModel; ModelProviderEntity get modelProvider;
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ChatModelWithProviderEntityCopyWith<ChatModelWithProviderEntity> get copyWith => _$ChatModelWithProviderEntityCopyWithImpl<ChatModelWithProviderEntity>(this as ChatModelWithProviderEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModelWithProviderEntity&&(identical(other.chatModel, chatModel) || other.chatModel == chatModel)&&(identical(other.modelProvider, modelProvider) || other.modelProvider == modelProvider));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,chatModel,modelProvider);
+
+@override
+String toString() {
+  return 'ChatModelWithProviderEntity(chatModel: $chatModel, modelProvider: $modelProvider)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ChatModelWithProviderEntityCopyWith<$Res>  {
+  factory $ChatModelWithProviderEntityCopyWith(ChatModelWithProviderEntity value, $Res Function(ChatModelWithProviderEntity) _then) = _$ChatModelWithProviderEntityCopyWithImpl;
+@useResult
+$Res call({
+ ChatModelEntity chatModel, ModelProviderEntity modelProvider
+});
+
+
+$ChatModelEntityCopyWith<$Res> get chatModel;$ModelProviderEntityCopyWith<$Res> get modelProvider;
+
+}
+/// @nodoc
+class _$ChatModelWithProviderEntityCopyWithImpl<$Res>
+    implements $ChatModelWithProviderEntityCopyWith<$Res> {
+  _$ChatModelWithProviderEntityCopyWithImpl(this._self, this._then);
+
+  final ChatModelWithProviderEntity _self;
+  final $Res Function(ChatModelWithProviderEntity) _then;
+
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? chatModel = null,Object? modelProvider = null,}) {
+  return _then(_self.copyWith(
+chatModel: null == chatModel ? _self.chatModel : chatModel // ignore: cast_nullable_to_non_nullable
+as ChatModelEntity,modelProvider: null == modelProvider ? _self.modelProvider : modelProvider // ignore: cast_nullable_to_non_nullable
+as ModelProviderEntity,
+  ));
+}
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ChatModelEntityCopyWith<$Res> get chatModel {
+  
+  return $ChatModelEntityCopyWith<$Res>(_self.chatModel, (value) {
+    return _then(_self.copyWith(chatModel: value));
+  });
+}/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ModelProviderEntityCopyWith<$Res> get modelProvider {
+  
+  return $ModelProviderEntityCopyWith<$Res>(_self.modelProvider, (value) {
+    return _then(_self.copyWith(modelProvider: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [ChatModelWithProviderEntity].
+extension ChatModelWithProviderEntityPatterns on ChatModelWithProviderEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ChatModelWithProviderEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ChatModelWithProviderEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ChatModelWithProviderEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ChatModelEntity chatModel,  ModelProviderEntity modelProvider)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity() when $default != null:
+return $default(_that.chatModel,_that.modelProvider);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ChatModelEntity chatModel,  ModelProviderEntity modelProvider)  $default,) {final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity():
+return $default(_that.chatModel,_that.modelProvider);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ChatModelEntity chatModel,  ModelProviderEntity modelProvider)?  $default,) {final _that = this;
+switch (_that) {
+case _ChatModelWithProviderEntity() when $default != null:
+return $default(_that.chatModel,_that.modelProvider);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _ChatModelWithProviderEntity implements ChatModelWithProviderEntity {
+  const _ChatModelWithProviderEntity({required this.chatModel, required this.modelProvider});
+  
+
+@override final  ChatModelEntity chatModel;
+@override final  ModelProviderEntity modelProvider;
+
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChatModelWithProviderEntityCopyWith<_ChatModelWithProviderEntity> get copyWith => __$ChatModelWithProviderEntityCopyWithImpl<_ChatModelWithProviderEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModelWithProviderEntity&&(identical(other.chatModel, chatModel) || other.chatModel == chatModel)&&(identical(other.modelProvider, modelProvider) || other.modelProvider == modelProvider));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,chatModel,modelProvider);
+
+@override
+String toString() {
+  return 'ChatModelWithProviderEntity(chatModel: $chatModel, modelProvider: $modelProvider)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ChatModelWithProviderEntityCopyWith<$Res> implements $ChatModelWithProviderEntityCopyWith<$Res> {
+  factory _$ChatModelWithProviderEntityCopyWith(_ChatModelWithProviderEntity value, $Res Function(_ChatModelWithProviderEntity) _then) = __$ChatModelWithProviderEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ ChatModelEntity chatModel, ModelProviderEntity modelProvider
+});
+
+
+@override $ChatModelEntityCopyWith<$Res> get chatModel;@override $ModelProviderEntityCopyWith<$Res> get modelProvider;
+
+}
+/// @nodoc
+class __$ChatModelWithProviderEntityCopyWithImpl<$Res>
+    implements _$ChatModelWithProviderEntityCopyWith<$Res> {
+  __$ChatModelWithProviderEntityCopyWithImpl(this._self, this._then);
+
+  final _ChatModelWithProviderEntity _self;
+  final $Res Function(_ChatModelWithProviderEntity) _then;
+
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? chatModel = null,Object? modelProvider = null,}) {
+  return _then(_ChatModelWithProviderEntity(
+chatModel: null == chatModel ? _self.chatModel : chatModel // ignore: cast_nullable_to_non_nullable
+as ChatModelEntity,modelProvider: null == modelProvider ? _self.modelProvider : modelProvider // ignore: cast_nullable_to_non_nullable
+as ModelProviderEntity,
+  ));
+}
+
+/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ChatModelEntityCopyWith<$Res> get chatModel {
+  
+  return $ChatModelEntityCopyWith<$Res>(_self.chatModel, (value) {
+    return _then(_self.copyWith(chatModel: value));
+  });
+}/// Create a copy of ChatModelWithProviderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ModelProviderEntityCopyWith<$Res> get modelProvider {
+  
+  return $ModelProviderEntityCopyWith<$Res>(_self.modelProvider, (value) {
+    return _then(_self.copyWith(modelProvider: value));
+  });
+}
+}
+
+/// @nodoc
+mixin _$ChatModelsFilter {
+
+ List<int>? get workspaces; List<ChatModelType>? get types;
+/// Create a copy of ChatModelsFilter
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ChatModelsFilterCopyWith<ChatModelsFilter> get copyWith => _$ChatModelsFilterCopyWithImpl<ChatModelsFilter>(this as ChatModelsFilter, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModelsFilter&&const DeepCollectionEquality().equals(other.workspaces, workspaces)&&const DeepCollectionEquality().equals(other.types, types));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(workspaces),const DeepCollectionEquality().hash(types));
+
+@override
+String toString() {
+  return 'ChatModelsFilter(workspaces: $workspaces, types: $types)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ChatModelsFilterCopyWith<$Res>  {
+  factory $ChatModelsFilterCopyWith(ChatModelsFilter value, $Res Function(ChatModelsFilter) _then) = _$ChatModelsFilterCopyWithImpl;
+@useResult
+$Res call({
+ List<int>? workspaces, List<ChatModelType>? types
+});
+
+
+
+
+}
+/// @nodoc
+class _$ChatModelsFilterCopyWithImpl<$Res>
+    implements $ChatModelsFilterCopyWith<$Res> {
+  _$ChatModelsFilterCopyWithImpl(this._self, this._then);
+
+  final ChatModelsFilter _self;
+  final $Res Function(ChatModelsFilter) _then;
+
+/// Create a copy of ChatModelsFilter
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
+  return _then(_self.copyWith(
+workspaces: freezed == workspaces ? _self.workspaces : workspaces // ignore: cast_nullable_to_non_nullable
+as List<int>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
+as List<ChatModelType>?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ChatModelsFilter].
+extension ChatModelsFilterPatterns on ChatModelsFilter {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ChatModelsFilter value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ChatModelsFilter() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ChatModelsFilter value)  $default,){
+final _that = this;
+switch (_that) {
+case _ChatModelsFilter():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ChatModelsFilter value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ChatModelsFilter() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ChatModelsFilter() when $default != null:
+return $default(_that.workspaces,_that.types);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
+switch (_that) {
+case _ChatModelsFilter():
+return $default(_that.workspaces,_that.types);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
+switch (_that) {
+case _ChatModelsFilter() when $default != null:
+return $default(_that.workspaces,_that.types);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _ChatModelsFilter implements ChatModelsFilter {
+  const _ChatModelsFilter({final  List<int>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
+  
+
+ final  List<int>? _workspaces;
+@override List<int>? get workspaces {
+  final value = _workspaces;
+  if (value == null) return null;
+  if (_workspaces is EqualUnmodifiableListView) return _workspaces;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+ final  List<ChatModelType>? _types;
+@override List<ChatModelType>? get types {
+  final value = _types;
+  if (value == null) return null;
+  if (_types is EqualUnmodifiableListView) return _types;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+
+/// Create a copy of ChatModelsFilter
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChatModelsFilterCopyWith<_ChatModelsFilter> get copyWith => __$ChatModelsFilterCopyWithImpl<_ChatModelsFilter>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModelsFilter&&const DeepCollectionEquality().equals(other._workspaces, _workspaces)&&const DeepCollectionEquality().equals(other._types, _types));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_workspaces),const DeepCollectionEquality().hash(_types));
+
+@override
+String toString() {
+  return 'ChatModelsFilter(workspaces: $workspaces, types: $types)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ChatModelsFilterCopyWith<$Res> implements $ChatModelsFilterCopyWith<$Res> {
+  factory _$ChatModelsFilterCopyWith(_ChatModelsFilter value, $Res Function(_ChatModelsFilter) _then) = __$ChatModelsFilterCopyWithImpl;
+@override @useResult
+$Res call({
+ List<int>? workspaces, List<ChatModelType>? types
+});
+
+
+
+
+}
+/// @nodoc
+class __$ChatModelsFilterCopyWithImpl<$Res>
+    implements _$ChatModelsFilterCopyWith<$Res> {
+  __$ChatModelsFilterCopyWithImpl(this._self, this._then);
+
+  final _ChatModelsFilter _self;
+  final $Res Function(_ChatModelsFilter) _then;
+
+/// Create a copy of ChatModelsFilter
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
+  return _then(_ChatModelsFilter(
+workspaces: freezed == workspaces ? _self._workspaces : workspaces // ignore: cast_nullable_to_non_nullable
+as List<int>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
+as List<ChatModelType>?,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ChatModelToCreate {
 
  String get displayName; String get modelId; String get modelType; int get modelProvider;

@@ -8,6 +8,10 @@ import 'package:tina_app/domain/entities/chat_models_entities.dart';
 /// business logic validation for chatModel operations.
 abstract class ChatModelsRepository {
   Future<void> createChatModels(List<ChatModelToCreate> chatModels);
+
+  Future<List<ChatModelWithProviderEntity>> getChatModels(
+    ChatModelsFilter filter,
+  );
 }
 
 /// Base exception for chatModel-related operations.

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:tina_ui/src/atoms/tina_dropdown_option.dart';
 import 'package:tina_ui/src/atoms/tina_field_wrapper.dart';
 import 'package:tina_ui/src/atoms/tina_icon.dart';
 import 'package:tina_ui/src/atoms/tina_text.dart';
+import 'package:tina_ui/src/internal/tina_pressable.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
 
@@ -22,9 +24,10 @@ class TinaDropdownSelector<T> extends StatefulWidget {
     this.label,
     this.hint,
     this.error,
+    this.header,
+    this.footer,
     this.isRequired = false,
     this.isEnabled = true,
-    this.isSearchable = false,
     this.focusNode,
     this.semanticLabel,
     this.optionBuilder,
@@ -51,14 +54,17 @@ class TinaDropdownSelector<T> extends StatefulWidget {
   /// Optional error text to display below the field.
   final Widget? error;
 
+  /// optional header for dropdown
+  final Widget? header;
+
+  /// optional footer for dropdown
+  final Widget? footer;
+
   /// Whether the field is required.
   final bool isRequired;
 
   /// Whether the dropdown is enabled.
   final bool isEnabled;
-
-  /// Whether the dropdown is searchable.
-  final bool isSearchable;
 
   /// Defines the keyboard focus for this widget.
   final FocusNode? focusNode;
@@ -76,26 +82,19 @@ class TinaDropdownSelector<T> extends StatefulWidget {
 
 class _TinaDropdownSelectorState<T> extends State<TinaDropdownSelector<T>> {
   late FocusNode _focusNode;
-  final TextEditingController _searchController = TextEditingController();
-  List<TinaDropdownOption<T>> _filteredOptions = [];
-  bool _isDisposed = false;
-  bool _isInternalFocusNode = false;
+  bool _isDropdownOpen = false;
 
   @override
   void initState() {
     super.initState();
-    _filteredOptions = widget.options;
-    _isInternalFocusNode = widget.focusNode == null;
     _focusNode = widget.focusNode ?? FocusNode();
   }
 
   @override
   void dispose() {
-    _isDisposed = true;
-    if (_isInternalFocusNode) {
+    if (widget.focusNode == null) {
       _focusNode.dispose();
     }
-    _searchController.dispose();
     // Ensure overlay is removed before widget is disposed
     super.dispose();
   }
@@ -109,32 +108,6 @@ class _TinaDropdownSelectorState<T> extends State<TinaDropdownSelector<T>> {
   }
 
   void _unfocus() => _focusNode.unfocus();
-
-  Widget _menuWidget() {
-    return _DropdownMenu<T>(
-      options: _filteredOptions,
-      selectedValue: widget.value,
-      onOptionSelected: (option) {
-        _unfocus();
-        if (mounted && !_isDisposed) {
-          widget.onChanged?.call(option);
-        }
-      },
-      isSearchable: widget.isSearchable,
-      searchController: _searchController,
-      onSearchChanged: (query) {
-        if (mounted && !_isDisposed) {
-          setState(() {
-            _filteredOptions = widget.options.where((option) {
-              final optionText = option.value.toString().toLowerCase();
-              return optionText.contains(query.toLowerCase());
-            }).toList();
-          });
-        }
-      },
-      optionBuilder: widget.optionBuilder,
-    );
-  }
 
   Widget _getDisplayText() {
     if (widget.value == null) {
@@ -164,45 +137,78 @@ class _TinaDropdownSelectorState<T> extends State<TinaDropdownSelector<T>> {
     final hasError = widget.error != null;
     final state = hasError ? TinaFieldState.error : TinaFieldState.normal;
 
-    return PortalTarget(
-      visible: _focusNode.hasFocus,
-      anchor: const Aligned(
-        follower: Alignment.topCenter,
-        target: Alignment.bottomCenter,
-        widthFactor: 1,
-      ),
-      portalFollower: _menuWidget(),
-      child: TinaFieldWrapper(
-        label: widget.label,
-        hint: widget.hint,
-        error: widget.error,
-        isRequired: widget.isRequired,
-        state: state,
-        isEnabled: widget.isEnabled,
-        isFocused: _focusNode.hasFocus,
-        onTap: _toggleDropdown,
-        semanticLabel: widget.semanticLabel,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: DesignSpacing.sm,
-            horizontal: DesignSpacing.md,
+    return FocusScope(
+      onKey: (node, event) {
+        // Handle ESC key to close dropdown
+        if (event.logicalKey == LogicalKeyboardKey.escape && _isDropdownOpen) {
+          _unfocus();
+          return KeyEventResult.handled;
+        }
+        return KeyEventResult.ignored;
+      },
+      child: Focus(
+        focusNode: _focusNode,
+        descendantsAreFocusable: true,
+        onFocusChange: (hasFocus) {
+          setState(() {
+            _isDropdownOpen = hasFocus;
+          });
+        },
+        child: PortalTarget(
+          visible: _isDropdownOpen,
+          anchor: const Aligned(
+            follower: Alignment.topCenter,
+            target: Alignment.bottomCenter,
+            widthFactor: 1,
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: TinaText(
-                  child: _getDisplayText(),
-                ),
+          portalFollower: FocusScope(
+            child: _DropdownMenu<T>(
+              options: widget.options,
+              selectedValue: widget.value,
+              onOptionSelected: (option) {
+                _unfocus();
+                if (mounted) {
+                  widget.onChanged?.call(option);
+                }
+              },
+              header: widget.header,
+              footer: widget.footer,
+              optionBuilder: widget.optionBuilder,
+            ),
+          ),
+          child: TinaFieldWrapper(
+            label: widget.label,
+            hint: widget.hint,
+            error: widget.error,
+            isRequired: widget.isRequired,
+            state: state,
+            isEnabled: widget.isEnabled,
+            isFocused: _isDropdownOpen,
+            onTap: _toggleDropdown,
+            semanticLabel: widget.semanticLabel,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: DesignSpacing.sm,
+                horizontal: DesignSpacing.md,
               ),
-              const SizedBox(width: DesignSpacing.sm),
-              TinaIcon(
-                _focusNode.hasFocus
-                    ? Icons.keyboard_arrow_up
-                    : Icons.keyboard_arrow_down,
-                color: tinaColors.onSurfaceVariant,
-                size: TinaIconSize.small,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TinaText(
+                      child: _getDisplayText(),
+                    ),
+                  ),
+                  const SizedBox(width: DesignSpacing.sm),
+                  TinaIcon(
+                    _isDropdownOpen
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                    color: tinaColors.onSurfaceVariant,
+                    size: TinaIconSize.small,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -215,18 +221,17 @@ class _DropdownMenu<T> extends StatefulWidget {
     required this.options,
     required this.selectedValue,
     required this.onOptionSelected,
-    required this.isSearchable,
-    required this.searchController,
-    required this.onSearchChanged,
+    required this.header,
+    required this.footer,
     this.optionBuilder,
+    super.key,
   });
 
   final List<TinaDropdownOption<T>> options;
   final T? selectedValue;
   final void Function(T) onOptionSelected;
-  final bool isSearchable;
-  final TextEditingController searchController;
-  final void Function(String) onSearchChanged;
+  final Widget? header;
+  final Widget? footer;
   final Widget Function(BuildContext, TinaDropdownOption<T>)? optionBuilder;
 
   @override
@@ -238,71 +243,45 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
   Widget build(BuildContext context) {
     final tinaColors = context.tinaColors;
 
-    return Material(
-      elevation: DesignElevation.lg,
-      borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
-      color: tinaColors.surface,
-      child: Container(
-        constraints: const BoxConstraints(maxHeight: 300),
-        decoration: BoxDecoration(
-          border: Border.all(color: tinaColors.outline),
-          borderRadius: BorderRadius.circular(DesignBorderRadius.md),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.isSearchable)
-              Padding(
-                padding: const EdgeInsets.all(DesignSpacing.sm),
-                child: TextField(
-                  controller: widget.searchController,
-                  onChanged: widget.onSearchChanged,
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        DesignBorderRadius.sm,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: DesignSpacing.sm,
-                      vertical: DesignSpacing.xs,
-                    ),
-                  ),
-                ),
-              ),
-            if (widget.options.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(DesignSpacing.md),
-                child: TinaText(
-                  style: TinaTextStyle.bodySmall,
-                  color: TinaTextColor.onSurfaceVariant,
-                  child: Text('No options found'),
-                ),
-              )
-            else
-              ...widget.options.map((option) {
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 300),
+      decoration: BoxDecoration(
+        border: Border.all(color: tinaColors.outline),
+        borderRadius: BorderRadius.circular(DesignBorderRadius.md),
+        color: tinaColors.surface,
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (widget.header != null) widget.header!,
+          Expanded(
+            // constraints: const BoxConstraints(maxHeight: 300),
+            child: ListView.builder(
+              itemCount: widget.options.length,
+              itemBuilder: (context, index) {
+                final option = widget.options[index];
+
                 final isSelected = option.value == widget.selectedValue;
                 return widget.optionBuilder?.call(context, option) ??
-                    InkWell(
-                      onTap: () {
+                    TinaPressable(
+                      onPressed: () {
                         widget.onOptionSelected(option.value);
                       },
-                      borderRadius: BorderRadius.circular(
-                        DesignBorderRadius.sm,
+                      color: context.tinaColors.primary,
+
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? tinaColors.primary.withValues(alpha: 0.08)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(
+                          DesignBorderRadius.sm,
+                        ),
                       ),
-                      child: Container(
+                      child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: DesignSpacing.md,
                           vertical: DesignSpacing.sm,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? tinaColors.primary.withValues(alpha: 0.08)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(
-                            DesignBorderRadius.sm,
-                          ),
                         ),
                         child: Row(
                           children: [
@@ -312,8 +291,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                             ],
                             Expanded(
                               child: TinaText(
-                                child: Text(
-                                  option.value.toString(),
+                                child: DefaultTextStyle(
                                   style: TextStyle(
                                     color: option.isEnabled
                                         ? tinaColors.onSurface
@@ -321,6 +299,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                                             alpha: 0.6,
                                           ),
                                   ),
+                                  child: option.child!,
                                 ),
                               ),
                             ),
@@ -339,9 +318,12 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                         ),
                       ),
                     );
-              }),
-          ],
-        ),
+              },
+            ),
+          ),
+
+          if (widget.footer != null) widget.footer!,
+        ],
       ),
     );
   }
