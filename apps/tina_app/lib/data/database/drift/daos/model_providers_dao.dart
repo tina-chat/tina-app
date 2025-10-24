@@ -17,7 +17,7 @@ class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
   }) {
     return (select(modelProviders)
           ..orderBy([(t) => OrderingTerm(expression: t.createdAt)])
-          ..where((u) => u.workspace.isIn(workspaceIds)))
+          ..where((u) => u.workspaceId.isIn(workspaceIds)))
         .get();
   }
 
@@ -27,7 +27,9 @@ class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
     )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
-  Future<int> insertModelProvider(ModelProvidersCompanion modelProvider) async {
-    return await into(modelProviders).insert(modelProvider);
+  Future<ModelProvidersTable> insertModelProvider(
+    ModelProvidersCompanion modelProvider,
+  ) async {
+    return await into(modelProviders).insertReturning(modelProvider);
   }
 }

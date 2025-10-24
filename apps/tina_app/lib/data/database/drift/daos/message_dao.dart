@@ -10,8 +10,8 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
   MessageDao(super.db);
 
   // Core CRUD operations
-  Future<int> insertMessage(MessagesCompanion message) =>
-      into(messages).insert(message);
+  Future<MessagesTable> insertMessage(MessagesCompanion message) =>
+      into(messages).insertReturning(message);
 
   Future<MessagesTable?> getMessageById(String id) =>
       (select(messages)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
@@ -57,13 +57,13 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
 
   Future<List<MessagesTable>> getMessagesByType(
     String conversationId,
-    String messageType,
+    MessagesTableType messageType,
   ) =>
       (select(messages)
             ..where(
               (tbl) =>
                   tbl.conversationId.equals(conversationId) &
-                  tbl.messageType.equals(messageType),
+                  tbl.messageType.equals(messageType.value),
             )
             ..orderBy([
               (tbl) => OrderingTerm(

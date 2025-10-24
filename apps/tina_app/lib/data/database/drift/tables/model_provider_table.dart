@@ -19,5 +19,5 @@ class ModelProviders extends Table with TableMixin {
   /// URL for remote chat models, null for default urls
   TextColumn get keyValue => text()();
 
-  TextColumn get workspace => text().references(Workspaces, #id)();
+  TextColumn get workspaceId => text().references(Workspaces, #id)();
 }

@@ -496,12 +496,12 @@ class $ModelProvidersTable extends ModelProviders
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _workspaceMeta = const VerificationMeta(
-    'workspace',
+  static const VerificationMeta _workspaceIdMeta = const VerificationMeta(
+    'workspaceId',
   );
   @override
-  late final GeneratedColumn<String> workspace = GeneratedColumn<String>(
-    'workspace',
+  late final GeneratedColumn<String> workspaceId = GeneratedColumn<String>(
+    'workspace_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -519,7 +519,7 @@ class $ModelProvidersTable extends ModelProviders
     type,
     url,
     keyValue,
-    workspace,
+    workspaceId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -570,13 +570,16 @@ class $ModelProvidersTable extends ModelProviders
     } else if (isInserting) {
       context.missing(_keyValueMeta);
     }
-    if (data.containsKey('workspace')) {
+    if (data.containsKey('workspace_id')) {
       context.handle(
-        _workspaceMeta,
-        workspace.isAcceptableOrUnknown(data['workspace']!, _workspaceMeta),
+        _workspaceIdMeta,
+        workspaceId.isAcceptableOrUnknown(
+          data['workspace_id']!,
+          _workspaceIdMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_workspaceMeta);
+      context.missing(_workspaceIdMeta);
     }
     return context;
   }
@@ -617,9 +620,9 @@ class $ModelProvidersTable extends ModelProviders
         DriftSqlType.string,
         data['${effectivePrefix}key_value'],
       )!,
-      workspace: attachedDatabase.typeMapping.read(
+      workspaceId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}workspace'],
+        data['${effectivePrefix}workspace_id'],
       )!,
     );
   }
@@ -656,7 +659,7 @@ class ModelProvidersTable extends DataClass
 
   /// URL for remote chat models, null for default urls
   final String keyValue;
-  final String workspace;
+  final String workspaceId;
   const ModelProvidersTable({
     required this.id,
     required this.createdAt,
@@ -665,7 +668,7 @@ class ModelProvidersTable extends DataClass
     required this.type,
     this.url,
     required this.keyValue,
-    required this.workspace,
+    required this.workspaceId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -683,7 +686,7 @@ class ModelProvidersTable extends DataClass
       map['url'] = Variable<String>(url);
     }
     map['key_value'] = Variable<String>(keyValue);
-    map['workspace'] = Variable<String>(workspace);
+    map['workspace_id'] = Variable<String>(workspaceId);
     return map;
   }
 
@@ -696,7 +699,7 @@ class ModelProvidersTable extends DataClass
       type: Value(type),
       url: url == null && nullToAbsent ? const Value.absent() : Value(url),
       keyValue: Value(keyValue),
-      workspace: Value(workspace),
+      workspaceId: Value(workspaceId),
     );
   }
 
@@ -715,7 +718,7 @@ class ModelProvidersTable extends DataClass
       ),
       url: serializer.fromJson<String?>(json['url']),
       keyValue: serializer.fromJson<String>(json['keyValue']),
-      workspace: serializer.fromJson<String>(json['workspace']),
+      workspaceId: serializer.fromJson<String>(json['workspaceId']),
     );
   }
   @override
@@ -731,7 +734,7 @@ class ModelProvidersTable extends DataClass
       ),
       'url': serializer.toJson<String?>(url),
       'keyValue': serializer.toJson<String>(keyValue),
-      'workspace': serializer.toJson<String>(workspace),
+      'workspaceId': serializer.toJson<String>(workspaceId),
     };
   }
 
@@ -743,7 +746,7 @@ class ModelProvidersTable extends DataClass
     ChatModelType? type,
     Value<String?> url = const Value.absent(),
     String? keyValue,
-    String? workspace,
+    String? workspaceId,
   }) => ModelProvidersTable(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
@@ -752,7 +755,7 @@ class ModelProvidersTable extends DataClass
     type: type ?? this.type,
     url: url.present ? url.value : this.url,
     keyValue: keyValue ?? this.keyValue,
-    workspace: workspace ?? this.workspace,
+    workspaceId: workspaceId ?? this.workspaceId,
   );
   ModelProvidersTable copyWithCompanion(ModelProvidersCompanion data) {
     return ModelProvidersTable(
@@ -763,7 +766,9 @@ class ModelProvidersTable extends DataClass
       type: data.type.present ? data.type.value : this.type,
       url: data.url.present ? data.url.value : this.url,
       keyValue: data.keyValue.present ? data.keyValue.value : this.keyValue,
-      workspace: data.workspace.present ? data.workspace.value : this.workspace,
+      workspaceId: data.workspaceId.present
+          ? data.workspaceId.value
+          : this.workspaceId,
     );
   }
 
@@ -777,7 +782,7 @@ class ModelProvidersTable extends DataClass
           ..write('type: $type, ')
           ..write('url: $url, ')
           ..write('keyValue: $keyValue, ')
-          ..write('workspace: $workspace')
+          ..write('workspaceId: $workspaceId')
           ..write(')'))
         .toString();
   }
@@ -791,7 +796,7 @@ class ModelProvidersTable extends DataClass
     type,
     url,
     keyValue,
-    workspace,
+    workspaceId,
   );
   @override
   bool operator ==(Object other) =>
@@ -804,7 +809,7 @@ class ModelProvidersTable extends DataClass
           other.type == this.type &&
           other.url == this.url &&
           other.keyValue == this.keyValue &&
-          other.workspace == this.workspace);
+          other.workspaceId == this.workspaceId);
 }
 
 class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
@@ -815,7 +820,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
   final Value<ChatModelType> type;
   final Value<String?> url;
   final Value<String> keyValue;
-  final Value<String> workspace;
+  final Value<String> workspaceId;
   final Value<int> rowid;
   const ModelProvidersCompanion({
     this.id = const Value.absent(),
@@ -825,7 +830,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
     this.type = const Value.absent(),
     this.url = const Value.absent(),
     this.keyValue = const Value.absent(),
-    this.workspace = const Value.absent(),
+    this.workspaceId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ModelProvidersCompanion.insert({
@@ -836,12 +841,12 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
     required ChatModelType type,
     this.url = const Value.absent(),
     required String keyValue,
-    required String workspace,
+    required String workspaceId,
     this.rowid = const Value.absent(),
   }) : name = Value(name),
        type = Value(type),
        keyValue = Value(keyValue),
-       workspace = Value(workspace);
+       workspaceId = Value(workspaceId);
   static Insertable<ModelProvidersTable> custom({
     Expression<String>? id,
     Expression<DateTime>? createdAt,
@@ -850,7 +855,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
     Expression<String>? type,
     Expression<String>? url,
     Expression<String>? keyValue,
-    Expression<String>? workspace,
+    Expression<String>? workspaceId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -861,7 +866,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
       if (type != null) 'type': type,
       if (url != null) 'url': url,
       if (keyValue != null) 'key_value': keyValue,
-      if (workspace != null) 'workspace': workspace,
+      if (workspaceId != null) 'workspace_id': workspaceId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -874,7 +879,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
     Value<ChatModelType>? type,
     Value<String?>? url,
     Value<String>? keyValue,
-    Value<String>? workspace,
+    Value<String>? workspaceId,
     Value<int>? rowid,
   }) {
     return ModelProvidersCompanion(
@@ -885,7 +890,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
       type: type ?? this.type,
       url: url ?? this.url,
       keyValue: keyValue ?? this.keyValue,
-      workspace: workspace ?? this.workspace,
+      workspaceId: workspaceId ?? this.workspaceId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -916,8 +921,8 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
     if (keyValue.present) {
       map['key_value'] = Variable<String>(keyValue.value);
     }
-    if (workspace.present) {
-      map['workspace'] = Variable<String>(workspace.value);
+    if (workspaceId.present) {
+      map['workspace_id'] = Variable<String>(workspaceId.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -935,7 +940,7 @@ class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
           ..write('type: $type, ')
           ..write('url: $url, ')
           ..write('keyValue: $keyValue, ')
-          ..write('workspace: $workspace, ')
+          ..write('workspaceId: $workspaceId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1015,12 +1020,12 @@ class $ChatModelsTable extends ChatModels
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _modelProviderMeta = const VerificationMeta(
-    'modelProvider',
+  static const VerificationMeta _modelProviderIdMeta = const VerificationMeta(
+    'modelProviderId',
   );
   @override
-  late final GeneratedColumn<String> modelProvider = GeneratedColumn<String>(
-    'model_provider',
+  late final GeneratedColumn<String> modelProviderId = GeneratedColumn<String>(
+    'model_provider_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -1037,7 +1042,7 @@ class $ChatModelsTable extends ChatModels
     displayName,
     modelId,
     modelType,
-    modelProvider,
+    modelProviderId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1093,16 +1098,16 @@ class $ChatModelsTable extends ChatModels
     } else if (isInserting) {
       context.missing(_modelTypeMeta);
     }
-    if (data.containsKey('model_provider')) {
+    if (data.containsKey('model_provider_id')) {
       context.handle(
-        _modelProviderMeta,
-        modelProvider.isAcceptableOrUnknown(
-          data['model_provider']!,
-          _modelProviderMeta,
+        _modelProviderIdMeta,
+        modelProviderId.isAcceptableOrUnknown(
+          data['model_provider_id']!,
+          _modelProviderIdMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_modelProviderMeta);
+      context.missing(_modelProviderIdMeta);
     }
     return context;
   }
@@ -1137,9 +1142,9 @@ class $ChatModelsTable extends ChatModels
         DriftSqlType.string,
         data['${effectivePrefix}model_type'],
       )!,
-      modelProvider: attachedDatabase.typeMapping.read(
+      modelProviderId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}model_provider'],
+        data['${effectivePrefix}model_provider_id'],
       )!,
     );
   }
@@ -1168,7 +1173,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
 
   /// model type
   final String modelType;
-  final String modelProvider;
+  final String modelProviderId;
   const ChatModelsTable({
     required this.id,
     required this.createdAt,
@@ -1176,7 +1181,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
     required this.displayName,
     required this.modelId,
     required this.modelType,
-    required this.modelProvider,
+    required this.modelProviderId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1187,7 +1192,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
     map['display_name'] = Variable<String>(displayName);
     map['model_id'] = Variable<String>(modelId);
     map['model_type'] = Variable<String>(modelType);
-    map['model_provider'] = Variable<String>(modelProvider);
+    map['model_provider_id'] = Variable<String>(modelProviderId);
     return map;
   }
 
@@ -1199,7 +1204,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
       displayName: Value(displayName),
       modelId: Value(modelId),
       modelType: Value(modelType),
-      modelProvider: Value(modelProvider),
+      modelProviderId: Value(modelProviderId),
     );
   }
 
@@ -1215,7 +1220,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
       displayName: serializer.fromJson<String>(json['displayName']),
       modelId: serializer.fromJson<String>(json['modelId']),
       modelType: serializer.fromJson<String>(json['modelType']),
-      modelProvider: serializer.fromJson<String>(json['modelProvider']),
+      modelProviderId: serializer.fromJson<String>(json['modelProviderId']),
     );
   }
   @override
@@ -1228,7 +1233,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
       'displayName': serializer.toJson<String>(displayName),
       'modelId': serializer.toJson<String>(modelId),
       'modelType': serializer.toJson<String>(modelType),
-      'modelProvider': serializer.toJson<String>(modelProvider),
+      'modelProviderId': serializer.toJson<String>(modelProviderId),
     };
   }
 
@@ -1239,7 +1244,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
     String? displayName,
     String? modelId,
     String? modelType,
-    String? modelProvider,
+    String? modelProviderId,
   }) => ChatModelsTable(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
@@ -1247,7 +1252,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
     displayName: displayName ?? this.displayName,
     modelId: modelId ?? this.modelId,
     modelType: modelType ?? this.modelType,
-    modelProvider: modelProvider ?? this.modelProvider,
+    modelProviderId: modelProviderId ?? this.modelProviderId,
   );
   ChatModelsTable copyWithCompanion(ChatModelsCompanion data) {
     return ChatModelsTable(
@@ -1259,9 +1264,9 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
           : this.displayName,
       modelId: data.modelId.present ? data.modelId.value : this.modelId,
       modelType: data.modelType.present ? data.modelType.value : this.modelType,
-      modelProvider: data.modelProvider.present
-          ? data.modelProvider.value
-          : this.modelProvider,
+      modelProviderId: data.modelProviderId.present
+          ? data.modelProviderId.value
+          : this.modelProviderId,
     );
   }
 
@@ -1274,7 +1279,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
           ..write('displayName: $displayName, ')
           ..write('modelId: $modelId, ')
           ..write('modelType: $modelType, ')
-          ..write('modelProvider: $modelProvider')
+          ..write('modelProviderId: $modelProviderId')
           ..write(')'))
         .toString();
   }
@@ -1287,7 +1292,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
     displayName,
     modelId,
     modelType,
-    modelProvider,
+    modelProviderId,
   );
   @override
   bool operator ==(Object other) =>
@@ -1299,7 +1304,7 @@ class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
           other.displayName == this.displayName &&
           other.modelId == this.modelId &&
           other.modelType == this.modelType &&
-          other.modelProvider == this.modelProvider);
+          other.modelProviderId == this.modelProviderId);
 }
 
 class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
@@ -1309,7 +1314,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
   final Value<String> displayName;
   final Value<String> modelId;
   final Value<String> modelType;
-  final Value<String> modelProvider;
+  final Value<String> modelProviderId;
   final Value<int> rowid;
   const ChatModelsCompanion({
     this.id = const Value.absent(),
@@ -1318,7 +1323,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
     this.displayName = const Value.absent(),
     this.modelId = const Value.absent(),
     this.modelType = const Value.absent(),
-    this.modelProvider = const Value.absent(),
+    this.modelProviderId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ChatModelsCompanion.insert({
@@ -1328,12 +1333,12 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
     required String displayName,
     required String modelId,
     required String modelType,
-    required String modelProvider,
+    required String modelProviderId,
     this.rowid = const Value.absent(),
   }) : displayName = Value(displayName),
        modelId = Value(modelId),
        modelType = Value(modelType),
-       modelProvider = Value(modelProvider);
+       modelProviderId = Value(modelProviderId);
   static Insertable<ChatModelsTable> custom({
     Expression<String>? id,
     Expression<DateTime>? createdAt,
@@ -1341,7 +1346,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
     Expression<String>? displayName,
     Expression<String>? modelId,
     Expression<String>? modelType,
-    Expression<String>? modelProvider,
+    Expression<String>? modelProviderId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1351,7 +1356,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
       if (displayName != null) 'display_name': displayName,
       if (modelId != null) 'model_id': modelId,
       if (modelType != null) 'model_type': modelType,
-      if (modelProvider != null) 'model_provider': modelProvider,
+      if (modelProviderId != null) 'model_provider_id': modelProviderId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1363,7 +1368,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
     Value<String>? displayName,
     Value<String>? modelId,
     Value<String>? modelType,
-    Value<String>? modelProvider,
+    Value<String>? modelProviderId,
     Value<int>? rowid,
   }) {
     return ChatModelsCompanion(
@@ -1373,7 +1378,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
       displayName: displayName ?? this.displayName,
       modelId: modelId ?? this.modelId,
       modelType: modelType ?? this.modelType,
-      modelProvider: modelProvider ?? this.modelProvider,
+      modelProviderId: modelProviderId ?? this.modelProviderId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1399,8 +1404,8 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
     if (modelType.present) {
       map['model_type'] = Variable<String>(modelType.value);
     }
-    if (modelProvider.present) {
-      map['model_provider'] = Variable<String>(modelProvider.value);
+    if (modelProviderId.present) {
+      map['model_provider_id'] = Variable<String>(modelProviderId.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -1417,7 +1422,7 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
           ..write('displayName: $displayName, ')
           ..write('modelId: $modelId, ')
           ..write('modelType: $modelType, ')
-          ..write('modelProvider: $modelProvider, ')
+          ..write('modelProviderId: $modelProviderId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1985,15 +1990,15 @@ class $MessagesTable extends Messages
       'CHECK ("is_user" IN (0, 1))',
     ),
   );
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
-  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<MessageTableStatus, String>
+  status = GeneratedColumn<String>(
     'status',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  );
+  ).withConverter<MessageTableStatus>($MessagesTable.$converterstatus);
   static const VerificationMeta _metadataMeta = const VerificationMeta(
     'metadata',
   );
@@ -2071,14 +2076,6 @@ class $MessagesTable extends Messages
     } else if (isInserting) {
       context.missing(_isUserMeta);
     }
-    if (data.containsKey('status')) {
-      context.handle(
-        _statusMeta,
-        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_statusMeta);
-    }
     if (data.containsKey('metadata')) {
       context.handle(
         _metadataMeta,
@@ -2124,10 +2121,12 @@ class $MessagesTable extends Messages
         DriftSqlType.bool,
         data['${effectivePrefix}is_user'],
       )!,
-      status: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}status'],
-      )!,
+      status: $MessagesTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
       metadata: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}metadata'],
@@ -2144,6 +2143,10 @@ class $MessagesTable extends Messages
   $convertermessageType = const EnumNameConverter<MessagesTableType>(
     MessagesTableType.values,
   );
+  static JsonTypeConverter2<MessageTableStatus, String, String>
+  $converterstatus = const EnumNameConverter<MessageTableStatus>(
+    MessageTableStatus.values,
+  );
 }
 
 class MessagesTable extends DataClass implements Insertable<MessagesTable> {
@@ -2159,7 +2162,7 @@ class MessagesTable extends DataClass implements Insertable<MessagesTable> {
   final String content;
   final MessagesTableType messageType;
   final bool isUser;
-  final String status;
+  final MessageTableStatus status;
   final String? metadata;
   const MessagesTable({
     required this.id,
@@ -2186,7 +2189,11 @@ class MessagesTable extends DataClass implements Insertable<MessagesTable> {
       );
     }
     map['is_user'] = Variable<bool>(isUser);
-    map['status'] = Variable<String>(status);
+    {
+      map['status'] = Variable<String>(
+        $MessagesTable.$converterstatus.toSql(status),
+      );
+    }
     if (!nullToAbsent || metadata != null) {
       map['metadata'] = Variable<String>(metadata);
     }
@@ -2224,7 +2231,9 @@ class MessagesTable extends DataClass implements Insertable<MessagesTable> {
         serializer.fromJson<String>(json['messageType']),
       ),
       isUser: serializer.fromJson<bool>(json['isUser']),
-      status: serializer.fromJson<String>(json['status']),
+      status: $MessagesTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
       metadata: serializer.fromJson<String?>(json['metadata']),
     );
   }
@@ -2241,7 +2250,9 @@ class MessagesTable extends DataClass implements Insertable<MessagesTable> {
         $MessagesTable.$convertermessageType.toJson(messageType),
       ),
       'isUser': serializer.toJson<bool>(isUser),
-      'status': serializer.toJson<String>(status),
+      'status': serializer.toJson<String>(
+        $MessagesTable.$converterstatus.toJson(status),
+      ),
       'metadata': serializer.toJson<String?>(metadata),
     };
   }
@@ -2254,7 +2265,7 @@ class MessagesTable extends DataClass implements Insertable<MessagesTable> {
     String? content,
     MessagesTableType? messageType,
     bool? isUser,
-    String? status,
+    MessageTableStatus? status,
     Value<String?> metadata = const Value.absent(),
   }) => MessagesTable(
     id: id ?? this.id,
@@ -2336,7 +2347,7 @@ class MessagesCompanion extends UpdateCompanion<MessagesTable> {
   final Value<String> content;
   final Value<MessagesTableType> messageType;
   final Value<bool> isUser;
-  final Value<String> status;
+  final Value<MessageTableStatus> status;
   final Value<String?> metadata;
   final Value<int> rowid;
   const MessagesCompanion({
@@ -2359,7 +2370,7 @@ class MessagesCompanion extends UpdateCompanion<MessagesTable> {
     required String content,
     required MessagesTableType messageType,
     required bool isUser,
-    required String status,
+    required MessageTableStatus status,
     this.metadata = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : conversationId = Value(conversationId),
@@ -2401,7 +2412,7 @@ class MessagesCompanion extends UpdateCompanion<MessagesTable> {
     Value<String>? content,
     Value<MessagesTableType>? messageType,
     Value<bool>? isUser,
-    Value<String>? status,
+    Value<MessageTableStatus>? status,
     Value<String?>? metadata,
     Value<int>? rowid,
   }) {
@@ -2446,7 +2457,9 @@ class MessagesCompanion extends UpdateCompanion<MessagesTable> {
       map['is_user'] = Variable<bool>(isUser.value);
     }
     if (status.present) {
-      map['status'] = Variable<String>(status.value);
+      map['status'] = Variable<String>(
+        $MessagesTable.$converterstatus.toSql(status.value),
+      );
     }
     if (metadata.present) {
       map['metadata'] = Variable<String>(metadata.value);
@@ -2535,7 +2548,7 @@ final class $$WorkspacesTableReferences
     db.modelProviders,
     aliasName: $_aliasNameGenerator(
       db.workspaces.id,
-      db.modelProviders.workspace,
+      db.modelProviders.workspaceId,
     ),
   );
 
@@ -2543,7 +2556,7 @@ final class $$WorkspacesTableReferences
     final manager = $$ModelProvidersTableTableManager(
       $_db,
       $_db.modelProviders,
-    ).filter((f) => f.workspace.id.sqlEquals($_itemColumn<String>('id')!));
+    ).filter((f) => f.workspaceId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_modelProvidersRefsTable($_db));
     return ProcessedTableManager(
@@ -2620,7 +2633,7 @@ class $$WorkspacesTableFilterComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.modelProviders,
-      getReferencedColumn: (t) => t.workspace,
+      getReferencedColumn: (t) => t.workspaceId,
       builder:
           (
             joinBuilder, {
@@ -2738,7 +2751,7 @@ class $$WorkspacesTableAnnotationComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.modelProviders,
-      getReferencedColumn: (t) => t.workspace,
+      getReferencedColumn: (t) => t.workspaceId,
       builder:
           (
             joinBuilder, {
@@ -2883,7 +2896,7 @@ class $$WorkspacesTableTableManager
                               ).modelProvidersRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
-                                (e) => e.workspace == item.id,
+                                (e) => e.workspaceId == item.id,
                               ),
                           typedResults: items,
                         ),
@@ -2939,7 +2952,7 @@ typedef $$ModelProvidersTableCreateCompanionBuilder =
       required ChatModelType type,
       Value<String?> url,
       required String keyValue,
-      required String workspace,
+      required String workspaceId,
       Value<int> rowid,
     });
 typedef $$ModelProvidersTableUpdateCompanionBuilder =
@@ -2951,7 +2964,7 @@ typedef $$ModelProvidersTableUpdateCompanionBuilder =
       Value<ChatModelType> type,
       Value<String?> url,
       Value<String> keyValue,
-      Value<String> workspace,
+      Value<String> workspaceId,
       Value<int> rowid,
     });
 
@@ -2968,19 +2981,19 @@ final class $$ModelProvidersTableReferences
     super.$_typedResult,
   );
 
-  static $WorkspacesTable _workspaceTable(_$AppDatabase db) =>
+  static $WorkspacesTable _workspaceIdTable(_$AppDatabase db) =>
       db.workspaces.createAlias(
-        $_aliasNameGenerator(db.modelProviders.workspace, db.workspaces.id),
+        $_aliasNameGenerator(db.modelProviders.workspaceId, db.workspaces.id),
       );
 
-  $$WorkspacesTableProcessedTableManager get workspace {
-    final $_column = $_itemColumn<String>('workspace')!;
+  $$WorkspacesTableProcessedTableManager get workspaceId {
+    final $_column = $_itemColumn<String>('workspace_id')!;
 
     final manager = $$WorkspacesTableTableManager(
       $_db,
       $_db.workspaces,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_workspaceTable($_db));
+    final item = $_typedResult.readTableOrNull(_workspaceIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -2992,15 +3005,14 @@ final class $$ModelProvidersTableReferences
     db.chatModels,
     aliasName: $_aliasNameGenerator(
       db.modelProviders.id,
-      db.chatModels.modelProvider,
+      db.chatModels.modelProviderId,
     ),
   );
 
   $$ChatModelsTableProcessedTableManager get chatModelsRefs {
-    final manager = $$ChatModelsTableTableManager(
-      $_db,
-      $_db.chatModels,
-    ).filter((f) => f.modelProvider.id.sqlEquals($_itemColumn<String>('id')!));
+    final manager = $$ChatModelsTableTableManager($_db, $_db.chatModels).filter(
+      (f) => f.modelProviderId.id.sqlEquals($_itemColumn<String>('id')!),
+    );
 
     final cache = $_typedResult.readTableOrNull(_chatModelsRefsTable($_db));
     return ProcessedTableManager(
@@ -3054,10 +3066,10 @@ class $$ModelProvidersTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$WorkspacesTableFilterComposer get workspace {
+  $$WorkspacesTableFilterComposer get workspaceId {
     final $$WorkspacesTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.workspace,
+      getCurrentColumn: (t) => t.workspaceId,
       referencedTable: $db.workspaces,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3084,7 +3096,7 @@ class $$ModelProvidersTableFilterComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.chatModels,
-      getReferencedColumn: (t) => t.modelProvider,
+      getReferencedColumn: (t) => t.modelProviderId,
       builder:
           (
             joinBuilder, {
@@ -3147,10 +3159,10 @@ class $$ModelProvidersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$WorkspacesTableOrderingComposer get workspace {
+  $$WorkspacesTableOrderingComposer get workspaceId {
     final $$WorkspacesTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.workspace,
+      getCurrentColumn: (t) => t.workspaceId,
       referencedTable: $db.workspaces,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3201,10 +3213,10 @@ class $$ModelProvidersTableAnnotationComposer
   GeneratedColumn<String> get keyValue =>
       $composableBuilder(column: $table.keyValue, builder: (column) => column);
 
-  $$WorkspacesTableAnnotationComposer get workspace {
+  $$WorkspacesTableAnnotationComposer get workspaceId {
     final $$WorkspacesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.workspace,
+      getCurrentColumn: (t) => t.workspaceId,
       referencedTable: $db.workspaces,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3231,7 +3243,7 @@ class $$ModelProvidersTableAnnotationComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.chatModels,
-      getReferencedColumn: (t) => t.modelProvider,
+      getReferencedColumn: (t) => t.modelProviderId,
       builder:
           (
             joinBuilder, {
@@ -3263,7 +3275,7 @@ class $$ModelProvidersTableTableManager
           $$ModelProvidersTableUpdateCompanionBuilder,
           (ModelProvidersTable, $$ModelProvidersTableReferences),
           ModelProvidersTable,
-          PrefetchHooks Function({bool workspace, bool chatModelsRefs})
+          PrefetchHooks Function({bool workspaceId, bool chatModelsRefs})
         > {
   $$ModelProvidersTableTableManager(
     _$AppDatabase db,
@@ -3287,7 +3299,7 @@ class $$ModelProvidersTableTableManager
                 Value<ChatModelType> type = const Value.absent(),
                 Value<String?> url = const Value.absent(),
                 Value<String> keyValue = const Value.absent(),
-                Value<String> workspace = const Value.absent(),
+                Value<String> workspaceId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ModelProvidersCompanion(
                 id: id,
@@ -3297,7 +3309,7 @@ class $$ModelProvidersTableTableManager
                 type: type,
                 url: url,
                 keyValue: keyValue,
-                workspace: workspace,
+                workspaceId: workspaceId,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -3309,7 +3321,7 @@ class $$ModelProvidersTableTableManager
                 required ChatModelType type,
                 Value<String?> url = const Value.absent(),
                 required String keyValue,
-                required String workspace,
+                required String workspaceId,
                 Value<int> rowid = const Value.absent(),
               }) => ModelProvidersCompanion.insert(
                 id: id,
@@ -3319,7 +3331,7 @@ class $$ModelProvidersTableTableManager
                 type: type,
                 url: url,
                 keyValue: keyValue,
-                workspace: workspace,
+                workspaceId: workspaceId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -3330,70 +3342,72 @@ class $$ModelProvidersTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({workspace = false, chatModelsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (chatModelsRefs) db.chatModels],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (workspace) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.workspace,
-                                referencedTable: $$ModelProvidersTableReferences
-                                    ._workspaceTable(db),
-                                referencedColumn:
-                                    $$ModelProvidersTableReferences
-                                        ._workspaceTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({workspaceId = false, chatModelsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [if (chatModelsRefs) db.chatModels],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (workspaceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.workspaceId,
+                                    referencedTable:
+                                        $$ModelProvidersTableReferences
+                                            ._workspaceIdTable(db),
+                                    referencedColumn:
+                                        $$ModelProvidersTableReferences
+                                            ._workspaceIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (chatModelsRefs)
+                        await $_getPrefetchedData<
+                          ModelProvidersTable,
+                          $ModelProvidersTable,
+                          ChatModelsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ModelProvidersTableReferences
+                              ._chatModelsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ModelProvidersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).chatModelsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.modelProviderId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (chatModelsRefs)
-                    await $_getPrefetchedData<
-                      ModelProvidersTable,
-                      $ModelProvidersTable,
-                      ChatModelsTable
-                    >(
-                      currentTable: table,
-                      referencedTable: $$ModelProvidersTableReferences
-                          ._chatModelsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$ModelProvidersTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).chatModelsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.modelProvider == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -3410,7 +3424,7 @@ typedef $$ModelProvidersTableProcessedTableManager =
       $$ModelProvidersTableUpdateCompanionBuilder,
       (ModelProvidersTable, $$ModelProvidersTableReferences),
       ModelProvidersTable,
-      PrefetchHooks Function({bool workspace, bool chatModelsRefs})
+      PrefetchHooks Function({bool workspaceId, bool chatModelsRefs})
     >;
 typedef $$ChatModelsTableCreateCompanionBuilder =
     ChatModelsCompanion Function({
@@ -3420,7 +3434,7 @@ typedef $$ChatModelsTableCreateCompanionBuilder =
       required String displayName,
       required String modelId,
       required String modelType,
-      required String modelProvider,
+      required String modelProviderId,
       Value<int> rowid,
     });
 typedef $$ChatModelsTableUpdateCompanionBuilder =
@@ -3431,7 +3445,7 @@ typedef $$ChatModelsTableUpdateCompanionBuilder =
       Value<String> displayName,
       Value<String> modelId,
       Value<String> modelType,
-      Value<String> modelProvider,
+      Value<String> modelProviderId,
       Value<int> rowid,
     });
 
@@ -3439,19 +3453,22 @@ final class $$ChatModelsTableReferences
     extends BaseReferences<_$AppDatabase, $ChatModelsTable, ChatModelsTable> {
   $$ChatModelsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ModelProvidersTable _modelProviderTable(_$AppDatabase db) =>
+  static $ModelProvidersTable _modelProviderIdTable(_$AppDatabase db) =>
       db.modelProviders.createAlias(
-        $_aliasNameGenerator(db.chatModels.modelProvider, db.modelProviders.id),
+        $_aliasNameGenerator(
+          db.chatModels.modelProviderId,
+          db.modelProviders.id,
+        ),
       );
 
-  $$ModelProvidersTableProcessedTableManager get modelProvider {
-    final $_column = $_itemColumn<String>('model_provider')!;
+  $$ModelProvidersTableProcessedTableManager get modelProviderId {
+    final $_column = $_itemColumn<String>('model_provider_id')!;
 
     final manager = $$ModelProvidersTableTableManager(
       $_db,
       $_db.modelProviders,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_modelProviderTable($_db));
+    final item = $_typedResult.readTableOrNull(_modelProviderIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -3516,10 +3533,10 @@ class $$ChatModelsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$ModelProvidersTableFilterComposer get modelProvider {
+  $$ModelProvidersTableFilterComposer get modelProviderId {
     final $$ModelProvidersTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.modelProvider,
+      getCurrentColumn: (t) => t.modelProviderId,
       referencedTable: $db.modelProviders,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3604,10 +3621,10 @@ class $$ChatModelsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$ModelProvidersTableOrderingComposer get modelProvider {
+  $$ModelProvidersTableOrderingComposer get modelProviderId {
     final $$ModelProvidersTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.modelProvider,
+      getCurrentColumn: (t) => t.modelProviderId,
       referencedTable: $db.modelProviders,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3657,10 +3674,10 @@ class $$ChatModelsTableAnnotationComposer
   GeneratedColumn<String> get modelType =>
       $composableBuilder(column: $table.modelType, builder: (column) => column);
 
-  $$ModelProvidersTableAnnotationComposer get modelProvider {
+  $$ModelProvidersTableAnnotationComposer get modelProviderId {
     final $$ModelProvidersTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.modelProvider,
+      getCurrentColumn: (t) => t.modelProviderId,
       referencedTable: $db.modelProviders,
       getReferencedColumn: (t) => t.id,
       builder:
@@ -3719,7 +3736,7 @@ class $$ChatModelsTableTableManager
           $$ChatModelsTableUpdateCompanionBuilder,
           (ChatModelsTable, $$ChatModelsTableReferences),
           ChatModelsTable,
-          PrefetchHooks Function({bool modelProvider, bool conversationsRefs})
+          PrefetchHooks Function({bool modelProviderId, bool conversationsRefs})
         > {
   $$ChatModelsTableTableManager(_$AppDatabase db, $ChatModelsTable table)
     : super(
@@ -3740,7 +3757,7 @@ class $$ChatModelsTableTableManager
                 Value<String> displayName = const Value.absent(),
                 Value<String> modelId = const Value.absent(),
                 Value<String> modelType = const Value.absent(),
-                Value<String> modelProvider = const Value.absent(),
+                Value<String> modelProviderId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ChatModelsCompanion(
                 id: id,
@@ -3749,7 +3766,7 @@ class $$ChatModelsTableTableManager
                 displayName: displayName,
                 modelId: modelId,
                 modelType: modelType,
-                modelProvider: modelProvider,
+                modelProviderId: modelProviderId,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -3760,7 +3777,7 @@ class $$ChatModelsTableTableManager
                 required String displayName,
                 required String modelId,
                 required String modelType,
-                required String modelProvider,
+                required String modelProviderId,
                 Value<int> rowid = const Value.absent(),
               }) => ChatModelsCompanion.insert(
                 id: id,
@@ -3769,7 +3786,7 @@ class $$ChatModelsTableTableManager
                 displayName: displayName,
                 modelId: modelId,
                 modelType: modelType,
-                modelProvider: modelProvider,
+                modelProviderId: modelProviderId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -3781,7 +3798,7 @@ class $$ChatModelsTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({modelProvider = false, conversationsRefs = false}) {
+              ({modelProviderId = false, conversationsRefs = false}) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
@@ -3803,16 +3820,16 @@ class $$ChatModelsTableTableManager
                           dynamic
                         >
                       >(state) {
-                        if (modelProvider) {
+                        if (modelProviderId) {
                           state =
                               state.withJoin(
                                     currentTable: table,
-                                    currentColumn: table.modelProvider,
+                                    currentColumn: table.modelProviderId,
                                     referencedTable: $$ChatModelsTableReferences
-                                        ._modelProviderTable(db),
+                                        ._modelProviderIdTable(db),
                                     referencedColumn:
                                         $$ChatModelsTableReferences
-                                            ._modelProviderTable(db)
+                                            ._modelProviderIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -3863,7 +3880,7 @@ typedef $$ChatModelsTableProcessedTableManager =
       $$ChatModelsTableUpdateCompanionBuilder,
       (ChatModelsTable, $$ChatModelsTableReferences),
       ChatModelsTable,
-      PrefetchHooks Function({bool modelProvider, bool conversationsRefs})
+      PrefetchHooks Function({bool modelProviderId, bool conversationsRefs})
     >;
 typedef $$ConversationsTableCreateCompanionBuilder =
     ConversationsCompanion Function({
@@ -4430,7 +4447,7 @@ typedef $$MessagesTableCreateCompanionBuilder =
       required String content,
       required MessagesTableType messageType,
       required bool isUser,
-      required String status,
+      required MessageTableStatus status,
       Value<String?> metadata,
       Value<int> rowid,
     });
@@ -4443,7 +4460,7 @@ typedef $$MessagesTableUpdateCompanionBuilder =
       Value<String> content,
       Value<MessagesTableType> messageType,
       Value<bool> isUser,
-      Value<String> status,
+      Value<MessageTableStatus> status,
       Value<String?> metadata,
       Value<int> rowid,
     });
@@ -4512,9 +4529,10 @@ class $$MessagesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get status => $composableBuilder(
+  ColumnWithTypeConverterFilters<MessageTableStatus, MessageTableStatus, String>
+  get status => $composableBuilder(
     column: $table.status,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get metadata => $composableBuilder(
@@ -4649,7 +4667,7 @@ class $$MessagesTableAnnotationComposer
   GeneratedColumn<bool> get isUser =>
       $composableBuilder(column: $table.isUser, builder: (column) => column);
 
-  GeneratedColumn<String> get status =>
+  GeneratedColumnWithTypeConverter<MessageTableStatus, String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
 
   GeneratedColumn<String> get metadata =>
@@ -4714,7 +4732,7 @@ class $$MessagesTableTableManager
                 Value<String> content = const Value.absent(),
                 Value<MessagesTableType> messageType = const Value.absent(),
                 Value<bool> isUser = const Value.absent(),
-                Value<String> status = const Value.absent(),
+                Value<MessageTableStatus> status = const Value.absent(),
                 Value<String?> metadata = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MessagesCompanion(
@@ -4738,7 +4756,7 @@ class $$MessagesTableTableManager
                 required String content,
                 required MessagesTableType messageType,
                 required bool isUser,
-                required String status,
+                required MessageTableStatus status,
                 Value<String?> metadata = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MessagesCompanion.insert(

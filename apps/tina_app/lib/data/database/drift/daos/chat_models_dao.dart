@@ -32,9 +32,9 @@ class ChatModelsDao extends DatabaseAccessor<AppDatabase>
     final query = (select(chatModels).join([
       innerJoin(
         modelProviders,
-        modelProviders.id.equalsExp(chatModels.modelProvider),
+        modelProviders.id.equalsExp(chatModels.modelProviderId),
       ),
-    ])..where(modelProviders.workspace.isIn(workspaceIds)));
+    ])..where(modelProviders.workspaceId.isIn(workspaceIds)));
 
     return query
         .map(

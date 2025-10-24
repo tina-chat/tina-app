@@ -6,14 +6,14 @@ part 'model_providers_entities.freezed.dart';
 @freezed
 abstract class ModelProviderEntity with _$ModelProviderEntity {
   const factory ModelProviderEntity({
-    required int id,
+    required String id,
     required String name,
     required ChatModelType type,
     required String key,
     String? url,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required int workspaceId,
+    required String workspaceId,
   }) = _ModelProviderEntity;
 }
 
@@ -23,7 +23,7 @@ abstract class ModelProviderToCreate with _$ModelProviderToCreate {
     required String name,
     required ChatModelType type,
     required String key,
-    required int workspaceId,
+    required String workspaceId,
     String? url,
   }) = _ModelProviderToCreate;
 }
@@ -31,7 +31,7 @@ abstract class ModelProviderToCreate with _$ModelProviderToCreate {
 @freezed
 abstract class ModelProviderFilter with _$ModelProviderFilter {
   const factory ModelProviderFilter({
-    List<int>? workspaces,
+    List<String>? workspaces,
     List<ChatModelType>? types,
   }) = _ModelProviderFilter;
 }

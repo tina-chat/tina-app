@@ -44,9 +44,8 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Inserts a new workspace into the database.
   ///
   /// Returns the ID of the inserted workspace.
-  Future<String> insertWorkspace(WorkspacesCompanion workspace) async {
-    await into(workspaces).insert(workspace);
-    return workspace.id.value;
+  Future<WorkspacesTable> insertWorkspace(WorkspacesCompanion workspace) {
+    return into(workspaces).insertReturning(workspace);
   }
 
   /// Updates an existing workspace in the database.

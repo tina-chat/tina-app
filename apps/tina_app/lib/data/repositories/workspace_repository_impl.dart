@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
-import '../database/drift/app_database.dart';
+
 import '../../domain/entities/workspace.dart';
 import '../../domain/enums/workspace_type.dart';
 import '../../domain/repositories/workspace_repository.dart';
+import '../database/drift/app_database.dart';
 
 /// Implementation of the [WorkspaceRepository] interface.
 ///
@@ -19,7 +20,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   WorkspaceRepositoryImpl(this._database);
 
   @override
-  Future<List<WorkspaceModel>> getAllWorkspaces() async {
+  Future<List<WorkspaceEntity>> getAllWorkspaces() async {
     try {
       final workspaceTables = await _database.workspaceDao.getAllWorkspaces();
       return workspaceTables.map(_mapToWorkspace).toList();
@@ -32,7 +33,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<WorkspaceModel?> getWorkspaceById(int id) async {
+  Future<WorkspaceEntity?> getWorkspaceById(String id) async {
     try {
       final workspacesTable = await _database.workspaceDao.getWorkspaceById(id);
       return workspacesTable != null ? _mapToWorkspace(workspacesTable) : null;
@@ -45,7 +46,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<List<WorkspaceModel>> getWorkspacesByType(WorkspaceType type) async {
+  Future<List<WorkspaceEntity>> getWorkspacesByType(WorkspaceType type) async {
     try {
       final workspaceTables = await _database.workspaceDao.getWorkspacesByType(
         type,
@@ -60,7 +61,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<WorkspaceModel> createWorkspace(WorkspaceToCreate workspace) async {
+  Future<WorkspaceEntity> createWorkspace(WorkspaceToCreate workspace) async {
     try {
       // Validate workspace before creating
       if (!await validateWorkspace(workspace)) {
@@ -68,17 +69,9 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
       }
 
       final workspaceCompanion = _mapToWorkspacesCompanion(workspace);
-      final createdId = await _database.workspaceDao.insertWorkspace(
+      final createdWorkspace = await _database.workspaceDao.insertWorkspace(
         workspaceCompanion,
       );
-
-      final createdWorkspace = await _database.workspaceDao.getWorkspaceById(
-        createdId,
-      );
-
-      if (createdWorkspace == null) {
-        throw WorkspaceException('Failed to create workspace');
-      }
 
       return _mapToWorkspace(createdWorkspace);
     } catch (e) {
@@ -88,8 +81,8 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<WorkspaceModel> updateWorkspace(
-    int id,
+  Future<WorkspaceEntity> updateWorkspace(
+    String id,
     WorkspaceToCreate workspace,
   ) async {
     try {
@@ -134,7 +127,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<bool> deleteWorkspace(int id) async {
+  Future<bool> deleteWorkspace(String id) async {
     try {
       // Check if workspace exists
       if (!await workspaceExists(id)) {
@@ -149,7 +142,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<bool> workspaceExists(int id) async {
+  Future<bool> workspaceExists(String id) async {
     try {
       return await _database.workspaceDao.workspaceExists(id);
     } catch (e) {
@@ -161,7 +154,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<List<WorkspaceModel>> searchWorkspacesByName(String query) async {
+  Future<List<WorkspaceEntity>> searchWorkspacesByName(String query) async {
     try {
       final workspaceTables = await _database.workspaceDao
           .searchWorkspacesByName(query);
@@ -211,7 +204,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   }
 
   @override
-  Future<bool> updateWorkspaceTimestamp(int id) async {
+  Future<bool> updateWorkspaceTimestamp(String id) async {
     try {
       // Check if workspace exists
       if (!await workspaceExists(id)) {
@@ -228,12 +221,12 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     }
   }
 
-  /// Maps a [workspacesTable] database record to a [WorkspaceModel] domain entity.
+  /// Maps a [workspacesTable] database record to a [WorkspaceEntity] domain entity.
   ///
   /// [workspacesTable] The database record to map.
-  /// Returns the corresponding [WorkspaceModel] entity.
-  WorkspaceModel _mapToWorkspace(WorkspacesTable workspacesTable) {
-    return WorkspaceModel(
+  /// Returns the corresponding [WorkspaceEntity] entity.
+  WorkspaceEntity _mapToWorkspace(WorkspacesTable workspacesTable) {
+    return WorkspaceEntity(
       id: workspacesTable.id,
       name: workspacesTable.name,
       type: workspacesTable.type,
@@ -243,7 +236,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     );
   }
 
-  /// Maps a [WorkspaceModel] domain entity to a [WorkspacesCompanion] for database operations.
+  /// Maps a [WorkspaceEntity] domain entity to a [WorkspacesCompanion] for database operations.
   ///
   /// [workspace] The workspace entity to map.
   /// [forUpdate] Whether this mapping is for an update operation.

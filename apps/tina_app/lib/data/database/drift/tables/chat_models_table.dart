@@ -14,5 +14,5 @@ class ChatModels extends Table with TableMixin {
   /// model type
   TextColumn get modelType => text()();
 
-  TextColumn get modelProvider => text().references(ModelProviders, #id)();
+  TextColumn get modelProviderId => text().references(ModelProviders, #id)();
 }

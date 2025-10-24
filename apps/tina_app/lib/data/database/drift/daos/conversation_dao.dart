@@ -11,8 +11,9 @@ class ConversationDao extends DatabaseAccessor<AppDatabase>
   ConversationDao(super.db);
 
   // Core CRUD operations
-  Future<int> insertConversation(ConversationsCompanion conversation) =>
-      into(conversations).insert(conversation);
+  Future<ConversationsTable> insertConversation(
+    ConversationsCompanion conversation,
+  ) => into(conversations).insertReturning(conversation);
 
   Future<ConversationsTable?> getConversationById(String id) => (select(
     conversations,

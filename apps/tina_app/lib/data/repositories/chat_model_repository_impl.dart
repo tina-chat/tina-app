@@ -38,7 +38,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
     return ChatModelsCompanion(
       displayName: Value(chatModel.displayName),
       modelId: Value(chatModel.modelId),
-      modelProvider: Value(chatModel.modelProvider),
+      modelProviderId: Value(chatModel.modelProviderId),
       modelType: Value(chatModel.modelType),
     );
   }
@@ -54,7 +54,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
         modelType: withProvider.chatModel.modelType,
         createdAt: withProvider.chatModel.createdAt,
         updatedAt: withProvider.chatModel.updatedAt,
-        modelProviderId: withProvider.chatModel.modelProvider,
+        modelProviderId: withProvider.chatModel.modelProviderId,
       ),
       modelProvider: ModelProviderEntity(
         id: withProvider.modelProvider.id,
@@ -63,7 +63,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
         key: withProvider.modelProvider.keyValue,
         createdAt: withProvider.modelProvider.createdAt,
         updatedAt: withProvider.modelProvider.updatedAt,
-        workspaceId: withProvider.modelProvider.workspace,
+        workspaceId: withProvider.modelProvider.workspaceId,
       ),
     );
   }
