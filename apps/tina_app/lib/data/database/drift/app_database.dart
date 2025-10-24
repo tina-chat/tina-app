@@ -1,15 +1,22 @@
 import 'dart:io';
+
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tina_app/data/database/drift/daos/chat_models_dao.dart';
+import 'package:tina_app/data/database/drift/daos/conversation_dao.dart';
+import 'package:tina_app/data/database/drift/daos/message_dao.dart';
 import 'package:tina_app/data/database/drift/daos/model_providers_dao.dart';
 import 'package:tina_app/data/database/drift/tables/chat_models_table.dart';
+import 'package:tina_app/data/database/drift/tables/conversations_table.dart';
+import 'package:tina_app/data/database/drift/tables/messages_table.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
-import 'tables/workspaces_table.dart';
-import 'daos/workspace_dao.dart';
-import '../../../domain/enums/workspace_type.dart';
+import 'package:uuid/v7.dart';
+
 import '../../../domain/enums/chat_models_type.dart';
+import '../../../domain/enums/workspace_type.dart';
+import 'daos/workspace_dao.dart';
+import 'tables/workspaces_table.dart';
 
 part 'app_database.g.dart';
 
@@ -18,8 +25,14 @@ part 'app_database.g.dart';
 /// This database manages all local data storage for the Tina application,
 /// including workspaces and other application data.
 @DriftDatabase(
-  tables: [Workspaces, ModelProviders, ChatModels],
-  daos: [WorkspaceDao, ModelProvidersDao, ChatModelsDao],
+  tables: [Workspaces, ModelProviders, ChatModels, Conversations, Messages],
+  daos: [
+    WorkspaceDao,
+    ModelProvidersDao,
+    ChatModelsDao,
+    ConversationDao,
+    MessageDao,
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   /// Creates a new [AppDatabase] instance.

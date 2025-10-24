@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
+
 import '../app_database.dart';
 
 part 'model_providers_dao.g.dart';
@@ -12,7 +13,7 @@ class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
   ModelProvidersDao(super.db);
 
   Future<List<ModelProvidersTable>> getAllModelProvidersByWorkspace({
-    required List<int> workspaceIds,
+    required List<String> workspaceIds,
   }) {
     return (select(modelProviders)
           ..orderBy([(t) => OrderingTerm(expression: t.createdAt)])
@@ -20,7 +21,7 @@ class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
         .get();
   }
 
-  Future<ModelProvidersTable?> getModelProviderById(int id) {
+  Future<ModelProvidersTable?> getModelProviderById(String id) {
     return (select(
       modelProviders,
     )..where((t) => t.id.equals(id))).getSingleOrNull();

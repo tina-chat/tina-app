@@ -27,7 +27,7 @@ class ChatModelsDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<List<ChatModelWithProvider>> getAllChatModelsByWorkspace({
-    required List<int> workspaceIds,
+    required List<String> workspaceIds,
   }) {
     final query = (select(chatModels).join([
       innerJoin(
