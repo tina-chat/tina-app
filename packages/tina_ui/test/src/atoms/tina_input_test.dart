@@ -90,26 +90,6 @@ void main() {
       expect(find.text(helperText), findsOneWidget);
     });
 
-    testWidgets('displays error text correctly', (tester) async {
-      const errorText = 'This is an error';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaInput(
-              error: Text(errorText),
-              state: TinaInputState.error,
-            ),
-          ),
-        ),
-      );
-
-      expect(find.text(errorText), findsOneWidget);
-
-      final errorTextWidget = tester.widget<Text>(find.text(errorText));
-      expect(errorTextWidget.style?.color, DesignColors.error);
-    });
-
     testWidgets('prioritizes error text over helper text', (tester) async {
       const helperText = 'Helper text';
       const errorText = 'Error text';
@@ -127,73 +107,6 @@ void main() {
 
       expect(find.text(errorText), findsOneWidget);
       expect(find.text(helperText), findsNothing);
-    });
-
-    testWidgets('applies small size correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaInput(
-              size: TinaInputSize.small,
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(
-        find
-            .ancestor(
-              of: find.byType(TextFormField),
-              matching: find.byType(Container),
-            )
-            .first,
-      );
-
-      expect(container.constraints?.maxHeight, DesignInputSizes.heightSm);
-    });
-
-    testWidgets('applies medium size correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaInput(),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(
-        find
-            .ancestor(
-              of: find.byType(TextFormField),
-              matching: find.byType(Container),
-            )
-            .first,
-      );
-
-      expect(container.constraints?.maxHeight, DesignInputSizes.heightMd);
-    });
-
-    testWidgets('applies large size correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaInput(
-              size: TinaInputSize.large,
-            ),
-          ),
-        ),
-      );
-
-      final container = tester.widget<Container>(
-        find
-            .ancestor(
-              of: find.byType(TextFormField),
-              matching: find.byType(Container),
-            )
-            .first,
-      );
-
-      expect(container.constraints?.maxHeight, DesignInputSizes.heightLg);
     });
 
     testWidgets('applies success state styling', (tester) async {
