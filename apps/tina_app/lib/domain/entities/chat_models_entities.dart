@@ -7,13 +7,13 @@ part 'chat_models_entities.freezed.dart';
 @freezed
 abstract class ChatModelEntity with _$ChatModelEntity {
   const factory ChatModelEntity({
-    required int id,
+    required String id,
     required String displayName,
     required String modelId,
     required String modelType,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required int modelProviderId,
+    required String modelProviderId,
   }) = _ChatModelEntity;
 }
 
@@ -28,7 +28,7 @@ abstract class ChatModelWithProviderEntity with _$ChatModelWithProviderEntity {
 @freezed
 abstract class ChatModelsFilter with _$ChatModelsFilter {
   const factory ChatModelsFilter({
-    List<int>? workspaces,
+    List<String>? workspaces,
     List<ChatModelType>? types,
   }) = _ChatModelsFilter;
 }
@@ -39,6 +39,6 @@ abstract class ChatModelToCreate with _$ChatModelToCreate {
     required String displayName,
     required String modelId,
     required String modelType,
-    required int modelProvider,
+    required String modelProviderId,
   }) = _ChatModelToCreate;
 }

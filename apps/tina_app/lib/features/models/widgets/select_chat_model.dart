@@ -15,7 +15,7 @@ class SelectChatModelWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final chatModelsAsync = ref.watch(listChatModelProvidersProvider);
 
-    final selectedModel = useState<int?>(null);
+    final selectedModel = useState<String?>(null);
     final searchValue = useState<String>('');
     final controller = useTextEditingController();
 
@@ -30,7 +30,7 @@ class SelectChatModelWidget extends HookConsumerWidget {
       }).toList();
     }, [searchValue.value, chatModelsAsync.value]);
 
-    return TinaDropdownSelector<int>(
+    return TinaDropdownSelector<String>(
       value: selectedModel.value,
       onChanged: (value) {
         selectedModel.value = value;

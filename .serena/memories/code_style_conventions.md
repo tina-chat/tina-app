@@ -20,12 +20,6 @@
 - **Documentation**: Use dartdoc comments (`///`) for public APIs
 - **Null safety**: Leverage null safety features appropriately
 
-## BLoC Pattern
-- **Events**: Suffix with `Event` (e.g., `WorkspaceLoadedEvent`)
-- **States**: Suffix with `State` (e.g., `WorkspaceLoadedState`)
-- **BLoCs**: Suffix with `Bloc` (e.g., `WorkspaceBloc`)
-- **Repositories**: Suffix with `Repository` (e.g., `WorkspaceRepository`)
-
 ## Import Organization
 - **Package imports first**: `import 'package:...'`
 - **Relative imports next**: `import '../...'`
@@ -56,7 +50,6 @@ feature/
 │   ├── repositories/
 │   └── usecases/
 ├── presentation/
-│   ├── bloc/
 │   ├── screens/
 │   └── widgets/
 └── tests/

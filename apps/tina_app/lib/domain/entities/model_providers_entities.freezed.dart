@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ModelProviderEntity {
 
- int get id; String get name; ChatModelType get type; String get key; String? get url; DateTime get createdAt; DateTime get updatedAt; int get workspaceId;
+ String get id; String get name; ChatModelType get type; String get key; String? get url; DateTime get createdAt; DateTime get updatedAt; String get workspaceId;
 /// Create a copy of ModelProviderEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ModelProviderEntityCopyWith<$Res>  {
   factory $ModelProviderEntityCopyWith(ModelProviderEntity value, $Res Function(ModelProviderEntity) _then) = _$ModelProviderEntityCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, ChatModelType type, String key, String? url, DateTime createdAt, DateTime updatedAt, int workspaceId
+ String id, String name, ChatModelType type, String key, String? url, DateTime createdAt, DateTime updatedAt, String workspaceId
 });
 
 
@@ -65,14 +65,14 @@ class _$ModelProviderEntityCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? type = null,Object? key = null,Object? url = freezed,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  int workspaceId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  String workspaceId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ModelProviderEntity() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.key,_that.url,_that.createdAt,_that.updatedAt,_that.workspaceId);case _:
@@ -178,7 +178,7 @@ return $default(_that.id,_that.name,_that.type,_that.key,_that.url,_that.created
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  int workspaceId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  String workspaceId)  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderEntity():
 return $default(_that.id,_that.name,_that.type,_that.key,_that.url,_that.createdAt,_that.updatedAt,_that.workspaceId);case _:
@@ -198,7 +198,7 @@ return $default(_that.id,_that.name,_that.type,_that.key,_that.url,_that.created
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  int workspaceId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  ChatModelType type,  String key,  String? url,  DateTime createdAt,  DateTime updatedAt,  String workspaceId)?  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderEntity() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.key,_that.url,_that.createdAt,_that.updatedAt,_that.workspaceId);case _:
@@ -216,14 +216,14 @@ class _ModelProviderEntity implements ModelProviderEntity {
   const _ModelProviderEntity({required this.id, required this.name, required this.type, required this.key, this.url, required this.createdAt, required this.updatedAt, required this.workspaceId});
   
 
-@override final  int id;
+@override final  String id;
 @override final  String name;
 @override final  ChatModelType type;
 @override final  String key;
 @override final  String? url;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
-@override final  int workspaceId;
+@override final  String workspaceId;
 
 /// Create a copy of ModelProviderEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -255,7 +255,7 @@ abstract mixin class _$ModelProviderEntityCopyWith<$Res> implements $ModelProvid
   factory _$ModelProviderEntityCopyWith(_ModelProviderEntity value, $Res Function(_ModelProviderEntity) _then) = __$ModelProviderEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, ChatModelType type, String key, String? url, DateTime createdAt, DateTime updatedAt, int workspaceId
+ String id, String name, ChatModelType type, String key, String? url, DateTime createdAt, DateTime updatedAt, String workspaceId
 });
 
 
@@ -275,14 +275,14 @@ class __$ModelProviderEntityCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? type = null,Object? key = null,Object? url = freezed,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,}) {
   return _then(_ModelProviderEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -292,7 +292,7 @@ as int,
 /// @nodoc
 mixin _$ModelProviderToCreate {
 
- String get name; ChatModelType get type; String get key; int get workspaceId; String? get url;
+ String get name; ChatModelType get type; String get key; String get workspaceId; String? get url;
 /// Create a copy of ModelProviderToCreate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -323,7 +323,7 @@ abstract mixin class $ModelProviderToCreateCopyWith<$Res>  {
   factory $ModelProviderToCreateCopyWith(ModelProviderToCreate value, $Res Function(ModelProviderToCreate) _then) = _$ModelProviderToCreateCopyWithImpl;
 @useResult
 $Res call({
- String name, ChatModelType type, String key, int workspaceId, String? url
+ String name, ChatModelType type, String key, String workspaceId, String? url
 });
 
 
@@ -346,7 +346,7 @@ name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
-as int,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -432,7 +432,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  int workspaceId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ModelProviderToCreate() when $default != null:
 return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
@@ -453,7 +453,7 @@ return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  int workspaceId,  String? url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderToCreate():
 return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
@@ -473,7 +473,7 @@ return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  ChatModelType type,  String key,  int workspaceId,  String? url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)?  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderToCreate() when $default != null:
 return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
@@ -494,7 +494,7 @@ class _ModelProviderToCreate implements ModelProviderToCreate {
 @override final  String name;
 @override final  ChatModelType type;
 @override final  String key;
-@override final  int workspaceId;
+@override final  String workspaceId;
 @override final  String? url;
 
 /// Create a copy of ModelProviderToCreate
@@ -527,7 +527,7 @@ abstract mixin class _$ModelProviderToCreateCopyWith<$Res> implements $ModelProv
   factory _$ModelProviderToCreateCopyWith(_ModelProviderToCreate value, $Res Function(_ModelProviderToCreate) _then) = __$ModelProviderToCreateCopyWithImpl;
 @override @useResult
 $Res call({
- String name, ChatModelType type, String key, int workspaceId, String? url
+ String name, ChatModelType type, String key, String workspaceId, String? url
 });
 
 
@@ -550,7 +550,7 @@ name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
-as int,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -561,7 +561,7 @@ as String?,
 /// @nodoc
 mixin _$ModelProviderFilter {
 
- List<int>? get workspaces; List<ChatModelType>? get types;
+ List<String>? get workspaces; List<ChatModelType>? get types;
 /// Create a copy of ModelProviderFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -592,7 +592,7 @@ abstract mixin class $ModelProviderFilterCopyWith<$Res>  {
   factory $ModelProviderFilterCopyWith(ModelProviderFilter value, $Res Function(ModelProviderFilter) _then) = _$ModelProviderFilterCopyWithImpl;
 @useResult
 $Res call({
- List<int>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<ChatModelType>? types
 });
 
 
@@ -612,7 +612,7 @@ class _$ModelProviderFilterCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
   return _then(_self.copyWith(
 workspaces: freezed == workspaces ? _self.workspaces : workspaces // ignore: cast_nullable_to_non_nullable
-as List<int>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
+as List<String>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
 as List<ChatModelType>?,
   ));
 }
@@ -698,7 +698,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -719,7 +719,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter():
 return $default(_that.workspaces,_that.types);case _:
@@ -739,7 +739,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -754,11 +754,11 @@ return $default(_that.workspaces,_that.types);case _:
 
 
 class _ModelProviderFilter implements ModelProviderFilter {
-  const _ModelProviderFilter({final  List<int>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
+  const _ModelProviderFilter({final  List<String>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
   
 
- final  List<int>? _workspaces;
-@override List<int>? get workspaces {
+ final  List<String>? _workspaces;
+@override List<String>? get workspaces {
   final value = _workspaces;
   if (value == null) return null;
   if (_workspaces is EqualUnmodifiableListView) return _workspaces;
@@ -806,7 +806,7 @@ abstract mixin class _$ModelProviderFilterCopyWith<$Res> implements $ModelProvid
   factory _$ModelProviderFilterCopyWith(_ModelProviderFilter value, $Res Function(_ModelProviderFilter) _then) = __$ModelProviderFilterCopyWithImpl;
 @override @useResult
 $Res call({
- List<int>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<ChatModelType>? types
 });
 
 
@@ -826,7 +826,7 @@ class __$ModelProviderFilterCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
   return _then(_ModelProviderFilter(
 workspaces: freezed == workspaces ? _self._workspaces : workspaces // ignore: cast_nullable_to_non_nullable
-as List<int>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
+as List<String>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
 as List<ChatModelType>?,
   ));
 }

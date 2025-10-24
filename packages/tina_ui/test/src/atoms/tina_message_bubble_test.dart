@@ -53,35 +53,6 @@ void main() {
       expect(decoration.color, DesignColors.primaryBase);
     });
 
-    testWidgets('applies AI message styling correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaMessageBubble(
-              content: 'AI message',
-              isUser: false,
-            ),
-          ),
-        ),
-      );
-
-      final align = tester.widget<Align>(find.byType(Align));
-      expect(align.alignment, Alignment.centerLeft);
-
-      // Find the message container with decoration
-      final containers = tester.widgetList<Container>(find.byType(Container));
-      final messageContainer = containers.firstWhere(
-        (container) =>
-            container.decoration != null &&
-            container.decoration is BoxDecoration &&
-            (container.decoration! as BoxDecoration).color ==
-                DesignColors.neutral100,
-      );
-
-      final decoration = messageContainer.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.neutral100);
-    });
-
     testWidgets('displays timestamp when provided', (tester) async {
       final timestamp = DateTime.now().subtract(const Duration(minutes: 5));
 

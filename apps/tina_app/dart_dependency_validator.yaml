@@ -1,0 +1,7 @@
+ignore:
+ - sqlite3_flutter_libs
+ - shared_preferences
+ - json_annotation
+ - easy_localization_loader
+ - drift_flutter
+ - anthropic_sdk_dart

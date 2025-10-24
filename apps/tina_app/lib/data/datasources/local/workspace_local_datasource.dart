@@ -1,6 +1,6 @@
+import '../../../domain/enums/workspace_type.dart';
 import '../../database/drift/app_database.dart';
 import '../../database/drift/daos/workspace_dao.dart';
-import '../../../domain/enums/workspace_type.dart';
 
 /// Data source for local workspace data operations.
 ///
@@ -38,7 +38,7 @@ class WorkspaceLocalDataSource {
   /// [id] The unique identifier of the workspace.
   /// Returns the workspace record if found, null otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<WorkspacesTable?> getWorkspaceById(int id) async {
+  Future<WorkspacesTable?> getWorkspaceById(String id) async {
     try {
       return await _workspaceDao.getWorkspaceById(id);
     } catch (e) {
@@ -64,7 +64,7 @@ class WorkspaceLocalDataSource {
   /// [workspace] The workspace data to insert.
   /// Returns the ID of the inserted workspace.
   /// Throws [Exception] if the database operation fails.
-  Future<int> insertWorkspace(WorkspacesCompanion workspace) async {
+  Future<WorkspacesTable> insertWorkspace(WorkspacesCompanion workspace) async {
     try {
       return await _workspaceDao.insertWorkspace(workspace);
     } catch (e) {
@@ -78,7 +78,7 @@ class WorkspaceLocalDataSource {
   /// [workspace] The updated workspace data.
   /// Returns true if the workspace was updated, false otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<bool> updateWorkspace(int id, WorkspacesCompanion workspace) async {
+  Future<bool> updateWorkspace(String id, WorkspacesCompanion workspace) async {
     try {
       return await _workspaceDao.updateWorkspace(id, workspace);
     } catch (e) {
@@ -91,7 +91,7 @@ class WorkspaceLocalDataSource {
   /// [id] The ID of the workspace to delete.
   /// Returns true if the workspace was deleted, false otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<bool> deleteWorkspace(int id) async {
+  Future<bool> deleteWorkspace(String id) async {
     try {
       return await _workspaceDao.deleteWorkspace(id);
     } catch (e) {
@@ -104,7 +104,7 @@ class WorkspaceLocalDataSource {
   /// [id] The ID of the workspace to check.
   /// Returns true if the workspace exists, false otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<bool> workspaceExists(int id) async {
+  Future<bool> workspaceExists(String id) async {
     try {
       return await _workspaceDao.workspaceExists(id);
     } catch (e) {
@@ -155,7 +155,7 @@ class WorkspaceLocalDataSource {
   /// [id] The ID of the workspace to update.
   /// Returns true if the workspace was updated, false otherwise.
   /// Throws [Exception] if the database operation fails.
-  Future<bool> updateWorkspaceTimestamp(int id) async {
+  Future<bool> updateWorkspaceTimestamp(String id) async {
     try {
       return await _workspaceDao.updateWorkspaceTimestamp(id);
     } catch (e) {

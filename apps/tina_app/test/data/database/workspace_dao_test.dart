@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/drift.dart' hide isNull, isNotNull;
+import 'package:flutter_test/flutter_test.dart';
 import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/domain/enums/workspace_type.dart';
 
@@ -25,14 +25,11 @@ void main() {
       );
 
       // Insert the workspace
-      final idCreated = await workspaceDao.insertWorkspace(workspace);
-
-      // Retrieve the workspace
-      final retrieved = await workspaceDao.getWorkspaceById(idCreated);
+      final retrieved = await workspaceDao.insertWorkspace(workspace);
 
       expect(retrieved, isNotNull);
-      expect(retrieved!.name, equals('Test Workspace'));
-      expect(retrieved.type, equals('local'));
+      expect(retrieved.name, equals('Test Workspace'));
+      expect(retrieved.type, equals(WorkspaceType.local));
       expect(retrieved.url, isNull);
     });
 
@@ -76,7 +73,7 @@ void main() {
 
       // Update the workspace
       final updated = await workspaceDao.updateWorkspace(
-        idCreated,
+        idCreated.id,
         WorkspacesCompanion(
           name: Value('Updated Name'),
           updatedAt: Value(DateTime.now()),
@@ -86,7 +83,7 @@ void main() {
       expect(updated, isTrue);
 
       // Verify the update
-      final retrieved = await workspaceDao.getWorkspaceById(idCreated);
+      final retrieved = await workspaceDao.getWorkspaceById(idCreated.id);
       expect(retrieved!.name, equals('Updated Name'));
     });
 
@@ -102,11 +99,11 @@ void main() {
       );
 
       // Delete the workspace
-      final deleted = await workspaceDao.deleteWorkspace(createdId);
+      final deleted = await workspaceDao.deleteWorkspace(createdId.id);
       expect(deleted, isTrue);
 
       // Verify deletion
-      final retrieved = await workspaceDao.getWorkspaceById(createdId);
+      final retrieved = await workspaceDao.getWorkspaceById(createdId.id);
       expect(retrieved, isNull);
     });
 

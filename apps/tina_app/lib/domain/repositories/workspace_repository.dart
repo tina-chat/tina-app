@@ -12,21 +12,21 @@ abstract class WorkspaceRepository {
   ///
   /// Returns a list of all workspaces ordered by their creation date.
   /// Throws [WorkspaceException] if there's an error retrieving workspaces.
-  Future<List<WorkspaceModel>> getAllWorkspaces();
+  Future<List<WorkspaceEntity>> getAllWorkspaces();
 
   /// Retrieves a workspace by its unique identifier.
   ///
   /// [id] The unique identifier of the workspace to retrieve.
   /// Returns the workspace with the given [id], or null if not found.
   /// Throws [WorkspaceException] if there's an error retrieving the workspace.
-  Future<WorkspaceModel?> getWorkspaceById(int id);
+  Future<WorkspaceEntity?> getWorkspaceById(String id);
 
   /// Retrieves workspaces filtered by their type.
   ///
   /// [type] The type of workspaces to retrieve.
   /// Returns a list of workspaces with the specified [type] ordered by name.
   /// Throws [WorkspaceException] if there's an error retrieving workspaces.
-  Future<List<WorkspaceModel>> getWorkspacesByType(WorkspaceType type);
+  Future<List<WorkspaceEntity>> getWorkspacesByType(WorkspaceType type);
 
   /// Creates a new workspace in the data source.
   ///
@@ -35,7 +35,7 @@ abstract class WorkspaceRepository {
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
   /// Throws [WorkspaceDuplicateException] if a workspace with the same ID already exists.
   /// Throws [WorkspaceException] if there's an error creating the workspace.
-  Future<WorkspaceModel> createWorkspace(WorkspaceToCreate workspace);
+  Future<WorkspaceEntity> createWorkspace(WorkspaceToCreate workspace);
 
   /// Updates an existing workspace in the data source.
   ///
@@ -45,21 +45,24 @@ abstract class WorkspaceRepository {
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
   /// Throws [WorkspaceNotFoundException] if no workspace with the given ID exists.
   /// Throws [WorkspaceException] if there's an error updating the workspace.
-  Future<WorkspaceModel> updateWorkspace(int id, WorkspaceToCreate workspace);
+  Future<WorkspaceEntity> updateWorkspace(
+    String id,
+    WorkspaceToCreate workspace,
+  );
 
   /// Deletes a workspace from the data source.
   ///
   /// [id] The unique identifier of the workspace to delete.
   /// Returns true if the workspace was successfully deleted, false if not found.
   /// Throws [WorkspaceException] if there's an error deleting the workspace.
-  Future<bool> deleteWorkspace(int id);
+  Future<bool> deleteWorkspace(String id);
 
   /// Checks if a workspace with the given ID exists.
   ///
   /// [id] The unique identifier to check.
   /// Returns true if the workspace exists, false otherwise.
   /// Throws [WorkspaceException] if there's an error checking existence.
-  Future<bool> workspaceExists(int id);
+  Future<bool> workspaceExists(String id);
 
   /// Searches for workspaces by name.
   ///
@@ -67,7 +70,7 @@ abstract class WorkspaceRepository {
   /// matches workspaces whose names contain the query.
   /// Returns a list of matching workspaces ordered by name.
   /// Throws [WorkspaceException] if there's an error searching workspaces.
-  Future<List<WorkspaceModel>> searchWorkspacesByName(String query);
+  Future<List<WorkspaceEntity>> searchWorkspacesByName(String query);
 
   /// Gets the total count of all workspaces.
   ///
@@ -94,7 +97,7 @@ abstract class WorkspaceRepository {
   /// [id] The unique identifier of the workspace to update.
   /// Returns true if the workspace was successfully updated, false if not found.
   /// Throws [WorkspaceException] if there's an error updating the timestamp.
-  Future<bool> updateWorkspaceTimestamp(int id);
+  Future<bool> updateWorkspaceTimestamp(String id);
 }
 
 /// Base exception for workspace-related operations.
@@ -122,7 +125,7 @@ class WorkspaceValidationException extends WorkspaceException {
 /// Exception thrown when a workspace is not found.
 class WorkspaceNotFoundException extends WorkspaceException {
   /// ID of the workspace that was not found
-  final int workspaceId;
+  final String workspaceId;
 
   /// Creates a new WorkspaceNotFoundException
   const WorkspaceNotFoundException(this.workspaceId, [Exception? cause])
@@ -132,7 +135,7 @@ class WorkspaceNotFoundException extends WorkspaceException {
 /// Exception thrown when attempting to create a duplicate workspace.
 class WorkspaceDuplicateException extends WorkspaceException {
   /// ID of the duplicate workspace
-  final int workspaceId;
+  final String workspaceId;
 
   /// Creates a new WorkspaceDuplicateException
   const WorkspaceDuplicateException(this.workspaceId, [Exception? cause])

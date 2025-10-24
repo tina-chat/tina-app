@@ -126,7 +126,6 @@ final localWorkspaces = await workspaceDao.getWorkspacesByType(WorkspaceType.loc
 ## Next Steps
 
 1. **Repository Implementation**: Create WorkspaceRepository interface using the DAO
-2. **BLoC Integration**: Integrate with existing BLoC state management
 3. **UI Integration**: Connect database operations to UI components
 4. **Migration Planning**: Prepare for future schema migrations
 5. **Performance Optimization**: Add indexes and query optimization as needed

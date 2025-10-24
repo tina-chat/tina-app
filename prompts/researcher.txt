@@ -137,7 +137,6 @@ Adjust research focus based on topic type:
 - **Code**: Existing package implementations, build scripts, CI/CD patterns
 
 ### State Management & Architecture
-- **External**: BLoC patterns, Clean Architecture, DDD principles
 - **Documentation**: Project's architectural decisions, layer boundaries
 - **Code**: Current state management implementation, service patterns
 

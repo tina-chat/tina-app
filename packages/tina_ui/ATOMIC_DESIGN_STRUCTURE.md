@@ -35,7 +35,6 @@ packages/ui/lib/src/
 - `google_fonts: ^6.2.1` - Inter font family support
 - `flutter_svg: ^2.0.10+1` - SVG icon support
 - `flutter_animate: ^4.5.0` - Animation utilities
-- `flutter_screenutil: ^5.9.3` - Responsive design
 - `flex_color_scheme: ^7.3.1` - Advanced theming
 - `golden_toolkit: ^0.15.0` - Widget testing utilities
 

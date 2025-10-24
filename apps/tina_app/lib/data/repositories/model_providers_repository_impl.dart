@@ -2,8 +2,9 @@ import 'package:drift/drift.dart';
 import 'package:tina_app/domain/entities/chat_models_entities.dart';
 import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/services/model_provider_services/model_provider_services.dart';
-import '../database/drift/app_database.dart';
+
 import '../../domain/repositories/model_providers_repository.dart';
+import '../database/drift/app_database.dart';
 
 /// Implementation of the [WorkspaceRepository] interface.
 ///
@@ -30,19 +31,11 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
       throw ModelProviderNotModelsException(workspace.type);
     }
 
-    final createdId = await _database.modelProvidersDao.insertModelProvider(
-      _modelProviderToCreateToCompanion(workspace),
-    );
-
     final createdChatModel = await _database.modelProvidersDao
-        .getModelProviderById(createdId);
-
-    if (createdChatModel == null) {
-      throw ModelProviderNotFoundException(createdId);
-    }
+        .insertModelProvider(_modelProviderToCreateToCompanion(workspace));
 
     final chatModels = models
-        .map((model) => model.copyWith(modelProvider: createdChatModel.id))
+        .map((model) => model.copyWith(modelProviderId: createdChatModel.id))
         .toList();
 
     await _database.chatModelsDao.insertChatModels(
@@ -73,7 +66,7 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
       type: Value(workspace.type),
       keyValue: Value(workspace.key),
       url: Value(workspace.url),
-      workspace: Value(workspace.workspaceId),
+      workspaceId: Value(workspace.workspaceId),
     );
   }
 
@@ -88,7 +81,7 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
       url: chatModel.url,
       createdAt: chatModel.createdAt,
       updatedAt: chatModel.updatedAt,
-      workspaceId: chatModel.workspace,
+      workspaceId: chatModel.workspaceId,
     );
   }
 
@@ -98,7 +91,7 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
     return ChatModelsCompanion(
       displayName: Value(chatModel.displayName),
       modelId: Value(chatModel.modelId),
-      modelProvider: Value(chatModel.modelProvider),
+      modelProviderId: Value(chatModel.modelProviderId),
       modelType: Value(chatModel.modelType),
     );
   }

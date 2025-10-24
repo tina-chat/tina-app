@@ -5,13 +5,11 @@ Tina is a privacy-first AI assistant that provides users with complete control o
 
 ## Tech Stack
 - **Framework**: Flutter with Dart SDK ^3.9.0
-- **State Management**: BLoC pattern with flutter_bloc
 - **Architecture**: Clean Architecture with layered approach
 - **Package Management**: Melos for monorepo management
 - **Code Generation**: build_runner for JSON serialization and other generated code
 - **UI Components**: Custom tina_ui package with atomic design
 - **Navigation**: go_router for declarative routing
-- **Networking**: dio for HTTP client, http for basic requests
 - **Local Storage**: shared_preferences (current), adding Drift for database
 - **Serialization**: json_annotation with json_serializable
 

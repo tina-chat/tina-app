@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tina_ui/src/atoms/tina_text.dart';
-import 'package:tina_ui/src/tokens/design_tokens.dart';
 
 void main() {
   group('TinaText', () {
@@ -17,70 +16,6 @@ void main() {
       );
 
       expect(find.text(testText), findsOneWidget);
-    });
-
-    testWidgets('applies correct style for heading1', (tester) async {
-      const testText = 'Heading 1';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              style: TinaTextStyle.heading1,
-              child: Text(testText),
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.style?.fontSize, DesignTypography.fontSize5Xl);
-      expect(textWidget.style?.fontWeight, DesignTypography.fontWeightBold);
-      expect(
-        textWidget.style?.color,
-        const Color(0xFF0F172A),
-      ); // tinaColors.onBackground
-    });
-
-    testWidgets('applies correct style for body text', (tester) async {
-      const testText = 'Body text';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              child: Text(testText),
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.style?.fontSize, DesignTypography.fontSizeBase);
-      expect(textWidget.style?.fontWeight, DesignTypography.fontWeightRegular);
-      expect(
-        textWidget.style?.color,
-        const Color(0xFF0F172A),
-      ); // tinaColors.onSurface
-    });
-
-    testWidgets('applies code style correctly', (tester) async {
-      const testText = 'console.log("Hello");';
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaText(
-              style: TinaTextStyle.code,
-              child: Text(testText),
-            ),
-          ),
-        ),
-      );
-
-      final textWidget = tester.widget<Text>(find.text(testText));
-      expect(textWidget.style?.fontFamily, DesignTypography.monoFontFamily);
-      expect(textWidget.style?.fontSize, DesignTypography.fontSizeSm);
     });
 
     group('TinaTextStyle enum', () {

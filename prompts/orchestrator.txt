@@ -62,7 +62,6 @@ You handle all implementation directly:
 - **Widget Development**: Create reusable widgets and UI components
 - **Design System**: Add components to packages/tina_ui when needed
 - **Database Work**: Implement Drift schemas and data access
-- **State Management**: Use BLoC pattern following project conventions
 
 ### 5. Operations Phase
 Delegate technical operations:
@@ -96,7 +95,6 @@ Delegate to @dart-ops for all package management operations:
 
 ### App Development
 - Follow existing patterns in apps/tina_app
-- Use BLoC for state management
 - Implement proper navigation
 - Follow project code style
 

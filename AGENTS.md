@@ -30,7 +30,7 @@ fvm flutter pub add dev:package_name
 fvm flutter pub add package_name:^1.0.0
 
 # Examples:
-fvm flutter pub add flutter_bloc dio flutter_markdown equatable
+fvm flutter pub add riverpod dio flutter_markdown
 fvm flutter pub add dev:build_runner dev:json_serializable
 ```
 

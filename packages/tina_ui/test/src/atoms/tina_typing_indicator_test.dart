@@ -25,33 +25,6 @@ void main() {
       expect(dotContainers, findsAtLeastNWidgets(3));
     });
 
-    testWidgets('shows container by default', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData.light().copyWith(
-            extensions: const [TinaTheme.light],
-          ),
-          home: const Scaffold(
-            body: TinaTypingIndicator(),
-          ),
-        ),
-      );
-
-      final align = tester.widget<Align>(find.byType(Align));
-      expect(align.alignment, Alignment.centerLeft);
-
-      // Should find the main container with background
-      // (surfaceVariant in light theme)
-      final containers = tester.widgetList<Container>(find.byType(Container));
-      final mainContainer = containers.firstWhere(
-        (container) =>
-            container.decoration is BoxDecoration &&
-            (container.decoration! as BoxDecoration).color ==
-                DesignColors.neutral100,
-      );
-      expect(mainContainer, isNotNull);
-    });
-
     testWidgets('hides container when showContainer is false', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(

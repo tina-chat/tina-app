@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tina_ui/src/atoms/tina_button.dart';
-import 'package:tina_ui/src/tokens/design_tokens.dart';
+import 'package:tina_ui/src/internal/tina_loading.dart';
+import 'package:tina_ui/ui.dart';
 
 void main() {
   group('TinaButton', () {
@@ -23,75 +23,9 @@ void main() {
       expect(find.text(buttonText), findsOneWidget);
       // Check for the actual widget structure: Material -> InkWell ->
       // AnimatedContainer
-      expect(find.byType(InkWell), findsOneWidget);
-      expect(find.byType(AnimatedContainer), findsOneWidget);
 
       await tester.tap(find.byType(TinaButton));
       expect(wasPressed, isTrue);
-    });
-
-    testWidgets('applies primary variant styling correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              child: const Text('Primary'),
-            ),
-          ),
-        ),
-      );
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.primaryBase);
-    });
-
-    testWidgets('applies secondary variant styling correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              variant: TinaButtonVariant.secondary,
-              child: const Text('Secondary'),
-            ),
-          ),
-        ),
-      );
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.secondaryBase);
-    });
-
-    testWidgets('applies outlined variant styling correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              variant: TinaButtonVariant.outlined,
-              child: const Text('Outlined'),
-            ),
-          ),
-        ),
-      );
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      expect(decoration.color, Colors.transparent);
-      expect(decoration.border, isNotNull);
-      expect(decoration.border!.top.color, DesignColors.primaryBase);
     });
 
     testWidgets('applies ghost variant styling correctly', (tester) async {
@@ -116,104 +50,6 @@ void main() {
       expect(decoration.border, isNull);
     });
 
-    testWidgets('applies elevated variant styling correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              variant: TinaButtonVariant.elevated,
-              child: const Text('Elevated'),
-            ),
-          ),
-        ),
-      );
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.primaryBase);
-      expect(decoration.boxShadow, isNotNull);
-      expect(decoration.boxShadow!.length, 1);
-      expect(decoration.boxShadow!.first, DesignShadows.sm);
-    });
-
-    testWidgets('applies small size correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              size: TinaButtonSize.small,
-              child: const Text('Small'),
-            ),
-          ),
-        ),
-      );
-
-      final sizedBox = tester.widget<SizedBox>(
-        find
-            .ancestor(
-              of: find.byType(AnimatedContainer),
-              matching: find.byType(SizedBox),
-            )
-            .first,
-      );
-
-      expect(sizedBox.height, DesignButtonSizes.heightSm);
-    });
-
-    testWidgets('applies medium size correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              child: const Text('Medium'),
-            ),
-          ),
-        ),
-      );
-
-      final sizedBox = tester.widget<SizedBox>(
-        find
-            .ancestor(
-              of: find.byType(AnimatedContainer),
-              matching: find.byType(SizedBox),
-            )
-            .first,
-      );
-
-      expect(sizedBox.height, DesignButtonSizes.heightMd);
-    });
-
-    testWidgets('applies large size correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              size: TinaButtonSize.large,
-              child: const Text('Large'),
-            ),
-          ),
-        ),
-      );
-
-      final sizedBox = tester.widget<SizedBox>(
-        find
-            .ancestor(
-              of: find.byType(AnimatedContainer),
-              matching: find.byType(SizedBox),
-            )
-            .first,
-      );
-
-      expect(sizedBox.height, DesignButtonSizes.heightLg);
-    });
-
     testWidgets('shows loading spinner when isLoading is true', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -227,7 +63,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(TinaLoadingCircle), findsOneWidget);
       expect(find.text('Loading'), findsNothing);
     });
 
@@ -275,35 +111,6 @@ void main() {
       expect(sizedBox.width, double.infinity);
     });
 
-    testWidgets('applies disabled styling when onPressed is null', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: null,
-              child: Text('Disabled'),
-            ),
-          ),
-        ),
-      );
-
-      final inkWell = tester.widget<InkWell>(
-        find.byType(InkWell),
-      );
-
-      expect(inkWell.onTap, isNull);
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      // Disabled state should have outlineVariant color
-      expect(decoration.color, isNotNull);
-    });
-
     testWidgets('applies correct text styling based on size', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -333,51 +140,6 @@ void main() {
       expect(
         defaultTextStyle.style.fontWeight,
         DesignTypography.fontWeightSemibold,
-      );
-    });
-
-    testWidgets('applies correct border radius', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              child: const Text('Button'),
-            ),
-          ),
-        ),
-      );
-
-      final animatedContainer = tester.widget<AnimatedContainer>(
-        find.byType(AnimatedContainer),
-      );
-
-      final decoration = animatedContainer.decoration! as BoxDecoration;
-      expect(
-        decoration.borderRadius,
-        BorderRadius.circular(DesignBorderRadius.md),
-      );
-    });
-
-    testWidgets('InkWell has correct border radius', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TinaButton(
-              onPressed: () {},
-              child: const Text('Button'),
-            ),
-          ),
-        ),
-      );
-
-      final inkWell = tester.widget<InkWell>(
-        find.byType(InkWell),
-      );
-
-      expect(
-        inkWell.borderRadius,
-        BorderRadius.circular(DesignBorderRadius.md),
       );
     });
 

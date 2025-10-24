@@ -10,7 +10,7 @@ import 'widgets/tina_sidebar.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MainLocale.ensureInitialized();
-  runApp(ProviderScope(child: MainLocale(child: MyApp())));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,15 +19,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Portal(
-      child: MaterialApp.router(
-        title: 'Tina App',
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
-          useMaterial3: true,
+      child: ProviderScope(
+        child: MainLocale(
+          child: MaterialApp.router(
+            title: 'Tina App',
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF2563EB),
+              ),
+              useMaterial3: true,
+            ),
+            routerConfig: _router,
+          ),
         ),
-        routerConfig: _router,
       ),
     );
   }
