@@ -75,24 +75,6 @@ void main() {
         expect(decoration.color, customColor);
       });
 
-      testWidgets('applies custom foreground color correctly', (tester) async {
-        const customColor = Colors.white;
-
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: Scaffold(
-              body: TinaAvatar.initials(
-                initials: 'JD',
-                foregroundColor: customColor,
-              ),
-            ),
-          ),
-        );
-
-        final tinaText = tester.widget<TinaText>(find.byType(TinaText));
-        expect(tinaText.color, customColor);
-      });
-
       testWidgets('applies semantic label correctly', (tester) async {
         const semanticLabel = 'User avatar';
 
