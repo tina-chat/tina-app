@@ -51,7 +51,7 @@ abstract class ConversationRepository {
   /// Throws [ConversationException] if there's an error updating the conversation.
   Future<ConversationEntity> updateConversation(
     String id,
-    ConversationToCreate conversation,
+    ConversationToUpdate conversation,
   );
 
   /// Deletes a conversation from the data source.

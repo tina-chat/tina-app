@@ -156,21 +156,13 @@ class MessageRepositoryImpl implements MessageRepository {
         message,
         forUpdate: true,
       );
-      final updated = await _database.messageDao.updateMessage(
+      final updatedMessage = await _database.messageDao.updateMessage(
         id,
         messageCompanion,
       );
 
-      if (!updated) {
-        throw MessageException('Failed to update message with ID $id');
-      }
-
-      final updatedMessage = await _database.messageDao.getMessageById(id);
-
       if (updatedMessage == null) {
-        throw MessageException(
-          'Failed to retrieve updated message with ID $id',
-        );
+        throw MessageException('Failed to update message with ID $id');
       }
 
       return _mapToMessage(updatedMessage);
@@ -178,6 +170,13 @@ class MessageRepositoryImpl implements MessageRepository {
       if (e is MessageException) rethrow;
       throw MessageException('Failed to update message', e as Exception);
     }
+  }
+
+  @override
+  Future<MessageEntity?> appendToMessage(String id, String delta) {
+    return _database.messageDao
+        .concatMessage(id, delta)
+        .then((value) async => value != null ? _mapToMessage(value) : null);
   }
 
   @override
@@ -285,9 +284,7 @@ class MessageRepositoryImpl implements MessageRepository {
       content: Value(message.content),
       messageType: Value(_messageTypeToTableType(message.messageType)),
       isUser: Value(message.isUser),
-      status: Value(
-        _messageStatusToTableStatus(message.status ?? MessageStatus.sending),
-      ),
+      status: Value(_messageStatusToTableStatus(message.status)),
       metadata: Value(message.metadata),
     );
   }

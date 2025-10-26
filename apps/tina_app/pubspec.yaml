@@ -51,6 +51,7 @@ dependencies:
   easy_localization: ^3.0.8
   easy_localization_loader: ^2.0.2
   riverpod: ^3.0.3
+  collection: ^1.19.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

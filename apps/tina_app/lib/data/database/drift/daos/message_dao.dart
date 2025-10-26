@@ -16,10 +16,24 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
   Future<MessagesTable?> getMessageById(String id) =>
       (select(messages)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
 
-  Future<bool> updateMessage(String id, MessagesCompanion companion) =>
-      (update(messages)..where((tbl) => tbl.id.equals(id)))
-          .write(companion)
-          .then((count) => count > 0);
+  Future<MessagesTable?> updateMessage(
+    String id,
+    MessagesCompanion companion,
+  ) => (update(messages)..where((tbl) => tbl.id.equals(id)))
+      .writeReturning(companion)
+      .then((tables) => tables.firstOrNull);
+
+  Future<MessagesTable?> concatMessage(String id, String delta) {
+    return transaction(() async {
+      final message = await (select(
+        messages,
+      )..where((tbl) => tbl.id.equals(id))).getSingle();
+      final updatedMessage = message
+          .copyWith(content: message.content + delta)
+          .toCompanion(true);
+      return updateMessage(id, updatedMessage);
+    });
+  }
 
   Future<bool> deleteMessage(String id) => (delete(
     messages,

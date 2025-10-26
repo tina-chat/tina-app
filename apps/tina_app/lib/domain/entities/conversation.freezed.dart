@@ -303,8 +303,7 @@ as DateTime,
 /// @nodoc
 mixin _$ConversationToCreate {
 
-/// Unique identifier for the conversation
- String get id;/// Human-readable title of the conversation
+/// Human-readable title of the conversation
  String get title;/// ID of the workspace this conversation belongs to
  String get workspaceId;/// ID of the AI model used for this conversation
  String? get modelId;/// Whether this conversation is pinned
@@ -319,16 +318,16 @@ $ConversationToCreateCopyWith<ConversationToCreate> get copyWith => _$Conversati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConversationToCreate&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConversationToCreate&&(identical(other.title, title) || other.title == title)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,workspaceId,modelId,isPinned);
+int get hashCode => Object.hash(runtimeType,title,workspaceId,modelId,isPinned);
 
 @override
 String toString() {
-  return 'ConversationToCreate(id: $id, title: $title, workspaceId: $workspaceId, modelId: $modelId, isPinned: $isPinned)';
+  return 'ConversationToCreate(title: $title, workspaceId: $workspaceId, modelId: $modelId, isPinned: $isPinned)';
 }
 
 
@@ -339,7 +338,7 @@ abstract mixin class $ConversationToCreateCopyWith<$Res>  {
   factory $ConversationToCreateCopyWith(ConversationToCreate value, $Res Function(ConversationToCreate) _then) = _$ConversationToCreateCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String workspaceId, String? modelId, bool? isPinned
+ String title, String workspaceId, String? modelId, bool? isPinned
 });
 
 
@@ -356,10 +355,9 @@ class _$ConversationToCreateCopyWithImpl<$Res>
 
 /// Create a copy of ConversationToCreate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? workspaceId = null,Object? modelId = freezed,Object? isPinned = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? workspaceId = null,Object? modelId = freezed,Object? isPinned = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,modelId: freezed == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String?,isPinned: freezed == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
@@ -448,10 +446,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String workspaceId,  String? modelId,  bool? isPinned)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String workspaceId,  String? modelId,  bool? isPinned)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ConversationToCreate() when $default != null:
-return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
+return $default(_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
   return orElse();
 
 }
@@ -469,10 +467,10 @@ return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPin
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String workspaceId,  String? modelId,  bool? isPinned)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String workspaceId,  String? modelId,  bool? isPinned)  $default,) {final _that = this;
 switch (_that) {
 case _ConversationToCreate():
-return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
+return $default(_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -489,10 +487,10 @@ return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPin
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String workspaceId,  String? modelId,  bool? isPinned)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String workspaceId,  String? modelId,  bool? isPinned)?  $default,) {final _that = this;
 switch (_that) {
 case _ConversationToCreate() when $default != null:
-return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
+return $default(_that.title,_that.workspaceId,_that.modelId,_that.isPinned);case _:
   return null;
 
 }
@@ -504,11 +502,9 @@ return $default(_that.id,_that.title,_that.workspaceId,_that.modelId,_that.isPin
 
 
 class _ConversationToCreate extends ConversationToCreate {
-  const _ConversationToCreate({required this.id, required this.title, required this.workspaceId, this.modelId, this.isPinned}): super._();
+  const _ConversationToCreate({required this.title, required this.workspaceId, this.modelId, this.isPinned}): super._();
   
 
-/// Unique identifier for the conversation
-@override final  String id;
 /// Human-readable title of the conversation
 @override final  String title;
 /// ID of the workspace this conversation belongs to
@@ -528,16 +524,16 @@ _$ConversationToCreateCopyWith<_ConversationToCreate> get copyWith => __$Convers
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConversationToCreate&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConversationToCreate&&(identical(other.title, title) || other.title == title)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,workspaceId,modelId,isPinned);
+int get hashCode => Object.hash(runtimeType,title,workspaceId,modelId,isPinned);
 
 @override
 String toString() {
-  return 'ConversationToCreate(id: $id, title: $title, workspaceId: $workspaceId, modelId: $modelId, isPinned: $isPinned)';
+  return 'ConversationToCreate(title: $title, workspaceId: $workspaceId, modelId: $modelId, isPinned: $isPinned)';
 }
 
 
@@ -548,7 +544,7 @@ abstract mixin class _$ConversationToCreateCopyWith<$Res> implements $Conversati
   factory _$ConversationToCreateCopyWith(_ConversationToCreate value, $Res Function(_ConversationToCreate) _then) = __$ConversationToCreateCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String workspaceId, String? modelId, bool? isPinned
+ String title, String workspaceId, String? modelId, bool? isPinned
 });
 
 
@@ -565,12 +561,280 @@ class __$ConversationToCreateCopyWithImpl<$Res>
 
 /// Create a copy of ConversationToCreate
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? workspaceId = null,Object? modelId = freezed,Object? isPinned = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? workspaceId = null,Object? modelId = freezed,Object? isPinned = freezed,}) {
   return _then(_ConversationToCreate(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,modelId: freezed == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
+as String?,isPinned: freezed == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
+as bool?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$ConversationToUpdate {
+
+/// Human-readable title of the conversation
+ String? get title;/// ID of the AI model used for this conversation
+ String? get modelId;/// Whether this conversation is pinned
+ bool? get isPinned;
+/// Create a copy of ConversationToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ConversationToUpdateCopyWith<ConversationToUpdate> get copyWith => _$ConversationToUpdateCopyWithImpl<ConversationToUpdate>(this as ConversationToUpdate, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConversationToUpdate&&(identical(other.title, title) || other.title == title)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,title,modelId,isPinned);
+
+@override
+String toString() {
+  return 'ConversationToUpdate(title: $title, modelId: $modelId, isPinned: $isPinned)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ConversationToUpdateCopyWith<$Res>  {
+  factory $ConversationToUpdateCopyWith(ConversationToUpdate value, $Res Function(ConversationToUpdate) _then) = _$ConversationToUpdateCopyWithImpl;
+@useResult
+$Res call({
+ String? title, String? modelId, bool? isPinned
+});
+
+
+
+
+}
+/// @nodoc
+class _$ConversationToUpdateCopyWithImpl<$Res>
+    implements $ConversationToUpdateCopyWith<$Res> {
+  _$ConversationToUpdateCopyWithImpl(this._self, this._then);
+
+  final ConversationToUpdate _self;
+  final $Res Function(ConversationToUpdate) _then;
+
+/// Create a copy of ConversationToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? title = freezed,Object? modelId = freezed,Object? isPinned = freezed,}) {
+  return _then(_self.copyWith(
+title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,modelId: freezed == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
+as String?,isPinned: freezed == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
+as bool?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ConversationToUpdate].
+extension ConversationToUpdatePatterns on ConversationToUpdate {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ConversationToUpdate value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ConversationToUpdate() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ConversationToUpdate value)  $default,){
+final _that = this;
+switch (_that) {
+case _ConversationToUpdate():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ConversationToUpdate value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ConversationToUpdate() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? title,  String? modelId,  bool? isPinned)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ConversationToUpdate() when $default != null:
+return $default(_that.title,_that.modelId,_that.isPinned);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? title,  String? modelId,  bool? isPinned)  $default,) {final _that = this;
+switch (_that) {
+case _ConversationToUpdate():
+return $default(_that.title,_that.modelId,_that.isPinned);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? title,  String? modelId,  bool? isPinned)?  $default,) {final _that = this;
+switch (_that) {
+case _ConversationToUpdate() when $default != null:
+return $default(_that.title,_that.modelId,_that.isPinned);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _ConversationToUpdate extends ConversationToUpdate {
+  const _ConversationToUpdate({this.title, this.modelId, this.isPinned}): super._();
+  
+
+/// Human-readable title of the conversation
+@override final  String? title;
+/// ID of the AI model used for this conversation
+@override final  String? modelId;
+/// Whether this conversation is pinned
+@override final  bool? isPinned;
+
+/// Create a copy of ConversationToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ConversationToUpdateCopyWith<_ConversationToUpdate> get copyWith => __$ConversationToUpdateCopyWithImpl<_ConversationToUpdate>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConversationToUpdate&&(identical(other.title, title) || other.title == title)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,title,modelId,isPinned);
+
+@override
+String toString() {
+  return 'ConversationToUpdate(title: $title, modelId: $modelId, isPinned: $isPinned)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ConversationToUpdateCopyWith<$Res> implements $ConversationToUpdateCopyWith<$Res> {
+  factory _$ConversationToUpdateCopyWith(_ConversationToUpdate value, $Res Function(_ConversationToUpdate) _then) = __$ConversationToUpdateCopyWithImpl;
+@override @useResult
+$Res call({
+ String? title, String? modelId, bool? isPinned
+});
+
+
+
+
+}
+/// @nodoc
+class __$ConversationToUpdateCopyWithImpl<$Res>
+    implements _$ConversationToUpdateCopyWith<$Res> {
+  __$ConversationToUpdateCopyWithImpl(this._self, this._then);
+
+  final _ConversationToUpdate _self;
+  final $Res Function(_ConversationToUpdate) _then;
+
+/// Create a copy of ConversationToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? title = freezed,Object? modelId = freezed,Object? isPinned = freezed,}) {
+  return _then(_ConversationToUpdate(
+title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,modelId: freezed == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String?,isPinned: freezed == isPinned ? _self.isPinned : isPinned // ignore: cast_nullable_to_non_nullable
 as bool?,
   ));
@@ -886,7 +1150,7 @@ mixin _$MessageToCreate {
  String get content;/// Type of the message
  MessageType get messageType;/// Whether this message was sent by the user
  bool get isUser;/// Additional metadata for the message (JSON)
- String? get metadata; MessageStatus? get status;
+ String? get metadata; MessageStatus get status;
 /// Create a copy of MessageToCreate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -917,7 +1181,7 @@ abstract mixin class $MessageToCreateCopyWith<$Res>  {
   factory $MessageToCreateCopyWith(MessageToCreate value, $Res Function(MessageToCreate) _then) = _$MessageToCreateCopyWithImpl;
 @useResult
 $Res call({
- String conversationId, String content, MessageType messageType, bool isUser, String? metadata, MessageStatus? status
+ String conversationId, String content, MessageType messageType, bool isUser, String? metadata, MessageStatus status
 });
 
 
@@ -934,15 +1198,15 @@ class _$MessageToCreateCopyWithImpl<$Res>
 
 /// Create a copy of MessageToCreate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? conversationId = null,Object? content = null,Object? messageType = null,Object? isUser = null,Object? metadata = freezed,Object? status = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? conversationId = null,Object? content = null,Object? messageType = null,Object? isUser = null,Object? metadata = freezed,Object? status = null,}) {
   return _then(_self.copyWith(
 conversationId: null == conversationId ? _self.conversationId : conversationId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,messageType: null == messageType ? _self.messageType : messageType // ignore: cast_nullable_to_non_nullable
 as MessageType,isUser: null == isUser ? _self.isUser : isUser // ignore: cast_nullable_to_non_nullable
 as bool,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MessageStatus?,
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageStatus,
   ));
 }
 
@@ -1027,7 +1291,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus? status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageToCreate() when $default != null:
 return $default(_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.metadata,_that.status);case _:
@@ -1048,7 +1312,7 @@ return $default(_that.conversationId,_that.content,_that.messageType,_that.isUse
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus? status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _MessageToCreate():
 return $default(_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.metadata,_that.status);case _:
@@ -1068,7 +1332,7 @@ return $default(_that.conversationId,_that.content,_that.messageType,_that.isUse
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus? status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String conversationId,  String content,  MessageType messageType,  bool isUser,  String? metadata,  MessageStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageToCreate() when $default != null:
 return $default(_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.metadata,_that.status);case _:
@@ -1083,7 +1347,7 @@ return $default(_that.conversationId,_that.content,_that.messageType,_that.isUse
 
 
 class _MessageToCreate extends MessageToCreate {
-  const _MessageToCreate({required this.conversationId, required this.content, required this.messageType, required this.isUser, this.metadata, this.status}): super._();
+  const _MessageToCreate({required this.conversationId, required this.content, required this.messageType, required this.isUser, this.metadata, required this.status}): super._();
   
 
 /// ID of the conversation this message belongs to
@@ -1096,7 +1360,7 @@ class _MessageToCreate extends MessageToCreate {
 @override final  bool isUser;
 /// Additional metadata for the message (JSON)
 @override final  String? metadata;
-@override final  MessageStatus? status;
+@override final  MessageStatus status;
 
 /// Create a copy of MessageToCreate
 /// with the given fields replaced by the non-null parameter values.
@@ -1128,7 +1392,7 @@ abstract mixin class _$MessageToCreateCopyWith<$Res> implements $MessageToCreate
   factory _$MessageToCreateCopyWith(_MessageToCreate value, $Res Function(_MessageToCreate) _then) = __$MessageToCreateCopyWithImpl;
 @override @useResult
 $Res call({
- String conversationId, String content, MessageType messageType, bool isUser, String? metadata, MessageStatus? status
+ String conversationId, String content, MessageType messageType, bool isUser, String? metadata, MessageStatus status
 });
 
 
@@ -1145,15 +1409,15 @@ class __$MessageToCreateCopyWithImpl<$Res>
 
 /// Create a copy of MessageToCreate
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? conversationId = null,Object? content = null,Object? messageType = null,Object? isUser = null,Object? metadata = freezed,Object? status = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? conversationId = null,Object? content = null,Object? messageType = null,Object? isUser = null,Object? metadata = freezed,Object? status = null,}) {
   return _then(_MessageToCreate(
 conversationId: null == conversationId ? _self.conversationId : conversationId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,messageType: null == messageType ? _self.messageType : messageType // ignore: cast_nullable_to_non_nullable
 as MessageType,isUser: null == isUser ? _self.isUser : isUser // ignore: cast_nullable_to_non_nullable
 as bool,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MessageStatus?,
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageStatus,
   ));
 }
 

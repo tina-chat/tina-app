@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tina_app/domain/entities/chat_entities.dart';
-import 'package:tina_app/features/chats/providers/chat_providers.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
+import 'package:tina_app/features/chats/providers/conversation_providers.dart';
 import 'package:tina_app/router/app_router.dart';
 import 'package:tina_ui/ui.dart';
 
@@ -10,7 +10,7 @@ class ChatListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatListAsync = ref.watch(chatListProvider);
+    final chatListAsync = ref.watch(conversationsListProvider);
 
     return switch (chatListAsync) {
       AsyncData(value: final chats) => () {
@@ -71,7 +71,7 @@ class ChatListWidget extends ConsumerWidget {
 class _ChatTile extends StatelessWidget {
   const _ChatTile({required this.chat});
 
-  final ChatEntity chat;
+  final ConversationEntity chat;
 
   @override
   Widget build(BuildContext context) {
@@ -132,18 +132,6 @@ class _ChatTile extends StatelessWidget {
               ],
             ],
           ),
-          if (chat.lastMessage != null) ...[
-            const SizedBox(height: 8),
-            TinaText(
-              style: TinaTextStyle.bodySmall,
-              color: TinaTextColor.onSurfaceVariant,
-              child: Text(
-                chat.lastMessage!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
         ],
       ),
     );

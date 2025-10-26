@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tina_app/features/chats/providers/chat_providers.dart';
+import 'package:tina_app/domain/enums/message_types.dart';
+import 'package:tina_app/features/chats/providers/messages_providers.dart';
 import 'package:tina_app/features/chats/widgets/chat_input_widget.dart';
 import 'package:tina_app/features/chats/widgets/chat_messages_widget.dart';
 import 'package:tina_app/features/models/widgets/select_chat_model.dart';
 import 'package:tina_app/widgets/app_error.dart';
 import 'package:tina_ui/ui.dart';
 
-class ChatConversationScreen extends ConsumerStatefulWidget {
-  const ChatConversationScreen({super.key, this.chatId});
+class ChatConversationScreen extends ConsumerWidget {
+  const ChatConversationScreen({super.key, required this.chatId});
 
-  final String? chatId;
+  final String chatId;
 
   @override
-  ConsumerState<ChatConversationScreen> createState() =>
-      _ChatConversationScreenState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ProviderScope(
+      overrides: [conversationSelectedProvider.overrideWithValue(chatId)],
+      child: _ChatConversationScreen(),
+    );
+  }
 }
 
-class _ChatConversationScreenState
-    extends ConsumerState<ChatConversationScreen> {
-  String? _selectedModelId;
-
+class _ChatConversationScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final messagesAsync = ref.watch(chatMessagesProvider(widget.chatId));
+  Widget build(BuildContext context, ref) {
+    final messagesAsync = ref.watch(chatMessagesProvider);
+
+    final modelId = ref.watch(
+      conversationChatProvider.select((c) => c.value?.modelId),
+    );
 
     return TinaScreen(
       appBar: TinaAppBar(
@@ -35,7 +41,12 @@ class _ChatConversationScreenState
             },
           ),
         ],
-        footer: SelectChatModelWidget(),
+        footer: SelectChatModelWidget(
+          chatModelId: modelId,
+          selectChatModelId: ref
+              .watch(conversationChatProvider.notifier)
+              .setModel,
+        ),
       ),
       child: switch (messagesAsync) {
         AsyncData(value: final messages) => Column(
@@ -44,19 +55,11 @@ class _ChatConversationScreenState
             ChatInputWidget(
               onSendMessage: (message) {
                 ref
-                    .read(chatMessagesProvider(widget.chatId).notifier)
-                    .addMessage(message, true, modelId: _selectedModelId);
-
-                // Simulate AI response
-                Future.delayed(const Duration(seconds: 1), () {
-                  ref
-                      .read(chatMessagesProvider(widget.chatId).notifier)
-                      .addMessage(
-                        'This is a mock AI response to: "$message"',
-                        false,
-                        modelId: _selectedModelId,
-                      );
-                });
+                    .read(chatMessagesProvider.notifier)
+                    .addMessage(
+                      content: message,
+                      messageType: MessageType.text,
+                    );
               },
             ),
           ],

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tina_app/domain/entities/chat_entities.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
+import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_ui/ui.dart';
 
 class ChatMessagesWidget extends StatelessWidget {
   const ChatMessagesWidget({super.key, required this.messages});
 
-  final List<ChatMessageEntity> messages;
+  final List<MessageEntity> messages;
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +25,13 @@ class ChatMessagesWidget extends StatelessWidget {
     );
   }
 
-  TinaMessageDeliveryStatus _mapMessageStatus(ChatMessageStatus status) {
-    switch (status) {
-      case ChatMessageStatus.sending:
-        return TinaMessageDeliveryStatus.sending;
-      case ChatMessageStatus.sent:
-        return TinaMessageDeliveryStatus.sent;
-      case ChatMessageStatus.delivered:
-        return TinaMessageDeliveryStatus.delivered;
-      case ChatMessageStatus.read:
-        return TinaMessageDeliveryStatus.read;
-      case ChatMessageStatus.error:
-        return TinaMessageDeliveryStatus.error;
-    }
+  TinaMessageDeliveryStatus _mapMessageStatus(MessageStatus status) {
+    return switch (status) {
+      MessageStatus.sending => TinaMessageDeliveryStatus.sending,
+      MessageStatus.sent => TinaMessageDeliveryStatus.sent,
+      MessageStatus.delivered => TinaMessageDeliveryStatus.delivered,
+      MessageStatus.read => TinaMessageDeliveryStatus.read,
+      MessageStatus.error => TinaMessageDeliveryStatus.error,
+    };
   }
 }

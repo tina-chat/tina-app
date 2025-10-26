@@ -95,11 +95,11 @@ class ConversationRepositoryImpl implements ConversationRepository {
   @override
   Future<ConversationEntity> updateConversation(
     String id,
-    ConversationToCreate conversation,
+    ConversationToUpdate conversation,
   ) async {
     try {
       // Validate conversation before updating
-      if (!await validateConversation(conversation)) {
+      if (!_validateConversationUpdate(conversation)) {
         throw const ConversationValidationException(
           'Invalid conversation data',
         );
@@ -110,9 +110,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
         throw ConversationNotFoundException(id);
       }
 
-      final conversationCompanion = _mapToConversationsCompanion(
+      final conversationCompanion = _mapUpdateToConversationsCompanion(
         conversation,
-        forUpdate: true,
       );
       final updated = await _database.conversationDao.updateConversation(
         id,
@@ -223,6 +222,23 @@ class ConversationRepositoryImpl implements ConversationRepository {
     }
   }
 
+  bool _validateConversationUpdate(ConversationToUpdate conversation) {
+    try {
+      if (!conversation.isValid) {
+        throw ConversationValidationException(
+          _getValidationErrorToUpdate(conversation),
+        );
+      }
+      return true;
+    } catch (e) {
+      if (e is ConversationValidationException) rethrow;
+      throw ConversationValidationException(
+        'Conversation validation failed',
+        e as Exception,
+      );
+    }
+  }
+
   @override
   Future<bool> updateConversationTimestamp(String id) async {
     try {
@@ -266,15 +282,23 @@ class ConversationRepositoryImpl implements ConversationRepository {
   /// [forUpdate] Whether this mapping is for an update operation.
   /// Returns the corresponding [ConversationsCompanion].
   ConversationsCompanion _mapToConversationsCompanion(
-    ConversationToCreate conversation, {
-    bool forUpdate = false,
-  }) {
+    ConversationToCreate conversation,
+  ) {
     return ConversationsCompanion(
-      id: forUpdate ? const Value.absent() : Value(conversation.id),
       title: Value(conversation.title),
       workspaceId: Value(conversation.workspaceId),
       modelId: Value(conversation.modelId),
       isPinned: Value(conversation.isPinned ?? false),
+    );
+  }
+
+  ConversationsCompanion _mapUpdateToConversationsCompanion(
+    ConversationToUpdate conversation,
+  ) {
+    return ConversationsCompanion(
+      title: Value.absentIfNull(conversation.title!),
+      modelId: Value.absentIfNull(conversation.modelId),
+      isPinned: Value.absentIfNull(conversation.isPinned),
     );
   }
 
@@ -285,6 +309,20 @@ class ConversationRepositoryImpl implements ConversationRepository {
   String _getValidationErrorToCreate(ConversationToCreate conversation) {
     if (conversation.title.isEmpty) return 'Conversation title cannot be empty';
     if (conversation.workspaceId.isEmpty) return 'Workspace ID cannot be empty';
+    return 'Unknown validation error';
+  }
+
+  /// Gets validation error message for a conversation.
+  ///
+  /// [conversation] The conversation to validate.
+  /// Returns a string describing the validation error.
+  String _getValidationErrorToUpdate(ConversationToUpdate conversation) {
+    if (conversation.title != null && conversation.title!.isEmpty) {
+      return 'Conversation title cannot be empty';
+    }
+    if (conversation.modelId != null && conversation.modelId!.isEmpty) {
+      return 'Model ID cannot be empty';
+    }
     return 'Unknown validation error';
   }
 }

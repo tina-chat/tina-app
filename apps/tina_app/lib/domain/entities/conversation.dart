@@ -48,9 +48,6 @@ abstract class ConversationEntity with _$ConversationEntity {
 abstract class ConversationToCreate with _$ConversationToCreate {
   const ConversationToCreate._();
   const factory ConversationToCreate({
-    /// Unique identifier for the conversation
-    required String id,
-
     /// Human-readable title of the conversation
     required String title,
 
@@ -70,6 +67,27 @@ abstract class ConversationToCreate with _$ConversationToCreate {
   /// Returns true if the conversation is in a valid state
   bool get isValid {
     return hasValidTitle && workspaceId.isNotEmpty;
+  }
+}
+
+@freezed
+abstract class ConversationToUpdate with _$ConversationToUpdate {
+  const ConversationToUpdate._();
+  const factory ConversationToUpdate({
+    /// Human-readable title of the conversation
+    final String? title,
+
+    /// ID of the AI model used for this conversation
+    final String? modelId,
+
+    /// Whether this conversation is pinned
+    final bool? isPinned,
+  }) = _ConversationToUpdate;
+
+  bool get isValid {
+    if (title != null && title!.isEmpty) return false;
+    if (modelId != null && modelId!.isEmpty) return false;
+    return title != null || modelId != null || isPinned != null;
   }
 }
 
@@ -140,11 +158,13 @@ abstract class MessageToCreate with _$MessageToCreate {
     /// Additional metadata for the message (JSON)
     final String? metadata,
 
-    final MessageStatus? status,
+    required MessageStatus status,
   }) = _MessageToCreate;
 
   /// Returns true if the message has valid content
-  bool get hasValidContent => content.isNotEmpty;
+  bool get hasValidContent {
+    return !(status == MessageStatus.sent && content.isNotEmpty);
+  }
 
   /// Returns true if the message is in a valid state
   bool get isValid {
