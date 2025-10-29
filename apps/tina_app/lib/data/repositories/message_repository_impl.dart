@@ -139,11 +139,11 @@ class MessageRepositoryImpl implements MessageRepository {
   @override
   Future<MessageEntity> updateMessage(
     String id,
-    MessageToCreate message,
+    MessageToUpdate message,
   ) async {
     try {
       // Validate message before updating
-      if (!await validateMessage(message)) {
+      if (!await _validateMessageToUpdate(message)) {
         throw const MessageValidationException('Invalid message data');
       }
 
@@ -152,10 +152,7 @@ class MessageRepositoryImpl implements MessageRepository {
         throw MessageNotFoundException(id);
       }
 
-      final messageCompanion = _mapToMessagesCompanion(
-        message,
-        forUpdate: true,
-      );
+      final messageCompanion = _mapUpdateToMessagesCompanion(message);
       final updatedMessage = await _database.messageDao.updateMessage(
         id,
         messageCompanion,
@@ -252,6 +249,21 @@ class MessageRepositoryImpl implements MessageRepository {
     }
   }
 
+  Future<bool> _validateMessageToUpdate(MessageToUpdate message) async {
+    try {
+      if (!message.isValid) {
+        throw MessageValidationException(_getValidationErrorToUpdate(message));
+      }
+      return true;
+    } catch (e) {
+      if (e is MessageValidationException) rethrow;
+      throw MessageValidationException(
+        'Message validation failed',
+        e as Exception,
+      );
+    }
+  }
+
   /// Maps a [messageTable] database record to a [MessageEntity] domain entity.
   ///
   /// [messageTable] The database record to map.
@@ -275,16 +287,25 @@ class MessageRepositoryImpl implements MessageRepository {
   /// [message] The message entity to map.
   /// [forUpdate] Whether this mapping is for an update operation.
   /// Returns a corresponding [MessagesCompanion].
-  MessagesCompanion _mapToMessagesCompanion(
-    MessageToCreate message, {
-    bool forUpdate = false,
-  }) {
+  MessagesCompanion _mapToMessagesCompanion(MessageToCreate message) {
     return MessagesCompanion(
       conversationId: Value(message.conversationId),
       content: Value(message.content),
       messageType: Value(_messageTypeToTableType(message.messageType)),
       isUser: Value(message.isUser),
       status: Value(_messageStatusToTableStatus(message.status)),
+      metadata: Value(message.metadata),
+    );
+  }
+
+  MessagesCompanion _mapUpdateToMessagesCompanion(MessageToUpdate message) {
+    return MessagesCompanion(
+      content: Value.absentIfNull(message.content),
+      status: Value.absentIfNull(
+        message.status == null
+            ? null
+            : _messageStatusToTableStatus(message.status!),
+      ),
       metadata: Value(message.metadata),
     );
   }
@@ -301,13 +322,23 @@ class MessageRepositoryImpl implements MessageRepository {
     return 'Unknown validation error';
   }
 
+  String _getValidationErrorToUpdate(MessageToUpdate message) {
+    if (message.content != null && message.content!.isEmpty) {
+      return 'Message content cannot be empty';
+    }
+    if (message.metadata != null && message.metadata!.isEmpty) {
+      return 'Metadata cannot be empty';
+    }
+    return 'Must Set content or metadata or status';
+  }
+
   MessageStatus _messageTableStatusToEntityStatus(MessageTableStatus status) {
     return switch (status) {
       MessageTableStatus.sent => MessageStatus.sent,
       MessageTableStatus.sending => MessageStatus.sending,
-      MessageTableStatus.read => MessageStatus.read,
       MessageTableStatus.error => MessageStatus.error,
       MessageTableStatus.delivered => MessageStatus.delivered,
+      MessageTableStatus.streaming => MessageStatus.streaming,
     };
   }
 
@@ -315,9 +346,9 @@ class MessageRepositoryImpl implements MessageRepository {
     return switch (status) {
       MessageStatus.sent => MessageTableStatus.sent,
       MessageStatus.sending => MessageTableStatus.sending,
-      MessageStatus.read => MessageTableStatus.read,
       MessageStatus.error => MessageTableStatus.error,
       MessageStatus.delivered => MessageTableStatus.delivered,
+      MessageStatus.streaming => MessageTableStatus.streaming,
     };
   }
 

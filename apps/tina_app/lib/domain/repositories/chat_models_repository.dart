@@ -12,6 +12,8 @@ abstract class ChatModelsRepository {
   Future<List<ChatModelWithProviderEntity>> getChatModels(
     ChatModelsFilter filter,
   );
+
+  Future<ChatModelWithProviderEntity?> getChatModelById(String id);
 }
 
 /// Base exception for chatModel-related operations.

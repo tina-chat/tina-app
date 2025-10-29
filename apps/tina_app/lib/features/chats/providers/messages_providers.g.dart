@@ -116,16 +116,13 @@ final class ChatMessagesProvider
         retry: null,
         name: r'chatMessagesProvider',
         isAutoDispose: true,
-        dependencies: const <ProviderOrFamily>[conversationChatProvider],
+        dependencies: const <ProviderOrFamily>[conversationSelectedProvider],
         $allTransitiveDependencies: const <ProviderOrFamily>[
           ChatMessagesProvider.$allTransitiveDependencies0,
-          ChatMessagesProvider.$allTransitiveDependencies1,
         ],
       );
 
-  static const $allTransitiveDependencies0 = conversationChatProvider;
-  static const $allTransitiveDependencies1 =
-      ConversationChatNotifierProvider.$allTransitiveDependencies0;
+  static const $allTransitiveDependencies0 = conversationSelectedProvider;
 
   @override
   String debugGetCreateSourceHash() => _$chatMessagesHash();
@@ -135,7 +132,7 @@ final class ChatMessagesProvider
   ChatMessages create() => ChatMessages();
 }
 
-String _$chatMessagesHash() => r'2cb53cbad7b862a4c44d2cd0c5aa88f26f9713dd';
+String _$chatMessagesHash() => r'cce30f02af379bdf197a34063fe35e9d68aff7ca';
 
 abstract class _$ChatMessages extends $AsyncNotifier<List<MessageEntity>> {
   FutureOr<List<MessageEntity>> build();
@@ -156,3 +153,152 @@ abstract class _$ChatMessages extends $AsyncNotifier<List<MessageEntity>> {
     element.handleValue(ref, created);
   }
 }
+
+@ProviderFor(messageList)
+const messageListProvider = MessageListProvider._();
+
+final class MessageListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<String>>,
+          List<String>,
+          FutureOr<List<String>>
+        >
+    with $FutureModifier<List<String>>, $FutureProvider<List<String>> {
+  const MessageListProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'messageListProvider',
+        isAutoDispose: true,
+        dependencies: const <ProviderOrFamily>[chatMessagesProvider],
+        $allTransitiveDependencies: const <ProviderOrFamily>[
+          MessageListProvider.$allTransitiveDependencies0,
+          MessageListProvider.$allTransitiveDependencies1,
+        ],
+      );
+
+  static const $allTransitiveDependencies0 = chatMessagesProvider;
+  static const $allTransitiveDependencies1 =
+      ChatMessagesProvider.$allTransitiveDependencies0;
+
+  @override
+  String debugGetCreateSourceHash() => _$messageListHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<String>> create(Ref ref) {
+    return messageList(ref);
+  }
+}
+
+String _$messageListHash() => r'57066aa84a313090aad3d3d0f1601dec58b2ef69';
+
+@ProviderFor(messageIdNotifier)
+const messageIdProvider = MessageIdNotifierProvider._();
+
+final class MessageIdNotifierProvider
+    extends $FunctionalProvider<String, String, String>
+    with $Provider<String> {
+  const MessageIdNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'messageIdProvider',
+        isAutoDispose: true,
+        dependencies: const <ProviderOrFamily>[chatMessagesProvider],
+        $allTransitiveDependencies: const <ProviderOrFamily>[
+          MessageIdNotifierProvider.$allTransitiveDependencies0,
+          MessageIdNotifierProvider.$allTransitiveDependencies1,
+        ],
+      );
+
+  static const $allTransitiveDependencies0 = chatMessagesProvider;
+  static const $allTransitiveDependencies1 =
+      ChatMessagesProvider.$allTransitiveDependencies0;
+
+  @override
+  String debugGetCreateSourceHash() => _$messageIdNotifierHash();
+
+  @$internal
+  @override
+  $ProviderElement<String> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  String create(Ref ref) {
+    return messageIdNotifier(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$messageIdNotifierHash() => r'f7c3dc6b42482a1be42673d362f74081840a66e1';
+
+@ProviderFor(messageConversation)
+const messageConversationProvider = MessageConversationProvider._();
+
+final class MessageConversationProvider
+    extends $FunctionalProvider<MessageEntity?, MessageEntity?, MessageEntity?>
+    with $Provider<MessageEntity?> {
+  const MessageConversationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'messageConversationProvider',
+        isAutoDispose: true,
+        dependencies: const <ProviderOrFamily>[
+          messageIdProvider,
+          chatMessagesProvider,
+        ],
+        $allTransitiveDependencies: const <ProviderOrFamily>[
+          MessageConversationProvider.$allTransitiveDependencies0,
+          MessageConversationProvider.$allTransitiveDependencies1,
+          MessageConversationProvider.$allTransitiveDependencies2,
+        ],
+      );
+
+  static const $allTransitiveDependencies0 = messageIdProvider;
+  static const $allTransitiveDependencies1 =
+      MessageIdNotifierProvider.$allTransitiveDependencies0;
+  static const $allTransitiveDependencies2 =
+      MessageIdNotifierProvider.$allTransitiveDependencies1;
+
+  @override
+  String debugGetCreateSourceHash() => _$messageConversationHash();
+
+  @$internal
+  @override
+  $ProviderElement<MessageEntity?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  MessageEntity? create(Ref ref) {
+    return messageConversation(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MessageEntity? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MessageEntity?>(value),
+    );
+  }
+}
+
+String _$messageConversationHash() =>
+    r'c357bfef502081efc8133814df5682411cc0eec0';

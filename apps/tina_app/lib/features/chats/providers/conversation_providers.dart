@@ -12,25 +12,31 @@ final updateConversationMutation = Mutation<ConversationEntity>();
 
 @riverpod
 class ConversationsList extends _$ConversationsList {
-  late final conversationRepository = ref.read(conversationRepositoryProvider);
   @override
   Future<List<ConversationEntity>> build() async {
     final conversationRepository = ref.watch(conversationRepositoryProvider);
 
-    final selectedWorkspace = await ref.read(selectedWorkspaceProvider.future);
+    final selectedWorkspace = await ref.watch(selectedWorkspaceProvider.future);
 
     return conversationRepository.getConversationsByWorkspace(
       selectedWorkspace.id,
     );
   }
 
-  Future<ConversationEntity> addConversation(String title) async {
+  Future<ConversationEntity> addConversation(
+    String title, [
+    String? modelId,
+  ]) async {
     final newConversation = await addConversationMutation.run(ref, (tsx) async {
       final selectedWorkspace = await tsx.get(selectedWorkspaceProvider.future);
       final conversationRepository = tsx.get(conversationRepositoryProvider);
 
       return await conversationRepository.createConversation(
-        ConversationToCreate(title: title, workspaceId: selectedWorkspace.id),
+        ConversationToCreate(
+          title: title,
+          workspaceId: selectedWorkspace.id,
+          modelId: modelId,
+        ),
       );
     });
 

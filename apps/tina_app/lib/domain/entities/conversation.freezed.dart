@@ -1424,4 +1424,271 @@ as MessageStatus,
 
 }
 
+/// @nodoc
+mixin _$MessageToUpdate {
+
+/// Content of the message (JSON structure based on message type)
+ String? get content;/// Additional metadata for the message (JSON)
+ String? get metadata; MessageStatus? get status;
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MessageToUpdateCopyWith<MessageToUpdate> get copyWith => _$MessageToUpdateCopyWithImpl<MessageToUpdate>(this as MessageToUpdate, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageToUpdate&&(identical(other.content, content) || other.content == content)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.status, status) || other.status == status));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,content,metadata,status);
+
+@override
+String toString() {
+  return 'MessageToUpdate(content: $content, metadata: $metadata, status: $status)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MessageToUpdateCopyWith<$Res>  {
+  factory $MessageToUpdateCopyWith(MessageToUpdate value, $Res Function(MessageToUpdate) _then) = _$MessageToUpdateCopyWithImpl;
+@useResult
+$Res call({
+ String? content, String? metadata, MessageStatus? status
+});
+
+
+
+
+}
+/// @nodoc
+class _$MessageToUpdateCopyWithImpl<$Res>
+    implements $MessageToUpdateCopyWith<$Res> {
+  _$MessageToUpdateCopyWithImpl(this._self, this._then);
+
+  final MessageToUpdate _self;
+  final $Res Function(MessageToUpdate) _then;
+
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? content = freezed,Object? metadata = freezed,Object? status = freezed,}) {
+  return _then(_self.copyWith(
+content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String?,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageStatus?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MessageToUpdate].
+extension MessageToUpdatePatterns on MessageToUpdate {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MessageToUpdate value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MessageToUpdate() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MessageToUpdate value)  $default,){
+final _that = this;
+switch (_that) {
+case _MessageToUpdate():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MessageToUpdate value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MessageToUpdate() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? content,  String? metadata,  MessageStatus? status)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MessageToUpdate() when $default != null:
+return $default(_that.content,_that.metadata,_that.status);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? content,  String? metadata,  MessageStatus? status)  $default,) {final _that = this;
+switch (_that) {
+case _MessageToUpdate():
+return $default(_that.content,_that.metadata,_that.status);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? content,  String? metadata,  MessageStatus? status)?  $default,) {final _that = this;
+switch (_that) {
+case _MessageToUpdate() when $default != null:
+return $default(_that.content,_that.metadata,_that.status);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _MessageToUpdate extends MessageToUpdate {
+  const _MessageToUpdate({this.content, this.metadata, this.status}): super._();
+  
+
+/// Content of the message (JSON structure based on message type)
+@override final  String? content;
+/// Additional metadata for the message (JSON)
+@override final  String? metadata;
+@override final  MessageStatus? status;
+
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MessageToUpdateCopyWith<_MessageToUpdate> get copyWith => __$MessageToUpdateCopyWithImpl<_MessageToUpdate>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageToUpdate&&(identical(other.content, content) || other.content == content)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.status, status) || other.status == status));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,content,metadata,status);
+
+@override
+String toString() {
+  return 'MessageToUpdate(content: $content, metadata: $metadata, status: $status)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MessageToUpdateCopyWith<$Res> implements $MessageToUpdateCopyWith<$Res> {
+  factory _$MessageToUpdateCopyWith(_MessageToUpdate value, $Res Function(_MessageToUpdate) _then) = __$MessageToUpdateCopyWithImpl;
+@override @useResult
+$Res call({
+ String? content, String? metadata, MessageStatus? status
+});
+
+
+
+
+}
+/// @nodoc
+class __$MessageToUpdateCopyWithImpl<$Res>
+    implements _$MessageToUpdateCopyWith<$Res> {
+  __$MessageToUpdateCopyWithImpl(this._self, this._then);
+
+  final _MessageToUpdate _self;
+  final $Res Function(_MessageToUpdate) _then;
+
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? content = freezed,Object? metadata = freezed,Object? status = freezed,}) {
+  return _then(_MessageToUpdate(
+content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String?,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageStatus?,
+  ));
+}
+
+
+}
+
 // dart format on

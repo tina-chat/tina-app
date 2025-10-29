@@ -171,3 +171,25 @@ abstract class MessageToCreate with _$MessageToCreate {
     return hasValidContent && conversationId.isNotEmpty;
   }
 }
+
+/// Entity for creating a new message
+@freezed
+abstract class MessageToUpdate with _$MessageToUpdate {
+  const MessageToUpdate._();
+
+  /// Creates a new MessageToUpdate instance
+  const factory MessageToUpdate({
+    /// Content of the message (JSON structure based on message type)
+    final String? content,
+
+    /// Additional metadata for the message (JSON)
+    final String? metadata,
+
+    final MessageStatus? status,
+  }) = _MessageToUpdate;
+
+  /// Returns true if the message is in a valid state
+  bool get isValid {
+    return content != null || metadata != null || status != null;
+  }
+}

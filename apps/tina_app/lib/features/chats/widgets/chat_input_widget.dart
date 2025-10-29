@@ -8,7 +8,7 @@ import 'package:tina_ui/ui.dart';
 class ChatInputWidget extends HookConsumerWidget {
   const ChatInputWidget({super.key, required this.onSendMessage});
 
-  final Function(String message) onSendMessage;
+  final void Function(String message)? onSendMessage;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -19,13 +19,16 @@ class ChatInputWidget extends HookConsumerWidget {
       () => controller.text.trim().isEmpty,
     );
 
-    final sendMessage = useCallback(() {
-      final message = controller.text.trim();
-      if (message.isNotEmpty) {
-        onSendMessage(message);
-        controller.clear();
-      }
-    }, []);
+    final sendMessage = useMemoized<void Function()?>(
+      () => (isEmpty || onSendMessage == null)
+          ? null
+          : () {
+              final message = controller.text.trim();
+              onSendMessage!(message);
+              controller.clear();
+            },
+      [controller, onSendMessage, isEmpty],
+    );
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -36,7 +39,7 @@ class ChatInputWidget extends HookConsumerWidget {
             Expanded(child: Container()),
 
             TinaButton(
-              onPressed: isEmpty ? null : () => sendMessage(),
+              onPressed: sendMessage,
               size: TinaButtonSize.small,
               child: const TinaIcon(Icons.arrow_upward),
             ),
@@ -48,9 +51,7 @@ class ChatInputWidget extends HookConsumerWidget {
         maxLines: 2,
         textInputAction: TextInputAction.send,
         onSubmitted: (value) {
-          if (value.trim().isNotEmpty) {
-            sendMessage();
-          }
+          sendMessage?.call();
         },
       ),
     );

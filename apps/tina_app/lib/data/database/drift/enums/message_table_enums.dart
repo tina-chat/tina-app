@@ -12,8 +12,8 @@ enum MessagesTableType {
 enum MessageTableStatus {
   sending('sending'),
   sent('sent'),
+  streaming('streaming'),
   delivered('delivered'),
-  read('read'),
   error('error');
 
   const MessageTableStatus(this.value);
@@ -27,10 +27,10 @@ enum MessageTableStatus {
         return MessageTableStatus.sent;
       case 'delivered':
         return MessageTableStatus.delivered;
-      case 'read':
-        return MessageTableStatus.read;
       case 'error':
         return MessageTableStatus.error;
+      case 'streaming':
+        return MessageTableStatus.streaming;
       default:
         throw ArgumentError('Invalid message status: $value');
     }

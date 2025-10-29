@@ -34,7 +34,7 @@ final class ConversationsListProvider
   ConversationsList create() => ConversationsList();
 }
 
-String _$conversationsListHash() => r'2de63b7b42aa22fee70ade4c16ab700fc744fc3a';
+String _$conversationsListHash() => r'edbfaa322386923b58f3a309bf7e499167213345';
 
 abstract class _$ConversationsList
     extends $AsyncNotifier<List<ConversationEntity>> {

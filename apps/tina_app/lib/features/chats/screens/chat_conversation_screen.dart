@@ -25,7 +25,7 @@ class ChatConversationScreen extends ConsumerWidget {
 class _ChatConversationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
-    final messagesAsync = ref.watch(chatMessagesProvider);
+    final messagesAsync = ref.watch(messageListProvider);
 
     final modelId = ref.watch(
       conversationChatProvider.select((c) => c.value?.modelId),

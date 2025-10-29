@@ -32,6 +32,14 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
     return tableResults.map(_withProviderTableToEntity).toList();
   }
 
+  @override
+  Future<ChatModelWithProviderEntity?> getChatModelById(String id) async {
+    final chatModelWithProvider = await _database.chatModelsDao
+        .getAllChatModelsById(id);
+    if (chatModelWithProvider == null) return null;
+    return _withProviderTableToEntity(chatModelWithProvider);
+  }
+
   ChatModelsCompanion _chatModelToCreateToCompanion(
     ChatModelToCreate chatModel,
   ) {

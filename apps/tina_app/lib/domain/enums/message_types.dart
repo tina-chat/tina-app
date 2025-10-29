@@ -39,9 +39,9 @@ enum MessageType {
 /// Enum representing the status of a message
 enum MessageStatus {
   sending('sending'),
+  streaming('streaming'),
   sent('sent'),
   delivered('delivered'),
-  read('read'),
   error('error');
 
   final String value;
@@ -55,10 +55,10 @@ enum MessageStatus {
         return MessageStatus.sent;
       case 'delivered':
         return MessageStatus.delivered;
-      case 'read':
-        return MessageStatus.read;
       case 'error':
         return MessageStatus.error;
+      case 'streaming':
+        return MessageStatus.streaming;
       default:
         throw ArgumentError('Invalid message status: $value');
     }
@@ -72,10 +72,11 @@ enum MessageStatus {
         return 'Sent';
       case MessageStatus.delivered:
         return 'Delivered';
-      case MessageStatus.read:
-        return 'Read';
       case MessageStatus.error:
         return 'Error';
+
+      case MessageStatus.streaming:
+        return 'Streaming';
     }
   }
 }

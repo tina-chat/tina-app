@@ -6,9 +6,7 @@ import 'package:tina_app/domain/entities/conversation.dart';
 import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_app/features/chats/providers/conversation_providers.dart';
 import 'package:tina_app/features/chats/providers/conversation_repository_provider.dart';
-import 'package:tina_app/features/models/providers/list_chat_models_providers.dart';
-import 'package:tina_app/services/chatbot_service/chatbot_service.dart';
-import 'package:tina_app/utils/drain.dart';
+import 'package:tina_app/providers/messages_manager_provider.dart';
 
 part 'messages_providers.g.dart';
 
@@ -42,101 +40,83 @@ class ConversationChatNotifier extends _$ConversationChatNotifier {
   }
 }
 
-@Riverpod(dependencies: [ConversationChatNotifier])
+@Riverpod(dependencies: [conversationSelectedNotifier])
 class ChatMessages extends _$ChatMessages {
   @override
   Future<List<MessageEntity>> build() async {
-    final conversationId = ref.watch(
-      conversationChatProvider.select((c) => c.value?.id),
-    );
-
-    if (conversationId == null) return [];
-    return ref
+    final conversationId = ref.watch(conversationSelectedProvider);
+    final messages = await ref
         .watch(messageRepositoryProvider)
         .getMessagesByConversation(conversationId);
+
+    return messages;
   }
 
   Future<void> addMessage({
     required String content,
     required MessageType messageType,
   }) async {
-    final modelId = ref.watch(
-      conversationChatProvider.select((c) => c.value?.modelId),
+    final conversationId = ref.read(conversationSelectedProvider);
+    final messagesManager = ref.read(messagesManagerProvider.notifier);
+
+    final (userMessage, systemMessage) = await messagesManager.sendMessage(
+      conversationId: conversationId,
+      message: content,
     );
-    final conversationId = ref.watch(
-      conversationChatProvider.select((c) => c.value?.id),
-    );
-    if (conversationId == null) return;
 
-    final newMessage = await addMessageMutation(conversationId).run(ref, (tsx) {
-      return tsx
-          .get(messageRepositoryProvider)
-          .createMessage(
-            MessageToCreate(
-              conversationId: conversationId,
-              content: content,
-              messageType: messageType,
-              isUser: true,
-              status: MessageStatus.sent,
-            ),
-          );
-    });
-
-    _sendingData(content, modelId);
-
-    state = AsyncValue.data([...state.value ?? [], newMessage]);
+    state = AsyncValue.data([...state.value ?? [], userMessage, systemMessage]);
   }
+}
 
-  void _sendingData(String content, String? modelId) async {
-    final (conversationId, modelIdSelected) = ref.watch(
-      conversationChatProvider.select((c) => (c.value?.id, c.value?.modelId)),
-    );
-    if (conversationId == null) return;
-    if (modelIdSelected == null) return;
+@Riverpod(dependencies: [ChatMessages])
+Future<List<String>> messageList(Ref ref) async {
+  final messages = await ref.watch(
+    chatMessagesProvider.selectAsync(
+      (messages) => messages.map((message) => message.id).toList(),
+    ),
+  );
 
-    final chatModels = ref.read(
-      listChatModelProvidersProvider.select(
-        (cm) => cm.value?.firstWhereOrNull(
-          (model) => model.chatModel.id == modelIdSelected,
-        ),
+  return messages;
+}
+
+@Riverpod(dependencies: [ChatMessages])
+String messageIdNotifier(Ref ref) =>
+    throw Exception('implement messageIdNotifier');
+
+@Riverpod(dependencies: [messageIdNotifier, ChatMessages])
+MessageEntity? messageConversation(Ref ref) {
+  final messageId = ref.watch(messageIdProvider);
+
+  final isLoading = ref.watch(
+    chatMessagesProvider.select((value) => value.isLoading),
+  );
+
+  var messageEntity = ref.watch(
+    chatMessagesProvider.select(
+      (value) => value.value?.firstWhereOrNull((c) => c.id == messageId),
+    ),
+  );
+
+  if (messageEntity == null && !isLoading) {
+    ref.invalidate(chatMessagesProvider);
+    messageEntity = ref.watch(
+      chatMessagesProvider.select(
+        (value) => value.value?.firstWhereOrNull((c) => c.id == messageId),
       ),
     );
-    if (chatModels == null) return;
-
-    final newMessage = await addMessageMutation(conversationId).run(ref, (tsx) {
-      return tsx
-          .get(messageRepositoryProvider)
-          .createMessage(
-            MessageToCreate(
-              conversationId: conversationId,
-              content: '',
-              messageType: MessageType.text,
-              isUser: true,
-              status: MessageStatus.sending,
-            ),
-          );
-    });
-
-    state = AsyncData([...state.value ?? [], newMessage]);
-
-    final deltaPersister = StreamingDeltaPersister(
-      appendDelta: (delta) {
-        ref
-            .read(messageRepositoryProvider)
-            .appendToMessage(newMessage.id, delta);
-      },
-    );
-    ChatbotService(chatModels).sendMessage(content).listen((chatResult) {
-      // print(data);
-      final delta = chatResult.outputAsString;
-      deltaPersister.addDelta(delta);
-      state = AsyncData([
-        ...state.value?.map((message) {
-              if (message.id != newMessage.id) return message;
-              return message.copyWith(content: message.content + delta);
-            }) ??
-            [],
-      ]);
-    });
   }
+
+  if (messageEntity == null) return null;
+
+  final updateMessage = ref.watch(
+    messagesManagerProvider.select(
+      (messages) => messages.firstWhereOrNull((message) {
+        return message.responseMesageId == messageId;
+      }),
+    ),
+  );
+
+  if (updateMessage == null) return messageEntity;
+
+  return messageEntity.copyWith(content: updateMessage.content);
 }

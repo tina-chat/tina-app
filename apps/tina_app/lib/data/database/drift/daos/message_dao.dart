@@ -29,7 +29,10 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
         messages,
       )..where((tbl) => tbl.id.equals(id))).getSingle();
       final updatedMessage = message
-          .copyWith(content: message.content + delta)
+          .copyWith(
+            content: message.content + delta,
+            status: MessageTableStatus.streaming,
+          )
           .toCompanion(true);
       return updateMessage(id, updatedMessage);
     });
