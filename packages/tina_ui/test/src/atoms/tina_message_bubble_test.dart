@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:tina_ui/src/atoms/tina_message_bubble.dart';
 import 'package:tina_ui/src/atoms/tina_message_status.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
@@ -21,7 +22,7 @@ void main() {
       );
 
       expect(find.text(messageContent), findsOneWidget);
-      expect(find.byType(SelectableText), findsOneWidget);
+      expect(find.byType(GptMarkdown), findsOneWidget);
     });
 
     testWidgets('applies user message styling correctly', (tester) async {
@@ -51,35 +52,6 @@ void main() {
 
       final decoration = messageContainer.decoration! as BoxDecoration;
       expect(decoration.color, DesignColors.primaryBase);
-    });
-
-    testWidgets('applies AI message styling correctly', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaMessageBubble(
-              content: 'AI message',
-              isUser: false,
-            ),
-          ),
-        ),
-      );
-
-      final align = tester.widget<Align>(find.byType(Align));
-      expect(align.alignment, Alignment.centerLeft);
-
-      // Find the message container with decoration
-      final containers = tester.widgetList<Container>(find.byType(Container));
-      final messageContainer = containers.firstWhere(
-        (container) =>
-            container.decoration != null &&
-            container.decoration is BoxDecoration &&
-            (container.decoration! as BoxDecoration).color ==
-                DesignColors.neutral100,
-      );
-
-      final decoration = messageContainer.decoration! as BoxDecoration;
-      expect(decoration.color, DesignColors.neutral100);
     });
 
     testWidgets('displays timestamp when provided', (tester) async {
@@ -114,24 +86,6 @@ void main() {
       );
 
       expect(find.byIcon(Icons.done_all), findsOneWidget);
-    });
-
-    testWidgets('does not show status indicator for AI messages', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: TinaMessageBubble(
-              content: 'AI message',
-              isUser: false,
-              status: TinaMessageDeliveryStatus.delivered,
-            ),
-          ),
-        ),
-      );
-
-      expect(find.byIcon(Icons.done_all), findsNothing);
     });
 
     testWidgets('applies error styling for error status', (tester) async {

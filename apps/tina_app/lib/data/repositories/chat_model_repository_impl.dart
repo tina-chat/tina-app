@@ -32,13 +32,21 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
     return tableResults.map(_withProviderTableToEntity).toList();
   }
 
+  @override
+  Future<ChatModelWithProviderEntity?> getChatModelById(String id) async {
+    final chatModelWithProvider = await _database.chatModelsDao
+        .getAllChatModelsById(id);
+    if (chatModelWithProvider == null) return null;
+    return _withProviderTableToEntity(chatModelWithProvider);
+  }
+
   ChatModelsCompanion _chatModelToCreateToCompanion(
     ChatModelToCreate chatModel,
   ) {
     return ChatModelsCompanion(
       displayName: Value(chatModel.displayName),
       modelId: Value(chatModel.modelId),
-      modelProvider: Value(chatModel.modelProvider),
+      modelProviderId: Value(chatModel.modelProviderId),
       modelType: Value(chatModel.modelType),
     );
   }
@@ -54,7 +62,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
         modelType: withProvider.chatModel.modelType,
         createdAt: withProvider.chatModel.createdAt,
         updatedAt: withProvider.chatModel.updatedAt,
-        modelProviderId: withProvider.chatModel.modelProvider,
+        modelProviderId: withProvider.chatModel.modelProviderId,
       ),
       modelProvider: ModelProviderEntity(
         id: withProvider.modelProvider.id,
@@ -63,7 +71,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
         key: withProvider.modelProvider.keyValue,
         createdAt: withProvider.modelProvider.createdAt,
         updatedAt: withProvider.modelProvider.updatedAt,
-        workspaceId: withProvider.modelProvider.workspace,
+        workspaceId: withProvider.modelProvider.workspaceId,
       ),
     );
   }

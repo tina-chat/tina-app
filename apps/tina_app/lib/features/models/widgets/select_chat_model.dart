@@ -9,13 +9,19 @@ import 'package:tina_app/widgets/text_locale.dart';
 import 'package:tina_ui/ui.dart';
 
 class SelectChatModelWidget extends HookConsumerWidget {
-  const SelectChatModelWidget({super.key});
+  const SelectChatModelWidget({
+    super.key,
+    this.chatModelId,
+    required this.selectChatModelId,
+  });
+
+  final String? chatModelId;
+  final void Function(String?) selectChatModelId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chatModelsAsync = ref.watch(listChatModelProvidersProvider);
 
-    final selectedModel = useState<int?>(null);
     final searchValue = useState<String>('');
     final controller = useTextEditingController();
 
@@ -30,10 +36,10 @@ class SelectChatModelWidget extends HookConsumerWidget {
       }).toList();
     }, [searchValue.value, chatModelsAsync.value]);
 
-    return TinaDropdownSelector<int>(
-      value: selectedModel.value,
+    return TinaDropdownSelector<String>(
+      value: chatModelId,
       onChanged: (value) {
-        selectedModel.value = value;
+        selectChatModelId(value);
       },
       placeholder: const TextLocale(
         LocaleKeys.chats_screens_chat_conversation_select_model_selctor,

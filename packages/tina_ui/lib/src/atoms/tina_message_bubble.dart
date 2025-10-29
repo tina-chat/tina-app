@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:tina_ui/src/atoms/tina_message_status.dart';
 import 'package:tina_ui/src/tokens/design_tokens.dart';
 import 'package:tina_ui/src/tokens/tina_theme.dart';
@@ -82,9 +83,11 @@ class TinaMessageBubble extends StatelessWidget {
                   ],
                 ),
               ),
-              if (isUser && status != TinaMessageDeliveryStatus.sent) ...[
+              if (status != TinaMessageDeliveryStatus.sent) ...[
                 const SizedBox(height: DesignSpacing.xs / 2),
-                _buildStatusIndicator(tinaColors),
+                TinaMessageStatus(
+                  status: status,
+                ),
               ],
             ],
           ),
@@ -127,8 +130,9 @@ class TinaMessageBubble extends StatelessWidget {
     final textColor = isUser ? tinaColors.onPrimary : tinaColors.onSurface;
 
     return switch (contentType) {
-      TinaMessageContentType.text => SelectableText(
+      TinaMessageContentType.text => GptMarkdown(
         content,
+        key: ValueKey(content),
         style: TextStyle(
           color: textColor,
           fontSize: DesignTypography.fontSizeBase,
@@ -201,34 +205,6 @@ class TinaMessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusIndicator(TinaColorScheme tinaColors) {
-    final icon = switch (status) {
-      TinaMessageDeliveryStatus.sending => Icons.access_time,
-      TinaMessageDeliveryStatus.sent => Icons.done,
-      TinaMessageDeliveryStatus.delivered => Icons.done_all,
-      TinaMessageDeliveryStatus.read => Icons.done_all,
-      TinaMessageDeliveryStatus.error => Icons.error_outline,
-    };
-
-    final color = switch (status) {
-      TinaMessageDeliveryStatus.sending =>
-        tinaColors.onSurfaceVariant.withValues(alpha: 0.6),
-      TinaMessageDeliveryStatus.sent => tinaColors.onSurfaceVariant.withValues(
-        alpha: 0.6,
-      ),
-      TinaMessageDeliveryStatus.delivered => tinaColors.info,
-      TinaMessageDeliveryStatus.read => tinaColors.info,
-      TinaMessageDeliveryStatus.error => tinaColors.error,
-    };
-
-    return Icon(
-      icon,
-      size: 16,
-      color: color,
-      semanticLabel: _getStatusSemanticLabel(status),
-    );
-  }
-
   String _formatTimestamp(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
@@ -242,16 +218,6 @@ class TinaMessageBubble extends StatelessWidget {
     } else {
       return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
     }
-  }
-
-  String _getStatusSemanticLabel(TinaMessageDeliveryStatus status) {
-    return switch (status) {
-      TinaMessageDeliveryStatus.sending => 'Message sending',
-      TinaMessageDeliveryStatus.sent => 'Message sent',
-      TinaMessageDeliveryStatus.delivered => 'Message delivered',
-      TinaMessageDeliveryStatus.read => 'Message read',
-      TinaMessageDeliveryStatus.error => 'Message failed to send',
-    };
   }
 }
 

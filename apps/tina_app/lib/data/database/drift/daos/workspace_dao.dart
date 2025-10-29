@@ -1,7 +1,8 @@
 import 'package:drift/drift.dart';
-import '../tables/workspaces_table.dart';
-import '../app_database.dart';
+
 import '../../../../domain/enums/workspace_type.dart';
+import '../app_database.dart';
+import '../tables/workspaces_table.dart';
 
 part 'workspace_dao.g.dart';
 
@@ -24,7 +25,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Retrieves a workspace by its ID.
   ///
   /// Returns the workspace with the given [id], or null if not found.
-  Future<WorkspacesTable?> getWorkspaceById(int id) {
+  Future<WorkspacesTable?> getWorkspaceById(String id) {
     return (select(
       workspaces,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
@@ -43,16 +44,15 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Inserts a new workspace into the database.
   ///
   /// Returns the ID of the inserted workspace.
-  Future<int> insertWorkspace(WorkspacesCompanion workspace) async {
-    await into(workspaces).insert(workspace);
-    return workspace.id.value;
+  Future<WorkspacesTable> insertWorkspace(WorkspacesCompanion workspace) {
+    return into(workspaces).insertReturning(workspace);
   }
 
   /// Updates an existing workspace in the database.
   ///
   /// Updates the workspace with the given [id] using the provided [workspace] data.
   /// Returns true if a workspace was updated, false otherwise.
-  Future<bool> updateWorkspace(int id, WorkspacesCompanion workspace) async {
+  Future<bool> updateWorkspace(String id, WorkspacesCompanion workspace) async {
     final updateCount = await (update(
       workspaces,
     )..where((t) => t.id.equals(id))).write(workspace);
@@ -63,7 +63,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   ///
   /// Deletes the workspace with the given [id].
   /// Returns true if a workspace was deleted, false otherwise.
-  Future<bool> deleteWorkspace(int id) async {
+  Future<bool> deleteWorkspace(String id) async {
     final deleteCount = await (delete(
       workspaces,
     )..where((t) => t.id.equals(id))).go();
@@ -73,7 +73,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   /// Checks if a workspace with the given [id] exists.
   ///
   /// Returns true if the workspace exists, false otherwise.
-  Future<bool> workspaceExists(int id) async {
+  Future<bool> workspaceExists(String id) async {
     final count =
         await (selectOnly(workspaces)
               ..addColumns([workspaces.id])
@@ -118,7 +118,7 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
   ///
   /// Sets the [updatedAt] field to the current time for the workspace with the given [id].
   /// Returns true if the workspace was updated, false otherwise.
-  Future<bool> updateWorkspaceTimestamp(int id) async {
+  Future<bool> updateWorkspaceTimestamp(String id) async {
     final rowsAffected =
         await (update(workspaces)..where((t) => t.id.equals(id))).write(
           WorkspacesCompanion(updatedAt: Value(DateTime.now())),

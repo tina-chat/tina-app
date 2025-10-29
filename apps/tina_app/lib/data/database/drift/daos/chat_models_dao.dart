@@ -27,14 +27,14 @@ class ChatModelsDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<List<ChatModelWithProvider>> getAllChatModelsByWorkspace({
-    required List<int> workspaceIds,
+    required List<String> workspaceIds,
   }) {
     final query = (select(chatModels).join([
       innerJoin(
         modelProviders,
-        modelProviders.id.equalsExp(chatModels.modelProvider),
+        modelProviders.id.equalsExp(chatModels.modelProviderId),
       ),
-    ])..where(modelProviders.workspace.isIn(workspaceIds)));
+    ])..where(modelProviders.workspaceId.isIn(workspaceIds)));
 
     return query
         .map(
@@ -44,5 +44,23 @@ class ChatModelsDao extends DatabaseAccessor<AppDatabase>
           ),
         )
         .get();
+  }
+
+  Future<ChatModelWithProvider?> getAllChatModelsById(String id) {
+    final query = (select(chatModels).join([
+      innerJoin(
+        modelProviders,
+        modelProviders.id.equalsExp(chatModels.modelProviderId),
+      ),
+    ])..where(chatModels.id.equals(id)));
+
+    return query
+        .map(
+          (row) => ChatModelWithProvider(
+            row.readTable(chatModels),
+            row.readTable(modelProviders),
+          ),
+        )
+        .getSingleOrNull();
   }
 }

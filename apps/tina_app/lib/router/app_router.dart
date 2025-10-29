@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tina_app/features/chats/screens/chat_conversation_screen.dart';
+import 'package:tina_app/features/chats/screens/new_chat_screen.dart';
 
 import '../features/agents/agents_screen.dart';
 import '../features/chats/screens/list_chats_screen.dart';
@@ -61,7 +62,7 @@ class ChatsRoute extends GoRouteData with $ChatsRoute {
 class NewChatRoute extends GoRouteData with $NewChatRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ChatConversationScreen();
+    return NewChatScreen();
   }
 }
 

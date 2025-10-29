@@ -1,49 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/i18n/locale_keys.dart';
 import 'package:tina_app/widgets/text_locale.dart';
 import 'package:tina_ui/ui.dart';
 
-class ChatInputWidget extends StatefulWidget {
+class ChatInputWidget extends HookConsumerWidget {
   const ChatInputWidget({super.key, required this.onSendMessage});
 
-  final Function(String message) onSendMessage;
+  final void Function(String message)? onSendMessage;
 
   @override
-  State<ChatInputWidget> createState() => _ChatInputWidgetState();
-}
+  Widget build(BuildContext context, ref) {
+    final controller = useTextEditingController();
 
-class _ChatInputWidgetState extends State<ChatInputWidget> {
-  final _controller = TextEditingController();
-  bool _isEmpty = true;
+    final isEmpty = useListenableSelector(
+      controller,
+      () => controller.text.trim().isEmpty,
+    );
 
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-      setState(() {
-        _isEmpty = _controller.text.trim().isEmpty;
-      });
-    });
-  }
+    final sendMessage = useMemoized<void Function()?>(
+      () => (isEmpty || onSendMessage == null)
+          ? null
+          : () {
+              final message = controller.text.trim();
+              onSendMessage!(message);
+              controller.clear();
+            },
+      [controller, onSendMessage, isEmpty],
+    );
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: TinaInput(
-        controller: _controller,
+        controller: controller,
         footer: Row(
           children: [
             Expanded(child: Container()),
 
             TinaButton(
-              onPressed: _isEmpty ? null : () => _sendMessage(_controller.text),
+              onPressed: sendMessage,
               size: TinaButtonSize.small,
               child: const TinaIcon(Icons.arrow_upward),
             ),
@@ -55,18 +51,9 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
         maxLines: 2,
         textInputAction: TextInputAction.send,
         onSubmitted: (value) {
-          if (value.trim().isNotEmpty) {
-            _sendMessage(value);
-          }
+          sendMessage?.call();
         },
       ),
     );
-  }
-
-  void _sendMessage(String message) {
-    if (message.trim().isNotEmpty) {
-      widget.onSendMessage(message.trim());
-      _controller.clear();
-    }
   }
 }

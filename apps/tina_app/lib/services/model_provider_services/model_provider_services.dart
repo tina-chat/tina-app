@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:tina_app/domain/enums/chat_models_type.dart';
-import 'package:tina_app/domain/entities/chat_models_entities.dart';
-
-import 'package:openai_dart/openai_dart.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:openai_dart/openai_dart.dart';
+import 'package:tina_app/domain/entities/chat_models_entities.dart';
+import 'package:tina_app/domain/enums/chat_models_type.dart';
 import 'package:tina_app/services/model_provider_services/models/antropic_responses.dart';
 
 class ModelProvider {
@@ -27,7 +25,7 @@ class ModelProviderServices {
               displayName: model.id,
               modelId: model.id,
               modelType: model.object?.name ?? 'model',
-              modelProvider: 0,
+              modelProviderId: '',
             ),
           )
           .toList();
@@ -43,7 +41,7 @@ class ModelProviderServices {
               displayName: model.displayName,
               modelId: model.id,
               modelType: model.type,
-              modelProvider: 0,
+              modelProviderId: '',
             ),
           )
           .toList();

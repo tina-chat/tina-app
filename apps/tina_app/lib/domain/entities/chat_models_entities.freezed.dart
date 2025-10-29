@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatModelEntity {
 
- int get id; String get displayName; String get modelId; String get modelType; DateTime get createdAt; DateTime get updatedAt; int get modelProviderId;
+ String get id; String get displayName; String get modelId; String get modelType; DateTime get createdAt; DateTime get updatedAt; String get modelProviderId;
 /// Create a copy of ChatModelEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ChatModelEntityCopyWith<$Res>  {
   factory $ChatModelEntityCopyWith(ChatModelEntity value, $Res Function(ChatModelEntity) _then) = _$ChatModelEntityCopyWithImpl;
 @useResult
 $Res call({
- int id, String displayName, String modelId, String modelType, DateTime createdAt, DateTime updatedAt, int modelProviderId
+ String id, String displayName, String modelId, String modelType, DateTime createdAt, DateTime updatedAt, String modelProviderId
 });
 
 
@@ -65,13 +65,13 @@ class _$ChatModelEntityCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? createdAt = null,Object? updatedAt = null,Object? modelProviderId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,modelType: null == modelType ? _self.modelType : modelType // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,modelProviderId: null == modelProviderId ? _self.modelProviderId : modelProviderId // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  int modelProviderId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  String modelProviderId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatModelEntity() when $default != null:
 return $default(_that.id,_that.displayName,_that.modelId,_that.modelType,_that.createdAt,_that.updatedAt,_that.modelProviderId);case _:
@@ -177,7 +177,7 @@ return $default(_that.id,_that.displayName,_that.modelId,_that.modelType,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  int modelProviderId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  String modelProviderId)  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelEntity():
 return $default(_that.id,_that.displayName,_that.modelId,_that.modelType,_that.createdAt,_that.updatedAt,_that.modelProviderId);case _:
@@ -197,7 +197,7 @@ return $default(_that.id,_that.displayName,_that.modelId,_that.modelType,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  int modelProviderId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String displayName,  String modelId,  String modelType,  DateTime createdAt,  DateTime updatedAt,  String modelProviderId)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelEntity() when $default != null:
 return $default(_that.id,_that.displayName,_that.modelId,_that.modelType,_that.createdAt,_that.updatedAt,_that.modelProviderId);case _:
@@ -215,13 +215,13 @@ class _ChatModelEntity implements ChatModelEntity {
   const _ChatModelEntity({required this.id, required this.displayName, required this.modelId, required this.modelType, required this.createdAt, required this.updatedAt, required this.modelProviderId});
   
 
-@override final  int id;
+@override final  String id;
 @override final  String displayName;
 @override final  String modelId;
 @override final  String modelType;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
-@override final  int modelProviderId;
+@override final  String modelProviderId;
 
 /// Create a copy of ChatModelEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +253,7 @@ abstract mixin class _$ChatModelEntityCopyWith<$Res> implements $ChatModelEntity
   factory _$ChatModelEntityCopyWith(_ChatModelEntity value, $Res Function(_ChatModelEntity) _then) = __$ChatModelEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String displayName, String modelId, String modelType, DateTime createdAt, DateTime updatedAt, int modelProviderId
+ String id, String displayName, String modelId, String modelType, DateTime createdAt, DateTime updatedAt, String modelProviderId
 });
 
 
@@ -273,13 +273,13 @@ class __$ChatModelEntityCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? createdAt = null,Object? updatedAt = null,Object? modelProviderId = null,}) {
   return _then(_ChatModelEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,modelType: null == modelType ? _self.modelType : modelType // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,modelProviderId: null == modelProviderId ? _self.modelProviderId : modelProviderId // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -585,7 +585,7 @@ $ModelProviderEntityCopyWith<$Res> get modelProvider {
 /// @nodoc
 mixin _$ChatModelsFilter {
 
- List<int>? get workspaces; List<ChatModelType>? get types;
+ List<String>? get workspaces; List<ChatModelType>? get types;
 /// Create a copy of ChatModelsFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -616,7 +616,7 @@ abstract mixin class $ChatModelsFilterCopyWith<$Res>  {
   factory $ChatModelsFilterCopyWith(ChatModelsFilter value, $Res Function(ChatModelsFilter) _then) = _$ChatModelsFilterCopyWithImpl;
 @useResult
 $Res call({
- List<int>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<ChatModelType>? types
 });
 
 
@@ -636,7 +636,7 @@ class _$ChatModelsFilterCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
   return _then(_self.copyWith(
 workspaces: freezed == workspaces ? _self.workspaces : workspaces // ignore: cast_nullable_to_non_nullable
-as List<int>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
+as List<String>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
 as List<ChatModelType>?,
   ));
 }
@@ -722,7 +722,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatModelsFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -743,7 +743,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<int>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelsFilter():
 return $default(_that.workspaces,_that.types);case _:
@@ -763,7 +763,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<int>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelsFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -778,11 +778,11 @@ return $default(_that.workspaces,_that.types);case _:
 
 
 class _ChatModelsFilter implements ChatModelsFilter {
-  const _ChatModelsFilter({final  List<int>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
+  const _ChatModelsFilter({final  List<String>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
   
 
- final  List<int>? _workspaces;
-@override List<int>? get workspaces {
+ final  List<String>? _workspaces;
+@override List<String>? get workspaces {
   final value = _workspaces;
   if (value == null) return null;
   if (_workspaces is EqualUnmodifiableListView) return _workspaces;
@@ -830,7 +830,7 @@ abstract mixin class _$ChatModelsFilterCopyWith<$Res> implements $ChatModelsFilt
   factory _$ChatModelsFilterCopyWith(_ChatModelsFilter value, $Res Function(_ChatModelsFilter) _then) = __$ChatModelsFilterCopyWithImpl;
 @override @useResult
 $Res call({
- List<int>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<ChatModelType>? types
 });
 
 
@@ -850,7 +850,7 @@ class __$ChatModelsFilterCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? workspaces = freezed,Object? types = freezed,}) {
   return _then(_ChatModelsFilter(
 workspaces: freezed == workspaces ? _self._workspaces : workspaces // ignore: cast_nullable_to_non_nullable
-as List<int>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
+as List<String>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
 as List<ChatModelType>?,
   ));
 }
@@ -861,7 +861,7 @@ as List<ChatModelType>?,
 /// @nodoc
 mixin _$ChatModelToCreate {
 
- String get displayName; String get modelId; String get modelType; int get modelProvider;
+ String get displayName; String get modelId; String get modelType; String get modelProviderId;
 /// Create a copy of ChatModelToCreate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -872,16 +872,16 @@ $ChatModelToCreateCopyWith<ChatModelToCreate> get copyWith => _$ChatModelToCreat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModelToCreate&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.modelType, modelType) || other.modelType == modelType)&&(identical(other.modelProvider, modelProvider) || other.modelProvider == modelProvider));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModelToCreate&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.modelType, modelType) || other.modelType == modelType)&&(identical(other.modelProviderId, modelProviderId) || other.modelProviderId == modelProviderId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,displayName,modelId,modelType,modelProvider);
+int get hashCode => Object.hash(runtimeType,displayName,modelId,modelType,modelProviderId);
 
 @override
 String toString() {
-  return 'ChatModelToCreate(displayName: $displayName, modelId: $modelId, modelType: $modelType, modelProvider: $modelProvider)';
+  return 'ChatModelToCreate(displayName: $displayName, modelId: $modelId, modelType: $modelType, modelProviderId: $modelProviderId)';
 }
 
 
@@ -892,7 +892,7 @@ abstract mixin class $ChatModelToCreateCopyWith<$Res>  {
   factory $ChatModelToCreateCopyWith(ChatModelToCreate value, $Res Function(ChatModelToCreate) _then) = _$ChatModelToCreateCopyWithImpl;
 @useResult
 $Res call({
- String displayName, String modelId, String modelType, int modelProvider
+ String displayName, String modelId, String modelType, String modelProviderId
 });
 
 
@@ -909,13 +909,13 @@ class _$ChatModelToCreateCopyWithImpl<$Res>
 
 /// Create a copy of ChatModelToCreate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? modelProvider = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? modelProviderId = null,}) {
   return _then(_self.copyWith(
 displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,modelType: null == modelType ? _self.modelType : modelType // ignore: cast_nullable_to_non_nullable
-as String,modelProvider: null == modelProvider ? _self.modelProvider : modelProvider // ignore: cast_nullable_to_non_nullable
-as int,
+as String,modelProviderId: null == modelProviderId ? _self.modelProviderId : modelProviderId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -1000,10 +1000,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String displayName,  String modelId,  String modelType,  int modelProvider)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String displayName,  String modelId,  String modelType,  String modelProviderId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatModelToCreate() when $default != null:
-return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvider);case _:
+return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProviderId);case _:
   return orElse();
 
 }
@@ -1021,10 +1021,10 @@ return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String displayName,  String modelId,  String modelType,  int modelProvider)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String displayName,  String modelId,  String modelType,  String modelProviderId)  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelToCreate():
-return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvider);case _:
+return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProviderId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1041,10 +1041,10 @@ return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String displayName,  String modelId,  String modelType,  int modelProvider)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String displayName,  String modelId,  String modelType,  String modelProviderId)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatModelToCreate() when $default != null:
-return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvider);case _:
+return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProviderId);case _:
   return null;
 
 }
@@ -1056,13 +1056,13 @@ return $default(_that.displayName,_that.modelId,_that.modelType,_that.modelProvi
 
 
 class _ChatModelToCreate implements ChatModelToCreate {
-  const _ChatModelToCreate({required this.displayName, required this.modelId, required this.modelType, required this.modelProvider});
+  const _ChatModelToCreate({required this.displayName, required this.modelId, required this.modelType, required this.modelProviderId});
   
 
 @override final  String displayName;
 @override final  String modelId;
 @override final  String modelType;
-@override final  int modelProvider;
+@override final  String modelProviderId;
 
 /// Create a copy of ChatModelToCreate
 /// with the given fields replaced by the non-null parameter values.
@@ -1074,16 +1074,16 @@ _$ChatModelToCreateCopyWith<_ChatModelToCreate> get copyWith => __$ChatModelToCr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModelToCreate&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.modelType, modelType) || other.modelType == modelType)&&(identical(other.modelProvider, modelProvider) || other.modelProvider == modelProvider));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModelToCreate&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.modelType, modelType) || other.modelType == modelType)&&(identical(other.modelProviderId, modelProviderId) || other.modelProviderId == modelProviderId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,displayName,modelId,modelType,modelProvider);
+int get hashCode => Object.hash(runtimeType,displayName,modelId,modelType,modelProviderId);
 
 @override
 String toString() {
-  return 'ChatModelToCreate(displayName: $displayName, modelId: $modelId, modelType: $modelType, modelProvider: $modelProvider)';
+  return 'ChatModelToCreate(displayName: $displayName, modelId: $modelId, modelType: $modelType, modelProviderId: $modelProviderId)';
 }
 
 
@@ -1094,7 +1094,7 @@ abstract mixin class _$ChatModelToCreateCopyWith<$Res> implements $ChatModelToCr
   factory _$ChatModelToCreateCopyWith(_ChatModelToCreate value, $Res Function(_ChatModelToCreate) _then) = __$ChatModelToCreateCopyWithImpl;
 @override @useResult
 $Res call({
- String displayName, String modelId, String modelType, int modelProvider
+ String displayName, String modelId, String modelType, String modelProviderId
 });
 
 
@@ -1111,13 +1111,13 @@ class __$ChatModelToCreateCopyWithImpl<$Res>
 
 /// Create a copy of ChatModelToCreate
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? modelProvider = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? displayName = null,Object? modelId = null,Object? modelType = null,Object? modelProviderId = null,}) {
   return _then(_ChatModelToCreate(
 displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,modelType: null == modelType ? _self.modelType : modelType // ignore: cast_nullable_to_non_nullable
-as String,modelProvider: null == modelProvider ? _self.modelProvider : modelProvider // ignore: cast_nullable_to_non_nullable
-as int,
+as String,modelProviderId: null == modelProviderId ? _self.modelProviderId : modelProviderId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
