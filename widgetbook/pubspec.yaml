@@ -12,7 +12,7 @@ dependencies:
   widgetbook: ^3.18.0
   tina_ui:
     path: ../packages/tina_ui
-  google_fonts: ^6.2.1
+  google_fonts: ^6.3.2
 
 dev_dependencies:
   build_runner: ^2.4.0
