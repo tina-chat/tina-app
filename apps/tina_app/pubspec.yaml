@@ -32,7 +32,7 @@ dependencies:
   iconsax: ^0.0.8
   
   # Database dependencies
-  drift: ^2.20.0
+  drift: ^2.29.0
   drift_flutter: ^0.2.7
   sqlite3_flutter_libs: ^0.5.24
   path_provider: ^2.1.3
