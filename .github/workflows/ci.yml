@@ -34,7 +34,7 @@ jobs:
       - uses: bluefireteam/melos-action@v3
         with:
           enforce-lockfile: true
-          run-bootstrap: steps.flutter-action.outputs.PUB-CACHE-HIT != 'true'
+          run-bootstrap: true
 
       - name: ✨ Check Formatting
         run: dart format --line-length 80 --set-exit-if-changed .
