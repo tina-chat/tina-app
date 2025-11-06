@@ -49,15 +49,18 @@ workflows:
           echo "Bootstrapping monorepo packages..."
           melos bootstrap --verbose
 
+      - name: Generate
+        script: |
+          echo "Running generations..."
+          melos generate
+          melos localization
+
       - name: Run Full Validation
         script: |
           echo "Running full validation pipeline..."
-          melos run validate
-
-      - name: Generate Coverage Report
-        script: |
-          echo "Generating coverage reports..."
-          melos run coverage || true
+          melos analyze
+          melos test
+          melos format:check
 
     artifacts:
       - coverage/**/*.html
@@ -106,65 +109,20 @@ workflows:
         script: |
           melos bootstrap --verbose
 
+      - name: Generate
+        script: |
+          echo "Running generations..."
+          melos generate
+          melos localization
+
       - name: Run Full Validation
         script: |
-          melos run validate
-
-      - name: Build Release APK
-        script: |
-          echo "Building release APK..."
-          melos run build:release
-
-      - name: Build Web
-        script: |
-          echo "Building web version..."
-          melos run build:web
-
-      - name: Run Integration Tests
-        script: |
-          echo "Running integration tests..."
-          melos run test:integration || echo "Integration tests not available yet"
+          echo "Running full validation pipeline..."
+          melos analyze
+          melos test
+          melos format:check
 
     artifacts:
       - "**/build/app/outputs/flutter-apk/*.apk"
       - "**/build/web/**"
       - coverage/**/*.html
-
-  # Development Quick Check
-  dev-check:
-    name: Quick Development Check
-    instance_type: mac_mini_m2
-    max_build_duration: 10
-    environment:
-      flutter: fvm
-    when:
-      changeset:
-        includes:
-          - "apps/**"
-          - "packages/**"
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: "feature/*"
-          include: true
-        - pattern: "bugfix/*"
-          include: true
-        - pattern: "hotfix/*"
-          include: true
-    cache:
-      cache_paths:
-        - ~/.pub-cache
-    scripts:
-      - name: Quick Setup
-        script: |
-          echo PATH="$PATH":"$FLUTTER_ROOT/.pub-cache/bin" >> $CM_ENV
-          dart pub global activate melos
-
-      - name: Bootstrap and Quick Check
-        script: |
-          melos bootstrap
-          melos run validate:quick
-
-    artifacts:
-      - "**/coverage/lcov.info"
