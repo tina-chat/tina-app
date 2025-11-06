@@ -31,10 +31,10 @@ jobs:
           flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
           channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
           cache: true
-
-      - name: Conditionally run melos bootstrap
-        if: steps.flutter-action.outputs.PUB-CACHE-HIT != 'true'
-        run: melos bootstrap
+      - uses: bluefireteam/melos-action@v3
+        with:
+          enforce-lockfile: true
+          run-bootstrap: steps.flutter-action.outputs.PUB-CACHE-HIT != 'true'
 
       - name: ✨ Check Formatting
         run: dart format --line-length 80 --set-exit-if-changed .
