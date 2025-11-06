@@ -66,7 +66,7 @@ melos:
     
     localization:
       # Run build_runner and format only the generated files
-      exec: dart pub run easy_localization:generate -S assets/i18n -f keys -O lib/i18n -o locale_keys.dart --skip-unnecessary-keys
+      exec: dart pub run easy_localization:generate -S assets/i18n -f keys -O lib/i18n -o locale_keys.dart --skip-unnecessary-keys && dart format lib/i18n/locale_keys.dart
       concurrency: 1
       orderDependents: true
       failFast: true
