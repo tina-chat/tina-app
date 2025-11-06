@@ -26,14 +26,15 @@ jobs:
 
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
+        id: flutter-action
         with:
           flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
           channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
           cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
 
-      - name: 📦 Install Dependencies
-        run: flutter pub get
+      - name: Conditionally run melos bootstrap
+        if: steps.flutter-action.outputs.PUB-CACHE-HIT != 'true'
+        run: melos bootstrap
 
       - name: ✨ Check Formatting
         run: dart format --line-length 80 --set-exit-if-changed .
