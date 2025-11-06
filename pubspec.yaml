@@ -15,6 +15,7 @@ dev_dependencies:
   very_good_analysis: ^10.0.0
 
 melos:
+  sdkPath: .fvm/flutter_sdk
   name: tina_workspace
 
   categories:
@@ -29,57 +30,40 @@ melos:
         environment:
           sdk: ^3.9.0
   scripts:
-    # Quality Assurance Scripts
     analyze:
-      run: melos exec -- "flutter analyze --fatal-infos"
-      description: Analyze all packages with strict warnings
+      run: dart analyze
 
-    format:
-      run: melos exec -- "dart format . --set-exit-if-changed"
-      description: Check code formatting (CI mode)
+    analyze:fix:
+      run: dart fix --apply
+
+    format:check:
+      run: dart format --line-length 80 -o none --set-exit-if-changed .
+      description: Check code formating
 
     format:fix:
-      run: melos exec -- "dart format ."
+      run: dart format --line-length 80 .
       description: Fix code formatting
 
     # Testing Scripts
     test:
-      run: melos exec --dir-exists=test -- "flutter test --coverage --reporter=expanded"
+      exec: flutter test --coverage --reporter=expanded
+      packageFilters:
+        dirExists: test
       description: Run tests for all packages with coverage
-
-    test:unit:
-      run: melos exec --dir-exists=test/unit -- "flutter test test/unit --coverage"
-      description: Run unit tests only
-
-    test:widget:
-      run: melos exec --dir-exists=test/widget -- "flutter test test/widget --coverage"
-      description: Run widget tests only
-
-    test:integration:
-      run: melos exec --dir-exists=test/integration -- "flutter test test/integration"
-      description: Run integration tests only
-
-    # Build Scripts
-    build:
-      run: melos exec --depends-on="flutter" -- "flutter build apk --debug"
-      description: Build debug APK for all Flutter packages
-
-    build:release:
-      run: melos exec --depends-on="flutter" -- "flutter build apk --release"
-      description: Build release APK for all Flutter packages
-
-    build:web:
-      run: melos exec --depends-on="flutter" -- "flutter build web"
-      description: Build web version for all Flutter packages
 
     # Code Generation Scripts
     generate:
-      run: melos exec --depends-on="build_runner" -- "dart run build_runner build --delete-conflicting-outputs"
+      exec: dart run build_runner build --delete-conflicting-outputs
       description: Run code generation for all packages
+      packageFilters:
+        dependsOn: build_runner
 
     generate:watch:
-      run: melos exec --depends-on="build_runner" -- "dart run build_runner watch --delete-conflicting-outputs"
+      exec: dart run build_runner watch --delete-conflicting-outputs
       description: Run code generation in watch mode
+      packageFilters:
+        dependsOn: build_runner
+      concurrency: 10
     
     localization:
       # Run build_runner and format only the generated files
@@ -91,11 +75,6 @@ melos:
         dependsOn:
           - easy_localization
 
-    # Dependency Management
-    pub-get:
-      run: melos exec -- "flutter pub get"
-      description: Run pub get for all packages
-
     clean:
       run: melos exec -- "flutter clean"
       description: Clean all packages
@@ -103,7 +82,7 @@ melos:
     # Validation Pipeline (for CI)
     validate:
       run: |
-        melos run analyze &&
+        melos analyze &&
         melos run format &&
         melos run test &&
         melos run build
@@ -111,43 +90,25 @@ melos:
 
     validate:quick:
       run: |
-        melos run analyze &&
+        melos analyze &&
         melos run format
       description: Quick validation for development
 
     # Development Scripts
     outdated:
-      run: melos exec -- "flutter pub outdated"
+      run: flutter pub outdated
       description: Check for outdated dependencies
 
     upgrade:
-      run: melos exec -- "flutter pub upgrade"
+      run: flutter pub upgrade
       description: Upgrade dependencies
-
-    # Coverage Scripts
-    coverage:
-      run: |
-        melos run test &&
-        melos exec --dir-exists=coverage -- "genhtml coverage/lcov.info -o coverage/html"
-      description: Generate test coverage reports
 
     # Maintenance Scripts
     reset:
-      run: |
-        melos clean &&
-        melos bootstrap &&
-        melos run generate
       description: Reset and regenerate all packages
+      steps:
+        - melos clean
+        - melos bootstrap
+        -  melos run generate
 
-    # Development Workflow Scripts
-    work-on-subtask:
-      run: ./scripts/work-on-subtask $MELOS_SCRIPT_ARGS
-      description: Start working on a specific subtask with guided workflow
 
-    work-branch:
-      run: ./scripts/work-on-subtask $MELOS_SCRIPT_ARGS --branch
-      description: Create branch and start working on subtask
-
-    work-validate:
-      run: ./scripts/work-on-subtask $MELOS_SCRIPT_ARGS --validate
-      description: Work on subtask with continuous validation
