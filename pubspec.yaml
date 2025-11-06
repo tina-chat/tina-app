@@ -22,7 +22,12 @@ melos:
       - "apps/**"
     packages:
       - "packages/**"
-
+  command:
+      bootstrap:
+        usePubspecOverrides: true
+        runPubGetInParallel: false
+        environment:
+          sdk: ^3.9.0
   scripts:
     # Quality Assurance Scripts
     analyze:
