@@ -23,10 +23,6 @@ melos:
     packages:
       - "packages/**"
 
-  command:
-    bootstrap:
-      runPubGetInParallel: true
-
   scripts:
     # Quality Assurance Scripts
     analyze:
