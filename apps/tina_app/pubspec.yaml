@@ -10,52 +10,56 @@ version: 1.0.0+1
 environment:
   sdk: ^3.9.0
 
-
 dependencies:
-  flutter:
-    sdk: flutter
-  
-  # Networking
-  http: ^1.5.0
-  
-  # UI Components
-  flutter_markdown: ^0.7.7+1
-  
-  # Other dependencies
-  provider: ^6.1.5+1
-  shared_preferences: ^2.5.3
-  uuid: ^4.5.1
-
-  json_annotation: ^4.9.0
-  go_router: ^16.2.5
-  tina_ui: ^0.1.0+1
-  iconsax: ^0.0.8
-  
-  # Database dependencies
-  drift: ^2.20.0
-  drift_flutter: ^0.2.7
-  sqlite3_flutter_libs: ^0.5.24
-  path_provider: ^2.1.3
-  path: ^1.9.0
-
-  hooks_riverpod: ^3.0.3
-  flutter_hooks: ^0.21.3+1
-  riverpod_annotation: ^3.0.3
-  freezed_annotation: ^3.1.0
-  openai_dart: ^0.6.0+1
-  langchain_openai: ^0.8.0+1
-  langchain: ^0.8.0+1
-  langchain_core: ^0.4.0+1
-  langchain_anthropic: ^0.3.0+1
   anthropic_sdk_dart: ^0.3.0+1
+  collection: ^1.19.1
+
+  # Database dependencies
+  drift: ^2.29.0
+  drift_flutter: ^0.2.7
   easy_localization: ^3.0.8
   easy_localization_loader: ^2.0.2
-  riverpod: ^3.0.3
-  collection: ^1.19.1
-  langchain_community: ^0.4.0+1
-dev_dependencies:
-  flutter_test:
+  flutter:
     sdk: flutter
+  flutter_hooks: ^0.21.3+1
+
+  # UI Components
+  flutter_markdown: ^0.7.7+1
+  freezed_annotation: ^3.1.0
+  go_router: ^17.0.0
+
+  hooks_riverpod: ^3.0.3
+
+  # Networking
+  http: ^1.5.0
+  iconsax: ^0.0.8
+
+  json_annotation: ^4.9.0
+  langchain: ^0.8.0+1
+  langchain_anthropic: ^0.3.0+1
+  langchain_community: ^0.4.0+1
+  langchain_core: ^0.4.0+1
+  langchain_openai: ^0.8.0+1
+  openai_dart: ^0.6.0+1
+  path: ^1.9.0
+  path_provider: ^2.1.5
+
+  # Other dependencies
+  provider: ^6.1.5+1
+  riverpod: ^3.0.3
+  riverpod_annotation: ^3.0.3
+  shared_preferences: ^2.5.3
+  sqlite3_flutter_libs: ^0.5.40
+  tina_ui: ^0.1.0+1
+  uuid: ^4.5.2
+dev_dependencies:
+
+  # Code generation for JSON serialization
+  build_runner: ^2.7.0
+  custom_lint: ^0.8.0
+
+  # Code generation for Drift
+  drift_dev: ^2.29.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -63,26 +67,19 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
-  
-  # Code generation for JSON serialization
-  build_runner: ^2.7.1
-  json_serializable: ^6.11.1
-  
-  # Code generation for Drift
-  drift_dev: ^2.20.0
-  riverpod_generator: ^3.0.3
-  custom_lint: ^0.8.0
-  riverpod_lint: ^3.0.3
+  flutter_test:
+    sdk: flutter
   freezed: ^3.2.3
   go_router_builder: ^4.1.1
+  json_serializable: ^6.11.1
+  riverpod_generator: ^3.0.3
+  riverpod_lint: ^3.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
   assets:
     - assets/i18n/
   uses-material-design: true
-
