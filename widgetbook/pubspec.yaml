@@ -11,13 +11,12 @@ dependencies:
   google_fonts: ^6.2.1
   tina_ui:
     path: ../packages/tina_ui
-  widgetbook: 3.16.0
+  widgetbook: ^3.16.0
   widgetbook_annotation: ^3.8.0
 
 dev_dependencies:
   build_runner: ^2.7.0
   widgetbook_generator: ^3.16.0
-  widgetbook_golden_test: ^0.2.1
 
 flutter:
   uses-material-design: true

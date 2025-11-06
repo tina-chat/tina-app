@@ -9,17 +9,9 @@ environment:
   flutter: ^3.35.0
 
 dependencies:
-  flex_color_scheme: ^8.3.1
   flutter:
     sdk: flutter
-  # Theme and styling utilities
-  # Animation and interaction
-  flutter_animate: ^4.5.2
   flutter_portal: ^1.1.4
-  flutter_screenutil: ^5.9.3
-  # Design system dependencies
-  flutter_svg: ^2.2.2
-  google_fonts: ^6.3.2
   gpt_markdown: ^1.1.4
 
 dev_dependencies:
