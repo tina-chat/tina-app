@@ -135,16 +135,4 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
             ))
           .map((row) => row.read(workspaceTools.id.count()) ?? 0)
           .getSingle();
-
-  // Bulk operations
-  Future<void> setDefaultWorkspaceTools(String workspaceId) async {
-    final defaultTools = [
-      'web_search',
-      'calculator',
-    ]; // File operations disabled by default for security
-
-    for (final toolType in defaultTools) {
-      await setWorkspaceToolEnabled(workspaceId, toolType, true);
-    }
-  }
 }

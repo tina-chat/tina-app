@@ -106,13 +106,6 @@ abstract class WorkspaceToolsRepository {
   /// Throws [WorkspaceToolsException] if there's an error counting tools.
   Future<int> getEnabledWorkspaceToolsCount(String workspaceId);
 
-  /// Initializes default tools for a workspace.
-  ///
-  /// [workspaceId] The ID of the workspace to initialize tools for.
-  /// Sets up default enabled tools based on app configuration.
-  /// Throws [WorkspaceToolsException] if there's an error initializing tools.
-  Future<void> initializeDefaultWorkspaceTools(String workspaceId);
-
   /// Copies workspace tools to a conversation.
   ///
   /// [workspaceId] The ID of the source workspace.

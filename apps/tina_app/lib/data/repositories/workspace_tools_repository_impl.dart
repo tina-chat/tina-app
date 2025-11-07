@@ -164,18 +164,6 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   }
 
   @override
-  Future<void> initializeDefaultWorkspaceTools(String workspaceId) async {
-    try {
-      await _dao.setDefaultWorkspaceTools(workspaceId);
-    } catch (e) {
-      throw WorkspaceToolsException(
-        'Failed to initialize workspace defaults: $e',
-        e is Exception ? e : null,
-      );
-    }
-  }
-
-  @override
   Future<void> copyWorkspaceToolsToConversation(
     String workspaceId,
     String conversationId,
