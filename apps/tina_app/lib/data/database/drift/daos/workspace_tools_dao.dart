@@ -21,20 +21,19 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
           ))
           .getSingleOrNull();
 
-  Future<bool> setWorkspaceToolEnabled(
+  Future<WorkspaceToolsTable> setWorkspaceToolEnabled(
     String workspaceId,
     String toolType,
     bool isEnabled,
   ) {
-    return customUpdate(
-      'INSERT OR REPLACE INTO workspace_tools (workspace_id, type, is_enabled, created_at, updated_at) '
-      'VALUES (?, ?, ?, datetime(\'now\'), datetime(\'now\'))',
-      variables: [
-        Variable.withString(workspaceId),
-        Variable.withString(toolType),
-        Variable.withBool(isEnabled),
-      ],
-    ).then((count) => count > 0);
+    return into(workspaceTools).insertReturning(
+      WorkspaceToolsCompanion(
+        workspaceId: Value(workspaceId),
+        type: Value(toolType),
+        isEnabled: Value(isEnabled),
+      ),
+      mode: InsertMode.insertOrReplace,
+    );
   }
 
   Future<bool> toggleWorkspaceTool(String workspaceId, String toolType) {
@@ -48,20 +47,18 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
     ).then((count) => count > 0);
   }
 
-  Future<bool> updateWorkspaceToolConfig(
+  Future<List<WorkspaceToolsTable>> updateWorkspaceToolConfig(
     String workspaceId,
     String toolType,
     String? config,
   ) {
-    return customUpdate(
-      'UPDATE workspace_tools SET config = ?, updated_at = datetime(\'now\') '
-      'WHERE workspace_id = ? AND type = ?',
-      variables: [
-        Variable.withString(config ?? ''),
-        Variable.withString(workspaceId),
-        Variable.withString(toolType),
-      ],
-    ).then((count) => count > 0);
+    return update(workspaceTools).writeReturning(
+      WorkspaceToolsCompanion(
+        workspaceId: Value(workspaceId),
+        type: Value(toolType),
+        config: Value(config),
+      ),
+    );
   }
 
   Future<bool> deleteWorkspaceTool(String workspaceId, String toolType) =>

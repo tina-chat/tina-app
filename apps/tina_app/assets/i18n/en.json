@@ -21,5 +21,22 @@
       "select_model_selctor": "Select Model",
       "message_placeholder": "Type your message..."
     }
+  },
+  "tools_screen": {
+    "title": "Workspace Tools",
+    "refresh_tooltip": "Refresh tools",
+    "workspace_ai_tools": "Workspace AI Tools",
+    "enable_configure_description": "Enable and configure tools for this workspace",
+    "enabled_count": {
+      "zero": "no tools enabled",
+      "other":"{} enabled"
+    },
+    "configured": "Configured"
+  },
+  "tools_names": {
+    "calculator": {
+      "name": "Calculator",
+      "description": "Solve Math problems"
+    }
   }
 }

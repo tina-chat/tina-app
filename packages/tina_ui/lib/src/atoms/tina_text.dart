@@ -35,7 +35,10 @@ class TinaText extends StatelessWidget {
       tinaColors,
     ).copyWith(color: _getColor(context));
 
-    final iconData = IconThemeData(color: _getColor(context));
+    final iconData = IconThemeData(
+      color: _getColor(context),
+      size: textStyle.fontSize,
+    );
 
     return DefaultTextStyle.merge(
       style: textStyle,

@@ -41,7 +41,7 @@ abstract class WorkspaceToolsRepository {
   /// [isEnabled] Whether the tool should be enabled.
   /// Returns true if the operation was successful, false if the tool was not found.
   /// Throws [WorkspaceToolsException] if there's an error updating the tool.
-  Future<bool> setWorkspaceToolEnabled(
+  Future<WorkspaceToolEntity> setWorkspaceToolEnabled(
     String workspaceId,
     String toolType,
     bool isEnabled,
@@ -62,7 +62,7 @@ abstract class WorkspaceToolsRepository {
   /// [config] The new configuration as JSON string.
   /// Returns true if the operation was successful, false if the tool was not found.
   /// Throws [WorkspaceToolsException] if there's an error updating the tool.
-  Future<bool> updateWorkspaceToolConfig(
+  Future<List<WorkspaceToolEntity>> updateWorkspaceToolConfig(
     String workspaceId,
     String toolType,
     String? config,

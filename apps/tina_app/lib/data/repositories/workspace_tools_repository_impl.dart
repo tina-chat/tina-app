@@ -18,18 +18,7 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
     String workspaceId,
   ) async {
     final results = await _dao.getWorkspaceTools(workspaceId);
-    return results
-        .map(
-          (table) => WorkspaceToolEntity(
-            workspaceId: table.workspaceId,
-            type: table.type,
-            config: table.config,
-            isEnabled: table.isEnabled,
-            createdAt: table.createdAt,
-            updatedAt: table.updatedAt,
-          ),
-        )
-        .toList();
+    return results.map(_tableToEntity).toList();
   }
 
   @override
@@ -37,18 +26,7 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
     String workspaceId,
   ) async {
     final results = await _dao.getEnabledWorkspaceTools(workspaceId);
-    return results
-        .map(
-          (table) => WorkspaceToolEntity(
-            workspaceId: table.workspaceId,
-            type: table.type,
-            config: table.config,
-            isEnabled: table.isEnabled,
-            createdAt: table.createdAt,
-            updatedAt: table.updatedAt,
-          ),
-        )
-        .toList();
+    return results.map(_tableToEntity).toList();
   }
 
   @override
@@ -59,28 +37,19 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
     final result = await _dao.getWorkspaceTool(workspaceId, toolType);
     if (result == null) return null;
 
-    return WorkspaceToolEntity(
-      workspaceId: result.workspaceId,
-      type: result.type,
-      config: result.config,
-      isEnabled: result.isEnabled,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-    );
+    return _tableToEntity(result);
   }
 
   @override
-  Future<bool> setWorkspaceToolEnabled(
+  Future<WorkspaceToolEntity> setWorkspaceToolEnabled(
     String workspaceId,
     String toolType,
     bool isEnabled,
   ) async {
     try {
-      return await _dao.setWorkspaceToolEnabled(
-        workspaceId,
-        toolType,
-        isEnabled,
-      );
+      return await _dao
+          .setWorkspaceToolEnabled(workspaceId, toolType, isEnabled)
+          .then(_tableToEntity);
     } catch (e) {
       throw WorkspaceToolsException(
         'Failed to set workspace tool enabled: $e',
@@ -92,14 +61,7 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   @override
   Future<bool> toggleWorkspaceTool(String workspaceId, String toolType) async {
     try {
-      final tool = await getWorkspaceTool(workspaceId, toolType);
-      final newStatus =
-          tool?.isEnabled ?? ToolService.isToolEnabledByDefault(toolType);
-      return await _dao.setWorkspaceToolEnabled(
-        workspaceId,
-        toolType,
-        !newStatus,
-      );
+      return await _dao.toggleWorkspaceTool(workspaceId, toolType);
     } catch (e) {
       throw WorkspaceToolsException(
         'Failed to toggle workspace tool: $e',
@@ -115,10 +77,8 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   ) async {
     try {
       final result = await _dao.getWorkspaceTool(workspaceId, toolType);
-      if (result == null) {
-        return ToolService.isToolEnabledByDefault(toolType);
-      }
-      return result.isEnabled;
+
+      return result?.isEnabled ?? false;
     } catch (e) {
       throw WorkspaceToolsException(
         'Failed to check workspace tool status: $e',
@@ -198,8 +158,7 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
       }
 
       // Check if tool type is valid
-      final availableTools = ToolService.getAvailableToolTypes();
-      if (!availableTools.contains(toolType)) {
+      if (!ToolService.hasTypeString(toolType)) {
         throw WorkspaceToolsValidationException('Invalid tool type: $toolType');
       }
 
@@ -245,22 +204,24 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   }
 
   @override
-  Future<bool> updateWorkspaceToolConfig(
+  Future<List<WorkspaceToolEntity>> updateWorkspaceToolConfig(
     String workspaceId,
     String toolType,
     String? config,
   ) async {
-    try {
-      return await _dao.updateWorkspaceToolConfig(
-        workspaceId,
-        toolType,
-        config,
-      );
-    } catch (e) {
-      throw WorkspaceToolsException(
-        'Failed to update workspace tool config: $e',
-        e is Exception ? e : null,
-      );
-    }
+    return await _dao
+        .updateWorkspaceToolConfig(workspaceId, toolType, config)
+        .then((value) => value.map(_tableToEntity).toList());
+  }
+
+  WorkspaceToolEntity _tableToEntity(WorkspaceToolsTable table) {
+    return WorkspaceToolEntity(
+      workspaceId: table.workspaceId,
+      type: table.type,
+      config: table.config,
+      isEnabled: table.isEnabled,
+      createdAt: table.createdAt,
+      updatedAt: table.updatedAt,
+    );
   }
 }
