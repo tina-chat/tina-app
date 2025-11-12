@@ -6,9 +6,14 @@ import 'package:tina_app/widgets/text_locale.dart';
 import 'package:tina_ui/ui.dart';
 
 class ChatInputWidget extends HookConsumerWidget {
-  const ChatInputWidget({super.key, required this.onSendMessage});
+  const ChatInputWidget({
+    super.key,
+    required this.onSendMessage,
+    required this.onToolsPress,
+  });
 
   final void Function(String message)? onSendMessage;
+  final VoidCallback? onToolsPress;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -36,8 +41,21 @@ class ChatInputWidget extends HookConsumerWidget {
         controller: controller,
         footer: Row(
           children: [
-            Expanded(child: Container()),
+            if (onToolsPress != null)
+              // Tools button - always show, modal will handle availability
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: TinaButton(
+                  onPressed: onToolsPress,
+                  variant: TinaButtonVariant.secondary,
+                  size: TinaButtonSize.small,
+                  child: const TinaIcon(Icons.build_circle_outlined),
+                ),
+              ),
 
+            const Spacer(),
+
+            // Send button
             TinaButton(
               onPressed: sendMessage,
               size: TinaButtonSize.small,

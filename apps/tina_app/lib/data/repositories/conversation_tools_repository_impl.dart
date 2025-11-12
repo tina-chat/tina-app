@@ -92,7 +92,8 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
         return await _dao.enableConversationTool(conversationId, toolType);
       } else {
         // Disable the tool by adding it to disabled table
-        return await _dao.disableConversationTool(conversationId, toolType);
+        await _dao.disableConversationTool(conversationId, toolType);
+        return true;
       }
     } catch (e) {
       throw ConversationToolsException(
@@ -100,6 +101,14 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
         e is Exception ? e : null,
       );
     }
+  }
+
+  @override
+  Future<void> setConversationToolsDisabled(
+    String conversationId,
+    List<String> toolTypes,
+  ) {
+    return _dao.disableConversationTools(conversationId, toolTypes);
   }
 
   @override
@@ -185,24 +194,6 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
   }
 
   @override
-  Future<void> initializeConversationFromWorkspace(
-    String conversationId,
-    String workspaceId,
-  ) async {
-    try {
-      await _dao.initializeConversationFromWorkspace(
-        conversationId,
-        workspaceId,
-      );
-    } catch (e) {
-      throw ConversationToolsException(
-        'Failed to initialize conversation from workspace: $e',
-        e is Exception ? e : null,
-      );
-    }
-  }
-
-  @override
   Future<void> copyConversationTools(
     String sourceConversationId,
     String targetConversationId,
@@ -238,8 +229,7 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
       }
 
       // Check if tool type is valid
-      final availableTools = ToolService.getAvailableToolTypes();
-      if (!availableTools.contains(toolType)) {
+      if (!ToolService.hasTypeString(toolType)) {
         throw ConversationToolsValidationException(
           'Invalid tool type: $toolType',
         );

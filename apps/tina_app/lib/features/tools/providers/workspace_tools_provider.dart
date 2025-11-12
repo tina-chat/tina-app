@@ -39,7 +39,7 @@ class WorkspaceToolsNotifier extends _$WorkspaceToolsNotifier {
 
     return ToolService.getTypes().map((toolType) {
       final workspaceTool = workspaceTools.firstWhereOrNull(
-        (wt) => wt.type == toolType,
+        (wt) => wt.type == toolType.value,
       );
       return (toolType, workspaceTool);
     }).toList();
@@ -75,19 +75,14 @@ class WorkspaceToolsNotifier extends _$WorkspaceToolsNotifier {
   }
 
   /// Enable or disable a workspace tool
-  Future<bool> setToolEnabled(String toolType, bool isEnabled) async {
-    try {
-      final newTool = await _repository.setWorkspaceToolEnabled(
-        _workspaceId,
-        toolType,
-        isEnabled,
-      );
-      _replaceTools([newTool]);
-      return true;
-    } catch (e) {
-      print('Failed to set workspace tool $toolType enabled: $e');
-      return false;
-    }
+  Future<void> setToolEnabled(String toolType, bool isEnabled) async {
+    final newTool = await _repository.setWorkspaceToolEnabled(
+      _workspaceId,
+      toolType,
+      isEnabled,
+    );
+    _replaceTools([newTool]);
+    return;
   }
 
   /// Update workspace tool configuration
@@ -102,17 +97,12 @@ class WorkspaceToolsNotifier extends _$WorkspaceToolsNotifier {
 
   /// Remove a workspace tool
   Future<bool> removeTool(UserToolType toolType) async {
-    try {
-      final success = await _repository.removeWorkspaceTool(
-        _workspaceId,
-        toolType.value,
-      );
-      _removeTools([toolType]);
-      return success;
-    } catch (e) {
-      print('Failed to remove workspace tool $toolType: $e');
-      return false;
-    }
+    final success = await _repository.removeWorkspaceTool(
+      _workspaceId,
+      toolType.value,
+    );
+    _removeTools([toolType]);
+    return success;
   }
 }
 

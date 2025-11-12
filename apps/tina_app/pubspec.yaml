@@ -39,6 +39,7 @@ dependencies:
   # Other dependencies
   riverpod: ^3.0.3
   riverpod_annotation: ^3.0.3
+  rxdart: ^0.28.0
   shared_preferences: ^2.5.3
   sqlite3_flutter_libs: ^0.5.40
   tina_ui: ^0.1.0+1

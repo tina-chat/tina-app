@@ -10,8 +10,28 @@ class ToolService {
   /// Hardcoded list of all available tools in the app
   static const List<UserToolEntity> availableTools = [CalculatorTool()];
 
-  static List<UserToolType> getTypes() =>
-      availableTools.map((e) => e.type).toList();
+  static List<UserToolType> getTypes({List<UserToolType>? without}) {
+    var types = availableTools.map((e) => e.type);
+    if (without != null && without.isNotEmpty) {
+      types = types.where((element) => !without.contains(element));
+    }
+    return types.toList();
+  }
+
+  static List<UserToolEntity> getTools({
+    List<UserToolType>? without,
+    List<UserToolType>? only,
+  }) {
+    Iterable<UserToolEntity> types = availableTools;
+    if (without != null && without.isNotEmpty) {
+      types = types.where((element) => !without.contains(element.type));
+    }
+    if (only != null) {
+      types = types.where((element) => only.contains(element.type));
+    }
+    return types.toList();
+  }
+
   static UserToolType getType(UserToolEntity tool) => tool.type;
   static bool hasType(UserToolType type) =>
       availableTools.any((tool) => tool.type == type);

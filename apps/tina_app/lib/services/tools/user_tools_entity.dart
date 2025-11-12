@@ -5,6 +5,12 @@ enum UserToolType {
 
   final String value;
   const UserToolType(this.value);
+  static UserToolType? fromValue(String value) {
+    for (UserToolType enumVariant in UserToolType.values) {
+      if (enumVariant.name == value) return enumVariant;
+    }
+    return null;
+  }
 }
 
 /// Represents an available tool in the app

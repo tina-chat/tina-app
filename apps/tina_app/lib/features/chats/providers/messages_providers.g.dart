@@ -49,7 +49,7 @@ final class ConversationSelectedNotifierProvider
 }
 
 String _$conversationSelectedNotifierHash() =>
-    r'6961c32224067093c21814f3c95558e110d40592';
+    r'54748a3e8db30c85e1c6305f967878aa4dc83be0';
 
 @ProviderFor(ConversationChatNotifier)
 const conversationChatProvider = ConversationChatNotifierProvider._();
@@ -301,4 +301,4 @@ final class MessageConversationProvider
 }
 
 String _$messageConversationHash() =>
-    r'c357bfef502081efc8133814df5682411cc0eec0';
+    r'06cd1fcd8b36348d55116af657a514187954f280';

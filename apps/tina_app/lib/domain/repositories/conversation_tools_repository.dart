@@ -49,6 +49,11 @@ abstract class ConversationToolsRepository {
     bool isEnabled,
   );
 
+  Future<void> setConversationToolsDisabled(
+    String conversationId,
+    List<String> toolTypes,
+  );
+
   /// Toggles the enabled status of a conversation tool.
   ///
   /// [conversationId] The ID of the conversation.
@@ -89,17 +94,6 @@ abstract class ConversationToolsRepository {
   /// Returns the number of enabled tools for the conversation.
   /// Throws [ConversationToolsException] if there's an error counting tools.
   Future<int> getEnabledConversationToolsCount(String conversationId);
-
-  /// Initializes conversation tools from workspace defaults.
-  ///
-  /// [conversationId] The ID of the conversation to initialize.
-  /// [workspaceId] The ID of the workspace to copy tools from.
-  /// Copies all enabled workspace tools to the conversation as a starting point.
-  /// Throws [ConversationToolsException] if there's an error initializing tools.
-  Future<void> initializeConversationFromWorkspace(
-    String conversationId,
-    String workspaceId,
-  );
 
   /// Copies all tools from one conversation to another.
   ///

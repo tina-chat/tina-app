@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod/experimental/mutation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tina_app/core/exceptions/conversation_exceptions.dart';
 import 'package:tina_app/domain/entities/conversation.dart';
 import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_app/features/chats/providers/conversation_providers.dart';
@@ -16,7 +17,7 @@ final updateMessageMutation = Mutation<MessageEntity>();
 
 @riverpod
 String conversationSelectedNotifier(Ref ref) =>
-    throw Exception('implement conversationSelectedNotifier');
+    throw const NoConversationSelectedException();
 
 @Riverpod(dependencies: [conversationSelectedNotifier])
 class ConversationChatNotifier extends _$ConversationChatNotifier {
@@ -118,5 +119,14 @@ MessageEntity? messageConversation(Ref ref) {
 
   if (updateMessage == null) return messageEntity;
 
-  return messageEntity.copyWith(content: updateMessage.content);
+  return messageEntity.copyWith(
+    content: updateMessage.content,
+    metadata: updateMessage.metadata,
+    status: switch (updateMessage.status) {
+      StreamingMessageStatus.created => MessageStatus.sending,
+      StreamingMessageStatus.streaming => MessageStatus.sending,
+      StreamingMessageStatus.done => MessageStatus.sent,
+      StreamingMessageStatus.error => MessageStatus.error,
+    },
+  );
 }

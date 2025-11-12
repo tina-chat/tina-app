@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StreamingMessage {
 
- String get messageId; String get conversationId; String get responseMesageId; String get content; DateTime get createdAt; DateTime get updatedAt; StreamingMessageStatus get status;
+ String get messageId; String get conversationId; String get responseMesageId; String get content; String? get metadata; DateTime get createdAt; DateTime get updatedAt; StreamingMessageStatus get status;
 /// Create a copy of StreamingMessage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $StreamingMessageCopyWith<StreamingMessage> get copyWith => _$StreamingMessageCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StreamingMessage&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.conversationId, conversationId) || other.conversationId == conversationId)&&(identical(other.responseMesageId, responseMesageId) || other.responseMesageId == responseMesageId)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StreamingMessage&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.conversationId, conversationId) || other.conversationId == conversationId)&&(identical(other.responseMesageId, responseMesageId) || other.responseMesageId == responseMesageId)&&(identical(other.content, content) || other.content == content)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,messageId,conversationId,responseMesageId,content,createdAt,updatedAt,status);
+int get hashCode => Object.hash(runtimeType,messageId,conversationId,responseMesageId,content,metadata,createdAt,updatedAt,status);
 
 @override
 String toString() {
-  return 'StreamingMessage(messageId: $messageId, conversationId: $conversationId, responseMesageId: $responseMesageId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, status: $status)';
+  return 'StreamingMessage(messageId: $messageId, conversationId: $conversationId, responseMesageId: $responseMesageId, content: $content, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, status: $status)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $StreamingMessageCopyWith<$Res>  {
   factory $StreamingMessageCopyWith(StreamingMessage value, $Res Function(StreamingMessage) _then) = _$StreamingMessageCopyWithImpl;
 @useResult
 $Res call({
- String messageId, String conversationId, String responseMesageId, String content, DateTime createdAt, DateTime updatedAt, StreamingMessageStatus status
+ String messageId, String conversationId, String responseMesageId, String content, String? metadata, DateTime createdAt, DateTime updatedAt, StreamingMessageStatus status
 });
 
 
@@ -62,13 +62,14 @@ class _$StreamingMessageCopyWithImpl<$Res>
 
 /// Create a copy of StreamingMessage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? messageId = null,Object? conversationId = null,Object? responseMesageId = null,Object? content = null,Object? createdAt = null,Object? updatedAt = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? messageId = null,Object? conversationId = null,Object? responseMesageId = null,Object? content = null,Object? metadata = freezed,Object? createdAt = null,Object? updatedAt = null,Object? status = null,}) {
   return _then(_self.copyWith(
 messageId: null == messageId ? _self.messageId : messageId // ignore: cast_nullable_to_non_nullable
 as String,conversationId: null == conversationId ? _self.conversationId : conversationId // ignore: cast_nullable_to_non_nullable
 as String,responseMesageId: null == responseMesageId ? _self.responseMesageId : responseMesageId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StreamingMessageStatus,
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String messageId,  String conversationId,  String responseMesageId,  String content,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String messageId,  String conversationId,  String responseMesageId,  String content,  String? metadata,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StreamingMessage() when $default != null:
-return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.createdAt,_that.updatedAt,_that.status);case _:
+return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.metadata,_that.createdAt,_that.updatedAt,_that.status);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String messageId,  String conversationId,  String responseMesageId,  String content,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String messageId,  String conversationId,  String responseMesageId,  String content,  String? metadata,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _StreamingMessage():
-return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.createdAt,_that.updatedAt,_that.status);case _:
+return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.metadata,_that.createdAt,_that.updatedAt,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String messageId,  String conversationId,  String responseMesageId,  String content,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String messageId,  String conversationId,  String responseMesageId,  String content,  String? metadata,  DateTime createdAt,  DateTime updatedAt,  StreamingMessageStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _StreamingMessage() when $default != null:
-return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.createdAt,_that.updatedAt,_that.status);case _:
+return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_that.content,_that.metadata,_that.createdAt,_that.updatedAt,_that.status);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.messageId,_that.conversationId,_that.responseMesageId,_tha
 
 
 class _StreamingMessage implements StreamingMessage {
-  const _StreamingMessage({required this.messageId, required this.conversationId, required this.responseMesageId, required this.content, required this.createdAt, required this.updatedAt, required this.status});
+  const _StreamingMessage({required this.messageId, required this.conversationId, required this.responseMesageId, required this.content, this.metadata, required this.createdAt, required this.updatedAt, required this.status});
   
 
 @override final  String messageId;
 @override final  String conversationId;
 @override final  String responseMesageId;
 @override final  String content;
+@override final  String? metadata;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 @override final  StreamingMessageStatus status;
@@ -233,16 +235,16 @@ _$StreamingMessageCopyWith<_StreamingMessage> get copyWith => __$StreamingMessag
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StreamingMessage&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.conversationId, conversationId) || other.conversationId == conversationId)&&(identical(other.responseMesageId, responseMesageId) || other.responseMesageId == responseMesageId)&&(identical(other.content, content) || other.content == content)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StreamingMessage&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.conversationId, conversationId) || other.conversationId == conversationId)&&(identical(other.responseMesageId, responseMesageId) || other.responseMesageId == responseMesageId)&&(identical(other.content, content) || other.content == content)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,messageId,conversationId,responseMesageId,content,createdAt,updatedAt,status);
+int get hashCode => Object.hash(runtimeType,messageId,conversationId,responseMesageId,content,metadata,createdAt,updatedAt,status);
 
 @override
 String toString() {
-  return 'StreamingMessage(messageId: $messageId, conversationId: $conversationId, responseMesageId: $responseMesageId, content: $content, createdAt: $createdAt, updatedAt: $updatedAt, status: $status)';
+  return 'StreamingMessage(messageId: $messageId, conversationId: $conversationId, responseMesageId: $responseMesageId, content: $content, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, status: $status)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$StreamingMessageCopyWith<$Res> implements $StreamingMessa
   factory _$StreamingMessageCopyWith(_StreamingMessage value, $Res Function(_StreamingMessage) _then) = __$StreamingMessageCopyWithImpl;
 @override @useResult
 $Res call({
- String messageId, String conversationId, String responseMesageId, String content, DateTime createdAt, DateTime updatedAt, StreamingMessageStatus status
+ String messageId, String conversationId, String responseMesageId, String content, String? metadata, DateTime createdAt, DateTime updatedAt, StreamingMessageStatus status
 });
 
 
@@ -270,13 +272,14 @@ class __$StreamingMessageCopyWithImpl<$Res>
 
 /// Create a copy of StreamingMessage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? messageId = null,Object? conversationId = null,Object? responseMesageId = null,Object? content = null,Object? createdAt = null,Object? updatedAt = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? messageId = null,Object? conversationId = null,Object? responseMesageId = null,Object? content = null,Object? metadata = freezed,Object? createdAt = null,Object? updatedAt = null,Object? status = null,}) {
   return _then(_StreamingMessage(
 messageId: null == messageId ? _self.messageId : messageId // ignore: cast_nullable_to_non_nullable
 as String,conversationId: null == conversationId ? _self.conversationId : conversationId // ignore: cast_nullable_to_non_nullable
 as String,responseMesageId: null == responseMesageId ? _self.responseMesageId : responseMesageId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StreamingMessageStatus,

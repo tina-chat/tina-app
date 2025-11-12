@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,13 +7,13 @@ import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_app/features/chats/providers/messages_providers.dart';
 import 'package:tina_ui/ui.dart';
 
-class ChatMessagesWidget extends HookWidget {
+class ChatMessagesWidget extends HookConsumerWidget {
   const ChatMessagesWidget({super.key, required this.messages});
 
   final List<String> messages;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final data = useMemoized(() => messages.reversed.toList(), [messages]);
     final controller = useScrollController();
 
@@ -35,6 +37,20 @@ class ChatMessagesWidget extends HookWidget {
   }
 }
 
+var encoder = const JsonEncoder.withIndent('  ');
+
+String? _tryDecode(String? metadata) {
+  if (metadata == null) return null;
+  dynamic decoded;
+  try {
+    decoded = jsonDecode(metadata);
+  } catch (e) {
+    return metadata;
+  }
+
+  return encoder.convert(decoded);
+}
+
 class _ChatMessageRow extends HookConsumerWidget {
   const _ChatMessageRow({super.key});
 
@@ -44,15 +60,26 @@ class _ChatMessageRow extends HookConsumerWidget {
     if (message == null) {
       return const SizedBox.shrink();
     }
+
+    final prettyMetadata = useMemoized(() => _tryDecode(message.metadata), [
+      message.metadata,
+    ]);
+
     return AnimatedSize(
       duration: Duration(microseconds: 200),
       alignment: Alignment.topLeft,
-      child: TinaMessageBubble(
-        key: ValueKey(message.id),
-        content: message.content,
-        isUser: message.isUser,
-        timestamp: message.createdAt,
-        status: _mapMessageStatus(message.status),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TinaMessageBubble(
+            key: ValueKey(message.id),
+            content: message.content,
+            isUser: message.isUser,
+            timestamp: message.createdAt,
+            status: _mapMessageStatus(message.status),
+          ),
+          if (prettyMetadata != null) Text(prettyMetadata),
+        ],
       ),
     );
   }

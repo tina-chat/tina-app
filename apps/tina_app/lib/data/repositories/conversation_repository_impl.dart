@@ -136,10 +136,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
       return _mapToConversation(updatedConversation);
     } catch (e) {
       if (e is ConversationException) rethrow;
-      throw ConversationException(
-        'Failed to update conversation',
-        e as Exception,
-      );
+      throw ConversationException('Failed to update conversation');
     }
   }
 
@@ -296,7 +293,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
     ConversationToUpdate conversation,
   ) {
     return ConversationsCompanion(
-      title: Value.absentIfNull(conversation.title!),
+      title: Value.absentIfNull(conversation.title),
       modelId: Value.absentIfNull(conversation.modelId),
       isPinned: Value.absentIfNull(conversation.isPinned),
     );

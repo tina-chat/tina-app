@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_app/features/chats/providers/messages_providers.dart';
 import 'package:tina_app/features/chats/widgets/chat_input_widget.dart';
 import 'package:tina_app/features/chats/widgets/chat_messages_widget.dart';
 import 'package:tina_app/features/models/widgets/select_chat_model.dart';
+import 'package:tina_app/features/tools/widgets/tools_management_modal.dart';
 import 'package:tina_app/widgets/app_error.dart';
 import 'package:tina_ui/ui.dart';
 
@@ -22,7 +24,7 @@ class ChatConversationScreen extends ConsumerWidget {
   }
 }
 
-class _ChatConversationScreen extends ConsumerWidget {
+class _ChatConversationScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final messagesAsync = ref.watch(messageListProvider);
@@ -30,6 +32,25 @@ class _ChatConversationScreen extends ConsumerWidget {
     final modelId = ref.watch(
       conversationChatProvider.select((c) => c.value?.modelId),
     );
+
+    final onToolsPress = useCallback(() async {
+      // Try to get conversation info
+
+      final conversation = await ref.read(conversationChatProvider.future);
+      if (conversation == null) return;
+      final conversationId = conversation.id;
+      final workspaceId = conversation.workspaceId;
+
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => ToolsManagementModal(
+            conversationId: conversationId,
+            workspaceId: workspaceId,
+          ),
+        );
+      }
+    }, [ref]);
 
     return TinaScreen(
       appBar: TinaAppBar(
@@ -53,6 +74,7 @@ class _ChatConversationScreen extends ConsumerWidget {
           children: [
             Expanded(child: ChatMessagesWidget(messages: messages)),
             ChatInputWidget(
+              onToolsPress: onToolsPress,
               onSendMessage: (message) {
                 ref
                     .read(chatMessagesProvider.notifier)

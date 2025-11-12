@@ -7,10 +7,14 @@ import 'package:tina_app/domain/enums/chat_models_type.dart';
 
 class ChatbotService {
   ChatModelWithProviderEntity chatProvider;
+  List<ToolSpec>? tools;
 
-  ChatbotService(this.chatProvider);
+  ChatbotService(this.chatProvider, {this.tools});
 
-  Stream<ChatResult> sendMessage(List<MessageEntity> messages) {
+  Stream<ChatResult> sendMessage(
+    List<MessageEntity> messages, {
+    List<ToolSpec>? tools,
+  }) {
     final chatMessages = messages.map((message) {
       if (message.isUser) {
         return ChatMessage.humanText(message.content);
@@ -19,7 +23,7 @@ class ChatbotService {
       }
     }).toList();
 
-    final chatModel = _getChatModel();
+    final chatModel = _getChatModel(tools: this.tools ?? tools);
 
     return chatModel.stream(
       PromptValue.chat(chatMessages),

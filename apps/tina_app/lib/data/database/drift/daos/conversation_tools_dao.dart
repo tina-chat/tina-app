@@ -22,15 +22,31 @@ class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
           ))
           .getSingleOrNull();
 
-  Future<bool> disableConversationTool(String conversationId, String toolType) {
-    return customUpdate(
-      'INSERT OR REPLACE INTO conversation_disabled_tools (conversation_id, type, created_at, updated_at) '
-      'VALUES (?, ?, datetime(\'now\'), datetime(\'now\'))',
-      variables: [
-        Variable.withString(conversationId),
-        Variable.withString(toolType),
-      ],
-    ).then((count) => count > 0);
+  Future<ConversationDisabledToolsTable> disableConversationTool(
+    String conversationId,
+    String toolType,
+  ) {
+    return into(conversationDisabledTools).insertReturning(
+      ConversationDisabledToolsCompanion(
+        conversationId: Value(conversationId),
+        type: Value(toolType),
+      ),
+    );
+  }
+
+  Future<void> disableConversationTools(
+    String conversationId,
+    List<String> toolTypes,
+  ) {
+    return batch((batch) {
+      batch.insertAllOnConflictUpdate(conversationDisabledTools, [
+        for (var toolType in toolTypes)
+          ConversationDisabledToolsCompanion(
+            conversationId: Value(conversationId),
+            type: Value(toolType),
+          ),
+      ]);
+    });
   }
 
   Future<bool> enableConversationTool(String conversationId, String toolType) =>
@@ -53,7 +69,8 @@ class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
     if (isCurrentlyDisabled) {
       return enableConversationTool(conversationId, toolType);
     } else {
-      return disableConversationTool(conversationId, toolType);
+      await disableConversationTool(conversationId, toolType);
+      return true;
     }
   }
 
@@ -97,15 +114,6 @@ class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
       (delete(
         conversationDisabledTools,
       )..where((tbl) => tbl.conversationId.equals(conversationId))).go();
-
-  Future<void> initializeConversationFromWorkspace(
-    String conversationId,
-    String workspaceId,
-  ) async {
-    // Note: This method is no longer needed since we don't copy workspace tools
-    // We'll just ensure no disabled tools exist for the conversation initially
-    await removeDisabledToolsForConversation(conversationId);
-  }
 
   Future<void> copyConversationTools(
     String sourceConversationId,
