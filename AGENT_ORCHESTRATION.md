@@ -1,8 +1,8 @@
-# Tina Agent Orchestration System
+# AuraVibes Agent Orchestration System
 
 ## Overview
 
-This document describes the comprehensive agentic orchestration system implemented for the Tina AI Assistant Flutter monorepo. The system consists of 12 specialized agents working in harmony to deliver high-quality development outcomes.
+This document describes the comprehensive agentic orchestration system implemented for the AuraVibes AI Assistant Flutter monorepo. The system consists of 12 specialized agents working in harmony to deliver high-quality development outcomes.
 
 ## Agent Architecture
 
@@ -20,9 +20,9 @@ This document describes the comprehensive agentic orchestration system implement
 
 ### Builder Agents (4)
 - **📦 Package Builder**: Specialized for Melos package management and dependencies
-- **📱 Tina App Builder**: Specialized for apps/tina_app Flutter development
+- **📱 AuraVibes App Builder**: Specialized for apps/auravibes_app Flutter development
 - **🎨 Widget Builder**: Specialized for general Flutter widget development
-- **🎭 Tina UI Builder**: Specialized for packages/tina_ui design system components
+- **🎭 AuraVibes UI Builder**: Specialized for packages/auravibes_ui design system components
 
 ### Quality Agents (2)
 - **👀 Reviewer**: Reviews code for best practices and potential issues
@@ -51,9 +51,9 @@ Based on research and selected solution, the Orchestrator creates an implementat
 ### 5. Build Phase
 Specialized builders implement the solution:
 - Package Builder: For package-related work
-- Tina App Builder: For app-specific features
+- AuraVibes App Builder: For app-specific features
 - Widget Builder: For general Flutter widgets
-- Tina UI Builder: For design system components
+- AuraVibes UI Builder: For design system components
 
 ### 6. Quality Phase
 Quality agents ensure excellence:
@@ -66,7 +66,7 @@ Final validation and integration testing.
 ## Agent Characteristics
 
 ### Zero Business Knowledge
-All agents (except the Orchestrator) have zero prior knowledge of the Tina project. They learn from:
+All agents (except the Orchestrator) have zero prior knowledge of the AuraVibes project. They learn from:
 - Research agents gather context from documentation and code
 - Builders follow established patterns they discover
 - Quality agents enforce general best practices
@@ -80,9 +80,9 @@ Agents always research before acting:
 ### Specialized Expertise
 Each agent has deep expertise in their domain:
 - Package Builder: Melos and monorepo management
-- Tina App Builder: Flutter application development
+- AuraVibes App Builder: Flutter application development
 - Widget Builder: Reusable widget creation
-- Tina UI Builder: Design system and atomic design
+- AuraVibes UI Builder: Design system and atomic design
 
 ### Proper Tool Permissions
 Each agent has only the tools they need:
@@ -103,7 +103,7 @@ Orchestrator:
 → @online-researcher "Research real-time collaboration best practices"
 → @solution-decision-maker "Analyze approaches for real-time collaboration"
 → @package-builder "Create real-time package"
-→ @tina-app-builder "Implement collaboration UI"
+→ @auravibes-app-builder "Implement collaboration UI"
 → @reviewer "Review implementation"
 → @tester "Add comprehensive tests"
 ```
@@ -166,9 +166,9 @@ prompts/
 ├── solution-brainstormer.txt    # Creative idea generation
 ├── solution-decision-maker.txt  # Solution analysis and selection
 ├── package-builder.txt          # Melos/package management
-├── tina-app-builder.txt         # App development
+├── auravibes-app-builder.txt         # App development
 ├── widget-builder.txt           # General widgets
-├── tina-ui-builder.txt          # Design system
+├── auravibes-ui-builder.txt          # Design system
 ├── reviewer.txt                 # Code review
 └── tester.txt                   # Testing implementation
 ```

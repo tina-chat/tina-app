@@ -1,10 +1,10 @@
-# Tina Flutter Monorepo - Agent Guidelines
+# AuraVibes Flutter Monorepo - Agent Guidelines
 
 ## Project Overview
-Flutter monorepo for Tina AI Assistant using Melos for package management.
-Main app: `apps/tina_shell/` | Legacy app: `apps/tina_app/` | Packages: `packages/*/`
+Flutter monorepo for AuraVibes AI Assistant using Melos for package management.
+Main app: `apps/auravibes_shell/` | Legacy app: `apps/auravibes_app/` | Packages: `packages/*/`
 
-**Note**: `apps/tina_shell/` is the main application following the architecture guide.
+**Note**: `apps/auravibes_shell/` is the main application following the architecture guide.
 
 ## Essential Commands
 
@@ -49,7 +49,7 @@ melos run validate           # Full CI validation
 ```bash
 # Create pure Dart packages (domain/core layers - no Flutter dependencies)
 fvm dart create --template=package packages/domain/chat_domain
-fvm dart create --template=package packages/core/tina_contracts
+fvm dart create --template=package packages/core/auravibes_contracts
 
 # Create Flutter packages (features/presentation - with Flutter dependencies)
 fvm flutter create --template=package packages/features/chat
@@ -75,7 +75,7 @@ melos list                          # Verify new package is discovered
 
 ### Development
 ```bash
-cd apps/tina_shell && flutter run    # Run main app
+cd apps/auravibes_shell && flutter run    # Run main app
 fvm flutter test path/to/test.dart       # Run specific test
 ```
 
@@ -104,9 +104,9 @@ workspace:
 4. **Verify**: Use `melos list` to confirm package is discovered and linked
 
 **Note**: The workspace patterns in `pubspec.yaml` cover all standard package locations:
-- `apps/tina_shell` - Main application shell (follows architecture guide)
-- `apps/tina_app` - Legacy application (being migrated)
-- `packages/core/*` - Core utilities (tina_core, tina_contracts, etc.)
+- `apps/auravibes_shell` - Main application shell (follows architecture guide)
+- `apps/auravibes_app` - Legacy application (being migrated)
+- `packages/core/*` - Core utilities (auravibes_core, auravibes_contracts, etc.)
 - `packages/domain/*` - Domain logic (pure Dart, no Flutter)
 - `packages/application/*` - Use cases and application services
 - `packages/infrastructure/**/*` - External integrations (supports nested structure)
@@ -124,7 +124,7 @@ melos run analyze           # Check current state
 ### During Implementation
 ```bash
 # Add dependencies using flutter pub add (not manual editing)
-cd apps/tina_app && flutter pub add package_name
+cd apps/auravibes_app && flutter pub add package_name
 
 # Test specific package changes
 melos exec --scope="package_name" -- flutter test
@@ -136,7 +136,7 @@ melos run validate:quick
 ### After Implementation
 ```bash
 melos run validate          # Must pass completely
-cd apps/tina_shell && flutter run    # Manual verification
+cd apps/auravibes_shell && flutter run    # Manual verification
 ```
 
 ## Package Architecture
@@ -187,8 +187,8 @@ All must pass:
 ## Current Workspace Status
 
 ### ✅ **Configured Packages:**
-- `tina_app` - Legacy Flutter application (being migrated)
-- `tina_core` - Core utilities package (COMPLETED)
+- `auravibes_app` - Legacy Flutter application (being migrated)
+- `auravibes_core` - Core utilities package (COMPLETED)
 
 ### 📋 **Package Creation Example:**
 ```bash

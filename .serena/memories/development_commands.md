@@ -1,4 +1,4 @@
-# Tina AI Assistant - Essential Development Commands
+# AuraVibes AI Assistant - Essential Development Commands
 
 ## Melos Commands (Workspace Management)
 ```bash
@@ -51,7 +51,7 @@ melos run build:web         # Build web version
 
 ## Development Workflow
 ```bash
-cd apps/tina_app && flutter run    # Run main app
+cd apps/auravibes_app && flutter run    # Run main app
 fvm flutter test path/to/test.dart # Run specific test
 melos run reset                    # Clean, bootstrap, and regenerate
 ```

@@ -1,4 +1,4 @@
-# Tina AI Assistant - Code Style & Conventions
+# AuraVibes AI Assistant - Code Style & Conventions
 
 ## Naming Conventions
 - **Files**: snake_case (e.g., `chat_screen.dart`, `workspace_repository.dart`)

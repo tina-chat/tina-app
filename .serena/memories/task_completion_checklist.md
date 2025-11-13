@@ -1,4 +1,4 @@
-# Tina AI Assistant - Task Completion Checklist
+# AuraVibes AI Assistant - Task Completion Checklist
 
 ## Mandatory Validation Steps
 Before considering any task complete, ALL of these must pass:
@@ -65,7 +65,7 @@ melos run analyze            # Must pass completely
 melos run format             # Must pass with no changes
 melos run test               # Must pass with good coverage
 melos run validate:quick     # Quick validation
-cd apps/tina_app && flutter run    # Manual verification
+cd apps/auravibes_app && flutter run    # Manual verification
 ```
 
 ## Documentation Updates

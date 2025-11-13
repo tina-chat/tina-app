@@ -1,7 +1,7 @@
-# Drift Database Implementation for Tina App
+# Drift Database Implementation for AuraVibes App
 
 ## Overview
-Successfully implemented a complete Drift database solution for the Tina Flutter application with proper cross-platform support and comprehensive testing.
+Successfully implemented a complete Drift database solution for the AuraVibes Flutter application with proper cross-platform support and comprehensive testing.
 
 ## Components Implemented
 

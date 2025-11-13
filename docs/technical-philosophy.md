@@ -1,4 +1,4 @@
-# Tina AI Assistant - Technical Philosophy & Architecture Principles
+# AuraVibes AI Assistant - Technical Philosophy & Architecture Principles
 
 ## Technical Philosophy
 
@@ -6,7 +6,7 @@
 We believe users should maintain complete control over their data and AI interactions. Our technical approach prioritizes local-first storage, encrypted credential management, and minimal data collection. Users bring their own API keys, ensuring cost transparency and preventing vendor lock-in. This philosophy extends to optional end-to-end encryption for cloud sync and explicit consent for any telemetry.
 
 ### User-Controlled Extensibility
-Tina is designed to be a flexible platform that adapts to users' needs rather than dictating their workflow. We embrace a plugin-oriented architecture where external services, tools, and workflows can be integrated without modifying core application code. This approach ensures users can choose their AI providers, orchestration platforms, and tool ecosystems while maintaining a consistent interface.
+AuraVibes is designed to be a flexible platform that adapts to users' needs rather than dictating their workflow. We embrace a plugin-oriented architecture where external services, tools, and workflows can be integrated without modifying core application code. This approach ensures users can choose their AI providers, orchestration platforms, and tool ecosystems while maintaining a consistent interface.
 
 ### Simplicity Through Abstraction
 Complex functionality should be accessible through intuitive interfaces. We layer sophisticated capabilities behind clean abstractions that hide implementation details while preserving power and flexibility. The user experience remains focused and distraction-free, even when interacting with complex multi-step workflows or diverse AI services.

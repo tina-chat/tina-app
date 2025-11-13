@@ -1,8 +1,8 @@
+import 'package:auravibes_ui/ui.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-import 'package:tina_ui/ui.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'main.directories.g.dart';
 
@@ -40,10 +40,10 @@ class WidgetbookApp extends StatelessWidget {
           ),
           themes: [
             WidgetbookTheme(
-              name: 'Tina Light Theme',
+              name: 'Aura Light Theme',
               data: _createLightTheme(),
             ),
-            WidgetbookTheme(name: 'Tina Dark Theme', data: _createDarkTheme()),
+            WidgetbookTheme(name: 'Aura Dark Theme', data: _createDarkTheme()),
           ],
         ),
         BuilderAddon(name: 'Builder', builder: (context, child) => child),
@@ -52,20 +52,20 @@ class WidgetbookApp extends StatelessWidget {
   }
 
   ThemeData _createLightTheme() {
-    final tinaColors = TinaTheme.light.colors;
+    final auraColors = AuraTheme.light.colors;
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme(
         brightness: Brightness.light,
-        primary: tinaColors.primary,
-        onPrimary: tinaColors.onPrimary,
-        secondary: tinaColors.secondary,
-        onSecondary: tinaColors.onSecondary,
-        surface: tinaColors.surface,
-        onSurface: tinaColors.onSurface,
-        error: tinaColors.error,
-        onError: tinaColors.onError,
-        outline: tinaColors.outline,
+        primary: auraColors.primary,
+        onPrimary: auraColors.onPrimary,
+        secondary: auraColors.secondary,
+        onSecondary: auraColors.onSecondary,
+        surface: auraColors.surface,
+        onSurface: auraColors.onSurface,
+        error: auraColors.error,
+        onError: auraColors.onError,
+        outline: auraColors.outline,
       ),
       textTheme: GoogleFonts.interTextTheme(),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -75,25 +75,25 @@ class WidgetbookApp extends StatelessWidget {
           ),
         ),
       ),
-      extensions: const [TinaTheme.light],
+      extensions: const [AuraTheme.light],
     );
   }
 
   ThemeData _createDarkTheme() {
-    final tinaColors = TinaTheme.dark.colors;
+    final auraColors = AuraTheme.dark.colors;
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme(
         brightness: Brightness.dark,
-        primary: tinaColors.primary,
-        onPrimary: tinaColors.onPrimary,
-        secondary: tinaColors.secondary,
-        onSecondary: tinaColors.onSecondary,
-        surface: tinaColors.surface,
-        onSurface: tinaColors.onSurface,
-        error: tinaColors.error,
-        onError: tinaColors.onError,
-        outline: tinaColors.outline,
+        primary: auraColors.primary,
+        onPrimary: auraColors.onPrimary,
+        secondary: auraColors.secondary,
+        onSecondary: auraColors.onSecondary,
+        surface: auraColors.surface,
+        onSurface: auraColors.onSurface,
+        error: auraColors.error,
+        onError: auraColors.onError,
+        outline: auraColors.outline,
       ),
       textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -103,7 +103,7 @@ class WidgetbookApp extends StatelessWidget {
           ),
         ),
       ),
-      extensions: const [TinaTheme.dark],
+      extensions: const [AuraTheme.dark],
     );
   }
 }

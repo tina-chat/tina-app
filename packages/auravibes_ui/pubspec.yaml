@@ -1,0 +1,20 @@
+name: auravibes_ui
+description: AuraVibes AI Assistant UI package with atomic design system components.
+version: 0.1.0+1
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+  flutter: ^3.35.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_portal: ^1.1.4
+  gpt_markdown: ^1.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^10.0.0

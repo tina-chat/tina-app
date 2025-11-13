@@ -1,8 +1,8 @@
-# Tina AI Assistant - User Experience Patterns
+# AuraVibes AI Assistant - User Experience Patterns
 
 ## Overview
 
-This document defines the core user experience patterns for Tina AI Assistant, focusing on how users interact with the app, what they should feel, and the mental models that guide their behavior. This is a user-centric document that describes the "what users do" and "how it should feel" without prescribing implementation details.
+This document defines the core user experience patterns for AuraVibes AI Assistant, focusing on how users interact with the app, what they should feel, and the mental models that guide their behavior. This is a user-centric document that describes the "what users do" and "how it should feel" without prescribing implementation details.
 
 ---
 
@@ -125,7 +125,7 @@ Users should feel like workflow designers, not just end users.
 
 ### 1. The AI as a Capable Assistant
 
-Users should think of Tina as a highly capable assistant that can:
+Users should think of AuraVibes as a highly capable assistant that can:
 - Understand context and nuance
 - Use tools and services on their behalf
 - Learn from their preferences and patterns
@@ -254,6 +254,6 @@ We design with understanding of:
 
 ## Conclusion
 
-The Tina AI Assistant experience should feel like having a brilliant, trustworthy, and endlessly capable partner who helps users achieve their goals while respecting their autonomy and privacy. Every interaction should reinforce feelings of empowerment, trust, and delight.
+The AuraVibes AI Assistant experience should feel like having a brilliant, trustworthy, and endlessly capable partner who helps users achieve their goals while respecting their autonomy and privacy. Every interaction should reinforce feelings of empowerment, trust, and delight.
 
 These patterns serve as the foundation for all design and implementation decisions, ensuring that regardless of how the app evolves, the core user experience remains consistent, intuitive, and deeply human-centered.

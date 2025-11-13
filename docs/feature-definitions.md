@@ -1,4 +1,4 @@
-# Tina AI Assistant - Feature Definitions & User Stories
+# AuraVibes AI Assistant - Feature Definitions & User Stories
 
 ## Product Vision
 
