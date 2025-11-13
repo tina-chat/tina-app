@@ -31,6 +31,12 @@ enum StreamingMessageStatus {
 }
 
 class _CoalescingSaver<T> {
+  // tracks the freshest state we've observed
+
+  _CoalescingSaver({
+    required this.storeMessage,
+    required this.storeDoneMessage,
+  });
   final Future<void> Function(T state) storeMessage;
   final Future<void> Function(T state) storeDoneMessage;
 
@@ -39,12 +45,7 @@ class _CoalescingSaver<T> {
   bool _doneRequested = false; // a terminal write has been requested
 
   T? _pending; // latest state waiting to be saved (normal)
-  T? _latestSeen; // tracks the freshest state we've observed
-
-  _CoalescingSaver({
-    required this.storeMessage,
-    required this.storeDoneMessage,
-  });
+  T? _latestSeen;
 
   /// Push each concatenated state here (e.g., from your .scan()).
   void push(T state) {
@@ -138,10 +139,10 @@ abstract class StreamingMessage with _$StreamingMessage {
     required String conversationId,
     required String responseMesageId,
     required String content,
-    MessageMetadataEntity? metadata,
     required DateTime createdAt,
     required DateTime updatedAt,
     required StreamingMessageStatus status,
+    MessageMetadataEntity? metadata,
     List<ToolCallMessageItem>? toolCalls,
   }) = _StreamingMessage;
 }
@@ -250,7 +251,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
 
     await repo.updateMessage(
       messageId,
-      MessageToUpdate(status: MessageStatus.sent),
+      const MessageToUpdate(status: MessageStatus.sent),
     );
   }
 
@@ -362,7 +363,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
       return ChatbotMessage.ai(
         message: message.content,
         toolCalls: [
-          for (var toolCall
+          for (final toolCall
               in message.metadata?.toolCalls ?? <MessageToolCallEntity>[])
             ChatbotToolCall(
               id: toolCall.id,
@@ -388,7 +389,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
       stream: stream,
     );
 
-    return (responseMessage);
+    return responseMessage;
   }
 
   Future<(MessageEntity userMessage, MessageEntity systemMessage)>
@@ -484,7 +485,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
 
     // Convert tool strings to UserToolType and get enabled tools
     final enabledToolTypes = contextAwareTools
-        .map((toolString) => UserToolType.fromValue(toolString))
+        .map(UserToolType.fromValue)
         .where((toolType) => toolType != null)
         .cast<UserToolType>()
         .toList();
@@ -498,7 +499,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     return (createdMessage, responseMessage);
   }
 
-  void sendToolsResponse(
+  Future<void> sendToolsResponse(
     List<ToolResponseItem> responses,
     String responseMessageId,
   ) async {
@@ -521,12 +522,12 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
 
     // Convert tool strings to UserToolType and get enabled tools
     final enabledToolTypes = contextAwareTools
-        .map((toolString) => UserToolType.fromValue(toolString))
+        .map(UserToolType.fromValue)
         .where((toolType) => toolType != null)
         .cast<UserToolType>()
         .toList();
 
-    final orignalMetadata = (message.metadata ?? MessageMetadataEntity());
+    final orignalMetadata = message.metadata ?? const MessageMetadataEntity();
 
     ref
         .read(messageRepositoryProvider)

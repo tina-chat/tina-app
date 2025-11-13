@@ -1,4 +1,4 @@
-import 'package:drift/drift.dart' hide isNull, isNotNull;
+import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/domain/enums/workspace_type.dart';
@@ -48,7 +48,7 @@ void main() {
         WorkspacesCompanion.insert(
           name: 'Workspace 2',
           type: WorkspaceType.remote,
-          url: Value('https://example.com'),
+          url: const Value('https://example.com'),
         ),
       );
 
@@ -75,7 +75,7 @@ void main() {
       final updated = await workspaceDao.updateWorkspace(
         idCreated.id,
         WorkspacesCompanion(
-          name: Value('Updated Name'),
+          name: const Value('Updated Name'),
           updatedAt: Value(DateTime.now()),
         ),
       );
@@ -122,7 +122,7 @@ void main() {
         WorkspacesCompanion.insert(
           name: 'Production Workspace',
           type: WorkspaceType.remote,
-          url: Value('https://prod.example.com'),
+          url: const Value('https://prod.example.com'),
         ),
       );
 
@@ -155,7 +155,7 @@ void main() {
         WorkspacesCompanion.insert(
           name: 'Remote Workspace 1',
           type: WorkspaceType.remote,
-          url: Value('https://example.com'),
+          url: const Value('https://example.com'),
         ),
       );
 

@@ -1,5 +1,5 @@
-import '../entities/workspace.dart';
-import '../enums/workspace_type.dart';
+import 'package:tina_app/domain/entities/workspace.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 
 /// Repository interface for workspace data operations.
 ///
@@ -102,14 +102,14 @@ abstract class WorkspaceRepository {
 
 /// Base exception for workspace-related operations.
 class WorkspaceException implements Exception {
+  /// Creates a new WorkspaceException
+  const WorkspaceException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new WorkspaceException
-  const WorkspaceException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -124,20 +124,20 @@ class WorkspaceValidationException extends WorkspaceException {
 
 /// Exception thrown when a workspace is not found.
 class WorkspaceNotFoundException extends WorkspaceException {
-  /// ID of the workspace that was not found
-  final String workspaceId;
-
   /// Creates a new WorkspaceNotFoundException
   const WorkspaceNotFoundException(this.workspaceId, [Exception? cause])
     : super('Workspace with ID "$workspaceId" not found', cause);
+
+  /// ID of the workspace that was not found
+  final String workspaceId;
 }
 
 /// Exception thrown when attempting to create a duplicate workspace.
 class WorkspaceDuplicateException extends WorkspaceException {
-  /// ID of the duplicate workspace
-  final String workspaceId;
-
   /// Creates a new WorkspaceDuplicateException
   const WorkspaceDuplicateException(this.workspaceId, [Exception? cause])
     : super('Workspace with ID "$workspaceId" already exists', cause);
+
+  /// ID of the duplicate workspace
+  final String workspaceId;
 }

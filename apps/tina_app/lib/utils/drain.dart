@@ -1,6 +1,12 @@
 import 'dart:async';
 
 class StreamingDeltaPersister {
+  StreamingDeltaPersister({
+    required this.appendDelta,
+    Duration? debounce,
+    Duration? maxFlushInterval,
+  }) : debounce = debounce ?? const Duration(milliseconds: 60),
+       maxFlushInterval = maxFlushInterval ?? const Duration(milliseconds: 300);
   final FutureOr<void> Function(String delga) appendDelta;
 
   /// Coalesce rapid deltas; keep this low to feel realtime but not spam writes.
@@ -18,13 +24,6 @@ class StreamingDeltaPersister {
   final List<String> _pendingWrites = <String>[]; // FIFO of batched chunks
 
   bool _closed = false;
-
-  StreamingDeltaPersister({
-    required this.appendDelta,
-    Duration? debounce,
-    Duration? maxFlushInterval,
-  }) : debounce = debounce ?? const Duration(milliseconds: 60),
-       maxFlushInterval = maxFlushInterval ?? const Duration(milliseconds: 300);
 
   /// Feed each incoming delta (e.g., token/partial text segment) here.
   void addDelta(String delta) {
@@ -58,7 +57,6 @@ class StreamingDeltaPersister {
     if (!_draining) {
       _draining = true;
       // fire-and-forget; we don't await here to avoid reentrancy issues.
-      // ignore: discarded_futures
       _drainLoop();
     }
   }

@@ -14,13 +14,12 @@ class ModelsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: TinaColumn(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.memory_outlined, size: 64),
+          const Icon(Icons.memory_outlined, size: 64),
           const SizedBox(height: 24),
           _AddModelModalButton(),
-          Expanded(child: const ListModelsWidget()),
+          const Expanded(child: ListModelsWidget()),
         ],
       ),
     );
@@ -34,15 +33,18 @@ class _AddModelModalButton extends ConsumerWidget {
       children: [
         TinaButton(
           onPressed: () {
-            showDialog(
+            showDialog<void>(
               context: context,
-              builder: (ctx) => AlertDialog(content: AddModelProviderWidget()),
+              builder: (ctx) =>
+                  const AlertDialog(content: AddModelProviderWidget()),
             ).then((onValue) {
               ref.invalidate(listModelProvidersProvider);
             });
             // context.go(location)
           },
-          child: TextLocale(LocaleKeys.models_screens_add_provider_open_button),
+          child: const TextLocale(
+            LocaleKeys.models_screens_add_provider_open_button,
+          ),
         ),
       ],
     );

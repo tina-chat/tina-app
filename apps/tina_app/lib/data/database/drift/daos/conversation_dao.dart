@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import '../app_database.dart';
-import '../tables/conversations_table.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/tables/conversations_table.dart';
 
 part 'conversation_dao.g.dart';
 

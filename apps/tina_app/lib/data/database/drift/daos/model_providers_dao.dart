@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
-
-import '../app_database.dart';
 
 part 'model_providers_dao.g.dart';
 
@@ -30,6 +29,6 @@ class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
   Future<ModelProvidersTable> insertModelProvider(
     ModelProvidersCompanion modelProvider,
   ) async {
-    return await into(modelProviders).insertReturning(modelProvider);
+    return into(modelProviders).insertReturning(modelProvider);
   }
 }

@@ -1,10 +1,11 @@
 import 'package:drift/drift.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/data/database/drift/daos/chat_models_dao.dart';
 import 'package:tina_app/domain/entities/chat_models_entities.dart';
 import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/domain/repositories/chat_models_repository.dart';
-
-import '../database/drift/app_database.dart';
+import 'package:tina_app/domain/repositories/workspace_repository.dart'
+    show WorkspaceRepository;
 
 /// Implementation of the [WorkspaceRepository] interface.
 ///
@@ -12,9 +13,8 @@ import '../database/drift/app_database.dart';
 /// using the Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class ChatModelsRepositoryImpl implements ChatModelsRepository {
-  final AppDatabase _database;
-
   ChatModelsRepositoryImpl(this._database);
+  final AppDatabase _database;
 
   @override
   Future<void> createChatModels(List<ChatModelToCreate> chatModels) async {

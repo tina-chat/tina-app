@@ -15,7 +15,7 @@ class ToolsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return TinaScreen(
       appBar: TinaAppBar(
-        title: TextLocale(LocaleKeys.tools_screen_title),
+        title: const TextLocale(LocaleKeys.tools_screen_title),
         actions: [
           TinaIconButton(
             icon: Icons.refresh,
@@ -29,7 +29,7 @@ class ToolsScreen extends ConsumerWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: TinaColumn(
           children: [
             // Header section
@@ -38,7 +38,7 @@ class ToolsScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: TinaSpacing.sm,
                 children: [
-                  TinaRow(
+                  const TinaRow(
                     children: [
                       TinaText(
                         style: TinaTextStyle.heading3,
@@ -53,7 +53,7 @@ class ToolsScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  TinaText(
+                  const TinaText(
                     color: TinaTextColor.onSurfaceVariant,
                     child: TextLocale(
                       LocaleKeys.tools_screen_enable_configure_description,
@@ -79,7 +79,7 @@ class ToolsScreen extends ConsumerWidget {
                               color: Colors.green[700],
                             ),
                             const SizedBox(width: 4),
-                            ToolCountEnabledWidget(),
+                            const ToolCountEnabledWidget(),
                           ],
                         ),
                       ),
@@ -90,7 +90,7 @@ class ToolsScreen extends ConsumerWidget {
             ),
 
             // Tools list
-            Expanded(child: ToolsWorkspaceListWidget()),
+            const Expanded(child: ToolsWorkspaceListWidget()),
           ],
         ),
       ),

@@ -10,9 +10,9 @@ import 'package:tina_ui/ui.dart';
 
 class SelectChatModelWidget extends HookConsumerWidget {
   const SelectChatModelWidget({
+    required this.selectChatModelId,
     super.key,
     this.chatModelId,
-    required this.selectChatModelId,
   });
 
   final String? chatModelId;
@@ -26,7 +26,7 @@ class SelectChatModelWidget extends HookConsumerWidget {
     final controller = useTextEditingController();
 
     final options = useMemoized(() {
-      final chatModels = (chatModelsAsync.value ?? []);
+      final chatModels = chatModelsAsync.value ?? [];
       if (searchValue.value.isEmpty) return chatModels;
       return chatModels.where((model) {
         final searchTerm =
@@ -38,9 +38,7 @@ class SelectChatModelWidget extends HookConsumerWidget {
 
     return TinaDropdownSelector<String>(
       value: chatModelId,
-      onChanged: (value) {
-        selectChatModelId(value);
-      },
+      onChanged: selectChatModelId,
       placeholder: const TextLocale(
         LocaleKeys.chats_screens_chat_conversation_select_model_selctor,
       ),
@@ -56,7 +54,8 @@ class SelectChatModelWidget extends HookConsumerWidget {
           .toList(),
 
       header: switch (chatModelsAsync) {
-        AsyncLoading<List<ChatModelWithProviderEntity>>() => TinaSpinner(),
+        AsyncLoading<List<ChatModelWithProviderEntity>>() =>
+          const TinaSpinner(),
         AsyncData<List<ChatModelWithProviderEntity>>() => Padding(
           padding: EdgeInsetsGeometry.all(context.tinaTheme.spacing.md),
           child: TinaInput(

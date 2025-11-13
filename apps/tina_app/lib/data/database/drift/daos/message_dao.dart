@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import '../app_database.dart';
-import '../tables/messages_table.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/tables/messages_table.dart';
 
 part 'message_dao.g.dart';
 
@@ -51,7 +51,6 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
             ..orderBy([
               (tbl) => OrderingTerm(
                 expression: tbl.createdAt,
-                mode: OrderingMode.asc,
               ),
             ]))
           .get();
@@ -66,7 +65,6 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
             ..orderBy([
               (tbl) => OrderingTerm(
                 expression: tbl.createdAt,
-                mode: OrderingMode.asc,
               ),
             ])
             ..limit(limit, offset: offset))

@@ -1,8 +1,7 @@
 import 'package:drift/drift.dart';
-
-import '../../domain/entities/conversation.dart';
-import '../../domain/repositories/conversation_repository.dart';
-import '../database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
+import 'package:tina_app/domain/repositories/conversation_repository.dart';
 
 /// Implementation of [ConversationRepository] interface.
 ///
@@ -10,13 +9,13 @@ import '../database/drift/app_database.dart';
 /// using Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class ConversationRepositoryImpl implements ConversationRepository {
-  /// The database instance for conversation operations.
-  final AppDatabase _database;
-
   /// Creates a new [ConversationRepositoryImpl] instance.
   ///
   /// [database] The database instance for conversation operations.
   ConversationRepositoryImpl(this._database);
+
+  /// The database instance for conversation operations.
+  final AppDatabase _database;
 
   @override
   Future<List<ConversationEntity>> getConversationsByWorkspace(
@@ -136,7 +135,7 @@ class ConversationRepositoryImpl implements ConversationRepository {
       return _mapToConversation(updatedConversation);
     } catch (e) {
       if (e is ConversationException) rethrow;
-      throw ConversationException('Failed to update conversation');
+      throw const ConversationException('Failed to update conversation');
     }
   }
 

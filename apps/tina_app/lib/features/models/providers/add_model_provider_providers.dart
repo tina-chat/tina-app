@@ -1,11 +1,10 @@
+import 'package:riverpod/experimental/mutation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tina_app/domain/entities/model_providers_entities.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
 import 'package:tina_app/features/models/models/add_model_provider_model.dart';
 import 'package:tina_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:tina_app/features/workspaces/providers/workspace_repository_providers.dart';
-// ignore: depend_on_referenced_packages
-import 'package:riverpod/experimental/mutation.dart';
 
 part 'add_model_provider_providers.g.dart';
 
@@ -13,7 +12,7 @@ part 'add_model_provider_providers.g.dart';
 class AddModelProviderState extends _$AddModelProviderState {
   @override
   AddModelProviderModel build() {
-    return AddModelProviderModel();
+    return const AddModelProviderModel();
   }
 
   void setName(String newName) {

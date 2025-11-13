@@ -7,7 +7,7 @@ enum UserToolType {
   final String value;
   const UserToolType(this.value);
   static UserToolType? fromValue(String value) {
-    for (UserToolType enumVariant in UserToolType.values) {
+    for (final enumVariant in UserToolType.values) {
       if (enumVariant.name == value) return enumVariant;
     }
     return null;
@@ -16,10 +16,10 @@ enum UserToolType {
 
 /// Represents an available tool in the app
 abstract class UserToolEntity<Input, Options, Output> {
+  const UserToolEntity();
+
   /// Type identifier for the tool
   UserToolType get type;
-
-  const UserToolEntity();
 
   ToolSpec getTool();
 

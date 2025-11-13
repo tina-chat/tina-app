@@ -13,12 +13,6 @@ part 'chat_tools_provider.g.dart';
 
 /// State for chat tools management
 class ChatToolsState {
-  final List<UserToolEntity> availableTools;
-  final Map<String, bool> toolStates;
-  final String conversationId;
-  final String workspaceId;
-  final bool isNewConversation;
-
   const ChatToolsState({
     required this.availableTools,
     required this.toolStates,
@@ -26,6 +20,11 @@ class ChatToolsState {
     required this.workspaceId,
     required this.isNewConversation,
   });
+  final List<UserToolEntity<Object, Object, Object>> availableTools;
+  final Map<String, bool> toolStates;
+  final String conversationId;
+  final String workspaceId;
+  final bool isNewConversation;
 
   /// Get the enabled state for a specific tool
   bool isToolEnabled(String toolType) {
@@ -37,7 +36,7 @@ class ChatToolsState {
   }
 
   /// Get enabled tools list
-  List<UserToolEntity> get enabledTools {
+  List<UserToolEntity<Object, Object, Object>> get enabledTools {
     return availableTools
         .where((tool) => isToolEnabled(tool.type.value))
         .toList();
@@ -47,7 +46,7 @@ class ChatToolsState {
   bool get hasTools => availableTools.isNotEmpty;
 
   ChatToolsState copyWith({
-    List<UserToolEntity>? availableTools,
+    List<UserToolEntity<Object, Object, Object>>? availableTools,
     Map<String, bool>? toolStates,
     String? conversationId,
     String? workspaceId,
@@ -82,8 +81,8 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
     }
 
     // Try to get conversation info
-    String conversationId = '';
-    bool isNewConversation = false;
+    var conversationId = '';
+    var isNewConversation = false;
 
     try {
       final conversation = ref.watch(conversationChatProvider);
@@ -102,7 +101,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
       isNewConversation = true;
     }
 
-    return await _loadToolsState(conversationId, isNewConversation);
+    return _loadToolsState(conversationId, isNewConversation);
   }
 
   Future<ChatToolsState> _loadToolsState(
@@ -111,7 +110,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
   ) async {
     try {
       // Get available tools from service
-      final availableTools = ToolService.availableTools;
+      const availableTools = ToolService.availableTools;
 
       // Initialize tool states
       final toolStates = <String, bool>{};

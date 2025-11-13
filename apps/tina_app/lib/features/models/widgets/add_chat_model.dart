@@ -31,8 +31,8 @@ class _NameInput extends HookConsumerWidget {
 
     return TinaInput(
       controller: controller,
-      placeholder: Text('Name'),
-      label: Text("Name"),
+      placeholder: const Text('Name'),
+      label: const Text('Name'),
       onChanged: ref.watch(addModelProviderStateProvider.notifier).setName,
     );
   }
@@ -47,7 +47,7 @@ class _KeyInput extends HookConsumerWidget {
 
     return TinaInput(
       controller: controller,
-      placeholder: Text('Key'),
+      placeholder: const Text('Key'),
       onChanged: ref.watch(addModelProviderStateProvider.notifier).setKey,
     );
   }
@@ -61,8 +61,8 @@ class _TypeSelctor extends ConsumerWidget {
     return TinaDropdownSelector<ChatModelType>(
       value: type,
       onChanged: ref.watch(addModelProviderStateProvider.notifier).setType,
-      label: Text('Select Model'),
-      options: [
+      label: const Text('Select Model'),
+      options: const [
         TinaDropdownOption(
           value: ChatModelType.anthropic,
           child: Text('Antropic'),
@@ -89,7 +89,7 @@ class _AddModelProviderButton extends ConsumerWidget {
           }
         });
       },
-      child: Text('Create'),
+      child: const Text('Create'),
     );
   }
 }

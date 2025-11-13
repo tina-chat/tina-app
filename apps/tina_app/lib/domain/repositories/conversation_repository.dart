@@ -1,4 +1,4 @@
-import '../entities/conversation.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
 
 /// Repository interface for conversation data operations.
 ///
@@ -104,14 +104,14 @@ abstract class ConversationRepository {
 
 /// Base exception for conversation-related operations.
 class ConversationException implements Exception {
+  /// Creates a new ConversationException
+  const ConversationException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new ConversationException
-  const ConversationException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -126,20 +126,20 @@ class ConversationValidationException extends ConversationException {
 
 /// Exception thrown when a conversation is not found.
 class ConversationNotFoundException extends ConversationException {
-  /// ID of the conversation that was not found
-  final String conversationId;
-
   /// Creates a new ConversationNotFoundException
   const ConversationNotFoundException(this.conversationId, [Exception? cause])
     : super('Conversation with ID "$conversationId" not found', cause);
+
+  /// ID of the conversation that was not found
+  final String conversationId;
 }
 
 /// Exception thrown when attempting to create a duplicate conversation.
 class ConversationDuplicateException extends ConversationException {
-  /// ID of the duplicate conversation
-  final String conversationId;
-
   /// Creates a new ConversationDuplicateException
   const ConversationDuplicateException(this.conversationId, [Exception? cause])
     : super('Conversation with ID "$conversationId" already exists', cause);
+
+  /// ID of the duplicate conversation
+  final String conversationId;
 }

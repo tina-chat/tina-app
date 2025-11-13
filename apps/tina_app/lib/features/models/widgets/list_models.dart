@@ -33,16 +33,15 @@ class ListModelsWidget extends ConsumerWidget {
       }(),
       AsyncLoading() => const Center(child: TinaSpinner()),
       AsyncError(error: final error, stackTrace: _) => TinaText(
-        style: TinaTextStyle.body,
-        child: Text('Error loading models: ${error.toString()}'),
+        child: Text('Error loading models: $error'),
       ),
     };
   }
 
   Widget _buildEmptyState(BuildContext context) {
-    return Center(
+    return const Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -51,14 +50,13 @@ class ListModelsWidget extends ConsumerWidget {
               size: TinaIconSize.extraLarge,
               color: Colors.grey,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             TinaText(
               style: TinaTextStyle.heading3,
               child: Text('No AI Models Configured'),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             TinaText(
-              style: TinaTextStyle.body,
               // TODO: color: Colors.grey,
               textAlign: TextAlign.center,
               child: Text('Add your first AI model to get started'),
@@ -78,7 +76,6 @@ class _ChatModelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TinaCard(
-      padding: TinaCardPadding.medium,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,7 +97,7 @@ class _ChatModelCard extends StatelessWidget {
                       style: TinaTextStyle.bodySmall,
 
                       child: Text(_getModelTypeDisplay()),
-                      // TODO color: Colors.grey,
+                      // TODOcolor: Colors.grey,
                     ),
                   ],
                 ),
@@ -151,14 +148,12 @@ class _ChatModelCard extends StatelessWidget {
       case ChatModelType.openai:
         iconData = Icons.psychology_outlined;
         iconColor = const Color(0xFF10A37F); // OpenAI green
-        break;
       case ChatModelType.anthropic:
         iconData = Icons.smart_toy_outlined;
         iconColor = const Color(0xFFD97757); // Anthropic orange
-        break;
     }
 
-    return TinaIcon(iconData, size: TinaIconSize.medium, color: iconColor);
+    return TinaIcon(iconData, color: iconColor);
   }
 
   String _getModelTypeDisplay() {

@@ -15,8 +15,8 @@ import 'package:tina_ui/ui.dart';
 class TinaSidebarWrapper extends StatefulWidget {
   /// Creates a Tina sidebar widget.
   const TinaSidebarWrapper({
-    super.key,
     required this.child,
+    super.key,
     this.isInitiallyExpanded = true,
   });
 
@@ -40,7 +40,7 @@ enum NavigationItemType {
 
   GoRouteData router() {
     return switch (this) {
-      NavigationItemType.home => HomeRoute(),
+      NavigationItemType.home => const HomeRoute(),
       NavigationItemType.chats => ChatsRoute(),
       NavigationItemType.tools => ToolsRoute(),
       NavigationItemType.models => ModelsRoute(),
@@ -58,32 +58,32 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<TinaNavigationData<NavigationItemType>> _navigationItems = [
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.dashboard_outlined,
       label: TextLocale(LocaleKeys.menu_home),
       value: NavigationItemType.home,
     ),
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.chat_outlined,
       label: TextLocale(LocaleKeys.menu_chats),
       value: NavigationItemType.chats,
     ),
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.build_circle_outlined,
       label: TextLocale(LocaleKeys.menu_tools),
       value: NavigationItemType.tools,
     ),
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.memory_outlined,
       label: TextLocale(LocaleKeys.menu_models),
       value: NavigationItemType.models,
     ),
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.smart_toy_outlined,
       label: TextLocale(LocaleKeys.menu_agents),
       value: NavigationItemType.agents,
     ),
-    TinaNavigationData(
+    const TinaNavigationData(
       icon: Icons.description_outlined,
       label: TextLocale(LocaleKeys.menu_prompts),
       value: NavigationItemType.prompts,
@@ -117,7 +117,7 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
   /// Handles navigation when a navigation item is tapped.
   void _handleNavigation(NavigationItemType route) {
     // Close drawer if open (mobile)
-    if (_scaffoldKey.currentState?.isDrawerOpen == true) {
+    if (_scaffoldKey.currentState?.isDrawerOpen ?? false) {
       Navigator.pop(context);
     }
 
@@ -164,7 +164,6 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
 
     return TinaTile(
       variant: isActive ? TinaTileVariant.primary : TinaTileVariant.ghost,
-      size: TinaTileSize.medium,
       leading: Icon(
         Icons.settings_outlined,
         size: 24,
@@ -224,7 +223,7 @@ class _TinaSidebarWrapperState extends State<TinaSidebarWrapper>
           backgroundColor: context.tinaColors.surface,
           child: TinaSidebar<NavigationItemType>(
             isExpanded: true, // Always expanded in drawer mode
-            animation: const AlwaysStoppedAnimation(1.0),
+            animation: const AlwaysStoppedAnimation(1),
             navigationItems: _buildNavigationItems(),
             onNavigationTap: _handleNavigation,
             header: _buildHeader(context, isDrawer: true),

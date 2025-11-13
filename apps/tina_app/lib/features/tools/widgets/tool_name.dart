@@ -4,9 +4,8 @@ import 'package:tina_app/services/tools/user_tools_entity.dart';
 import 'package:tina_app/widgets/text_locale.dart';
 
 class ToolNameWidget extends StatelessWidget {
-  final UserToolType toolType;
-
   const ToolNameWidget({required this.toolType, super.key});
+  final UserToolType toolType;
 
   @override
   Widget build(BuildContext context) {

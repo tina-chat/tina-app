@@ -4,7 +4,7 @@ abstract class AppConfig {
     'STORE_LOCALE',
     defaultValue: true,
   );
-  static const appTintHue =
+  static const double appTintHue =
       int.fromEnvironment('TINT_HUE', defaultValue: 25947) / 100;
   static const appTitle = String.fromEnvironment(
     'APP_TITLE',

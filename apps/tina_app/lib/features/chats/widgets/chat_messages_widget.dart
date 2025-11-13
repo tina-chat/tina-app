@@ -8,7 +8,7 @@ import 'package:tina_app/features/chats/providers/messages_providers.dart';
 import 'package:tina_ui/ui.dart';
 
 class ChatMessagesWidget extends HookConsumerWidget {
-  const ChatMessagesWidget({super.key, required this.messages});
+  const ChatMessagesWidget({required this.messages, super.key});
 
   final List<String> messages;
 
@@ -22,7 +22,6 @@ class ChatMessagesWidget extends HookConsumerWidget {
       padding: const EdgeInsets.all(16),
       reverse: true,
       addAutomaticKeepAlives: false,
-      addRepaintBoundaries: true,
       itemCount: data.length,
       cacheExtent: 500,
       itemBuilder: (context, index) {
@@ -37,15 +36,17 @@ class ChatMessagesWidget extends HookConsumerWidget {
   }
 }
 
-var encoder = const JsonEncoder.withIndent('  ');
+JsonEncoder encoder = const JsonEncoder.withIndent('  ');
 
-String? _tryDecode(String? metadata) {
+String? _tryDecode(Object? metadata) {
   if (metadata == null) return null;
   dynamic decoded;
   try {
-    decoded = jsonDecode(metadata);
-  } catch (e) {
-    return metadata;
+    if (metadata is String) {
+      decoded = jsonDecode(metadata);
+    }
+  } on Exception catch (_) {
+    return metadata.toString();
   }
 
   if (decoded is Map<String, dynamic>) {
@@ -68,7 +69,7 @@ class _ChatMessageRow extends HookConsumerWidget {
     }
 
     return AnimatedSize(
-      duration: Duration(microseconds: 200),
+      duration: const Duration(microseconds: 200),
       alignment: Alignment.topLeft,
       child: TinaColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +83,7 @@ class _ChatMessageRow extends HookConsumerWidget {
               status: _mapMessageStatus(message.status),
             ),
           if (message.metadata?.toolCalls != null) ...[
-            for (var toolCall in message.metadata!.toolCalls)
+            for (final toolCall in message.metadata!.toolCalls)
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -100,9 +101,9 @@ class _ChatMessageRow extends HookConsumerWidget {
                         children: [
                           TextSpan(text: toolCall.name),
                           if (_tryDecode(toolCall.argumentsRaw) != null)
-                            TextSpan(text: '( '),
+                            const TextSpan(text: '( '),
                           TextSpan(text: _tryDecode(toolCall.argumentsRaw)),
-                          TextSpan(text: ' )'),
+                          const TextSpan(text: ' )'),
                         ],
                       ),
                     ),

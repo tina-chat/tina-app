@@ -18,14 +18,14 @@ abstract class ChatModelsRepository {
 
 /// Base exception for chatModel-related operations.
 class ChatModelException implements Exception {
+  /// Creates a new ChatModelException
+  const ChatModelException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new ChatModelException
-  const ChatModelException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -40,10 +40,10 @@ class ChatModelValidationException extends ChatModelException {
 
 /// Exception thrown when a chatModel is not found.
 class ChatModelNotFoundException extends ChatModelException {
-  /// ID of the chatModel that was not found
-  final int chatModelId;
-
   /// Creates a new ChatModelNotFoundException
   const ChatModelNotFoundException(this.chatModelId, [Exception? cause])
     : super('ChatModel with ID "$chatModelId" not found', cause);
+
+  /// ID of the chatModel that was not found
+  final int chatModelId;
 }

@@ -1,11 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/data/database/drift/enums/message_table_enums.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
 import 'package:tina_app/domain/enums/message_types.dart';
+import 'package:tina_app/domain/repositories/message_repository.dart';
 import 'package:tina_app/utils/encode.dart';
-
-import '../../domain/entities/conversation.dart';
-import '../../domain/repositories/message_repository.dart';
-import '../database/drift/app_database.dart';
 
 /// Implementation of [MessageRepository] interface.
 ///
@@ -13,13 +12,13 @@ import '../database/drift/app_database.dart';
 /// using Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class MessageRepositoryImpl implements MessageRepository {
-  /// The database instance for message operations.
-  final AppDatabase _database;
-
   /// Creates a new [MessageRepositoryImpl] instance.
   ///
   /// [database] The database instance for message operations.
   MessageRepositoryImpl(this._database);
+
+  /// The database instance for message operations.
+  final AppDatabase _database;
 
   @override
   Future<List<MessageEntity>> getMessagesByConversation(

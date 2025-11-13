@@ -5,7 +5,7 @@ class PromptsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -13,15 +13,15 @@ class PromptsScreen extends StatelessWidget {
             Icon(
               Icons.description_outlined,
               size: 64,
-              color: const Color(0xFF2563EB),
+              color: Color(0xFF2563EB),
             ),
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: 24),
+            Text(
               'Prompts Screen',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'Prompt templates and management',
               style: TextStyle(fontSize: 16, color: Color(0xFF64748B)),
             ),

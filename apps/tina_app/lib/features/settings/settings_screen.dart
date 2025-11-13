@@ -15,23 +15,22 @@ class SettingsScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Workspace Management Section
             TinaCard(
-              padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.heading6,
                     color: TinaTextColor.onSurface,
                     child: Text('Workspace Management'),
                   ),
                   const SizedBox(height: 8),
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.bodySmall,
                     color: TinaTextColor.onSurfaceVariant,
                     child: Text(
@@ -41,7 +40,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.workspaces_outline,
                       color: context.tinaColors.primary,
@@ -52,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
                       color: context.tinaColors.onSurfaceVariant,
                     ),
                     onTap: () => context.go('/workspaces'),
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('Manage Workspaces'),
                     ),
@@ -65,17 +63,16 @@ class SettingsScreen extends StatelessWidget {
 
             // App Settings Section
             TinaCard(
-              padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.heading6,
                     color: TinaTextColor.onSurface,
                     child: Text('App Settings'),
                   ),
                   const SizedBox(height: 8),
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.bodySmall,
                     color: TinaTextColor.onSurfaceVariant,
                     child: Text('Configure your app preferences and behavior'),
@@ -83,7 +80,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.palette_outlined,
                       color: context.tinaColors.secondary,
@@ -97,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
                       // TODO: Navigate to theme settings
                       _showComingSoonDialog(context, 'Theme Settings');
                     },
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('Theme & Appearance'),
                     ),
@@ -105,7 +101,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.notifications_outlined,
                       color: context.tinaColors.secondary,
@@ -119,7 +114,7 @@ class SettingsScreen extends StatelessWidget {
                       // TODO: Navigate to notification settings
                       _showComingSoonDialog(context, 'Notification Settings');
                     },
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('Notifications'),
                     ),
@@ -127,7 +122,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.privacy_tip_outlined,
                       color: context.tinaColors.secondary,
@@ -141,7 +135,7 @@ class SettingsScreen extends StatelessWidget {
                       // TODO: Navigate to privacy settings
                       _showComingSoonDialog(context, 'Privacy Settings');
                     },
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('Privacy & Security'),
                     ),
@@ -154,17 +148,16 @@ class SettingsScreen extends StatelessWidget {
 
             // About Section
             TinaCard(
-              padding: TinaCardPadding.medium,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.heading6,
                     color: TinaTextColor.onSurface,
                     child: Text('About'),
                   ),
                   const SizedBox(height: 8),
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.bodySmall,
                     color: TinaTextColor.onSurfaceVariant,
                     child: Text('App information and version details'),
@@ -172,7 +165,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.info_outline,
                       color: context.tinaColors.secondary,
@@ -180,7 +172,7 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () {
                       _showAppInfoDialog(context);
                     },
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('App Version'),
                     ),
@@ -188,7 +180,6 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   TinaTile(
                     variant: TinaTileVariant.ghost,
-                    size: TinaTileSize.medium,
                     leading: Icon(
                       Icons.help_outline,
                       color: context.tinaColors.secondary,
@@ -202,7 +193,7 @@ class SettingsScreen extends StatelessWidget {
                       // TODO: Navigate to help section
                       _showComingSoonDialog(context, 'Help & Support');
                     },
-                    child: TinaText(
+                    child: const TinaText(
                       style: TinaTextStyle.bodyLarge,
                       child: Text('Help & Support'),
                     ),
@@ -217,7 +208,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   void _showComingSoonDialog(BuildContext context, String feature) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Coming Soon'),
@@ -233,7 +224,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   void _showAppInfoDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Tina AI Assistant'),

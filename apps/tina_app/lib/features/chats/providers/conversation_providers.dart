@@ -31,7 +31,7 @@ class ConversationsList extends _$ConversationsList {
       final selectedWorkspace = await tsx.get(selectedWorkspaceProvider.future);
       final conversationRepository = tsx.get(conversationRepositoryProvider);
 
-      return await conversationRepository.createConversation(
+      return conversationRepository.createConversation(
         ConversationToCreate(
           title: title,
           workspaceId: selectedWorkspace.id,

@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tina_app/domain/enums/message_types.dart';
 import 'package:tina_app/utils/encode.dart';
-
-import '../enums/message_types.dart';
 
 part 'conversation.freezed.dart';
 part 'conversation.g.dart';
@@ -15,7 +14,6 @@ part 'conversation.g.dart';
 ///
 @freezed
 abstract class ConversationEntity with _$ConversationEntity {
-  const ConversationEntity._();
   const factory ConversationEntity({
     /// Unique identifier for the conversation
     required String id,
@@ -26,9 +24,6 @@ abstract class ConversationEntity with _$ConversationEntity {
     /// ID of the workspace this conversation belongs to
     required String workspaceId,
 
-    /// ID of the AI model used for this conversation
-    final String? modelId,
-
     /// Whether this conversation is pinned
     required bool isPinned,
 
@@ -37,7 +32,11 @@ abstract class ConversationEntity with _$ConversationEntity {
 
     /// Timestamp when the conversation was last updated
     required DateTime updatedAt,
+
+    /// ID of the AI model used for this conversation
+    String? modelId,
   }) = _ConversationEntity;
+  const ConversationEntity._();
 
   /// Returns true if the conversation has a valid title
   bool get hasValidTitle => title.isNotEmpty;
@@ -50,7 +49,6 @@ abstract class ConversationEntity with _$ConversationEntity {
 
 @freezed
 abstract class ConversationToCreate with _$ConversationToCreate {
-  const ConversationToCreate._();
   const factory ConversationToCreate({
     /// Human-readable title of the conversation
     required String title,
@@ -59,11 +57,12 @@ abstract class ConversationToCreate with _$ConversationToCreate {
     required String workspaceId,
 
     /// ID of the AI model used for this conversation
-    final String? modelId,
+    String? modelId,
 
     /// Whether this conversation is pinned
-    final bool? isPinned,
+    bool? isPinned,
   }) = _ConversationToCreate;
+  const ConversationToCreate._();
 
   /// Returns true if the conversation has a valid title
   bool get hasValidTitle => title.isNotEmpty;
@@ -76,17 +75,17 @@ abstract class ConversationToCreate with _$ConversationToCreate {
 
 @freezed
 abstract class ConversationToUpdate with _$ConversationToUpdate {
-  const ConversationToUpdate._();
   const factory ConversationToUpdate({
     /// Human-readable title of the conversation
-    final String? title,
+    String? title,
 
     /// ID of the AI model used for this conversation
-    final String? modelId,
+    String? modelId,
 
     /// Whether this conversation is pinned
-    final bool? isPinned,
+    bool? isPinned,
   }) = _ConversationToUpdate;
+  const ConversationToUpdate._();
 
   bool get isValid {
     if (title != null && title!.isEmpty) return false;
@@ -97,13 +96,13 @@ abstract class ConversationToUpdate with _$ConversationToUpdate {
 
 @freezed
 abstract class MessageToolCallEntity with _$MessageToolCallEntity {
-  const MessageToolCallEntity._();
   const factory MessageToolCallEntity({
     required String id,
     required String name,
     required String argumentsRaw,
     String? responseRaw,
   }) = _MessageToolCallEntity;
+  const MessageToolCallEntity._();
 
   factory MessageToolCallEntity.fromJson(Map<String, dynamic> json) =>
       _$MessageToolCallEntityFromJson(json);
@@ -125,9 +124,9 @@ abstract class MessageMetadataEntity with _$MessageMetadataEntity {
   static MessageMetadataEntity? fromJsonString(String? metadata) {
     if (metadata == null) return null;
     try {
-      final json = jsonDecode(metadata);
+      final json = jsonDecode(metadata) as Map<String, dynamic>;
       return MessageMetadataEntity.fromJson(json);
-    } catch (_) {
+    } on Exception catch (_) {
       return null;
     }
   }
@@ -139,7 +138,6 @@ abstract class MessageMetadataEntity with _$MessageMetadataEntity {
 /// for communication within a conversation.
 @freezed
 abstract class MessageEntity with _$MessageEntity {
-  const MessageEntity._();
   const factory MessageEntity({
     /// Unique identifier for the message
     required String id,
@@ -159,15 +157,16 @@ abstract class MessageEntity with _$MessageEntity {
     /// Status of the message
     required MessageStatus status,
 
-    /// Additional metadata for the message (JSON)
-    final MessageMetadataEntity? metadata,
-
     /// Timestamp when the message was created
     required DateTime createdAt,
 
     /// Timestamp when the message was last updated
     required DateTime updatedAt,
+
+    /// Additional metadata for the message (JSON)
+    MessageMetadataEntity? metadata,
   }) = _MessageEntity;
+  const MessageEntity._();
 
   /// Returns true if the message has valid content
   bool get hasValidContent => content.isNotEmpty;
@@ -181,8 +180,6 @@ abstract class MessageEntity with _$MessageEntity {
 /// Entity for creating a new message
 @freezed
 abstract class MessageToCreate with _$MessageToCreate {
-  const MessageToCreate._();
-
   /// Creates a new MessageToCreate instance
   const factory MessageToCreate({
     /// ID of the conversation this message belongs to
@@ -197,11 +194,12 @@ abstract class MessageToCreate with _$MessageToCreate {
     /// Whether this message was sent by the user
     required bool isUser,
 
-    /// Additional metadata for the message (JSON)
-    final String? metadata,
-
     required MessageStatus status,
+
+    /// Additional metadata for the message (JSON)
+    String? metadata,
   }) = _MessageToCreate;
+  const MessageToCreate._();
 
   /// Returns true if the message has valid content
   bool get hasValidContent {
@@ -217,18 +215,17 @@ abstract class MessageToCreate with _$MessageToCreate {
 /// Entity for creating a new message
 @freezed
 abstract class MessageToUpdate with _$MessageToUpdate {
-  const MessageToUpdate._();
-
   /// Creates a new MessageToUpdate instance
   const factory MessageToUpdate({
     /// Content of the message (JSON structure based on message type)
-    final String? content,
+    String? content,
 
     /// Additional metadata for the message (JSON)
-    final MessageMetadataEntity? metadata,
+    MessageMetadataEntity? metadata,
 
-    final MessageStatus? status,
+    MessageStatus? status,
   }) = _MessageToUpdate;
+  const MessageToUpdate._();
 
   /// Returns true if the message is in a valid state
   bool get isValid {

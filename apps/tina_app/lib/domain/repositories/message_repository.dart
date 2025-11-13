@@ -1,5 +1,5 @@
-import '../entities/conversation.dart';
-import '../enums/message_types.dart';
+import 'package:tina_app/domain/entities/conversation.dart';
+import 'package:tina_app/domain/enums/message_types.dart';
 
 /// Repository interface for message data operations.
 ///
@@ -123,14 +123,14 @@ abstract class MessageRepository {
 
 /// Base exception for message-related operations.
 class MessageException implements Exception {
+  /// Creates a new MessageException
+  const MessageException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new MessageException
-  const MessageException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -145,20 +145,20 @@ class MessageValidationException extends MessageException {
 
 /// Exception thrown when a message is not found.
 class MessageNotFoundException extends MessageException {
-  /// ID of the message that was not found
-  final String messageId;
-
   /// Creates a new MessageNotFoundException
   const MessageNotFoundException(this.messageId, [Exception? cause])
     : super('Message with ID "$messageId" not found', cause);
+
+  /// ID of the message that was not found
+  final String messageId;
 }
 
 /// Exception thrown when attempting to create a duplicate message.
 class MessageDuplicateException extends MessageException {
-  /// ID of the duplicate message
-  final String messageId;
-
   /// Creates a new MessageDuplicateException
   const MessageDuplicateException(this.messageId, [Exception? cause])
     : super('Message with ID "$messageId" already exists', cause);
+
+  /// ID of the duplicate message
+  final String messageId;
 }

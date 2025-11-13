@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../enums/workspace_type.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 
 part 'workspace.freezed.dart';
 
@@ -10,8 +10,6 @@ part 'workspace.freezed.dart';
 /// projects or environments within the Tina application.
 @freezed
 abstract class WorkspaceEntity with _$WorkspaceEntity {
-  const WorkspaceEntity._();
-
   /// Creates a new Workspace instance
   const factory WorkspaceEntity({
     /// Unique identifier for the workspace
@@ -23,21 +21,20 @@ abstract class WorkspaceEntity with _$WorkspaceEntity {
     /// Type of workspace (local or remote)
     required WorkspaceType type,
 
-    /// URL for remote workspaces, null for local workspaces
-    final String? url,
-
     /// Timestamp when the workspace was created
     required DateTime createdAt,
 
     /// Timestamp when the workspace was last updated
     required DateTime updatedAt,
+
+    /// URL for remote workspaces, null for local workspaces
+    final String? url,
   }) = _WorkspaceEntity;
+  const WorkspaceEntity._();
 }
 
 @freezed
 abstract class WorkspaceToCreate with _$WorkspaceToCreate {
-  const WorkspaceToCreate._();
-
   /// Creates a new WorkspaceToCreate instance
   const factory WorkspaceToCreate({
     /// Human-readable name of the workspace
@@ -49,6 +46,7 @@ abstract class WorkspaceToCreate with _$WorkspaceToCreate {
     /// URL for remote workspaces, null for local workspaces
     final String? url,
   }) = _WorkspaceToCreate;
+  const WorkspaceToCreate._();
 
   /// Returns true if the workspace name is not empty
   bool get hasValidName => name.isNotEmpty;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +13,7 @@ import 'package:tina_app/widgets/app_error.dart';
 import 'package:tina_ui/ui.dart';
 
 class ChatConversationScreen extends ConsumerWidget {
-  const ChatConversationScreen({super.key, required this.chatId});
+  const ChatConversationScreen({required this.chatId, super.key});
 
   final String chatId;
 
@@ -26,7 +28,7 @@ class ChatConversationScreen extends ConsumerWidget {
 
 class _ChatConversationScreen extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final messagesAsync = ref.watch(messageListProvider);
 
     final modelId = ref.watch(
@@ -42,11 +44,13 @@ class _ChatConversationScreen extends HookConsumerWidget {
       final workspaceId = conversation.workspaceId;
 
       if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => ToolsManagementModal(
-            conversationId: conversationId,
-            workspaceId: workspaceId,
+        unawaited(
+          showDialog<void>(
+            context: context,
+            builder: (context) => ToolsManagementModal(
+              conversationId: conversationId,
+              workspaceId: workspaceId,
+            ),
           ),
         );
       }

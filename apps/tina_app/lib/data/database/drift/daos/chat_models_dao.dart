@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/data/database/drift/tables/chat_models_table.dart';
-
-import '../app_database.dart';
 
 part 'chat_models_dao.g.dart';
 

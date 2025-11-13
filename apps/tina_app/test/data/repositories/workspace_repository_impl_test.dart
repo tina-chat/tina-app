@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/native.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:tina_app/data/database/drift/app_database.dart';
 import 'package:tina_app/data/repositories/workspace_repository_impl.dart';
 import 'package:tina_app/domain/entities/workspace.dart';
@@ -26,7 +26,7 @@ void main() {
 
     test('should create and retrieve a workspace', () async {
       // Arrange
-      final workspace = WorkspaceToCreate(
+      const workspace = WorkspaceToCreate(
         name: 'Test Workspace',
         type: WorkspaceType.local,
       );
@@ -45,11 +45,11 @@ void main() {
 
     test('should retrieve all workspaces', () async {
       // Arrange
-      final workspace1 = WorkspaceToCreate(
+      const workspace1 = WorkspaceToCreate(
         name: 'Test Workspace 1',
         type: WorkspaceType.local,
       );
-      final workspace2 = WorkspaceToCreate(
+      const workspace2 = WorkspaceToCreate(
         name: 'Test Workspace 2',
         type: WorkspaceType.remote,
         url: 'https://example.com',
@@ -68,7 +68,7 @@ void main() {
 
     test('should update a workspace', () async {
       // Arrange
-      final workspace = WorkspaceToCreate(
+      const workspace = WorkspaceToCreate(
         name: 'Test Workspace',
         type: WorkspaceType.local,
       );
@@ -88,7 +88,7 @@ void main() {
 
     test('should delete a workspace', () async {
       // Arrange
-      final workspace = WorkspaceToCreate(
+      const workspace = WorkspaceToCreate(
         name: 'Test Workspace',
         type: WorkspaceType.local,
       );
@@ -106,11 +106,11 @@ void main() {
 
     test('should search workspaces by name', () async {
       // Arrange
-      final workspace1 = WorkspaceToCreate(
+      const workspace1 = WorkspaceToCreate(
         name: 'Development Workspace',
         type: WorkspaceType.local,
       );
-      final workspace2 = WorkspaceToCreate(
+      const workspace2 = WorkspaceToCreate(
         name: 'Production Workspace',
         type: WorkspaceType.remote,
         url: 'https://example.com',
@@ -129,7 +129,7 @@ void main() {
 
     test('should handle invalid workspace creation', () async {
       // Arrange - Create invalid workspace (local with URL)
-      final invalidWorkspace = WorkspaceToCreate(
+      const invalidWorkspace = WorkspaceToCreate(
         name: 'Test Workspace',
         type: WorkspaceType.local,
         url: 'https://example.com', // Local workspace shouldn't have URL

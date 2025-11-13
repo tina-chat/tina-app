@@ -1,8 +1,7 @@
 import 'package:drift/drift.dart';
-
-import '../../../../domain/enums/workspace_type.dart';
-import '../app_database.dart';
-import '../tables/workspaces_table.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/tables/workspaces_table.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 
 part 'workspace_dao.g.dart';
 

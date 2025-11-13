@@ -6,12 +6,11 @@ import 'package:tina_app/services/tools/tool_service.dart';
 
 /// Implementation of the WorkspaceToolsRepository
 class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
-  final AppDatabase _database;
-  late WorkspaceToolsDao _dao;
-
   WorkspaceToolsRepositoryImpl(this._database) {
     _dao = _database.workspaceToolsDao;
   }
+  final AppDatabase _database;
+  late WorkspaceToolsDao _dao;
 
   @override
   Future<List<WorkspaceToolEntity>> getWorkspaceTools(
@@ -209,7 +208,7 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
     String toolType,
     String? config,
   ) async {
-    return await _dao
+    return _dao
         .updateWorkspaceToolConfig(workspaceId, toolType, config)
         .then((value) => value.map(_tableToEntity).toList());
   }

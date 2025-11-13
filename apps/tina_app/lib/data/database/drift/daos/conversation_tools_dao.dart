@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import '../app_database.dart';
-import '../tables/conversation_disabled_tools_table.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/tables/conversation_disabled_tools_table.dart';
 
 part 'conversation_tools_dao.g.dart';
 
@@ -40,7 +40,7 @@ class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
   ) {
     return batch((batch) {
       batch.insertAllOnConflictUpdate(conversationDisabledTools, [
-        for (var toolType in toolTypes)
+        for (final toolType in toolTypes)
           ConversationDisabledToolsCompanion(
             conversationId: Value(conversationId),
             type: Value(toolType),
@@ -95,8 +95,7 @@ class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
       (select(conversationDisabledTools)
             ..where((tbl) => tbl.conversationId.equals(conversationId))
             ..orderBy([
-              (tbl) =>
-                  OrderingTerm(expression: tbl.type, mode: OrderingMode.asc),
+              (tbl) => OrderingTerm(expression: tbl.type),
             ]))
           .get();
 

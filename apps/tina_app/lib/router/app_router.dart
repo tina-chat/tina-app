@@ -1,16 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tina_app/features/agents/agents_screen.dart';
 import 'package:tina_app/features/chats/screens/chat_conversation_screen.dart';
+import 'package:tina_app/features/chats/screens/list_chats_screen.dart';
 import 'package:tina_app/features/chats/screens/new_chat_screen.dart';
-
-import '../features/agents/agents_screen.dart';
-import '../features/chats/screens/list_chats_screen.dart';
-import '../features/home/home_screen.dart';
-import '../features/models/screens/models_screen.dart';
-import '../features/prompts/prompts_screen.dart';
-import '../features/settings/settings_screen.dart';
-import '../features/tools/tools_screen.dart';
-import '../main.dart';
+import 'package:tina_app/features/home/home_screen.dart';
+import 'package:tina_app/features/models/screens/models_screen.dart';
+import 'package:tina_app/features/prompts/prompts_screen.dart';
+import 'package:tina_app/features/settings/settings_screen.dart';
+import 'package:tina_app/features/tools/tools_screen.dart';
+import 'package:tina_app/main.dart';
 
 part 'app_router.g.dart';
 
@@ -55,21 +54,20 @@ class HomeRoute extends GoRouteData with $HomeRoute {
 class ChatsRoute extends GoRouteData with $ChatsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ChatScreen();
+    return const ChatScreen();
   }
 }
 
 class NewChatRoute extends GoRouteData with $NewChatRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return NewChatScreen();
+    return const NewChatScreen();
   }
 }
 
 class CoversationRoute extends GoRouteData with $CoversationRoute {
-  String chatId;
-
   CoversationRoute({required this.chatId});
+  String chatId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -80,7 +78,7 @@ class CoversationRoute extends GoRouteData with $CoversationRoute {
 class ToolsRoute extends GoRouteData with $ToolsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ToolsScreen();
+    return const ToolsScreen();
   }
 }
 
@@ -88,7 +86,7 @@ class ModelsRoute extends GoRouteData with $ModelsRoute {
   // There is no need to implement [build] when this [redirect] is unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ModelsScreen();
+    return const ModelsScreen();
   }
 }
 
@@ -96,7 +94,7 @@ class AgentsRoute extends GoRouteData with $AgentsRoute {
   // There is no need to implement [build] when this [redirect] is unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return AgentsScreen();
+    return const AgentsScreen();
   }
 }
 
@@ -104,7 +102,7 @@ class PromptsRoute extends GoRouteData with $PromptsRoute {
   // There is no need to implement [build] when this [redirect] is unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return PromptsScreen();
+    return const PromptsScreen();
   }
 }
 
@@ -112,6 +110,6 @@ class SettingsRoute extends GoRouteData with $SettingsRoute {
   // There is no need to implement [build] when this [redirect] is unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return SettingsScreen();
+    return const SettingsScreen();
   }
 }

@@ -78,7 +78,7 @@ Future<AntropicResponseModels> _anthopicModels(
   String? afterId,
 ]) async {
   final url = provider.url ?? 'https://api.anthropic.com/v1';
-  final Map<String, dynamic> qp = {'limit': '1000'};
+  final qp = <String, dynamic>{'limit': '1000'};
 
   if (afterId != null) {
     qp.addAll({'after_id': afterId});
@@ -91,7 +91,7 @@ Future<AntropicResponseModels> _anthopicModels(
     },
   );
 
-  final json = jsonDecode(request.body);
+  final json = jsonDecode(request.body) as Map<String, dynamic>;
 
   return AntropicResponseModels.fromJson(json);
 }

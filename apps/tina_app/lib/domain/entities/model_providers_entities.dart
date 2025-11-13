@@ -10,10 +10,10 @@ abstract class ModelProviderEntity with _$ModelProviderEntity {
     required String name,
     required ChatModelType type,
     required String key,
-    String? url,
     required DateTime createdAt,
     required DateTime updatedAt,
     required String workspaceId,
+    String? url,
   }) = _ModelProviderEntity;
 }
 

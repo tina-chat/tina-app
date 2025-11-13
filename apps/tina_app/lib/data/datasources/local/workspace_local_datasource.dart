@@ -1,6 +1,6 @@
-import '../../../domain/enums/workspace_type.dart';
-import '../../database/drift/app_database.dart';
-import '../../database/drift/daos/workspace_dao.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/daos/workspace_dao.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 
 /// Data source for local workspace data operations.
 ///
@@ -8,18 +8,18 @@ import '../../database/drift/daos/workspace_dao.dart';
 /// using the Drift database. It handles the low-level database interactions
 /// and provides methods for CRUD operations on workspaces.
 class WorkspaceLocalDataSource {
-  /// The database instance for performing operations.
-  final AppDatabase _database;
-
-  /// The workspace DAO for database operations.
-  late final WorkspaceDao _workspaceDao;
-
   /// Creates a new [WorkspaceLocalDataSource] instance.
   ///
   /// [database] The database instance to use for operations.
   WorkspaceLocalDataSource(this._database) {
     _workspaceDao = _database.workspaceDao;
   }
+
+  /// The database instance for performing operations.
+  final AppDatabase _database;
+
+  /// The workspace DAO for database operations.
+  late final WorkspaceDao _workspaceDao;
 
   /// Retrieves all workspaces from the local database.
   ///

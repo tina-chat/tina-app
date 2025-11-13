@@ -7,16 +7,16 @@ import 'package:tina_ui/ui.dart';
 
 class ChatInputWidget extends HookConsumerWidget {
   const ChatInputWidget({
-    super.key,
     required this.onSendMessage,
     required this.onToolsPress,
+    super.key,
   });
 
   final void Function(String message)? onSendMessage;
   final VoidCallback? onToolsPress;
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController();
 
     final isEmpty = useListenableSelector(
@@ -63,7 +63,7 @@ class ChatInputWidget extends HookConsumerWidget {
             ),
           ],
         ),
-        placeholder: TextLocale(
+        placeholder: const TextLocale(
           LocaleKeys.chats_screens_chat_conversation_message_placeholder,
         ),
         maxLines: 2,

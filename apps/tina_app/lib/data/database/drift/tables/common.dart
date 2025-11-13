@@ -3,11 +3,17 @@ import 'package:uuid/v7.dart';
 
 mixin TableMixin on Table {
   ///Primary key column as string
-  late final id = text().clientDefault(() => UuidV7().generate())();
+  late final Column<String> id = text().clientDefault(
+    () => const UuidV7().generate(),
+  )();
 
   /// when was created timestamp
-  late final createdAt = dateTime().withDefault(currentDateAndTime)();
+  late final Column<DateTime> createdAt = dateTime().withDefault(
+    currentDateAndTime,
+  )();
 
   /// when was last updated timestamp
-  late final updatedAt = dateTime().withDefault(currentDateAndTime)();
+  late final Column<DateTime> updatedAt = dateTime().withDefault(
+    currentDateAndTime,
+  )();
 }

@@ -10,8 +10,8 @@ import 'package:tina_ui/ui.dart';
 /// Modal for managing conversation tools
 class ToolsManagementModal extends HookConsumerWidget {
   const ToolsManagementModal({
-    super.key,
     required this.workspaceId,
+    super.key,
     this.conversationId,
   });
 
@@ -52,7 +52,7 @@ class ToolsManagementModal extends HookConsumerWidget {
               ),
               child: Row(
                 children: [
-                  TinaText(
+                  const TinaText(
                     style: TinaTextStyle.heading6,
                     child: Text('Manage Tools'),
                   ),
@@ -98,8 +98,8 @@ class ToolsManagementModal extends HookConsumerWidget {
 class _ToolsList extends StatelessWidget {
   const _ToolsList({
     required this.toolsState,
-    this.conversationId,
     required this.workspaceId,
+    this.conversationId,
   });
 
   final Map<UserToolType, bool> toolsState;
@@ -109,8 +109,8 @@ class _ToolsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (toolsState.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.all(DesignSpacing.lg),
+      return const Padding(
+        padding: EdgeInsets.all(DesignSpacing.lg),
         child: Center(
           child: TinaText(
             color: TinaTextColor.onSurfaceVariant,
@@ -188,7 +188,6 @@ class _ToolTile extends HookConsumerWidget {
             // Tool name
             Expanded(
               child: TinaText(
-                style: TinaTextStyle.body,
                 child: ToolNameWidget(toolType: toolType),
               ),
             ),

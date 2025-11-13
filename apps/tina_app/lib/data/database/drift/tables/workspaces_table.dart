@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:tina_app/data/database/drift/tables/common.dart';
-import '../../../../domain/enums/workspace_type.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 
 /// Table definition for workspaces in the database.
 @DataClassName('WorkspacesTable')

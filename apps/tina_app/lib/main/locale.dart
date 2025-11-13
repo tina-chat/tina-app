@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:tina_app/config/config.dart';
 
 export 'package:easy_localization/easy_localization.dart'
     show BuildContextEasyLocalizationExtension;
@@ -10,9 +9,8 @@ export 'package:easy_localization/easy_localization.dart'
 const supportedLocales = [Locale('en'), Locale('es')];
 
 class MainLocale extends StatelessWidget {
+  const MainLocale({required this.child, super.key});
   final Widget child;
-
-  const MainLocale({super.key, required this.child});
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
@@ -21,7 +19,6 @@ class MainLocale extends StatelessWidget {
       fallbackLocale: supportedLocales.first,
       useFallbackTranslations: true,
       useOnlyLangCode: true,
-      saveLocale: AppConfig.storeLocale,
       child: child,
     );
   }

@@ -25,10 +25,9 @@ List<AIChatMessageToolCall>? safeDecode(String? metadata) {
 }
 
 class ChatbotService {
+  ChatbotService(this.chatProvider, {this.tools});
   ChatModelWithProviderEntity chatProvider;
   List<ToolSpec>? tools;
-
-  ChatbotService(this.chatProvider, {this.tools});
 
   Stream<ChatResult> sendMessage(
     List<ChatbotMessage> messages, {
@@ -44,7 +43,7 @@ class ChatbotService {
             message,
             toolCalls: toolCalls.map((tool) => tool.toAIChat()).toList(),
           ),
-          for (var response in toolCalls.where(
+          for (final response in toolCalls.where(
             (element) => element.responseRaw != null,
           ))
             ChatMessage.tool(
@@ -78,7 +77,7 @@ class ChatbotService {
         prompt,
         options: _getModelOptions(),
       );
-      String title = result.outputAsString.trim();
+      var title = result.outputAsString.trim();
 
       // Clean up the title
       if (title.startsWith('"') && title.endsWith('"')) {

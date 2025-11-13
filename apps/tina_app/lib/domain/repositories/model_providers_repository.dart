@@ -19,14 +19,14 @@ abstract class ModelProvidersRepository {
 
 /// Base exception for chatModel-related operations.
 class ModelProviderException implements Exception {
+  /// Creates a new ModelProviderException
+  const ModelProviderException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new ModelProviderException
-  const ModelProviderException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -41,20 +41,20 @@ class ModelProviderValidationException extends ModelProviderException {
 
 /// Exception thrown when a modelProvider is not found.
 class ModelProviderNotFoundException extends ModelProviderException {
-  /// ID of the chatModel that was not found
-  final int modelProviderId;
-
   /// Creates a new ModelProviderNotFoundException
   const ModelProviderNotFoundException(this.modelProviderId, [Exception? cause])
     : super('ModelProvider with ID "$modelProviderId" not found', cause);
+
+  /// ID of the chatModel that was not found
+  final int modelProviderId;
 }
 
 /// Exception thrown when a modelProvider is not found.
 class ModelProviderNotModelsException extends ModelProviderException {
-  /// ID of the chatModel that was not found
-  final ChatModelType modelType;
-
   /// Creates a new ModelProviderNotModelsException
   const ModelProviderNotModelsException(this.modelType, [Exception? cause])
     : super('ModelProvider with type "$modelType" not found models', cause);
+
+  /// ID of the chatModel that was not found
+  final ChatModelType modelType;
 }

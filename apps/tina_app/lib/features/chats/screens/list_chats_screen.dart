@@ -12,7 +12,7 @@ class ChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TinaScreen(
-      appBar: TinaAppBar(
+      appBar: const TinaAppBar(
         title: TextLocale(LocaleKeys.chats_screens_chats_list_title),
       ),
       child: TinaColumn(
@@ -23,12 +23,14 @@ class ChatScreen extends ConsumerWidget {
                 onPressed: () {
                   NewChatRoute().go(context);
                 },
-                child: TextLocale(LocaleKeys.chats_screens_chats_list_add_chat),
+                child: const TextLocale(
+                  LocaleKeys.chats_screens_chats_list_add_chat,
+                ),
               ),
             ],
           ),
 
-          Expanded(child: ChatListWidget()),
+          const Expanded(child: ChatListWidget()),
         ],
       ),
     );

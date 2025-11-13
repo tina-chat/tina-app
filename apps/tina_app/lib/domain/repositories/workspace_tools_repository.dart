@@ -135,14 +135,14 @@ abstract class WorkspaceToolsRepository {
 
 /// Base exception for workspace tools-related operations.
 class WorkspaceToolsException implements Exception {
+  /// Creates a new WorkspaceToolsException
+  const WorkspaceToolsException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new WorkspaceToolsException
-  const WorkspaceToolsException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -157,12 +157,6 @@ class WorkspaceToolsValidationException extends WorkspaceToolsException {
 
 /// Exception thrown when a workspace tool is not found.
 class WorkspaceToolNotFoundException extends WorkspaceToolsException {
-  /// ID of the workspace
-  final String workspaceId;
-
-  /// Type of the tool that was not found
-  final String toolType;
-
   /// Creates a new WorkspaceToolNotFoundException
   const WorkspaceToolNotFoundException(
     this.workspaceId,
@@ -172,4 +166,10 @@ class WorkspaceToolNotFoundException extends WorkspaceToolsException {
          'Workspace tool "$toolType" not found in workspace "$workspaceId"',
          cause,
        );
+
+  /// ID of the workspace
+  final String workspaceId;
+
+  /// Type of the tool that was not found
+  final String toolType;
 }

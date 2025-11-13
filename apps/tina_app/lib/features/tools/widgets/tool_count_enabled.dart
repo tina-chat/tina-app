@@ -16,12 +16,12 @@ class ToolCountEnabledWidget extends ConsumerWidget {
       workspaceToolsProvider.select(
         (asyncValue) => asyncValue.whenData(
           (value) =>
-              value.where((e) => e.$2?.isAvailable == true).nonNulls.length,
+              value.where((e) => e.$2?.isAvailable ?? false).nonNulls.length,
         ),
       ),
     );
     return switch (countAsync) {
-      AsyncLoading() => TinaSpinner(),
+      AsyncLoading() => const TinaSpinner(),
 
       AsyncData(value: final count) => Text(
         LocaleKeys.tools_screen_enabled_count.plural(count),

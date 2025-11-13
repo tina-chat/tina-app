@@ -1,9 +1,8 @@
 import 'package:drift/drift.dart';
-
-import '../../domain/entities/workspace.dart';
-import '../../domain/enums/workspace_type.dart';
-import '../../domain/repositories/workspace_repository.dart';
-import '../database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/domain/entities/workspace.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
+import 'package:tina_app/domain/repositories/workspace_repository.dart';
 
 /// Implementation of the [WorkspaceRepository] interface.
 ///
@@ -11,13 +10,13 @@ import '../database/drift/app_database.dart';
 /// using the Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class WorkspaceRepositoryImpl implements WorkspaceRepository {
-  /// The database instance for workspace operations.
-  final AppDatabase _database;
-
   /// Creates a new [WorkspaceRepositoryImpl] instance.
   ///
   /// [database] The database instance for workspace operations.
   WorkspaceRepositoryImpl(this._database);
+
+  /// The database instance for workspace operations.
+  final AppDatabase _database;
 
   @override
   Future<List<WorkspaceEntity>> getAllWorkspaces() async {

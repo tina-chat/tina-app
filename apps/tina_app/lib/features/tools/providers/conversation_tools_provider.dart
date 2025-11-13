@@ -10,10 +10,10 @@ part 'conversation_tools_provider.g.dart';
 
 /// Combined state for workspace tools with their conversation-specific toggle states
 class ConversationToolsState {
-  final Map<UserToolType, bool>
-  toolStates; // toolType -> isEnabled for conversation
+  // toolType -> isEnabled for conversation
 
   const ConversationToolsState({required this.toolStates});
+  final Map<UserToolType, bool> toolStates;
 
   /// Get the enabled state for a specific tool
   bool isToolEnabled(UserToolType toolType) {
@@ -57,7 +57,7 @@ class ConversationToolsNotifier extends _$ConversationToolsNotifier {
     );
 
     final toolStates = {
-      for (var typeTool in workspaceEnabeldTools) typeTool: true,
+      for (final typeTool in workspaceEnabeldTools) typeTool: true,
     };
 
     if (conversationId != null && conversationId.isNotEmpty) {
@@ -69,7 +69,9 @@ class ConversationToolsNotifier extends _$ConversationToolsNotifier {
           .map((e) => UserToolType.fromValue(e.type))
           .nonNulls;
 
-      toolStates.addAll({for (var typeTool in disabledTools) typeTool: false});
+      toolStates.addAll({
+        for (final typeTool in disabledTools) typeTool: false,
+      });
     }
 
     return toolStates;
@@ -127,7 +129,7 @@ class AvailableConversationToolsNotifier
   }
 
   Future<List<String>> _getAvailableTools() async {
-    return await _repository.getAvailableToolsForConversation(
+    return _repository.getAvailableToolsForConversation(
       _conversationId,
       _workspaceId,
     );
@@ -160,7 +162,7 @@ class ContextAwareToolsNotifier extends _$ContextAwareToolsNotifier {
   }
 
   Future<List<String>> _getContextAwareTools() async {
-    return await _repository.getAvailableToolsForConversation(
+    return _repository.getAvailableToolsForConversation(
       _conversationId,
       _workspaceId,
     );

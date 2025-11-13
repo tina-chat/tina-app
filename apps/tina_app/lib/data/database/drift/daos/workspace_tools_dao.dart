@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import '../app_database.dart';
-import '../tables/workspace_tools_table.dart';
+import 'package:tina_app/data/database/drift/app_database.dart';
+import 'package:tina_app/data/database/drift/tables/workspace_tools_table.dart';
 
 part 'workspace_tools_dao.g.dart';
 
@@ -38,7 +38,7 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
 
   Future<bool> toggleWorkspaceTool(String workspaceId, String toolType) {
     return customUpdate(
-      'UPDATE workspace_tools SET is_enabled = NOT is_enabled, updated_at = datetime(\'now\') '
+      "UPDATE workspace_tools SET is_enabled = NOT is_enabled, updated_at = datetime('now') "
       'WHERE workspace_id = ? AND type = ?',
       variables: [
         Variable.withString(workspaceId),
@@ -74,8 +74,7 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
       (select(workspaceTools)
             ..where((tbl) => tbl.workspaceId.equals(workspaceId))
             ..orderBy([
-              (tbl) =>
-                  OrderingTerm(expression: tbl.type, mode: OrderingMode.asc),
+              (tbl) => OrderingTerm(expression: tbl.type),
             ]))
           .get();
 
@@ -89,8 +88,7 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
                   tbl.isEnabled.equals(true),
             )
             ..orderBy([
-              (tbl) =>
-                  OrderingTerm(expression: tbl.type, mode: OrderingMode.asc),
+              (tbl) => OrderingTerm(expression: tbl.type),
             ]))
           .get();
 

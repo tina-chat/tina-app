@@ -7,16 +7,15 @@ import 'package:tina_app/services/tools/tool_service.dart';
 
 /// Implementation of the ConversationToolsRepository
 class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
-  final AppDatabase _database;
-  final WorkspaceToolsRepository _workspaceToolsRepository;
-  late ConversationToolsDao _dao;
-
   ConversationToolsRepositoryImpl(
     this._database,
     this._workspaceToolsRepository,
   ) {
     _dao = _database.conversationToolsDao;
   }
+  final AppDatabase _database;
+  final WorkspaceToolsRepository _workspaceToolsRepository;
+  late ConversationToolsDao _dao;
 
   @override
   Future<List<ConversationToolEntity>> getConversationTools(

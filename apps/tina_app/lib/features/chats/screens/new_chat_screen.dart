@@ -22,7 +22,6 @@ class NewChatScreen extends HookConsumerWidget {
     final toolsMap = ref.watch(
       conversationToolsProvider(
         workspaceId: workspaceId ?? '',
-        conversationId: null,
       ),
     );
     final modelIdState = useState<String?>(null);
@@ -34,7 +33,7 @@ class NewChatScreen extends HookConsumerWidget {
       );
 
       if (workspaceId.isNotEmpty && context.mounted) {
-        showDialog(
+        showDialog<void>(
           context: context,
           builder: (context) => ToolsManagementModal(workspaceId: workspaceId),
         );
@@ -109,7 +108,7 @@ class NewChatScreen extends HookConsumerWidget {
             ),
           ),
           if (isLoading.value)
-            Container(
+            ColoredBox(
               color: Colors.black.withValues(alpha: 0.3),
               child: const Center(child: CircularProgressIndicator()),
             ),

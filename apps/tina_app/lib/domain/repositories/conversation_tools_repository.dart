@@ -150,14 +150,14 @@ abstract class ConversationToolsRepository {
 
 /// Base exception for conversation tools-related operations.
 class ConversationToolsException implements Exception {
+  /// Creates a new ConversationToolsException
+  const ConversationToolsException(this.message, [this.cause]);
+
   /// Error message describing the exception
   final String message;
 
   /// Optional original exception that caused this exception
   final Exception? cause;
-
-  /// Creates a new ConversationToolsException
-  const ConversationToolsException(this.message, [this.cause]);
 
   @override
   String toString() =>
@@ -172,12 +172,6 @@ class ConversationToolsValidationException extends ConversationToolsException {
 
 /// Exception thrown when a conversation tool is not found.
 class ConversationToolNotFoundException extends ConversationToolsException {
-  /// ID of the conversation
-  final String conversationId;
-
-  /// Type of the tool that was not found
-  final String toolType;
-
   /// Creates a new ConversationToolNotFoundException
   const ConversationToolNotFoundException(
     this.conversationId,
@@ -187,4 +181,10 @@ class ConversationToolNotFoundException extends ConversationToolsException {
          'Conversation tool "$toolType" not found in conversation "$conversationId"',
          cause,
        );
+
+  /// ID of the conversation
+  final String conversationId;
+
+  /// Type of the tool that was not found
+  final String toolType;
 }

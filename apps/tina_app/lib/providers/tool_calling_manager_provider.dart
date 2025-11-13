@@ -40,7 +40,7 @@ class ToolCallingManagerNotifier extends _$ToolCallingManagerNotifier {
     return [];
   }
 
-  void runTask(
+  Future<void> runTask(
     List<MessageToolCallEntity> toolCalling,
     String responseMessageId,
   ) async {
@@ -61,7 +61,8 @@ class ToolCallingManagerNotifier extends _$ToolCallingManagerNotifier {
         .nonNulls;
 
     final toolResponsesFutures = toolsToCall.map((toolToCall) {
-      return toolToCall.$1.runner(toolToCall.$2.arguments['input']).value.then((
+      final input = toolToCall.$2.arguments['input'] as Object;
+      return toolToCall.$1.runner(input).value.then((
         value,
       ) {
         return ToolResponseItem(

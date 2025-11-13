@@ -8,8 +8,6 @@ part 'workspace_tool.freezed.dart';
 /// allowing different workspaces to have different tool configurations.
 @freezed
 abstract class WorkspaceToolEntity with _$WorkspaceToolEntity {
-  const WorkspaceToolEntity._();
-
   /// Creates a new WorkspaceTool instance
   const factory WorkspaceToolEntity({
     /// ID of the workspace this tool setting belongs to
@@ -17,9 +15,6 @@ abstract class WorkspaceToolEntity with _$WorkspaceToolEntity {
 
     /// Type of tool (e.g., 'web_search', 'calculator', etc.)
     required String type,
-
-    /// Tool configuration as JSON (optional)
-    final String? config,
 
     /// Whether the tool is enabled for this workspace
     required bool isEnabled,
@@ -29,7 +24,11 @@ abstract class WorkspaceToolEntity with _$WorkspaceToolEntity {
 
     /// Timestamp when this setting was last updated
     required DateTime updatedAt,
+
+    /// Tool configuration as JSON (optional)
+    final String? config,
   }) = _WorkspaceToolEntity;
+  const WorkspaceToolEntity._();
 
   /// Returns true if the tool has custom configuration
   bool get hasConfig => config != null && config!.isNotEmpty;
@@ -41,8 +40,6 @@ abstract class WorkspaceToolEntity with _$WorkspaceToolEntity {
 /// Entity for creating/updating workspace tool settings
 @freezed
 abstract class WorkspaceToolToCreate with _$WorkspaceToolToCreate {
-  const WorkspaceToolToCreate._();
-
   /// Creates a new WorkspaceToolToCreate instance
   const factory WorkspaceToolToCreate({
     /// Type of tool (e.g., 'web_search', 'calculator', etc.)
@@ -54,6 +51,7 @@ abstract class WorkspaceToolToCreate with _$WorkspaceToolToCreate {
     /// Whether the tool should be enabled (defaults to true)
     final bool? isEnabled,
   }) = _WorkspaceToolToCreate;
+  const WorkspaceToolToCreate._();
 
   /// Returns true if the tool type is valid
   bool get hasValidType => type.isNotEmpty;

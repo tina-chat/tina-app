@@ -17,10 +17,9 @@ import 'package:tina_app/data/database/drift/tables/messages_table.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
 import 'package:tina_app/data/database/drift/tables/workspace_tools_table.dart';
 import 'package:tina_app/data/database/drift/tables/workspaces_table.dart';
+import 'package:tina_app/domain/enums/chat_models_type.dart';
+import 'package:tina_app/domain/enums/workspace_type.dart';
 import 'package:uuid/v7.dart';
-
-import '../../../domain/enums/chat_models_type.dart';
-import '../../../domain/enums/workspace_type.dart';
 
 part 'app_database.g.dart';
 

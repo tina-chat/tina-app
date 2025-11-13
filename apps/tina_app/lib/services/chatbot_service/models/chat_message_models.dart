@@ -5,8 +5,6 @@ part 'chat_message_models.freezed.dart';
 
 @freezed
 abstract class ChatbotToolCall with _$ChatbotToolCall {
-  const ChatbotToolCall._();
-
   const factory ChatbotToolCall({
     required String id,
     required String name,
@@ -14,6 +12,7 @@ abstract class ChatbotToolCall with _$ChatbotToolCall {
     required String argumentsRaw,
     String? responseRaw,
   }) = _ChatbotToolCall;
+  const ChatbotToolCall._();
 
   AIChatMessageToolCall toAIChat() {
     return AIChatMessageToolCall(

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tina_app/services/tools/user_tools_entity.dart';
 
 class ToolIconWidget extends StatelessWidget {
-  final UserToolType toolType;
-
   const ToolIconWidget({required this.toolType, super.key});
+  final UserToolType toolType;
 
   @override
   Widget build(BuildContext context) {

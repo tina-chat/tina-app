@@ -22,14 +22,14 @@ class ToolsWorkspaceListWidget extends HookConsumerWidget {
     );
 
     return switch (workspaceToolsAsync) {
-      AsyncLoading() => TinaSpinner(),
+      AsyncLoading() => const TinaSpinner(),
 
       AsyncData(:final value) => ListView.builder(
         itemCount: value,
         itemBuilder: (context, index) {
           return ProviderScope(
             overrides: [workspaceToolIndexProvider.overrideWithValue(index)],
-            child: WorkspaceToolCard(),
+            child: const WorkspaceToolCard(),
           );
         },
       ),
@@ -70,7 +70,6 @@ class WorkspaceToolCard extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TinaRow(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Tool icon
                 Container(
@@ -107,7 +106,7 @@ class WorkspaceToolCard extends HookConsumerWidget {
                         style: TinaTextStyle.bodySmall,
                         color: TinaTextColor.onPrimary,
                         child: DefaultTextStyle.merge(
-                          style: TextStyle(),
+                          style: const TextStyle(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           child: ToolDescriptionidget(toolType: toolType),
@@ -147,12 +146,12 @@ class WorkspaceToolCard extends HookConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TinaIcon(
+                          const TinaIcon(
                             Icons.settings,
                             size: TinaIconSize.extraSmall,
                           ),
                           SizedBox(width: context.tinaTheme.spacing.xs),
-                          TextLocale(LocaleKeys.tools_screen_configured),
+                          const TextLocale(LocaleKeys.tools_screen_configured),
                         ],
                       ),
                     ),

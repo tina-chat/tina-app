@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tina_app/main/locale.dart';
+import 'package:tina_app/router/app_router.dart';
+import 'package:tina_app/widgets/tina_sidebar.dart';
 import 'package:tina_ui/ui.dart';
-
-import 'router/app_router.dart';
-import 'widgets/tina_sidebar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
 }
 
 class AppLayout extends StatelessWidget {
-  const AppLayout({super.key, required this.child});
+  const AppLayout({required this.child, super.key});
 
   final Widget child;
 

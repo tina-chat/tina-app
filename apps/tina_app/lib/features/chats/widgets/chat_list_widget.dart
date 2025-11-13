@@ -22,7 +22,7 @@ class ChatListWidget extends ConsumerWidget {
 
         return ListView.separated(
           padding: const EdgeInsets.all(16),
-          separatorBuilder: (context, index) => SizedBox(height: 10),
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
           itemCount: chats.length,
           itemBuilder: (context, index) {
             final chat = chats[index];
@@ -33,17 +33,16 @@ class ChatListWidget extends ConsumerWidget {
       AsyncLoading() => const Center(child: TinaSpinner()),
       AsyncError(error: final error, stackTrace: _) => Center(
         child: TinaText(
-          style: TinaTextStyle.body,
-          child: Text('Error loading chats: ${error.toString()}'),
+          child: Text('Error loading chats: $error'),
         ),
       ),
     };
   }
 
   Widget _buildEmptyState(BuildContext context) {
-    return Center(
+    return const Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -52,14 +51,13 @@ class ChatListWidget extends ConsumerWidget {
               size: TinaIconSize.extraLarge,
               color: Colors.grey,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             TinaText(
               style: TinaTextStyle.heading3,
               child: Text('No Chats Yet'),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             TinaText(
-              style: TinaTextStyle.body,
               textAlign: TextAlign.center,
               child: Text('Start your first conversation with Tina AI'),
             ),
@@ -86,7 +84,6 @@ class _ChatTile extends ConsumerWidget {
       ),
     );
     return TinaCard(
-      padding: TinaCardPadding.medium,
       // backgroundColor: Colors.red,
       onTap: () {
         CoversationRoute(chatId: chat.id).go(context);
@@ -103,7 +100,7 @@ class _ChatTile extends ConsumerWidget {
                     Row(
                       children: [
                         if (chat.isPinned) ...[
-                          TinaIcon(
+                          const TinaIcon(
                             Icons.push_pin_outlined,
                             size: TinaIconSize.small,
                             color: Colors.orange,
