@@ -184,7 +184,7 @@ class _TinaSidebarItem extends StatelessWidget {
         child: TinaRow(
           spacing: TinaSpacing.sm,
           children: [
-            if (icon != null) icon!,
+            ?icon,
             label,
           ],
         ),
