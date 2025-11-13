@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:tina_app/data/database/drift/enums/message_table_enums.dart';
 import 'package:tina_app/domain/enums/message_types.dart';
+import 'package:tina_app/utils/encode.dart';
 
 import '../../domain/entities/conversation.dart';
 import '../../domain/repositories/message_repository.dart';
@@ -276,7 +277,7 @@ class MessageRepositoryImpl implements MessageRepository {
       messageType: MessageType.fromString(messageTable.messageType.value),
       isUser: messageTable.isUser,
       status: _messageTableStatusToEntityStatus(messageTable.status),
-      metadata: messageTable.metadata,
+      metadata: MessageMetadataEntity.fromJsonString(messageTable.metadata),
       createdAt: messageTable.createdAt,
       updatedAt: messageTable.updatedAt,
     );
@@ -306,7 +307,7 @@ class MessageRepositoryImpl implements MessageRepository {
             ? null
             : _messageStatusToTableStatus(message.status!),
       ),
-      metadata: Value(message.metadata),
+      metadata: Value.absentIfNull(safeJsonEncode(message.metadata?.toJson())),
     );
   }
 
@@ -326,7 +327,7 @@ class MessageRepositoryImpl implements MessageRepository {
     if (message.content != null && message.content!.isEmpty) {
       return 'Message content cannot be empty';
     }
-    if (message.metadata != null && message.metadata!.isEmpty) {
+    if (message.metadata != null) {
       return 'Metadata cannot be empty';
     }
     return 'Must Set content or metadata or status';

@@ -21,5 +21,22 @@
       "select_model_selctor": "Selecionar Modelo",
       "message_placeholder": "Escribe tu mensaje..."
     }
+  },
+  "tools_screen": {
+    "title": "Herramientas del Espacio de Trabajo",
+    "refresh_tooltip": "Actualizar herramientas",
+    "workspace_ai_tools": "Herramientas IA del Espacio de Trabajo",
+    "enable_configure_description": "Activa y configura herramientas para este espacio de trabajo",
+    "enabled_count": {
+      "zero": "No hay herramientas activadas",
+      "other":"{} activadas"
+    },
+    "configured": "Configurado"
+  },
+  "tools_names": {
+    "calculator": {
+      "name": "Calculadora",
+      "description": "Resuelve Problemas Matematicos"
+    }
   }
 }

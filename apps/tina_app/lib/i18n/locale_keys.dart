@@ -19,4 +19,15 @@ abstract class LocaleKeys {
       'chats_screens.chat_conversation.select_model_selctor';
   static const chats_screens_chat_conversation_message_placeholder =
       'chats_screens.chat_conversation.message_placeholder';
+  static const tools_screen_title = 'tools_screen.title';
+  static const tools_screen_refresh_tooltip = 'tools_screen.refresh_tooltip';
+  static const tools_screen_workspace_ai_tools =
+      'tools_screen.workspace_ai_tools';
+  static const tools_screen_enable_configure_description =
+      'tools_screen.enable_configure_description';
+  static const tools_screen_enabled_count = 'tools_screen.enabled_count';
+  static const tools_screen_configured = 'tools_screen.configured';
+  static const tools_names_calculator_name = 'tools_names.calculator.name';
+  static const tools_names_calculator_description =
+      'tools_names.calculator.description';
 }

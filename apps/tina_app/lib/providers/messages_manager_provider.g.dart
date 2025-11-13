@@ -42,7 +42,7 @@ final class MessagesManagerNotifierProvider
 }
 
 String _$messagesManagerNotifierHash() =>
-    r'86de3aec2586eeb5248a19abcf2b32f16c39734c';
+    r'fb9d8fe39470657f497b528a2e7718b12df24b87';
 
 abstract class _$MessagesManagerNotifier
     extends $Notifier<List<StreamingMessage>> {

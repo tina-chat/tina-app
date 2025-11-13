@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   anthropic_sdk_dart: ^0.3.0+1
+  async: ^2.13.0
   collection: ^1.19.1
 
   # Database dependencies
@@ -32,12 +33,14 @@ dependencies:
   langchain: ^0.8.0+1
   langchain_anthropic: ^0.3.0+1
   langchain_openai: ^0.8.0+1
+  math_expressions: ^3.1.0
   openai_dart: ^0.6.0+1
   path_provider: ^2.1.5
 
   # Other dependencies
   riverpod: ^3.0.3
   riverpod_annotation: ^3.0.3
+  rxdart: ^0.28.0
   shared_preferences: ^2.5.3
   sqlite3_flutter_libs: ^0.5.40
   tina_ui: ^0.1.0+1

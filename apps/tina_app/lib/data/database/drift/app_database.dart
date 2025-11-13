@@ -5,18 +5,22 @@ import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tina_app/data/database/drift/daos/chat_models_dao.dart';
 import 'package:tina_app/data/database/drift/daos/conversation_dao.dart';
+import 'package:tina_app/data/database/drift/daos/conversation_tools_dao.dart';
 import 'package:tina_app/data/database/drift/daos/message_dao.dart';
 import 'package:tina_app/data/database/drift/daos/model_providers_dao.dart';
+import 'package:tina_app/data/database/drift/daos/workspace_dao.dart';
+import 'package:tina_app/data/database/drift/daos/workspace_tools_dao.dart';
 import 'package:tina_app/data/database/drift/tables/chat_models_table.dart';
+import 'package:tina_app/data/database/drift/tables/conversation_disabled_tools_table.dart';
 import 'package:tina_app/data/database/drift/tables/conversations_table.dart';
 import 'package:tina_app/data/database/drift/tables/messages_table.dart';
 import 'package:tina_app/data/database/drift/tables/model_provider_table.dart';
+import 'package:tina_app/data/database/drift/tables/workspace_tools_table.dart';
+import 'package:tina_app/data/database/drift/tables/workspaces_table.dart';
 import 'package:uuid/v7.dart';
 
 import '../../../domain/enums/chat_models_type.dart';
 import '../../../domain/enums/workspace_type.dart';
-import 'daos/workspace_dao.dart';
-import 'tables/workspaces_table.dart';
 
 part 'app_database.g.dart';
 
@@ -25,13 +29,23 @@ part 'app_database.g.dart';
 /// This database manages all local data storage for the Tina application,
 /// including workspaces and other application data.
 @DriftDatabase(
-  tables: [Workspaces, ModelProviders, ChatModels, Conversations, Messages],
+  tables: [
+    Workspaces,
+    ModelProviders,
+    ChatModels,
+    Conversations,
+    Messages,
+    WorkspaceTools,
+    ConversationDisabledTools,
+  ],
   daos: [
     WorkspaceDao,
     ModelProvidersDao,
     ChatModelsDao,
     ConversationDao,
     MessageDao,
+    WorkspaceToolsDao,
+    ConversationToolsDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -49,19 +63,13 @@ class AppDatabase extends _$AppDatabase {
   /// Migration logic for database schema upgrades.
   ///
   /// This method handles database migrations when the schema version changes.
-  /// Currently, we're at version 1, so no migrations are needed yet.
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
-      },
-      onUpgrade: (Migrator m, int from, int to) async {
-        // Handle future migrations here
-        // Example:
-        // if (from <= 1 && to >= 2) {
-        //   await m.addColumn(workspaces, newColumn);
-        // }
+        // No default tools initialization needed
+        // Tools are defined in the app code via ToolService, not the database
       },
     );
   }
