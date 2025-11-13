@@ -113,7 +113,7 @@ class TinaAppBar extends StatelessWidget {
               if (actions != null && actions!.isNotEmpty) ...actions!,
             ],
           ),
-          if (footer != null) footer!,
+          ?footer,
         ],
       ),
     );

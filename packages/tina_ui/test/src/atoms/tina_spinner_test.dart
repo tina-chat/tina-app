@@ -376,7 +376,12 @@ void main() {
         ),
       );
 
-      final coloredBox = tester.widget<ColoredBox>(find.byType(ColoredBox));
+      final coloredBox = tester.widget<ColoredBox>(
+        find.descendant(
+          of: find.byType(TinaLoadingOverlay),
+          matching: find.byType(ColoredBox),
+        ),
+      );
       expect(coloredBox.color, customBackgroundColor);
     });
   });
