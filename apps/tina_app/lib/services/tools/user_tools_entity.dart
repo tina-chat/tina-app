@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:langchain/langchain.dart';
 
 enum UserToolType {
@@ -14,11 +15,13 @@ enum UserToolType {
 }
 
 /// Represents an available tool in the app
-abstract class UserToolEntity {
+abstract class UserToolEntity<Input, Options, Output> {
   /// Type identifier for the tool
   UserToolType get type;
 
   const UserToolEntity();
 
-  Tool getTool();
+  ToolSpec getTool();
+
+  CancelableOperation<Output> runner(Input toolInput);
 }

@@ -48,6 +48,12 @@ String? _tryDecode(String? metadata) {
     return metadata;
   }
 
+  if (decoded is Map<String, dynamic>) {
+    if (decoded.length == 1) {
+      return _tryDecode(decoded.values.first);
+    }
+  }
+
   return encoder.convert(decoded);
 }
 
@@ -61,24 +67,51 @@ class _ChatMessageRow extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final prettyMetadata = useMemoized(() => _tryDecode(message.metadata), [
-      message.metadata,
-    ]);
-
     return AnimatedSize(
       duration: Duration(microseconds: 200),
       alignment: Alignment.topLeft,
-      child: Column(
+      child: TinaColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TinaMessageBubble(
-            key: ValueKey(message.id),
-            content: message.content,
-            isUser: message.isUser,
-            timestamp: message.createdAt,
-            status: _mapMessageStatus(message.status),
-          ),
-          if (prettyMetadata != null) Text(prettyMetadata),
+          if (message.metadata?.toolCalls == null || message.content.isNotEmpty)
+            TinaMessageBubble(
+              key: ValueKey(message.id),
+              content: message.content,
+              isUser: message.isUser,
+              timestamp: message.createdAt,
+              status: _mapMessageStatus(message.status),
+            ),
+          if (message.metadata?.toolCalls != null) ...[
+            for (var toolCall in message.metadata!.toolCalls)
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: context.tinaColors.info,
+                ),
+                padding: EdgeInsetsDirectional.all(
+                  context.tinaTheme.spacing.sm,
+                ),
+                margin: EdgeInsetsDirectional.all(context.tinaTheme.spacing.sm),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(text: toolCall.name),
+                          if (_tryDecode(toolCall.argumentsRaw) != null)
+                            TextSpan(text: '( '),
+                          TextSpan(text: _tryDecode(toolCall.argumentsRaw)),
+                          TextSpan(text: ' )'),
+                        ],
+                      ),
+                    ),
+                    if (_tryDecode(toolCall.responseRaw) != null)
+                      Text(_tryDecode(toolCall.responseRaw)!),
+                  ],
+                ),
+              ),
+          ],
         ],
       ),
     );

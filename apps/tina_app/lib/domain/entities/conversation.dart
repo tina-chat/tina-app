@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tina_app/utils/encode.dart';
 
 import '../enums/message_types.dart';
 
 part 'conversation.freezed.dart';
+part 'conversation.g.dart';
 
 /// Entity representing a conversation in the Tina application.
 ///
@@ -91,6 +95,44 @@ abstract class ConversationToUpdate with _$ConversationToUpdate {
   }
 }
 
+@freezed
+abstract class MessageToolCallEntity with _$MessageToolCallEntity {
+  const MessageToolCallEntity._();
+  const factory MessageToolCallEntity({
+    required String id,
+    required String name,
+    required String argumentsRaw,
+    String? responseRaw,
+  }) = _MessageToolCallEntity;
+
+  factory MessageToolCallEntity.fromJson(Map<String, dynamic> json) =>
+      _$MessageToolCallEntityFromJson(json);
+
+  Map<String, dynamic> get arguments {
+    return safeJsonDecode(argumentsRaw) ?? {};
+  }
+}
+
+@freezed
+abstract class MessageMetadataEntity with _$MessageMetadataEntity {
+  const factory MessageMetadataEntity({
+    @Default(<MessageToolCallEntity>[]) List<MessageToolCallEntity> toolCalls,
+  }) = _MessageMetadataEntity;
+
+  factory MessageMetadataEntity.fromJson(Map<String, dynamic> json) =>
+      _$MessageMetadataEntityFromJson(json);
+
+  static MessageMetadataEntity? fromJsonString(String? metadata) {
+    if (metadata == null) return null;
+    try {
+      final json = jsonDecode(metadata);
+      return MessageMetadataEntity.fromJson(json);
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
 /// Entity representing a message in a conversation.
 ///
 /// A message contains the actual content and metadata
@@ -118,7 +160,7 @@ abstract class MessageEntity with _$MessageEntity {
     required MessageStatus status,
 
     /// Additional metadata for the message (JSON)
-    final String? metadata,
+    final MessageMetadataEntity? metadata,
 
     /// Timestamp when the message was created
     required DateTime createdAt,
@@ -183,7 +225,7 @@ abstract class MessageToUpdate with _$MessageToUpdate {
     final String? content,
 
     /// Additional metadata for the message (JSON)
-    final String? metadata,
+    final MessageMetadataEntity? metadata,
 
     final MessageStatus? status,
   }) = _MessageToUpdate;

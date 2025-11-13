@@ -843,6 +843,547 @@ as bool?,
 
 }
 
+
+/// @nodoc
+mixin _$MessageToolCallEntity {
+
+ String get id; String get name; String get argumentsRaw; String? get responseRaw;
+/// Create a copy of MessageToolCallEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MessageToolCallEntityCopyWith<MessageToolCallEntity> get copyWith => _$MessageToolCallEntityCopyWithImpl<MessageToolCallEntity>(this as MessageToolCallEntity, _$identity);
+
+  /// Serializes this MessageToolCallEntity to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageToolCallEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.argumentsRaw, argumentsRaw) || other.argumentsRaw == argumentsRaw)&&(identical(other.responseRaw, responseRaw) || other.responseRaw == responseRaw));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,name,argumentsRaw,responseRaw);
+
+@override
+String toString() {
+  return 'MessageToolCallEntity(id: $id, name: $name, argumentsRaw: $argumentsRaw, responseRaw: $responseRaw)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MessageToolCallEntityCopyWith<$Res>  {
+  factory $MessageToolCallEntityCopyWith(MessageToolCallEntity value, $Res Function(MessageToolCallEntity) _then) = _$MessageToolCallEntityCopyWithImpl;
+@useResult
+$Res call({
+ String id, String name, String argumentsRaw, String? responseRaw
+});
+
+
+
+
+}
+/// @nodoc
+class _$MessageToolCallEntityCopyWithImpl<$Res>
+    implements $MessageToolCallEntityCopyWith<$Res> {
+  _$MessageToolCallEntityCopyWithImpl(this._self, this._then);
+
+  final MessageToolCallEntity _self;
+  final $Res Function(MessageToolCallEntity) _then;
+
+/// Create a copy of MessageToolCallEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? argumentsRaw = null,Object? responseRaw = freezed,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,argumentsRaw: null == argumentsRaw ? _self.argumentsRaw : argumentsRaw // ignore: cast_nullable_to_non_nullable
+as String,responseRaw: freezed == responseRaw ? _self.responseRaw : responseRaw // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MessageToolCallEntity].
+extension MessageToolCallEntityPatterns on MessageToolCallEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MessageToolCallEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MessageToolCallEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MessageToolCallEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _MessageToolCallEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MessageToolCallEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MessageToolCallEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String argumentsRaw,  String? responseRaw)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MessageToolCallEntity() when $default != null:
+return $default(_that.id,_that.name,_that.argumentsRaw,_that.responseRaw);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String argumentsRaw,  String? responseRaw)  $default,) {final _that = this;
+switch (_that) {
+case _MessageToolCallEntity():
+return $default(_that.id,_that.name,_that.argumentsRaw,_that.responseRaw);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String argumentsRaw,  String? responseRaw)?  $default,) {final _that = this;
+switch (_that) {
+case _MessageToolCallEntity() when $default != null:
+return $default(_that.id,_that.name,_that.argumentsRaw,_that.responseRaw);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _MessageToolCallEntity extends MessageToolCallEntity {
+  const _MessageToolCallEntity({required this.id, required this.name, required this.argumentsRaw, this.responseRaw}): super._();
+  factory _MessageToolCallEntity.fromJson(Map<String, dynamic> json) => _$MessageToolCallEntityFromJson(json);
+
+@override final  String id;
+@override final  String name;
+@override final  String argumentsRaw;
+@override final  String? responseRaw;
+
+/// Create a copy of MessageToolCallEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MessageToolCallEntityCopyWith<_MessageToolCallEntity> get copyWith => __$MessageToolCallEntityCopyWithImpl<_MessageToolCallEntity>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MessageToolCallEntityToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageToolCallEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.argumentsRaw, argumentsRaw) || other.argumentsRaw == argumentsRaw)&&(identical(other.responseRaw, responseRaw) || other.responseRaw == responseRaw));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,name,argumentsRaw,responseRaw);
+
+@override
+String toString() {
+  return 'MessageToolCallEntity(id: $id, name: $name, argumentsRaw: $argumentsRaw, responseRaw: $responseRaw)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MessageToolCallEntityCopyWith<$Res> implements $MessageToolCallEntityCopyWith<$Res> {
+  factory _$MessageToolCallEntityCopyWith(_MessageToolCallEntity value, $Res Function(_MessageToolCallEntity) _then) = __$MessageToolCallEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String name, String argumentsRaw, String? responseRaw
+});
+
+
+
+
+}
+/// @nodoc
+class __$MessageToolCallEntityCopyWithImpl<$Res>
+    implements _$MessageToolCallEntityCopyWith<$Res> {
+  __$MessageToolCallEntityCopyWithImpl(this._self, this._then);
+
+  final _MessageToolCallEntity _self;
+  final $Res Function(_MessageToolCallEntity) _then;
+
+/// Create a copy of MessageToolCallEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? argumentsRaw = null,Object? responseRaw = freezed,}) {
+  return _then(_MessageToolCallEntity(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,argumentsRaw: null == argumentsRaw ? _self.argumentsRaw : argumentsRaw // ignore: cast_nullable_to_non_nullable
+as String,responseRaw: freezed == responseRaw ? _self.responseRaw : responseRaw // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$MessageMetadataEntity {
+
+ List<MessageToolCallEntity> get toolCalls;
+/// Create a copy of MessageMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MessageMetadataEntityCopyWith<MessageMetadataEntity> get copyWith => _$MessageMetadataEntityCopyWithImpl<MessageMetadataEntity>(this as MessageMetadataEntity, _$identity);
+
+  /// Serializes this MessageMetadataEntity to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageMetadataEntity&&const DeepCollectionEquality().equals(other.toolCalls, toolCalls));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(toolCalls));
+
+@override
+String toString() {
+  return 'MessageMetadataEntity(toolCalls: $toolCalls)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MessageMetadataEntityCopyWith<$Res>  {
+  factory $MessageMetadataEntityCopyWith(MessageMetadataEntity value, $Res Function(MessageMetadataEntity) _then) = _$MessageMetadataEntityCopyWithImpl;
+@useResult
+$Res call({
+ List<MessageToolCallEntity> toolCalls
+});
+
+
+
+
+}
+/// @nodoc
+class _$MessageMetadataEntityCopyWithImpl<$Res>
+    implements $MessageMetadataEntityCopyWith<$Res> {
+  _$MessageMetadataEntityCopyWithImpl(this._self, this._then);
+
+  final MessageMetadataEntity _self;
+  final $Res Function(MessageMetadataEntity) _then;
+
+/// Create a copy of MessageMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? toolCalls = null,}) {
+  return _then(_self.copyWith(
+toolCalls: null == toolCalls ? _self.toolCalls : toolCalls // ignore: cast_nullable_to_non_nullable
+as List<MessageToolCallEntity>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MessageMetadataEntity].
+extension MessageMetadataEntityPatterns on MessageMetadataEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MessageMetadataEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MessageMetadataEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MessageMetadataEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _MessageMetadataEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MessageMetadataEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MessageMetadataEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<MessageToolCallEntity> toolCalls)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MessageMetadataEntity() when $default != null:
+return $default(_that.toolCalls);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<MessageToolCallEntity> toolCalls)  $default,) {final _that = this;
+switch (_that) {
+case _MessageMetadataEntity():
+return $default(_that.toolCalls);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<MessageToolCallEntity> toolCalls)?  $default,) {final _that = this;
+switch (_that) {
+case _MessageMetadataEntity() when $default != null:
+return $default(_that.toolCalls);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _MessageMetadataEntity implements MessageMetadataEntity {
+  const _MessageMetadataEntity({final  List<MessageToolCallEntity> toolCalls = const <MessageToolCallEntity>[]}): _toolCalls = toolCalls;
+  factory _MessageMetadataEntity.fromJson(Map<String, dynamic> json) => _$MessageMetadataEntityFromJson(json);
+
+ final  List<MessageToolCallEntity> _toolCalls;
+@override@JsonKey() List<MessageToolCallEntity> get toolCalls {
+  if (_toolCalls is EqualUnmodifiableListView) return _toolCalls;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_toolCalls);
+}
+
+
+/// Create a copy of MessageMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MessageMetadataEntityCopyWith<_MessageMetadataEntity> get copyWith => __$MessageMetadataEntityCopyWithImpl<_MessageMetadataEntity>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MessageMetadataEntityToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageMetadataEntity&&const DeepCollectionEquality().equals(other._toolCalls, _toolCalls));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_toolCalls));
+
+@override
+String toString() {
+  return 'MessageMetadataEntity(toolCalls: $toolCalls)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MessageMetadataEntityCopyWith<$Res> implements $MessageMetadataEntityCopyWith<$Res> {
+  factory _$MessageMetadataEntityCopyWith(_MessageMetadataEntity value, $Res Function(_MessageMetadataEntity) _then) = __$MessageMetadataEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ List<MessageToolCallEntity> toolCalls
+});
+
+
+
+
+}
+/// @nodoc
+class __$MessageMetadataEntityCopyWithImpl<$Res>
+    implements _$MessageMetadataEntityCopyWith<$Res> {
+  __$MessageMetadataEntityCopyWithImpl(this._self, this._then);
+
+  final _MessageMetadataEntity _self;
+  final $Res Function(_MessageMetadataEntity) _then;
+
+/// Create a copy of MessageMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? toolCalls = null,}) {
+  return _then(_MessageMetadataEntity(
+toolCalls: null == toolCalls ? _self._toolCalls : toolCalls // ignore: cast_nullable_to_non_nullable
+as List<MessageToolCallEntity>,
+  ));
+}
+
+
+}
+
 /// @nodoc
 mixin _$MessageEntity {
 
@@ -853,7 +1394,7 @@ mixin _$MessageEntity {
  MessageType get messageType;/// Whether this message was sent by the user
  bool get isUser;/// Status of the message
  MessageStatus get status;/// Additional metadata for the message (JSON)
- String? get metadata;/// Timestamp when the message was created
+ MessageMetadataEntity? get metadata;/// Timestamp when the message was created
  DateTime get createdAt;/// Timestamp when the message was last updated
  DateTime get updatedAt;
 /// Create a copy of MessageEntity
@@ -886,11 +1427,11 @@ abstract mixin class $MessageEntityCopyWith<$Res>  {
   factory $MessageEntityCopyWith(MessageEntity value, $Res Function(MessageEntity) _then) = _$MessageEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String conversationId, String content, MessageType messageType, bool isUser, MessageStatus status, String? metadata, DateTime createdAt, DateTime updatedAt
+ String id, String conversationId, String content, MessageType messageType, bool isUser, MessageStatus status, MessageMetadataEntity? metadata, DateTime createdAt, DateTime updatedAt
 });
 
 
-
+$MessageMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -912,12 +1453,24 @@ as String,messageType: null == messageType ? _self.messageType : messageType // 
 as MessageType,isUser: null == isUser ? _self.isUser : isUser // ignore: cast_nullable_to_non_nullable
 as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as MessageStatus,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as MessageMetadataEntity?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }
+/// Create a copy of MessageEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MessageMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 
@@ -999,7 +1552,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  String? metadata,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  MessageMetadataEntity? metadata,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageEntity() when $default != null:
 return $default(_that.id,_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.status,_that.metadata,_that.createdAt,_that.updatedAt);case _:
@@ -1020,7 +1573,7 @@ return $default(_that.id,_that.conversationId,_that.content,_that.messageType,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  String? metadata,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  MessageMetadataEntity? metadata,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _MessageEntity():
 return $default(_that.id,_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.status,_that.metadata,_that.createdAt,_that.updatedAt);case _:
@@ -1040,7 +1593,7 @@ return $default(_that.id,_that.conversationId,_that.content,_that.messageType,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  String? metadata,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String conversationId,  String content,  MessageType messageType,  bool isUser,  MessageStatus status,  MessageMetadataEntity? metadata,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageEntity() when $default != null:
 return $default(_that.id,_that.conversationId,_that.content,_that.messageType,_that.isUser,_that.status,_that.metadata,_that.createdAt,_that.updatedAt);case _:
@@ -1071,7 +1624,7 @@ class _MessageEntity extends MessageEntity {
 /// Status of the message
 @override final  MessageStatus status;
 /// Additional metadata for the message (JSON)
-@override final  String? metadata;
+@override final  MessageMetadataEntity? metadata;
 /// Timestamp when the message was created
 @override final  DateTime createdAt;
 /// Timestamp when the message was last updated
@@ -1107,11 +1660,11 @@ abstract mixin class _$MessageEntityCopyWith<$Res> implements $MessageEntityCopy
   factory _$MessageEntityCopyWith(_MessageEntity value, $Res Function(_MessageEntity) _then) = __$MessageEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String conversationId, String content, MessageType messageType, bool isUser, MessageStatus status, String? metadata, DateTime createdAt, DateTime updatedAt
+ String id, String conversationId, String content, MessageType messageType, bool isUser, MessageStatus status, MessageMetadataEntity? metadata, DateTime createdAt, DateTime updatedAt
 });
 
 
-
+@override $MessageMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -1133,13 +1686,25 @@ as String,messageType: null == messageType ? _self.messageType : messageType // 
 as MessageType,isUser: null == isUser ? _self.isUser : isUser // ignore: cast_nullable_to_non_nullable
 as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as MessageStatus,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as MessageMetadataEntity?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }
 
+/// Create a copy of MessageEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MessageMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 /// @nodoc
@@ -1429,7 +1994,7 @@ mixin _$MessageToUpdate {
 
 /// Content of the message (JSON structure based on message type)
  String? get content;/// Additional metadata for the message (JSON)
- String? get metadata; MessageStatus? get status;
+ MessageMetadataEntity? get metadata; MessageStatus? get status;
 /// Create a copy of MessageToUpdate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1460,11 +2025,11 @@ abstract mixin class $MessageToUpdateCopyWith<$Res>  {
   factory $MessageToUpdateCopyWith(MessageToUpdate value, $Res Function(MessageToUpdate) _then) = _$MessageToUpdateCopyWithImpl;
 @useResult
 $Res call({
- String? content, String? metadata, MessageStatus? status
+ String? content, MessageMetadataEntity? metadata, MessageStatus? status
 });
 
 
-
+$MessageMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -1481,11 +2046,23 @@ class _$MessageToUpdateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String?,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageMetadataEntity?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as MessageStatus?,
   ));
 }
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MessageMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 
@@ -1567,7 +2144,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? content,  String? metadata,  MessageStatus? status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? content,  MessageMetadataEntity? metadata,  MessageStatus? status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageToUpdate() when $default != null:
 return $default(_that.content,_that.metadata,_that.status);case _:
@@ -1588,7 +2165,7 @@ return $default(_that.content,_that.metadata,_that.status);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? content,  String? metadata,  MessageStatus? status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? content,  MessageMetadataEntity? metadata,  MessageStatus? status)  $default,) {final _that = this;
 switch (_that) {
 case _MessageToUpdate():
 return $default(_that.content,_that.metadata,_that.status);case _:
@@ -1608,7 +2185,7 @@ return $default(_that.content,_that.metadata,_that.status);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? content,  String? metadata,  MessageStatus? status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? content,  MessageMetadataEntity? metadata,  MessageStatus? status)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageToUpdate() when $default != null:
 return $default(_that.content,_that.metadata,_that.status);case _:
@@ -1629,7 +2206,7 @@ class _MessageToUpdate extends MessageToUpdate {
 /// Content of the message (JSON structure based on message type)
 @override final  String? content;
 /// Additional metadata for the message (JSON)
-@override final  String? metadata;
+@override final  MessageMetadataEntity? metadata;
 @override final  MessageStatus? status;
 
 /// Create a copy of MessageToUpdate
@@ -1662,11 +2239,11 @@ abstract mixin class _$MessageToUpdateCopyWith<$Res> implements $MessageToUpdate
   factory _$MessageToUpdateCopyWith(_MessageToUpdate value, $Res Function(_MessageToUpdate) _then) = __$MessageToUpdateCopyWithImpl;
 @override @useResult
 $Res call({
- String? content, String? metadata, MessageStatus? status
+ String? content, MessageMetadataEntity? metadata, MessageStatus? status
 });
 
 
-
+@override $MessageMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -1683,12 +2260,24 @@ class __$MessageToUpdateCopyWithImpl<$Res>
   return _then(_MessageToUpdate(
 content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String?,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as MessageMetadataEntity?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as MessageStatus?,
   ));
 }
 
+/// Create a copy of MessageToUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MessageMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 // dart format on

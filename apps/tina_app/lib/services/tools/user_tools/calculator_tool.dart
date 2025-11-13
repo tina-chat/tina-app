@@ -1,9 +1,10 @@
+import 'package:async/async.dart';
 import 'package:langchain/langchain.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:tina_app/services/tools/user_tools_entity.dart';
 
 /// Represents an available tool in the app
-final class CalculatorTool extends UserToolEntity {
+final class CalculatorTool extends UserToolEntity<String, Object, String> {
   const CalculatorTool();
 
   @override
@@ -35,6 +36,22 @@ final class CalculatorTool extends UserToolEntity {
           return "I don't know how to do that.";
         }
       },
+    );
+  }
+
+  @override
+  CancelableOperation<String> runner(String toolInput) {
+    final parser = GrammarParser();
+    final evaluator = RealEvaluator();
+    return CancelableOperation.fromFuture(
+      Future(() {
+        try {
+          final exp = parser.parse(toolInput);
+          return evaluator.evaluate(exp).toString();
+        } catch (e) {
+          return "I don't know how to do that.";
+        }
+      }),
     );
   }
 

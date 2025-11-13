@@ -105,7 +105,7 @@ final class ConversationToolsNotifierProvider
 }
 
 String _$conversationToolsNotifierHash() =>
-    r'2dd6ba65083ccfcf34261522792c5d687188f5ef';
+    r'eeb367a68144080de463dac7550c08157d7b6b61';
 
 final class ConversationToolsNotifierFamily extends $Family
     with
@@ -226,7 +226,7 @@ final class AvailableConversationToolsNotifierProvider
 }
 
 String _$availableConversationToolsNotifierHash() =>
-    r'270a3b13f88668dc3e31e7e7e92841e46d70f9c6';
+    r'c52ba798f76e6e59cde7ed72d00cc0a82b1edf1b';
 
 final class AvailableConversationToolsNotifierFamily extends $Family
     with

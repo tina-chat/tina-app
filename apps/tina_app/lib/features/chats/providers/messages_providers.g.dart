@@ -81,7 +81,7 @@ final class ConversationChatNotifierProvider
 }
 
 String _$conversationChatNotifierHash() =>
-    r'3eb74e57243e1a671e9ec9f89772914433cd2a56';
+    r'1f1fb14eca5f6e98e85a2725875cebded5fb7ca0';
 
 abstract class _$ConversationChatNotifier
     extends $AsyncNotifier<ConversationEntity?> {
@@ -132,7 +132,7 @@ final class ChatMessagesProvider
   ChatMessages create() => ChatMessages();
 }
 
-String _$chatMessagesHash() => r'cce30f02af379bdf197a34063fe35e9d68aff7ca';
+String _$chatMessagesHash() => r'f35648a34b72e1816820bbc67c601af0d0cbb926';
 
 abstract class _$ChatMessages extends $AsyncNotifier<List<MessageEntity>> {
   FutureOr<List<MessageEntity>> build();
@@ -301,4 +301,4 @@ final class MessageConversationProvider
 }
 
 String _$messageConversationHash() =>
-    r'06cd1fcd8b36348d55116af657a514187954f280';
+    r'77d5537987da903337a62ccacc21a1adde5985cc';

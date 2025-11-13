@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:tina_app/services/tools/user_tools/calculator_tool.dart';
 import 'package:tina_app/services/tools/user_tools_entity.dart';
 
@@ -30,6 +31,12 @@ class ToolService {
       types = types.where((element) => only.contains(element.type));
     }
     return types.toList();
+  }
+
+  static UserToolEntity? getTool(UserToolType toolType) {
+    return availableTools.firstWhereOrNull(
+      (element) => element.type == toolType,
+    );
   }
 
   static UserToolType getType(UserToolEntity tool) => tool.type;

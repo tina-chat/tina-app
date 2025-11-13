@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   anthropic_sdk_dart: ^0.3.0+1
+  async: ^2.13.0
   collection: ^1.19.1
 
   # Database dependencies

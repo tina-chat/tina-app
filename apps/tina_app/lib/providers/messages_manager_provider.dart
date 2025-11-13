@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:langchain/langchain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,7 +11,9 @@ import 'package:tina_app/features/chats/providers/conversation_providers.dart';
 import 'package:tina_app/features/chats/providers/conversation_repository_provider.dart';
 import 'package:tina_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:tina_app/features/tools/providers/conversation_tools_provider.dart';
+import 'package:tina_app/providers/tool_calling_manager_provider.dart';
 import 'package:tina_app/services/chatbot_service/chatbot_service.dart';
+import 'package:tina_app/services/chatbot_service/models/chat_message_models.dart';
 import 'package:tina_app/services/tools/tool_service.dart';
 import 'package:tina_app/services/tools/user_tools_entity.dart';
 import 'package:tina_app/utils/drain.dart';
@@ -19,7 +21,14 @@ import 'package:tina_app/utils/drain.dart';
 part 'messages_manager_provider.freezed.dart';
 part 'messages_manager_provider.g.dart';
 
-enum StreamingMessageStatus { created, streaming, done, error }
+enum StreamingMessageStatus {
+  created,
+  streaming,
+  done,
+  error,
+  awaitingToolConfirmation,
+  executingTools,
+}
 
 class _CoalescingSaver<T> {
   final Future<void> Function(T state) storeMessage;
@@ -102,16 +111,38 @@ class _CoalescingSaver<T> {
 }
 
 @freezed
+abstract class ToolCallMessageResult with _$ToolCallMessageResult {
+  const factory ToolCallMessageResult({
+    required bool success,
+    required String result,
+    required String? error,
+    required DateTime executedAt,
+  }) = _ToolCallMessageResult;
+}
+
+@freezed
+abstract class ToolCallMessageItem with _$ToolCallMessageItem {
+  const factory ToolCallMessageItem({
+    required String id,
+    required String name,
+    required Map<String, dynamic> arguments,
+    required String argumentsRaw,
+    ToolCallMessageResult? result,
+  }) = _ToolCallMessageItem;
+}
+
+@freezed
 abstract class StreamingMessage with _$StreamingMessage {
   const factory StreamingMessage({
     required String messageId,
     required String conversationId,
     required String responseMesageId,
     required String content,
-    String? metadata,
+    MessageMetadataEntity? metadata,
     required DateTime createdAt,
     required DateTime updatedAt,
     required StreamingMessageStatus status,
+    List<ToolCallMessageItem>? toolCalls,
   }) = _StreamingMessage;
 }
 
@@ -190,7 +221,10 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     );
     // store message update
     subs.add(
-      chats$.listen(coalescingSaver.push, onDone: coalescingSaver.complete),
+      chats$.shareReplay().listen(
+        coalescingSaver.push,
+        onDone: coalescingSaver.complete,
+      ),
     );
 
     // _deltaPersisters[responseMessageId] = deltaPersister;
@@ -220,16 +254,26 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     );
   }
 
-  String? _getMetadata(ChatResult chatResult) {
+  List<MessageToolCallEntity> _getTools(ChatResult chatResult) {
+    if (chatResult.output.toolCalls.isEmpty) {
+      return [];
+    }
+
+    return chatResult.output.toolCalls.map((e) {
+      return MessageToolCallEntity(
+        argumentsRaw: e.argumentsRaw,
+        id: e.id,
+        name: e.name,
+      );
+    }).toList();
+  }
+
+  MessageMetadataEntity? _getMetadata(ChatResult chatResult) {
     if (chatResult.output.toolCalls.isEmpty) {
       return null;
     }
 
-    final toolCalls = chatResult.output.toolCalls.map((e) {
-      return {"arguments": e.argumentsRaw, "id": e.id, "name": e.name};
-    }).toList();
-
-    return jsonEncode({"tools": toolCalls});
+    return MessageMetadataEntity(toolCalls: _getTools(chatResult));
   }
 
   Future<void> _updateMessage({
@@ -252,17 +296,19 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     required ChatResult chatResult,
   }) async {
     final repo = ref.read(messageRepositoryProvider);
-    state = state.map((msg) {
-      if (msg.responseMesageId == responseMessageId) {
-        return msg.copyWith(
-          updatedAt: DateTime.now(),
-          status: StreamingMessageStatus.done,
-          content: chatResult.outputAsString,
-          metadata: _getMetadata(chatResult),
-        );
-      }
-      return msg;
+    state = state.where((msg) {
+      return msg.responseMesageId != responseMessageId;
     }).toList();
+
+    await _subscriptions[responseMessageId]?.cancel();
+
+    final toolsToCall = _getTools(chatResult);
+    if (toolsToCall.isNotEmpty) {
+      ref
+          .read(toolCallingManagerProvider.notifier)
+          .runTask(_getTools(chatResult), responseMessageId);
+    }
+
     await repo.updateMessage(
       responseMessageId,
       MessageToUpdate(
@@ -271,6 +317,106 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
         metadata: _getMetadata(chatResult),
       ),
     );
+  }
+
+  Future<MessageEntity> _waitMessage({
+    required String createdMessageId,
+    required String conversationId,
+    required List<UserToolType> toolTypes,
+  }) async {
+    final conversation = await ref
+        .read(conversationRepositoryProvider)
+        .getConversationById(conversationId);
+    final modelId = conversation?.modelId;
+    if (modelId == null) {
+      throw Exception('no model id for conversation');
+    }
+    final chatModelsRepository = ref.read(chatModelsRepositoryProvider);
+    final foundModel = await chatModelsRepository.getChatModelById(modelId);
+    if (foundModel == null) {
+      throw Exception('Selected model not found');
+    }
+
+    final messages = await ref
+        .read(messageRepositoryProvider)
+        .getMessagesByConversation(conversationId);
+    // Create response message
+    final responseMessage = await ref
+        .read(messageRepositoryProvider)
+        .createMessage(
+          MessageToCreate(
+            conversationId: conversationId,
+            content: '',
+            messageType: MessageType.text,
+            isUser: false,
+            status: MessageStatus.sending,
+          ),
+        );
+
+    final titleService = ChatbotService(foundModel);
+    final aiMessages = messages.map<ChatbotMessage>((message) {
+      if (message.isUser) {
+        return ChatbotMessage.humanText(message.content);
+      }
+
+      return ChatbotMessage.ai(
+        message: message.content,
+        toolCalls: [
+          for (var toolCall
+              in message.metadata?.toolCalls ?? <MessageToolCallEntity>[])
+            ChatbotToolCall(
+              id: toolCall.id,
+              name: toolCall.name,
+              arguments: toolCall.arguments,
+              argumentsRaw: toolCall.argumentsRaw,
+              responseRaw: toolCall.responseRaw,
+            ),
+        ],
+      );
+    }).toList();
+
+    final stream = titleService.sendMessage(
+      aiMessages,
+      tools: ToolService.getTools(
+        only: toolTypes,
+      ).map((e) => e.getTool()).toList(),
+    );
+    _addStream(
+      messageId: createdMessageId,
+      conversationId: conversationId,
+      responseMessageId: responseMessage.id,
+      stream: stream,
+    );
+
+    return (responseMessage);
+  }
+
+  Future<(MessageEntity userMessage, MessageEntity systemMessage)>
+  _messageSent({
+    required String conversationId,
+    required String content,
+    required List<UserToolType> toolTypes,
+    List<ToolResponseItem>? toolResponses,
+  }) async {
+    final createdMessage = await ref
+        .read(messageRepositoryProvider)
+        .createMessage(
+          MessageToCreate(
+            conversationId: conversationId,
+            content: content,
+            messageType: MessageType.text,
+            isUser: toolResponses == null,
+            status: MessageStatus.sending,
+          ),
+        );
+
+    final responseMessage = await _waitMessage(
+      createdMessageId: createdMessage.id,
+      conversationId: conversationId,
+      toolTypes: toolTypes,
+    );
+
+    return (createdMessage, responseMessage);
   }
 
   Future<ConversationEntity> addConversation({
@@ -312,44 +458,10 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
       conversation.id,
       toolsToRemove,
     );
-
-    final createdMessage = await ref
-        .read(messageRepositoryProvider)
-        .createMessage(
-          MessageToCreate(
-            conversationId: conversation.id,
-            content: message,
-            messageType: MessageType.text,
-            isUser: true,
-            status: MessageStatus.sending,
-          ),
-        );
-
-    // Create response message
-    final responseMessage = await ref
-        .read(messageRepositoryProvider)
-        .createMessage(
-          MessageToCreate(
-            conversationId: conversation.id,
-            content: '',
-            messageType: MessageType.text,
-            isUser: false,
-            status: MessageStatus.sending,
-          ),
-        );
-
-    final stream = titleService.sendMessage(
-      [createdMessage],
-      tools: ToolService.getTools(
-        only: toolTypes,
-      ).map((e) => e.getTool()).toList(),
-    );
-
-    _addStream(
-      messageId: createdMessage.id,
+    await _messageSent(
+      content: message,
       conversationId: conversation.id,
-      responseMessageId: responseMessage.id,
-      stream: stream,
+      toolTypes: toolTypes,
     );
 
     return conversation;
@@ -359,58 +471,84 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     required String conversationId,
     required String message,
   }) async {
-    final createdMessage = await ref
-        .read(messageRepositoryProvider)
-        .createMessage(
-          MessageToCreate(
-            conversationId: conversationId,
-            content: message,
-            messageType: MessageType.text,
-            isUser: true,
-            status: MessageStatus.sending,
-          ),
-        );
-    final messages = await ref
-        .read(messageRepositoryProvider)
-        .getMessagesByConversation(conversationId);
-    // Create response message
-    final responseMessage = await ref
-        .read(messageRepositoryProvider)
-        .createMessage(
-          MessageToCreate(
-            conversationId: conversationId,
-            content: '',
-            messageType: MessageType.text,
-            isUser: false,
-            status: MessageStatus.sending,
-          ),
-        );
-
     // Get chat model provider
     final conversation = await ref
         .read(conversationRepositoryProvider)
         .getConversationById(conversationId);
-    final modelId = conversation?.modelId;
-    if (modelId == null) {
-      throw Exception('no model id for conversation');
-    }
-    final chatModelsRepository = ref.read(chatModelsRepositoryProvider);
-    final foundModel = await chatModelsRepository.getChatModelById(modelId);
-    if (foundModel == null) {
-      throw Exception('Selected model not found');
-    }
 
-    // Generate title for conversation
-    final titleService = ChatbotService(foundModel);
+    // Get conversation tools
+    final workspaceId = conversation?.workspaceId ?? '';
+    final contextAwareTools = await ref.read(
+      contextAwareToolsProvider((conversationId, workspaceId)).future,
+    );
 
-    final stream = titleService.sendMessage(messages);
-    _addStream(
-      messageId: createdMessage.id,
+    // Convert tool strings to UserToolType and get enabled tools
+    final enabledToolTypes = contextAwareTools
+        .map((toolString) => UserToolType.fromValue(toolString))
+        .where((toolType) => toolType != null)
+        .cast<UserToolType>()
+        .toList();
+
+    final (createdMessage, responseMessage) = await _messageSent(
+      content: message,
       conversationId: conversationId,
-      responseMessageId: responseMessage.id,
-      stream: stream,
+      toolTypes: enabledToolTypes,
     );
 
     return (createdMessage, responseMessage);
+  }
+
+  void sendToolsResponse(
+    List<ToolResponseItem> responses,
+    String responseMessageId,
+  ) async {
+    final message = await ref
+        .read(messageRepositoryProvider)
+        .getMessageById(responseMessageId);
+    if (message == null) return;
+
+    final conversation = await ref
+        .read(conversationRepositoryProvider)
+        .getConversationById(message.conversationId);
+
+    if (conversation == null) return;
+
+    // Get conversation tools
+    final workspaceId = conversation.workspaceId;
+    final contextAwareTools = await ref.read(
+      contextAwareToolsProvider((conversation.id, workspaceId)).future,
+    );
+
+    // Convert tool strings to UserToolType and get enabled tools
+    final enabledToolTypes = contextAwareTools
+        .map((toolString) => UserToolType.fromValue(toolString))
+        .where((toolType) => toolType != null)
+        .cast<UserToolType>()
+        .toList();
+
+    final orignalMetadata = (message.metadata ?? MessageMetadataEntity());
+
+    ref
+        .read(messageRepositoryProvider)
+        .updateMessage(
+          responseMessageId,
+          MessageToUpdate(
+            metadata: orignalMetadata.copyWith(
+              toolCalls: orignalMetadata.toolCalls.map((toolCall) {
+                return toolCall.copyWith(
+                  responseRaw: responses
+                      .firstWhereOrNull((element) => element.id == toolCall.id)
+                      ?.content,
+                );
+              }).toList(),
+            ),
+          ),
+        );
+
+    await _waitMessage(
+      createdMessageId: responseMessageId,
+      conversationId: message.conversationId,
+      toolTypes: enabledToolTypes,
+    );
   }
 }

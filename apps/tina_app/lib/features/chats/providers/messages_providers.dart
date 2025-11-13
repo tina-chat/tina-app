@@ -26,7 +26,7 @@ class ConversationChatNotifier extends _$ConversationChatNotifier {
     final conversationId = ref.watch(conversationSelectedProvider);
 
     return ref
-        .read(conversationRepositoryProvider)
+        .watch(conversationRepositoryProvider)
         .getConversationById(conversationId);
   }
 
@@ -50,7 +50,21 @@ class ChatMessages extends _$ChatMessages {
         .watch(messageRepositoryProvider)
         .getMessagesByConversation(conversationId);
 
-    return messages;
+    final messagesId = ref.watch(
+      messagesManagerProvider.select(
+        (message) => message
+            .where((element) => element.conversationId == conversationId)
+            .map((e) => e.messageId)
+            .toList(),
+      ),
+    );
+
+    return messages.map((message) {
+      final streaming = messagesId.contains(message.id);
+      return message.copyWith(
+        status: streaming ? MessageStatus.streaming : message.status,
+      );
+    }).toList();
   }
 
   Future<void> addMessage({
@@ -127,6 +141,10 @@ MessageEntity? messageConversation(Ref ref) {
       StreamingMessageStatus.streaming => MessageStatus.sending,
       StreamingMessageStatus.done => MessageStatus.sent,
       StreamingMessageStatus.error => MessageStatus.error,
+      // TODO: Handle this case.
+      StreamingMessageStatus.awaitingToolConfirmation => MessageStatus.sent,
+      // TODO: Handle this case.
+      StreamingMessageStatus.executingTools => MessageStatus.sending,
     },
   );
 }

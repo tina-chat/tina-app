@@ -1,9 +1,28 @@
+import 'dart:convert';
+
+import 'package:collection/collection.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_anthropic/langchain_anthropic.dart';
 import 'package:langchain_openai/langchain_openai.dart';
 import 'package:tina_app/domain/entities/chat_models_entities.dart';
-import 'package:tina_app/domain/entities/conversation.dart';
 import 'package:tina_app/domain/enums/chat_models_type.dart';
+import 'package:tina_app/services/chatbot_service/models/chat_message_models.dart';
+
+List<AIChatMessageToolCall>? safeDecode(String? metadata) {
+  if (metadata == null) return null;
+  final jsonMap = jsonDecode(metadata);
+
+  if (jsonMap is! Map<String, dynamic>) {
+    return null;
+  }
+  if (jsonMap.containsKey('tool_responses') &&
+      jsonMap['tool_responses'] is List<Map<String, dynamic>>) {
+    return (jsonMap['tool_responses'] as List<Map<String, dynamic>>)
+        .map(AIChatMessageToolCall.fromMap)
+        .toList();
+  }
+  return null;
+}
 
 class ChatbotService {
   ChatModelWithProviderEntity chatProvider;
@@ -12,16 +31,29 @@ class ChatbotService {
   ChatbotService(this.chatProvider, {this.tools});
 
   Stream<ChatResult> sendMessage(
-    List<MessageEntity> messages, {
+    List<ChatbotMessage> messages, {
     List<ToolSpec>? tools,
   }) {
     final chatMessages = messages.map((message) {
-      if (message.isUser) {
-        return ChatMessage.humanText(message.content);
-      } else {
-        return ChatMessage.ai(message.content);
-      }
-    }).toList();
+      return switch (message) {
+        ChatbotMessageHumanText(:final message) => [
+          ChatMessage.humanText(message),
+        ],
+        ChatbotMessageAI(:final message, :final toolCalls) => [
+          ChatMessage.ai(
+            message,
+            toolCalls: toolCalls.map((tool) => tool.toAIChat()).toList(),
+          ),
+          for (var response in toolCalls.where(
+            (element) => element.responseRaw != null,
+          ))
+            ChatMessage.tool(
+              toolCallId: response.id,
+              content: response.responseRaw!,
+            ),
+        ],
+      };
+    }).flattenedToList;
 
     final chatModel = _getChatModel(tools: this.tools ?? tools);
 
