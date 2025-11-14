@@ -1,0 +1,313 @@
+import 'package:auravibes_app/data/database/drift/app_database.dart';
+import 'package:auravibes_app/data/database/drift/daos/conversation_tools_dao.dart';
+import 'package:auravibes_app/domain/entities/conversation_tool.dart';
+import 'package:auravibes_app/domain/repositories/conversation_tools_repository.dart';
+import 'package:auravibes_app/domain/repositories/workspace_tools_repository.dart';
+import 'package:auravibes_app/services/tools/tool_service.dart';
+
+/// Implementation of the ConversationToolsRepository
+class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
+  ConversationToolsRepositoryImpl(
+    this._database,
+    this._workspaceToolsRepository,
+  ) {
+    _dao = _database.conversationToolsDao;
+  }
+  final AppDatabase _database;
+  final WorkspaceToolsRepository _workspaceToolsRepository;
+  late ConversationToolsDao _dao;
+
+  @override
+  Future<List<ConversationToolEntity>> getConversationTools(
+    String conversationId,
+  ) async {
+    final results = await _dao.getDisabledConversationTools(conversationId);
+    return results
+        .map(
+          (table) => ConversationToolEntity(
+            conversationId: table.conversationId,
+            type: table.type,
+            isEnabled: false, // All records in this table are disabled tools
+            createdAt: table.createdAt,
+            updatedAt: table.updatedAt,
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<ConversationToolEntity>> getEnabledConversationTools(
+    String conversationId,
+  ) async {
+    // Get available tools for the conversation by computing:
+    // Available tools = Workspace enabled tools - Conversation disabled tools
+    final availableToolTypes = await getAvailableToolsForConversation(
+      conversationId,
+      '', // workspaceId will be retrieved from conversation
+    );
+
+    return availableToolTypes
+        .map(
+          (toolType) => ConversationToolEntity(
+            conversationId: conversationId,
+            type: toolType,
+            isEnabled: true, // These are computed enabled tools
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<ConversationToolEntity?> getConversationTool(
+    String conversationId,
+    String toolType,
+  ) async {
+    final result = await _dao.getDisabledConversationTool(
+      conversationId,
+      toolType,
+    );
+    if (result == null) return null;
+
+    return ConversationToolEntity(
+      conversationId: result.conversationId,
+      type: result.type,
+      isEnabled: false, // All records in this table are disabled tools
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    );
+  }
+
+  @override
+  Future<bool> setConversationToolEnabled(
+    String conversationId,
+    String toolType, {
+    required bool isEnabled,
+  }) async {
+    try {
+      if (isEnabled) {
+        // Enable the tool by removing it from disabled table
+        return await _dao.enableConversationTool(conversationId, toolType);
+      } else {
+        // Disable the tool by adding it to disabled table
+        await _dao.disableConversationTool(conversationId, toolType);
+        return true;
+      }
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to set conversation tool enabled: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<void> setConversationToolsDisabled(
+    String conversationId,
+    List<String> toolTypes,
+  ) {
+    return _dao.disableConversationTools(conversationId, toolTypes);
+  }
+
+  @override
+  Future<bool> toggleConversationTool(
+    String conversationId,
+    String toolType,
+  ) async {
+    try {
+      return await _dao.toggleConversationTool(conversationId, toolType);
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to toggle conversation tool: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<bool> isConversationToolEnabled(
+    String conversationId,
+    String toolType,
+  ) async {
+    try {
+      // Check if the tool is disabled for this conversation
+      final isDisabled = await _dao.isConversationToolDisabled(
+        conversationId,
+        toolType,
+      );
+
+      // If it's not disabled, it's considered enabled
+      //(based on workspace defaults)
+      return !isDisabled;
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to check conversation tool status: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<bool> removeConversationTool(
+    String conversationId,
+    String toolType,
+  ) async {
+    try {
+      // Remove the disabled tool record (reverts to workspace setting)
+      return await _dao.enableConversationTool(conversationId, toolType);
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to remove conversation tool: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<int> getConversationToolsCount(String conversationId) async {
+    try {
+      return await _dao.getDisabledConversationToolsCount(conversationId);
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to count conversation tools: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<int> getEnabledConversationToolsCount(String conversationId) async {
+    try {
+      // This is computed as available tools - disabled tools
+      final availableCount = await getAvailableToolsForConversation(
+        conversationId,
+        '',
+      );
+      return availableCount.length;
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to count enabled conversation tools: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<void> copyConversationTools(
+    String sourceConversationId,
+    String targetConversationId,
+  ) async {
+    try {
+      await _dao.copyConversationTools(
+        sourceConversationId,
+        targetConversationId,
+      );
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to copy conversation tools: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<bool> validateConversationToolSetting(
+    String conversationId,
+    String toolType, {
+    required bool isEnabled,
+  }) async {
+    try {
+      // Check if conversation exists
+      final conversation = await _database.conversationDao.getConversationById(
+        conversationId,
+      );
+      if (conversation == null) {
+        throw ConversationToolsValidationException(
+          'Conversation not found: $conversationId',
+        );
+      }
+
+      // Check if tool type is valid
+      if (!ToolService.hasTypeString(toolType)) {
+        throw ConversationToolsValidationException(
+          'Invalid tool type: $toolType',
+        );
+      }
+
+      return true;
+    } catch (e) {
+      if (e is ConversationToolsValidationException) rethrow;
+      throw ConversationToolsException(
+        'Failed to validate conversation tool setting: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<bool> isToolAvailableForConversation(
+    String conversationId,
+    String workspaceId,
+    String toolType,
+  ) async {
+    try {
+      // Check if workspace has tool enabled
+      final workspaceEnabled = await _workspaceToolsRepository
+          .isWorkspaceToolEnabled(workspaceId, toolType);
+
+      // Check if conversation has disabled override for this tool
+      final conversationDisabled = await _dao.isConversationToolDisabled(
+        conversationId,
+        toolType,
+      );
+
+      // Tool is available if workspace enabled AND not conversation disabled
+      return workspaceEnabled && !conversationDisabled;
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to check tool availability for conversation: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+
+  @override
+  Future<List<String>> getAvailableToolsForConversation(
+    String conversationId,
+    String workspaceId,
+  ) async {
+    try {
+      // Get workspace enabled tools
+      final workspaceEnabledTools = await _workspaceToolsRepository
+          .getEnabledWorkspaceTools(workspaceId);
+
+      // Get conversation disabled tools
+      final conversationDisabledTools = await _dao.getDisabledConversationTools(
+        conversationId,
+      );
+
+      // Extract tool types from workspace enabled tools
+      final workspaceEnabledToolTypes = workspaceEnabledTools
+          .map((tool) => tool.type)
+          .toList();
+
+      // Extract tool types from disabled tools
+      final disabledToolTypes = conversationDisabledTools
+          .map((tool) => tool.type)
+          .toSet();
+
+      // Available tools = workspace enabled tools - disabled tools
+      final availableTools = workspaceEnabledToolTypes
+          .where((toolType) => !disabledToolTypes.contains(toolType))
+          .toList();
+
+      return availableTools;
+    } catch (e) {
+      throw ConversationToolsException(
+        'Failed to get available tools for conversation: $e',
+        e is Exception ? e : null,
+      );
+    }
+  }
+}

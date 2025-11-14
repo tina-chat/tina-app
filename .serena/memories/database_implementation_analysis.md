@@ -1,7 +1,7 @@
-# Database Implementation Analysis - Tina App
+# Database Implementation Analysis - AuraVibes App
 
 ## Overview
-This document analyzes the database implementation patterns used in the Tina Flutter application, focusing on the Drift ORM implementation, Clean Architecture principles, and the overall data layer structure.
+This document analyzes the database implementation patterns used in the AuraVibes Flutter application, focusing on the Drift ORM implementation, Clean Architecture principles, and the overall data layer structure.
 
 ## Architecture Pattern
 

@@ -4,7 +4,7 @@
   "small_model": "{env:OPENCODE_SMALL_MODEL}",
   "agent": {
     "orchestrator": {
-      "description": "Master coordinator for Tina AI Assistant development - now handles direct coding implementation",
+      "description": "Master coordinator for AuraVibes AI Assistant development - now handles direct coding implementation",
       "mode": "primary",
       "model": "{env:OPENCODE_MODEL}",
       "prompt": "{file:./prompts/orchestrator.txt}",

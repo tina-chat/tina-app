@@ -1,25 +1,25 @@
-# Tina AI Assistant - Project Overview
+# AuraVibes AI Assistant - Project Overview
 
 ## Project Purpose
-Tina is a privacy-first AI assistant that provides users with complete control over their data and AI interactions. The app allows users to bring their own API keys, ensuring cost transparency and preventing vendor lock-in. It features local-first storage, optional cloud sync, and supports multiple AI providers through a unified interface.
+AuraVibes is a privacy-first AI assistant that provides users with complete control over their data and AI interactions. The app allows users to bring their own API keys, ensuring cost transparency and preventing vendor lock-in. It features local-first storage, optional cloud sync, and supports multiple AI providers through a unified interface.
 
 ## Tech Stack
 - **Framework**: Flutter with Dart SDK ^3.9.0
 - **Architecture**: Clean Architecture with layered approach
 - **Package Management**: Melos for monorepo management
 - **Code Generation**: build_runner for JSON serialization and other generated code
-- **UI Components**: Custom tina_ui package with atomic design
+- **UI Components**: Custom auravibes_ui package with atomic design
 - **Navigation**: go_router for declarative routing
 - **Local Storage**: shared_preferences (current), adding Drift for database
 - **Serialization**: json_annotation with json_serializable
 
 ## Project Structure
 ```
-tina_workspace/
+auravibes_workspace/
 ├── apps/
-│   └── tina_app/           # Main Flutter application
+│   └── auravibes_app/           # Main Flutter application
 ├── packages/
-│   └── tina_ui/           # Shared UI components
+│   └── auravibes_ui/           # Shared UI components
 ├── widgetbook/            # Storybook for UI components
 ├── docs/                  # Documentation
 └── prompts/              # Agent prompts
@@ -41,7 +41,7 @@ tina_workspace/
 - `melos run validate` - Full CI validation pipeline
 - `melos run validate:quick` - Quick development validation
 - `melos run generate` - Code generation
-- `cd apps/tina_app && flutter run` - Run main app
+- `cd apps/auravibes_app && flutter run` - Run main app
 
 ## Quality Standards
 - Very Good Analysis linting rules

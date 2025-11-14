@@ -1,17 +1,17 @@
 # Workspace Screen Text Button Issue Analysis
 
 ## Issue Location
-**File**: `apps/tina_app/lib/screens/workspaces/widgets/workspace_card.dart`
+**File**: `apps/auravibes_app/lib/screens/workspaces/widgets/workspace_card.dart`
 **Lines**: 107-134 (Edit and Delete buttons)
 
 ## Problem Description
 The workspace card contains edit and delete buttons with both icons and text that may have fitting issues:
 
 ```dart
-TinaButton(
+AuraButton(
   onPressed: onEdit,
-  variant: TinaButtonVariant.outlined,
-  size: TinaButtonSize.small,
+  variant: AuraButtonVariant.outlined,
+  size: AuraButtonSize.small,
   child: Row(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -48,11 +48,11 @@ Settings → Workspace Management → `/workspaces` route → `WorkspacesScreen`
 ## Related Components
 - **WorkspacesScreen**: Main workspace management screen
 - **WorkspaceCard**: Individual workspace display with action buttons
-- **TinaButton**: Custom button component from tina_ui package
+- **AuraButton**: Custom button component from auravibes_ui package
 - **Workspace Entity**: Domain model for workspace data
 
 ## Design System Context
-- Uses Tina UI design system with atomic design principles
+- Uses AuraVibes UI design system with atomic design principles
 - Follows Material Design conventions
 - Consistent spacing and typography tokens
 - Small button size optimized for compact layouts

@@ -5,28 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tina_shell",
-            "cwd": "apps/tina_app",
+            "name": "auravibes_shell",
+            "cwd": "apps/auravibes_app",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "tina_shell (profile mode)",
-            "cwd": "apps/tina_app",
+            "name": "auravibes_shell (profile mode)",
+            "cwd": "apps/auravibes_app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "tina_shell (release mode)",
-            "cwd": "apps/tina_app",
+            "name": "auravibes_shell (release mode)",
+            "cwd": "apps/auravibes_app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
 
         {
-            "name": "tina_widgetbook",
+            "name": "auravibes_widgetbook",
             "cwd": "widgetbook",
             "request": "launch",
             "type": "dart"

@@ -1,11 +1,11 @@
-name: tina_workspace
+name: auravibes_workspace
 publish_to: none
 environment:
   sdk: ^3.9.0
 
 workspace:
-  - apps/tina_app
-  - packages/tina_ui
+  - apps/auravibes_app
+  - packages/auravibes_ui
   - widgetbook
 
 dev_dependencies:
@@ -15,7 +15,7 @@ dev_dependencies:
   very_good_analysis: ^10.0.0
 
 melos:
-  name: tina_workspace
+  name: auravibes_workspace
 
   categories:
     app:

@@ -1,4 +1,4 @@
-# Tina AI Assistant - Development Guidelines & Best Practices
+# AuraVibes AI Assistant - Development Guidelines & Best Practices
 
 ## Development Principles
 
@@ -12,7 +12,7 @@ We believe users should maintain complete control over their data and AI interac
 Complex functionality should be accessible through intuitive interfaces. We layer sophisticated capabilities behind clean abstractions that hide implementation details while preserving power and flexibility. The user experience remains focused and distraction-free.
 
 ### User-Controlled Extensibility
-Tina is designed to be a flexible platform that adapts to users' needs rather than dictating their workflow. We embrace an extensible architecture where external services and tools can be integrated without compromising the core experience.
+AuraVibes is designed to be a flexible platform that adapts to users' needs rather than dictating their workflow. We embrace an extensible architecture where external services and tools can be integrated without compromising the core experience.
 
 ## Quality Standards
 
@@ -95,4 +95,4 @@ We consider the ethical implications of AI technology and implement safeguards t
 
 ---
 
-These guidelines serve as the foundation for how we build Tina AI Assistant. They describe our culture, values, and approach without prescribing specific technologies or implementations. As we evolve and learn, these guidelines will grow with us, always keeping the user at the center of everything we do.
+These guidelines serve as the foundation for how we build AuraVibes AI Assistant. They describe our culture, values, and approach without prescribing specific technologies or implementations. As we evolve and learn, these guidelines will grow with us, always keeping the user at the center of everything we do.
