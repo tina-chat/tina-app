@@ -48,6 +48,7 @@ dependencies:
 
 dev_dependencies:
   # Code generation for JSON serialization
+  very_good_analysis: ^10.0.0
   build_runner: ^2.7.0
   custom_lint: ^0.8.0
 
