@@ -4,7 +4,6 @@ enum MessageType {
   toolCall('tool_call'),
   system('system');
 
-  final String value;
   const MessageType(this.value);
 
   factory MessageType.fromString(String value) {
@@ -21,6 +20,7 @@ enum MessageType {
         throw ArgumentError('Invalid message type: $value');
     }
   }
+  final String value;
 
   String get displayName {
     switch (this) {
@@ -44,7 +44,6 @@ enum MessageStatus {
   delivered('delivered'),
   error('error');
 
-  final String value;
   const MessageStatus(this.value);
 
   factory MessageStatus.fromString(String value) {
@@ -63,6 +62,7 @@ enum MessageStatus {
         throw ArgumentError('Invalid message status: $value');
     }
   }
+  final String value;
 
   String get displayName {
     switch (this) {

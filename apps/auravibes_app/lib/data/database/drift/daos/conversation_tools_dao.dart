@@ -7,7 +7,7 @@ part 'conversation_tools_dao.g.dart';
 @DriftAccessor(tables: [ConversationDisabledTools])
 class ConversationToolsDao extends DatabaseAccessor<AppDatabase>
     with _$ConversationToolsDaoMixin {
-  ConversationToolsDao(super.db);
+  ConversationToolsDao(super.attachedDatabase);
 
   // Core operations for disabled tools
   Future<ConversationDisabledToolsTable?> getDisabledConversationTool(

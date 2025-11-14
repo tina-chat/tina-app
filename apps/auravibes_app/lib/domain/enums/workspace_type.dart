@@ -6,9 +6,6 @@ enum WorkspaceType {
   /// Remote workspace accessed via URL
   remote('remote');
 
-  /// String value representing the workspace type
-  final String value;
-
   /// Creates a new WorkspaceType with the given string value
   const WorkspaceType(this.value);
 
@@ -25,6 +22,9 @@ enum WorkspaceType {
         throw ArgumentError('Invalid workspace type: $value');
     }
   }
+
+  /// String value representing the workspace type
+  final String value;
 
   /// Returns true if this is a local workspace
   bool get isLocal => this == WorkspaceType.local;

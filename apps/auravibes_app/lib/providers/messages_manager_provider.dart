@@ -77,7 +77,7 @@ class _CoalescingSaver<T> {
           _pending = null;
           try {
             await storeMessage(toSave);
-          } catch (_) {
+          } on Exception catch (_) {
             // Policy choice: swallow/log so loop continues,
             // or set a retry/backoff strategy.
           }
@@ -95,7 +95,7 @@ class _CoalescingSaver<T> {
           if (toDone != null) {
             try {
               await storeDoneMessage(toDone);
-            } catch (_) {
+            } on Exception catch (_) {
               // Decide your policy here too.
             }
           }

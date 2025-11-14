@@ -42,28 +42,16 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   @override
   Future<WorkspaceToolEntity> setWorkspaceToolEnabled(
     String workspaceId,
-    String toolType,
-    bool isEnabled,
-  ) async {
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     try {
       return await _dao
-          .setWorkspaceToolEnabled(workspaceId, toolType, isEnabled)
+          .setWorkspaceToolEnabled(workspaceId, toolType, isEnabled: isEnabled)
           .then(_tableToEntity);
     } catch (e) {
       throw WorkspaceToolsException(
         'Failed to set workspace tool enabled: $e',
-        e is Exception ? e : null,
-      );
-    }
-  }
-
-  @override
-  Future<bool> toggleWorkspaceTool(String workspaceId, String toolType) async {
-    try {
-      return await _dao.toggleWorkspaceTool(workspaceId, toolType);
-    } catch (e) {
-      throw WorkspaceToolsException(
-        'Failed to toggle workspace tool: $e',
         e is Exception ? e : null,
       );
     }
@@ -129,7 +117,8 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   ) async {
     try {
       // This method is no longer needed since we use disabled tools approach
-      // Copying workspace tools to conversation is handled by the conversation tools repository
+      // Copying workspace tools to conversation is handled by the conversation
+      // tools repository
     } catch (e) {
       throw WorkspaceToolsException(
         'Failed to copy workspace tools to conversation: $e',
@@ -141,10 +130,10 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
   @override
   Future<bool> validateWorkspaceToolSetting(
     String workspaceId,
-    String toolType,
-    bool isEnabled,
+    String toolType, {
+    required bool isEnabled,
     String? config,
-  ) async {
+  }) async {
     try {
       // Check if workspace exists
       final workspace = await _database.workspaceDao.getWorkspaceById(
@@ -164,12 +153,14 @@ class WorkspaceToolsRepositoryImpl implements WorkspaceToolsRepository {
       // Validate config if provided
       if (config != null && config.isNotEmpty) {
         try {
-          // Basic JSON validation - can be extended based on tool type requirements
-          // This is a simple check, you might want to add more sophisticated validation
+          // Basic JSON validation
+          // can be extended based on tool type requirements
+          // This is a simple check, you might want to add more
+          // sophisticated validation
           if (config.trim().startsWith('{') && config.trim().endsWith('}')) {
             // It looks like JSON, could parse it if needed
           }
-        } catch (e) {
+        } on Exception catch (_) {
           throw WorkspaceToolsValidationException(
             'Invalid config format: $config',
           );

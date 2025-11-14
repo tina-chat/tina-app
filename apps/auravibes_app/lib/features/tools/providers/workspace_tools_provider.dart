@@ -75,11 +75,14 @@ class WorkspaceToolsNotifier extends _$WorkspaceToolsNotifier {
   }
 
   /// Enable or disable a workspace tool
-  Future<void> setToolEnabled(String toolType, bool isEnabled) async {
+  Future<void> setToolEnabled(
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     final newTool = await _repository.setWorkspaceToolEnabled(
       _workspaceId,
       toolType,
-      isEnabled,
+      isEnabled: isEnabled,
     );
     _replaceTools([newTool]);
     return;

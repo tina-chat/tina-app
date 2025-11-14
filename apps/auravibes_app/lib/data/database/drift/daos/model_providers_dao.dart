@@ -9,7 +9,7 @@ part 'model_providers_dao.g.dart';
 class ModelProvidersDao extends DatabaseAccessor<AppDatabase>
     with _$ModelProvidersDaoMixin {
   /// Creates a new [ModelProvidersDao] instance.
-  ModelProvidersDao(super.db);
+  ModelProvidersDao(super.attachedDatabase);
 
   Future<List<ModelProvidersTable>> getAllModelProvidersByWorkspace({
     required List<String> workspaceIds,

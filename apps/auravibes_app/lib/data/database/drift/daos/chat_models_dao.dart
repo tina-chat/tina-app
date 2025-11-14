@@ -15,7 +15,7 @@ class ChatModelWithProvider {
 @DriftAccessor(tables: [ChatModels])
 class ChatModelsDao extends DatabaseAccessor<AppDatabase>
     with _$ChatModelsDaoMixin {
-  ChatModelsDao(super.db);
+  ChatModelsDao(super.attachedDatabase);
 
   Future<void> insertChatModels(
     List<ChatModelsCompanion> modelProvidersToInsert,

@@ -52,9 +52,9 @@ class WorkspaceToolCard extends HookConsumerWidget {
     final onToggle = useCallback((bool value) {
       final toolType = workspaceToolRow?.$1;
       if (toolType == null) return;
-      final notifier = ref.read(workspaceToolsProvider.notifier);
-
-      notifier.setToolEnabled(toolType.value, value);
+      ref
+          .read(workspaceToolsProvider.notifier)
+          .setToolEnabled(toolType.value, isEnabled: value);
     }, []);
 
     if (workspaceToolRow == null) return const SizedBox.shrink();

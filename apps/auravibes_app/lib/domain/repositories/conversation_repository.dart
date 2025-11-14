@@ -11,7 +11,8 @@ abstract class ConversationRepository {
   ///
   /// [workspaceId] The unique identifier of the workspace.
   /// Returns a list of conversations ordered by their last update date.
-  /// Throws [ConversationException] if there's an error retrieving conversations.
+  /// Throws [ConversationException]
+  /// if there's an error retrieving conversations.
   Future<List<ConversationEntity>> getConversationsByWorkspace(
     String workspaceId,
   );
@@ -20,23 +21,29 @@ abstract class ConversationRepository {
   ///
   /// [id] The unique identifier of the conversation to retrieve.
   /// Returns conversation with the given [id], or null if not found.
-  /// Throws [ConversationException] if there's an error retrieving the conversation.
+  /// Throws [ConversationException]
+  /// if there's an error retrieving the conversation.
   Future<ConversationEntity?> getConversationById(String id);
 
   /// Retrieves pinned conversations for a specific workspace.
   ///
   /// [workspaceId] The unique identifier of the workspace.
   /// Returns a list of pinned conversations ordered by their last update date.
-  /// Throws [ConversationException] if there's an error retrieving conversations.
+  /// Throws [ConversationException]
+  /// if there's an error retrieving conversations.
   Future<List<ConversationEntity>> getPinnedConversations(String workspaceId);
 
   /// Creates a new conversation in the data source.
   ///
-  /// [conversation] The conversation to create. The conversation should have a unique ID.
-  /// Returns the created conversation with any system-generated values populated.
+  /// [conversation] The conversation to create.
+  /// The conversation should have a unique ID.
+  /// Returns the created conversation with any
+  /// system-generated values populated.
   /// Throws [ConversationValidationException] if conversation data is invalid.
-  /// Throws [ConversationDuplicateException] if a conversation with the same ID already exists.
-  /// Throws [ConversationException] if there's an error creating the conversation.
+  /// Throws [ConversationDuplicateException] if a
+  /// conversation with the same ID already exists.
+  /// Throws [ConversationException] if there's an
+  /// error creating the conversation.
   Future<ConversationEntity> createConversation(
     ConversationToCreate conversation,
   );
@@ -47,8 +54,10 @@ abstract class ConversationRepository {
   /// [conversation] The conversation with updated values. Must have a valid ID.
   /// Returns the updated conversation.
   /// Throws [ConversationValidationException] if conversation data is invalid.
-  /// Throws [ConversationNotFoundException] if no conversation with the given ID exists.
-  /// Throws [ConversationException] if there's an error updating the conversation.
+  /// Throws [ConversationNotFoundException] if no
+  /// conversation with the given ID exists.
+  /// Throws [ConversationException] if there's an
+  /// error updating the conversation.
   Future<ConversationEntity> updateConversation(
     String id,
     ConversationToUpdate conversation,
@@ -57,8 +66,10 @@ abstract class ConversationRepository {
   /// Deletes a conversation from the data source.
   ///
   /// [id] The unique identifier of the conversation to delete.
-  /// Returns true if the conversation was successfully deleted, false if not found.
-  /// Throws [ConversationException] if there's an error deleting the conversation.
+  /// Returns true if the conversation was successfully deleted,
+  /// false if not found.
+  /// Throws [ConversationException] if there's an error
+  /// deleting the conversation.
   Future<bool> deleteConversation(String id);
 
   /// Checks if a conversation with the given ID exists.
@@ -73,8 +84,10 @@ abstract class ConversationRepository {
   /// [workspaceId] The unique identifier of the workspace.
   /// [query] The search query string. The search is case-insensitive and
   /// matches conversations whose titles contain the query.
-  /// Returns a list of matching conversations ordered by their last update date.
-  /// Throws [ConversationException] if there's an error searching conversations.
+  /// Returns a list of matching conversations ordered by
+  /// their last update date.
+  /// Throws [ConversationException] if there's an error
+  /// searching conversations.
   Future<List<ConversationEntity>> searchConversationsByTitle(
     String workspaceId,
     String query,
@@ -97,7 +110,8 @@ abstract class ConversationRepository {
   /// Updates the last updated timestamp for a conversation.
   ///
   /// [id] The unique identifier of the conversation to update.
-  /// Returns true if the conversation was successfully updated, false if not found.
+  /// Returns true if the conversation was successfully updated,
+  /// false if not found.
   /// Throws [ConversationException] if there's an error updating the timestamp.
   Future<bool> updateConversationTimestamp(String id);
 }
@@ -114,8 +128,10 @@ class ConversationException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'ConversationException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = ' (Caused by: $cause)';
+    return 'ConversationException: $message${cause != null ? causedBy : ''}';
+  }
 }
 
 /// Exception thrown when conversation validation fails.

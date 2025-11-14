@@ -5,13 +5,11 @@ import 'package:drift/drift.dart';
 
 /// Implementation of [ConversationRepository] interface.
 ///
-/// This class provides a concrete implementation of conversation data operations
+/// This class provides a concrete implementation of conversation
+/// data operations
 /// using Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class ConversationRepositoryImpl implements ConversationRepository {
-  /// Creates a new [ConversationRepositoryImpl] instance.
-  ///
-  /// [database] The database instance for conversation operations.
   ConversationRepositoryImpl(this._database);
 
   /// The database instance for conversation operations.
@@ -256,7 +254,8 @@ class ConversationRepositoryImpl implements ConversationRepository {
     }
   }
 
-  /// Maps a [conversationTable] database record to a [ConversationEntity] domain entity.
+  /// Maps a [conversationTable] database record to a [ConversationEntity]
+  /// domain entity.
   ///
   /// [conversationTable] The database record to map.
   /// Returns the corresponding [ConversationEntity] entity.
@@ -272,10 +271,10 @@ class ConversationRepositoryImpl implements ConversationRepository {
     );
   }
 
-  /// Maps a [ConversationEntity] domain entity to a [ConversationsCompanion] for database operations.
+  /// Maps a [ConversationEntity] domain entity to a [ConversationsCompanion]
+  /// for database operations.
   ///
   /// [conversation] The conversation entity to map.
-  /// [forUpdate] Whether this mapping is for an update operation.
   /// Returns the corresponding [ConversationsCompanion].
   ConversationsCompanion _mapToConversationsCompanion(
     ConversationToCreate conversation,

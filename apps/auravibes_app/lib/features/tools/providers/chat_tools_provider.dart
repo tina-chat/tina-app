@@ -76,7 +76,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
       _workspaceId = await ref.watch(
         selectedWorkspaceProvider.selectAsync((w) => w.id),
       );
-    } catch (e) {
+    } on Exception catch (_) {
       _workspaceId = '';
     }
 
@@ -96,7 +96,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
       isNewConversation = true;
     } on NoConversationSelectedException {
       isNewConversation = true;
-    } catch (e) {
+    } on Exception catch (_) {
       // Generic exception - assume new conversation
       isNewConversation = true;
     }
@@ -151,7 +151,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
         workspaceId: _workspaceId,
         isNewConversation: isNewConversation,
       );
-    } catch (e) {
+    } on Exception catch (_) {
       // Return empty state on error
       return ChatToolsState(
         availableTools: [],
@@ -169,11 +169,14 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
     if (currentState == null) return false;
 
     final newEnabledState = !currentState.isToolEnabled(toolType);
-    return setToolEnabled(toolType, newEnabledState);
+    return setToolEnabled(toolType, isEnabled: newEnabledState);
   }
 
   /// Enable or disable a tool
-  Future<bool> setToolEnabled(String toolType, bool isEnabled) async {
+  Future<bool> setToolEnabled(
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     final currentState = state.value;
     if (currentState == null) return false;
 
@@ -191,13 +194,13 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
       final success = await _repository.setConversationToolEnabled(
         currentState.conversationId,
         toolType,
-        isEnabled,
+        isEnabled: isEnabled,
       );
       if (success) {
         await refresh();
       }
       return success;
-    } catch (e) {
+    } on Exception catch (_) {
       return false;
     }
   }
@@ -215,7 +218,7 @@ class ChatToolsNotifier extends _$ChatToolsNotifier {
           currentState.isNewConversation,
         ),
       );
-    } catch (e, stack) {
+    } on Exception catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
   }

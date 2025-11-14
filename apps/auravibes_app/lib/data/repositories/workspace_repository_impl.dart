@@ -10,9 +10,6 @@ import 'package:drift/drift.dart';
 /// using the Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class WorkspaceRepositoryImpl implements WorkspaceRepository {
-  /// Creates a new [WorkspaceRepositoryImpl] instance.
-  ///
-  /// [database] The database instance for workspace operations.
   WorkspaceRepositoryImpl(this._database);
 
   /// The database instance for workspace operations.
@@ -220,7 +217,8 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     }
   }
 
-  /// Maps a [workspacesTable] database record to a [WorkspaceEntity] domain entity.
+  /// Maps a [workspacesTable] database record to a [WorkspaceEntity]
+  /// domain entity.
   ///
   /// [workspacesTable] The database record to map.
   /// Returns the corresponding [WorkspaceEntity] entity.
@@ -235,7 +233,8 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     );
   }
 
-  /// Maps a [WorkspaceEntity] domain entity to a [WorkspacesCompanion] for database operations.
+  /// Maps a [WorkspaceEntity] domain entity to a [WorkspacesCompanion]
+  /// for database operations.
   ///
   /// [workspace] The workspace entity to map.
   /// [forUpdate] Whether this mapping is for an update operation.

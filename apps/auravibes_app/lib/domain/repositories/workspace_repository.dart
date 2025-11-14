@@ -30,10 +30,12 @@ abstract class WorkspaceRepository {
 
   /// Creates a new workspace in the data source.
   ///
-  /// [workspace] The workspace to create. The workspace should have a unique ID.
+  /// [workspace] The workspace to create. The workspace should have
+  /// a unique ID.
   /// Returns the created workspace with any system-generated values populated.
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
-  /// Throws [WorkspaceDuplicateException] if a workspace with the same ID already exists.
+  /// Throws [WorkspaceDuplicateException] if a workspace with the same ID
+  /// already exists.
   /// Throws [WorkspaceException] if there's an error creating the workspace.
   Future<WorkspaceEntity> createWorkspace(WorkspaceToCreate workspace);
 
@@ -43,7 +45,8 @@ abstract class WorkspaceRepository {
   /// [workspace] The workspace with updated values. Must have a valid ID.
   /// Returns the updated workspace.
   /// Throws [WorkspaceValidationException] if the workspace data is invalid.
-  /// Throws [WorkspaceNotFoundException] if no workspace with the given ID exists.
+  /// Throws [WorkspaceNotFoundException] if no workspace with the
+  /// given ID exists.
   /// Throws [WorkspaceException] if there's an error updating the workspace.
   Future<WorkspaceEntity> updateWorkspace(
     String id,
@@ -53,7 +56,8 @@ abstract class WorkspaceRepository {
   /// Deletes a workspace from the data source.
   ///
   /// [id] The unique identifier of the workspace to delete.
-  /// Returns true if the workspace was successfully deleted, false if not found.
+  /// Returns true if the workspace was successfully deleted, false
+  /// if not found.
   /// Throws [WorkspaceException] if there's an error deleting the workspace.
   Future<bool> deleteWorkspace(String id);
 
@@ -95,7 +99,8 @@ abstract class WorkspaceRepository {
   /// Updates the last updated timestamp for a workspace.
   ///
   /// [id] The unique identifier of the workspace to update.
-  /// Returns true if the workspace was successfully updated, false if not found.
+  /// Returns true if the workspace was successfully updated,
+  /// false if not found.
   /// Throws [WorkspaceException] if there's an error updating the timestamp.
   Future<bool> updateWorkspaceTimestamp(String id);
 }
@@ -112,8 +117,10 @@ class WorkspaceException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'WorkspaceException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = cause != null ? ' (Caused by: $cause)' : '';
+    return 'WorkspaceException: $message$causedBy';
+  }
 }
 
 /// Exception thrown when workspace validation fails.

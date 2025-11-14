@@ -29,8 +29,10 @@ class ModelProviderException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'ModelProviderException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = cause != null ? ' (Caused by: $cause)' : '';
+    return 'ModelProviderException: $message$causedBy';
+  }
 }
 
 /// Exception thrown when modelProvider validation fails.

@@ -3,8 +3,6 @@ enum ChatModelType {
   openai('openai'),
   anthropic('anthropic');
 
-  final String value;
-
   /// Creates a new ChatModelType with the given string value
   const ChatModelType(this.value);
 
@@ -21,6 +19,7 @@ enum ChatModelType {
         throw ArgumentError('Invalid chat model type: $value');
     }
   }
+  final String value;
 
   @override
   String toString() => value;

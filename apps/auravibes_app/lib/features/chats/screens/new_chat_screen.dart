@@ -77,7 +77,7 @@ class NewChatScreen extends HookConsumerWidget {
         if (context.mounted) {
           CoversationRoute(chatId: createdConversation.id).replace(context);
         }
-      } catch (e) {
+      } on Exception catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(
             context,

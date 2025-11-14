@@ -82,9 +82,9 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
   @override
   Future<bool> setConversationToolEnabled(
     String conversationId,
-    String toolType,
-    bool isEnabled,
-  ) async {
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     try {
       if (isEnabled) {
         // Enable the tool by removing it from disabled table
@@ -137,7 +137,8 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
         toolType,
       );
 
-      // If it's not disabled, it's considered enabled (based on workspace defaults)
+      // If it's not disabled, it's considered enabled
+      //(based on workspace defaults)
       return !isDisabled;
     } catch (e) {
       throw ConversationToolsException(
@@ -213,9 +214,9 @@ class ConversationToolsRepositoryImpl implements ConversationToolsRepository {
   @override
   Future<bool> validateConversationToolSetting(
     String conversationId,
-    String toolType,
-    bool isEnabled,
-  ) async {
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     try {
       // Check if conversation exists
       final conversation = await _database.conversationDao.getConversationById(

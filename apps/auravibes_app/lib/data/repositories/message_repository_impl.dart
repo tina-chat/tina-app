@@ -12,9 +12,6 @@ import 'package:drift/drift.dart';
 /// using Drift database. It handles the mapping between domain entities
 /// and database records, and provides proper error handling using exceptions.
 class MessageRepositoryImpl implements MessageRepository {
-  /// Creates a new [MessageRepositoryImpl] instance.
-  ///
-  /// [database] The database instance for message operations.
   MessageRepositoryImpl(this._database);
 
   /// The database instance for message operations.
@@ -48,7 +45,9 @@ class MessageRepositoryImpl implements MessageRepository {
       return messageTables.map(_mapToMessage).toList();
     } catch (e) {
       throw MessageException(
-        'Failed to retrieve paginated messages for conversation $conversationId',
+        '''
+Failed to retrieve paginated messages for conversation $conversationId
+''',
         e as Exception,
       );
     }
@@ -67,7 +66,9 @@ class MessageRepositoryImpl implements MessageRepository {
       return messageTables.map(_mapToMessage).toList();
     } catch (e) {
       throw MessageException(
-        'Failed to retrieve messages of type $messageType for conversation $conversationId',
+        '''
+Failed to retrieve messages of type $messageType for conversation $conversationId
+''',
         e as Exception,
       );
     }
@@ -216,7 +217,9 @@ class MessageRepositoryImpl implements MessageRepository {
       return messageTables.map(_mapToMessage).toList();
     } catch (e) {
       throw MessageException(
-        'Failed to retrieve messages with status $status for conversation $conversationId',
+        '''
+Failed to retrieve messages with status $status for conversation $conversationId
+''',
         e as Exception,
       );
     }
@@ -282,10 +285,10 @@ class MessageRepositoryImpl implements MessageRepository {
     );
   }
 
-  /// Maps a [MessageEntity] domain entity to a [MessagesCompanion] for database operations.
+  /// Maps a [MessageEntity] domain entity to a [MessagesCompanion]
+  /// for database operations.
   ///
   /// [message] The message entity to map.
-  /// [forUpdate] Whether this mapping is for an update operation.
   /// Returns a corresponding [MessagesCompanion].
   MessagesCompanion _mapToMessagesCompanion(MessageToCreate message) {
     return MessagesCompanion(

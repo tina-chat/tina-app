@@ -8,7 +8,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'conversation_tools_provider.g.dart';
 
-/// Combined state for workspace tools with their conversation-specific toggle states
+/// Combined state for workspace tools with their conversation-specific
+/// toggle states
 class ConversationToolsState {
   // toolType -> isEnabled for conversation
 
@@ -84,19 +85,22 @@ class ConversationToolsNotifier extends _$ConversationToolsNotifier {
 
     if (currentState.containsKey(UserToolType.fromValue(toolType))) {
       final newEnabledState = currentState[UserToolType.fromValue(toolType)]!;
-      return setToolEnabled(toolType, newEnabledState);
+      return setToolEnabled(toolType, isEnabled: newEnabledState);
     }
     return false;
   }
 
   /// Enable or disable a conversation tool
-  Future<bool> setToolEnabled(String toolType, bool isEnabled) async {
+  Future<bool> setToolEnabled(
+    String toolType, {
+    required bool isEnabled,
+  }) async {
     var success = true;
     if (conversationId != null) {
       success = await _repository.setConversationToolEnabled(
         conversationId!,
         toolType,
-        isEnabled,
+        isEnabled: isEnabled,
       );
     }
     if (success && state.value != null) {
@@ -140,13 +144,14 @@ class AvailableConversationToolsNotifier
     state = const AsyncValue.loading();
     try {
       state = AsyncValue.data(await _getAvailableTools());
-    } catch (e, stack) {
+    } on Exception catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
   }
 }
 
-/// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+/// Provider to get context-aware tools for chat
+/// (conversation -> workspace -> app defaults)
 @riverpod
 class ContextAwareToolsNotifier extends _$ContextAwareToolsNotifier {
   late ConversationToolsRepository _repository;
@@ -173,7 +178,7 @@ class ContextAwareToolsNotifier extends _$ContextAwareToolsNotifier {
     state = const AsyncValue.loading();
     try {
       state = AsyncValue.data(await _getContextAwareTools());
-    } catch (e, stack) {
+    } on Exception catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
   }

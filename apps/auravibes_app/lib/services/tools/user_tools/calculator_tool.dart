@@ -32,7 +32,7 @@ final class CalculatorTool extends UserToolEntity<String, Object, String> {
         try {
           final exp = parser.parse(toolInput);
           return evaluator.evaluate(exp).toString();
-        } catch (e) {
+        } on Exception catch (_) {
           return "I don't know how to do that.";
         }
       },
@@ -48,7 +48,7 @@ final class CalculatorTool extends UserToolEntity<String, Object, String> {
         try {
           final exp = parser.parse(toolInput);
           return evaluator.evaluate(exp).toString();
-        } catch (e) {
+        } on Exception catch (_) {
           return "I don't know how to do that.";
         }
       }),

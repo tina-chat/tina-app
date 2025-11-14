@@ -83,7 +83,8 @@ class ToolsRoute extends GoRouteData with $ToolsRoute {
 }
 
 class ModelsRoute extends GoRouteData with $ModelsRoute {
-  // There is no need to implement [build] when this [redirect] is unconditional.
+  // There is no need to implement [build] when this [redirect] is
+  // unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ModelsScreen();
@@ -91,7 +92,8 @@ class ModelsRoute extends GoRouteData with $ModelsRoute {
 }
 
 class AgentsRoute extends GoRouteData with $AgentsRoute {
-  // There is no need to implement [build] when this [redirect] is unconditional.
+  // There is no need to implement [build] when this [redirect] is
+  // unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AgentsScreen();
@@ -99,7 +101,8 @@ class AgentsRoute extends GoRouteData with $AgentsRoute {
 }
 
 class PromptsRoute extends GoRouteData with $PromptsRoute {
-  // There is no need to implement [build] when this [redirect] is unconditional.
+  // There is no need to implement [build] when this [redirect] is
+  // unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const PromptsScreen();
@@ -107,7 +110,8 @@ class PromptsRoute extends GoRouteData with $PromptsRoute {
 }
 
 class SettingsRoute extends GoRouteData with $SettingsRoute {
-  // There is no need to implement [build] when this [redirect] is unconditional.
+  // There is no need to implement [build] when this [redirect] is
+  // unconditional.
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingsScreen();

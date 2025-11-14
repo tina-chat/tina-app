@@ -65,7 +65,8 @@ abstract class MessageRepository {
   /// [message] The message to create. The message should have a unique ID.
   /// Returns the created message with any system-generated values populated.
   /// Throws [MessageValidationException] if message data is invalid.
-  /// Throws [MessageDuplicateException] if a message with the same ID already exists.
+  /// Throws [MessageDuplicateException] if a message with the same ID already
+  ///  exists.
   /// Throws [MessageException] if there's an error creating the message.
   Future<MessageEntity> createMessage(MessageToCreate message);
 
@@ -99,7 +100,8 @@ abstract class MessageRepository {
   ///
   /// [conversationId] The unique identifier of the conversation.
   /// [status] The status of messages to retrieve.
-  /// Returns a list of messages with the specified status ordered by creation date.
+  /// Returns a list of messages with the specified status ordered by
+  /// creation date.
   /// Throws [MessageException] if there's an error retrieving messages.
   Future<List<MessageEntity>> getMessagesByStatus(
     String conversationId,
@@ -133,8 +135,10 @@ class MessageException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'MessageException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = cause != null ? ' (Caused by: $cause)' : '';
+    return 'MessageException: $message$causedBy';
+  }
 }
 
 /// Exception thrown when message validation fails.

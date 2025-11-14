@@ -2,7 +2,8 @@ import 'package:auravibes_app/domain/entities/conversation_tool.dart';
 
 /// Repository interface for conversation tool data operations.
 ///
-/// This abstract class defines the contract for conversation tool settings access,
+/// This abstract class defines the contract for conversation tool
+/// settings access,
 /// following the Repository pattern from Clean Architecture.
 /// Implementations should handle data persistence, retrieval, and
 /// business logic validation for conversation tool operations.
@@ -30,7 +31,8 @@ abstract class ConversationToolsRepository {
   /// [conversationId] The ID of the conversation.
   /// [toolType] The type of tool to retrieve.
   /// Returns the conversation tool setting, or null if not found.
-  /// Throws [ConversationToolsException] if there's an error retrieving the tool.
+  /// Throws [ConversationToolsException] if there's an error
+  /// retrieving the tool.
   Future<ConversationToolEntity?> getConversationTool(
     String conversationId,
     String toolType,
@@ -41,13 +43,14 @@ abstract class ConversationToolsRepository {
   /// [conversationId] The ID of the conversation.
   /// [toolType] The type of tool to toggle.
   /// [isEnabled] Whether the tool should be enabled.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false if the
+  ///  tool was not found.
   /// Throws [ConversationToolsException] if there's an error updating the tool.
   Future<bool> setConversationToolEnabled(
     String conversationId,
-    String toolType,
-    bool isEnabled,
-  );
+    String toolType, {
+    required bool isEnabled,
+  });
 
   Future<void> setConversationToolsDisabled(
     String conversationId,
@@ -58,7 +61,8 @@ abstract class ConversationToolsRepository {
   ///
   /// [conversationId] The ID of the conversation.
   /// [toolType] The type of tool to toggle.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false if the
+  /// tool was not found.
   /// Throws [ConversationToolsException] if there's an error toggling the tool.
   Future<bool> toggleConversationTool(String conversationId, String toolType);
 
@@ -67,7 +71,8 @@ abstract class ConversationToolsRepository {
   /// [conversationId] The ID of the conversation.
   /// [toolType] The type of tool to check.
   /// Returns true if the tool is enabled, false otherwise.
-  /// Throws [ConversationToolsException] if there's an error checking the tool status.
+  /// Throws [ConversationToolsException] if there's an error
+  /// checking the tool status.
   Future<bool> isConversationToolEnabled(
     String conversationId,
     String toolType,
@@ -77,7 +82,8 @@ abstract class ConversationToolsRepository {
   ///
   /// [conversationId] The ID of the conversation.
   /// [toolType] The type of tool to remove.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false
+  /// if the tool was not found.
   /// Throws [ConversationToolsException] if there's an error removing the tool.
   Future<bool> removeConversationTool(String conversationId, String toolType);
 
@@ -112,22 +118,25 @@ abstract class ConversationToolsRepository {
   /// [toolType] The type of tool to validate.
   /// [isEnabled] Whether the tool should be enabled.
   /// Returns true if the tool setting is valid.
-  /// Throws [ConversationToolsValidationException] if the tool setting is invalid.
+  /// Throws [ConversationToolsValidationException] if
+  /// the tool setting is invalid.
   Future<bool> validateConversationToolSetting(
     String conversationId,
-    String toolType,
-    bool isEnabled,
-  );
+    String toolType, {
+    required bool isEnabled,
+  });
 
   /// Gets the effective tool availability for a conversation.
   ///
-  /// This method checks if a tool is available for a conversation by considering
+  /// This method checks if a tool is available for a conversation
+  /// by considering
   /// both conversation-level overrides and workspace-level settings.
   /// [conversationId] The ID of the conversation.
   /// [workspaceId] The ID of the workspace the conversation belongs to.
   /// [toolType] The type of tool to check.
   /// Returns true if the tool is available for the conversation.
-  /// Throws [ConversationToolsException] if there's an error checking tool availability.
+  /// Throws [ConversationToolsException] if there's an
+  /// error checking tool availability.
   Future<bool> isToolAvailableForConversation(
     String conversationId,
     String workspaceId,
@@ -136,12 +145,15 @@ abstract class ConversationToolsRepository {
 
   /// Gets all available tools for a conversation.
   ///
-  /// This method returns the effective list of available tools for a conversation
-  /// by considering conversation overrides, workspace settings, and app defaults.
+  /// This method returns the effective list of available tools
+  /// for a conversation
+  /// by considering conversation overrides, workspace settings,
+  /// and app defaults.
   /// [conversationId] The ID of the conversation.
   /// [workspaceId] The ID of the workspace the conversation belongs to.
   /// Returns a list of tool types that are available for the conversation.
-  /// Throws [ConversationToolsException] if there's an error getting available tools.
+  /// Throws [ConversationToolsException] if there's an error
+  /// getting available tools.
   Future<List<String>> getAvailableToolsForConversation(
     String conversationId,
     String workspaceId,
@@ -160,8 +172,10 @@ class ConversationToolsException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'ConversationToolsException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = cause != null ? ' (Caused by: $cause)' : '';
+    return 'ConversationToolsException: $message$causedBy';
+  }
 }
 
 /// Exception thrown when conversation tool validation fails.
@@ -178,7 +192,9 @@ class ConversationToolNotFoundException extends ConversationToolsException {
     this.toolType, [
     Exception? cause,
   ]) : super(
-         'Conversation tool "$toolType" not found in conversation "$conversationId"',
+         '''
+Conversation tool "$toolType" not found in conversation "$conversationId"
+''',
          cause,
        );
 

@@ -67,8 +67,10 @@ class ChatbotService {
 
     final prompt = PromptValue.chat([
       ChatMessage.humanText(
-        'Generate a short, concise title (max 5 words) for a conversation that starts with this message: "$firstMessage". '
-        'The title should capture the main topic or theme. Respond with only the title, no quotes or extra text.',
+        '''
+Generate a short, concise title (max 5 words) for a conversation that starts with this message: "$firstMessage". 
+The title should capture the main topic or theme. Respond with only the title, no quotes or extra text.
+''',
       ),
     ]);
 
@@ -101,7 +103,7 @@ class ChatbotService {
       }
 
       return title;
-    } catch (e) {
+    } on Exception catch (_) {
       return _generateFallbackTitle(firstMessage);
     }
   }

@@ -17,7 +17,6 @@ enum MessageTableStatus {
   error('error');
 
   const MessageTableStatus(this.value);
-  final String value;
 
   factory MessageTableStatus.fromString(String value) {
     switch (value.toLowerCase()) {
@@ -35,4 +34,5 @@ enum MessageTableStatus {
         throw ArgumentError('Invalid message status: $value');
     }
   }
+  final String value;
 }

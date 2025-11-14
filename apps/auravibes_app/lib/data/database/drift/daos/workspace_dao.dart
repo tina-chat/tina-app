@@ -10,7 +10,7 @@ part 'workspace_dao.g.dart';
 class WorkspaceDao extends DatabaseAccessor<AppDatabase>
     with _$WorkspaceDaoMixin {
   /// Creates a new [WorkspaceDao] instance.
-  WorkspaceDao(super.db);
+  WorkspaceDao(super.attachedDatabase);
 
   /// Retrieves all workspaces from the database.
   ///
@@ -49,7 +49,8 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
 
   /// Updates an existing workspace in the database.
   ///
-  /// Updates the workspace with the given [id] using the provided [workspace] data.
+  /// Updates the workspace with the given [id]
+  /// using the provided [workspace] data.
   /// Returns true if a workspace was updated, false otherwise.
   Future<bool> updateWorkspace(String id, WorkspacesCompanion workspace) async {
     final updateCount = await (update(
@@ -113,10 +114,6 @@ class WorkspaceDao extends DatabaseAccessor<AppDatabase>
         .then((rows) => rows.length);
   }
 
-  /// Updates the last updated timestamp for a workspace.
-  ///
-  /// Sets the [updatedAt] field to the current time for the workspace with the given [id].
-  /// Returns true if the workspace was updated, false otherwise.
   Future<bool> updateWorkspaceTimestamp(String id) async {
     final rowsAffected =
         await (update(workspaces)..where((t) => t.id.equals(id))).write(

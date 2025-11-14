@@ -6,7 +6,7 @@ part 'message_dao.g.dart';
 
 @DriftAccessor(tables: [Messages])
 class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
-  MessageDao(super.db);
+  MessageDao(super.attachedDatabase);
 
   // Core CRUD operations
   Future<MessagesTable> insertMessage(MessagesCompanion message) =>

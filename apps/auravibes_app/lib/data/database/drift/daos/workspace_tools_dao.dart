@@ -7,7 +7,7 @@ part 'workspace_tools_dao.g.dart';
 @DriftAccessor(tables: [WorkspaceTools])
 class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
     with _$WorkspaceToolsDaoMixin {
-  WorkspaceToolsDao(super.db);
+  WorkspaceToolsDao(super.attachedDatabase);
 
   // Core operations
   Future<WorkspaceToolsTable?> getWorkspaceTool(
@@ -22,9 +22,9 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
 
   Future<WorkspaceToolsTable> setWorkspaceToolEnabled(
     String workspaceId,
-    String toolType,
-    bool isEnabled,
-  ) {
+    String toolType, {
+    required bool isEnabled,
+  }) {
     return into(workspaceTools).insertReturning(
       WorkspaceToolsCompanion(
         workspaceId: Value(workspaceId),
@@ -33,17 +33,6 @@ class WorkspaceToolsDao extends DatabaseAccessor<AppDatabase>
       ),
       mode: InsertMode.insertOrReplace,
     );
-  }
-
-  Future<bool> toggleWorkspaceTool(String workspaceId, String toolType) {
-    return customUpdate(
-      "UPDATE workspace_tools SET is_enabled = NOT is_enabled, updated_at = datetime('now') "
-      'WHERE workspace_id = ? AND type = ?',
-      variables: [
-        Variable.withString(workspaceId),
-        Variable.withString(toolType),
-      ],
-    ).then((count) => count > 0);
   }
 
   Future<List<WorkspaceToolsTable>> updateWorkspaceToolConfig(

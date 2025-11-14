@@ -4,7 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'chatbot_service_provider.g.dart';
 
-/// Provider that creates a ChatbotService without tools (for title generation, etc.)
+/// Provider that creates a ChatbotService without tools
+/// (for title generation, etc.)
 @riverpod
 ChatbotService chatbotService(
   Ref ref,

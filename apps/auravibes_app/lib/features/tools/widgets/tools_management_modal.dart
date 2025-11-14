@@ -162,7 +162,7 @@ class _ToolTile extends HookConsumerWidget {
           conversationId: conversationId,
         ).notifier,
       );
-      await notifier.setToolEnabled(toolType.value, value);
+      await notifier.setToolEnabled(toolType.value, isEnabled: value);
     }, [conversationId, workspaceId, toolType]);
 
     return AuraCard(

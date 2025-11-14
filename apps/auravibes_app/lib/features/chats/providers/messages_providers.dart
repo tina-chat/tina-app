@@ -141,9 +141,7 @@ MessageEntity? messageConversation(Ref ref) {
       StreamingMessageStatus.streaming => MessageStatus.sending,
       StreamingMessageStatus.done => MessageStatus.sent,
       StreamingMessageStatus.error => MessageStatus.error,
-      // TODO: Handle this case.
       StreamingMessageStatus.awaitingToolConfirmation => MessageStatus.sent,
-      // TODO: Handle this case.
       StreamingMessageStatus.executingTools => MessageStatus.sending,
     },
   );

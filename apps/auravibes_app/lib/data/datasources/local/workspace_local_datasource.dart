@@ -8,9 +8,6 @@ import 'package:auravibes_app/domain/enums/workspace_type.dart';
 /// using the Drift database. It handles the low-level database interactions
 /// and provides methods for CRUD operations on workspaces.
 class WorkspaceLocalDataSource {
-  /// Creates a new [WorkspaceLocalDataSource] instance.
-  ///
-  /// [database] The database instance to use for operations.
   WorkspaceLocalDataSource(this._database) {
     _workspaceDao = _database.workspaceDao;
   }

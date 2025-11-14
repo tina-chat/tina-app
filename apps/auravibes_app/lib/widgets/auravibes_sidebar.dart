@@ -11,7 +11,8 @@ import 'package:go_router/go_router.dart';
 /// and navigation logic. It uses a hybrid approach:
 /// - Desktop: Shows persistent collapsible sidebar
 /// - Mobile: Uses Scaffold's drawer pattern for native platform behavior
-/// It delegates the visual presentation to AuraSidebarOrganism from the auravibes_ui package.
+/// It delegates the visual presentation to AuraSidebarOrganism
+/// 'from the auravibes_ui package.
 class AuraSidebarWrapper extends StatefulWidget {
   /// Creates a Aura sidebar widget.
   const AuraSidebarWrapper({

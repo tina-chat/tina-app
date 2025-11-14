@@ -1,7 +1,7 @@
 import 'package:auravibes_app/domain/entities/model_providers_entities.dart';
 import 'package:auravibes_app/domain/enums/chat_models_type.dart';
 import 'package:auravibes_app/features/models/providers/list_models_providers.dart';
-import 'package:auravibes_ui/src/atoms/atoms.dart';
+import 'package:auravibes_ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -177,6 +177,9 @@ class _ChatModelCard extends StatelessWidget {
     if (apiKey.length <= 8) {
       return '*' * apiKey.length;
     }
-    return '${apiKey.substring(0, 4)}${'*' * (apiKey.length - 8)}${apiKey.substring(apiKey.length - 4)}';
+    final initial = apiKey.substring(0, 4);
+    final ending = apiKey.substring(apiKey.length - 4);
+
+    return '$initial${'*' * (apiKey.length - 8)}$ending';
   }
 }

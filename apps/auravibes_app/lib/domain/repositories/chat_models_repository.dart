@@ -28,8 +28,10 @@ class ChatModelException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'ChatModelException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = ' (Caused by: $cause)';
+    return 'ChatModelException: $message${cause != null ? causedBy : ''}';
+  }
 }
 
 /// Exception thrown when chatModel validation fails.

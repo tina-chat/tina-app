@@ -34,7 +34,9 @@ class SettingsScreen extends StatelessWidget {
                     style: AuraTextStyle.bodySmall,
                     color: AuraTextColor.onSurfaceVariant,
                     child: Text(
-                      'Manage your workspaces and switch between different environments',
+                      '''
+Manage your workspaces and switch between different environments
+''',
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -237,7 +239,9 @@ class SettingsScreen extends StatelessWidget {
             Text('Build: 1'),
             SizedBox(height: 16),
             Text(
-              'Aura is your AI-powered assistant for productivity and creativity.',
+              '''
+Aura is your AI-powered assistant for productivity and creativity.
+''',
               style: TextStyle(fontSize: 14),
             ),
           ],

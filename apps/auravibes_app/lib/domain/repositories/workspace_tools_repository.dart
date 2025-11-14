@@ -39,28 +39,22 @@ abstract class WorkspaceToolsRepository {
   /// [workspaceId] The ID of the workspace.
   /// [toolType] The type of tool to toggle.
   /// [isEnabled] Whether the tool should be enabled.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false if the tool
+  /// was not found.
   /// Throws [WorkspaceToolsException] if there's an error updating the tool.
   Future<WorkspaceToolEntity> setWorkspaceToolEnabled(
     String workspaceId,
-    String toolType,
-    bool isEnabled,
-  );
-
-  /// Toggles the enabled status of a workspace tool.
-  ///
-  /// [workspaceId] The ID of the workspace.
-  /// [toolType] The type of tool to toggle.
-  /// Returns true if the operation was successful, false if the tool was not found.
-  /// Throws [WorkspaceToolsException] if there's an error toggling the tool.
-  Future<bool> toggleWorkspaceTool(String workspaceId, String toolType);
+    String toolType, {
+    required bool isEnabled,
+  });
 
   /// Updates the configuration for a workspace tool.
   ///
   /// [workspaceId] The ID of the workspace.
   /// [toolType] The type of tool to update.
   /// [config] The new configuration as JSON string.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false if the tool
+  /// was not found.
   /// Throws [WorkspaceToolsException] if there's an error updating the tool.
   Future<List<WorkspaceToolEntity>> updateWorkspaceToolConfig(
     String workspaceId,
@@ -73,22 +67,26 @@ abstract class WorkspaceToolsRepository {
   /// [workspaceId] The ID of the workspace.
   /// [toolType] The type of tool to check.
   /// Returns true if the tool is enabled, false otherwise.
-  /// Throws [WorkspaceToolsException] if there's an error checking the tool status.
+  /// Throws [WorkspaceToolsException] if there's an error checking
+  /// the tool status.
   Future<bool> isWorkspaceToolEnabled(String workspaceId, String toolType);
 
   /// Gets the configuration for a workspace tool.
   ///
   /// [workspaceId] The ID of the workspace.
   /// [toolType] The type of tool to get configuration for.
-  /// Returns the tool configuration as a JSON string, or null if not found or no config exists.
-  /// Throws [WorkspaceToolsException] if there's an error retrieving the configuration.
+  /// Returns the tool configuration as a JSON string, or null if
+  ///  not found or no config exists.
+  /// Throws [WorkspaceToolsException] if there's an error retrieving
+  /// the configuration.
   Future<String?> getWorkspaceToolConfig(String workspaceId, String toolType);
 
   /// Removes a tool setting for a workspace.
   ///
   /// [workspaceId] The ID of the workspace.
   /// [toolType] The type of tool to remove.
-  /// Returns true if the operation was successful, false if the tool was not found.
+  /// Returns true if the operation was successful, false if the
+  /// tool was not found.
   /// Throws [WorkspaceToolsException] if there's an error removing the tool.
   Future<bool> removeWorkspaceTool(String workspaceId, String toolType);
 
@@ -110,7 +108,8 @@ abstract class WorkspaceToolsRepository {
   ///
   /// [workspaceId] The ID of the source workspace.
   /// [conversationId] The ID of the target conversation.
-  /// Copies all workspace tool settings to the conversation as a starting point.
+  /// Copies all workspace tool settings to the conversation as
+  ///  a starting point.
   /// Throws [WorkspaceToolsException] if there's an error copying tools.
   Future<void> copyWorkspaceToolsToConversation(
     String workspaceId,
@@ -127,10 +126,10 @@ abstract class WorkspaceToolsRepository {
   /// Throws [WorkspaceToolsValidationException] if the tool setting is invalid.
   Future<bool> validateWorkspaceToolSetting(
     String workspaceId,
-    String toolType,
-    bool isEnabled,
+    String toolType, {
+    required bool isEnabled,
     String? config,
-  );
+  });
 }
 
 /// Base exception for workspace tools-related operations.
@@ -145,8 +144,10 @@ class WorkspaceToolsException implements Exception {
   final Exception? cause;
 
   @override
-  String toString() =>
-      'WorkspaceToolsException: $message${cause != null ? ' (Caused by: $cause)' : ''}';
+  String toString() {
+    final causedBy = cause != null ? ' (Caused by: $cause)' : '';
+    return 'WorkspaceToolsException: $message$causedBy';
+  }
 }
 
 /// Exception thrown when workspace tool validation fails.

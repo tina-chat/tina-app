@@ -40,7 +40,7 @@ abstract class ConversationToolToCreate with _$ConversationToolToCreate {
     required String type,
 
     /// Whether the tool should be enabled (defaults to true)
-    final bool? isEnabled,
+    bool? isEnabled,
   }) = _ConversationToolToCreate;
   const ConversationToolToCreate._();
 

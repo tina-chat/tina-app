@@ -27,7 +27,7 @@ abstract class WorkspaceEntity with _$WorkspaceEntity {
     required DateTime updatedAt,
 
     /// URL for remote workspaces, null for local workspaces
-    final String? url,
+    String? url,
   }) = _WorkspaceEntity;
   const WorkspaceEntity._();
 }
@@ -43,7 +43,7 @@ abstract class WorkspaceToCreate with _$WorkspaceToCreate {
     required WorkspaceType type,
 
     /// URL for remote workspaces, null for local workspaces
-    final String? url,
+    String? url,
   }) = _WorkspaceToCreate;
   const WorkspaceToCreate._();
 

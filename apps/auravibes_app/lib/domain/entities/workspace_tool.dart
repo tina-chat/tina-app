@@ -26,7 +26,7 @@ abstract class WorkspaceToolEntity with _$WorkspaceToolEntity {
     required DateTime updatedAt,
 
     /// Tool configuration as JSON (optional)
-    final String? config,
+    String? config,
   }) = _WorkspaceToolEntity;
   const WorkspaceToolEntity._();
 
@@ -46,10 +46,10 @@ abstract class WorkspaceToolToCreate with _$WorkspaceToolToCreate {
     required String type,
 
     /// Tool configuration as JSON (optional)
-    final String? config,
+    String? config,
 
     /// Whether the tool should be enabled (defaults to true)
-    final bool? isEnabled,
+    bool? isEnabled,
   }) = _WorkspaceToolToCreate;
   const WorkspaceToolToCreate._();
 
