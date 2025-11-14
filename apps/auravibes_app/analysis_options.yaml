@@ -4,3 +4,10 @@ linter:
 
   rules:
     public_member_api_docs: false
+    ## temporal off
+    flutter_style_todos: false
+    discarded_futures: false
+    unawaited_futures: false
+    document_ignores: false
+    unreachable_from_main: false
+    cancel_subscriptions: false

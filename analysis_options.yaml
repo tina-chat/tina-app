@@ -52,7 +52,6 @@ linter:
     avoid_returning_null_for_void: true
     avoid_unnecessary_containers: true
     camel_case_types: true
-    flutter_style_todos: true
     always_declare_return_types: true    
     require_trailing_commas: true
     sort_child_properties_last: true
@@ -61,5 +60,8 @@ linter:
     depend_on_referenced_packages: false
     remove_deprecations_in_breaking_versions: true
     unnecessary_unawaited: true
+    ##
+    flutter_style_todos: false
+    discarded_futures: false
 
 

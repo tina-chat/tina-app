@@ -4,7 +4,6 @@ import 'package:langchain/langchain.dart';
 enum UserToolType {
   calculator('calculator');
 
-  final String value;
   const UserToolType(this.value);
   static UserToolType? fromValue(String value) {
     for (final enumVariant in UserToolType.values) {
@@ -12,6 +11,8 @@ enum UserToolType {
     }
     return null;
   }
+
+  final String value;
 }
 
 /// Represents an available tool in the app

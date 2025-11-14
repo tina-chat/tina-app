@@ -199,16 +199,19 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     }, null).whereNotNull();
 
     // set message confirmation
-    subs.add(
-      chats$.take(1).listen((event) => _confirmMessage(messageId: messageId)),
-    );
-
-    // update states
-    subs.add(
-      chats$.listen(
-        (chatResult) => _updateState(responseMessageId, chatResult),
-      ),
-    );
+    subs
+      ..add(
+        chats$
+            .shareReplay()
+            .take(1)
+            .listen((event) => _confirmMessage(messageId: messageId)),
+      )
+      // update states
+      ..add(
+        chats$.shareReplay().listen(
+          (chatResult) => _updateState(responseMessageId, chatResult),
+        ),
+      );
 
     final coalescingSaver = _CoalescingSaver<ChatResult>(
       storeMessage: (chatResult) => _updateMessage(
