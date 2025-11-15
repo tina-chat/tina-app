@@ -11,6 +11,46 @@ abstract class LocaleKeys {
   static const menu_prompts = 'menu.prompts';
   static const models_screens_add_provider_open_button =
       'models_screens.add_provider.open_button';
+  static const models_screens_add_provider_name_label =
+      'models_screens.add_provider.name_label';
+  static const models_screens_add_provider_name_placeholder =
+      'models_screens.add_provider.name_placeholder';
+  static const models_screens_add_provider_name_hint =
+      'models_screens.add_provider.name_hint';
+  static const models_screens_add_provider_key_label =
+      'models_screens.add_provider.key_label';
+  static const models_screens_add_provider_key_placeholder =
+      'models_screens.add_provider.key_placeholder';
+  static const models_screens_add_provider_key_hint =
+      'models_screens.add_provider.key_hint';
+  static const models_screens_add_provider_url_label =
+      'models_screens.add_provider.url_label';
+  static const models_screens_add_provider_url_placeholder =
+      'models_screens.add_provider.url_placeholder';
+  static const models_screens_add_provider_url_hint =
+      'models_screens.add_provider.url_hint';
+  static const models_screens_add_provider_model_label =
+      'models_screens.add_provider.model_label';
+  static const models_screens_add_provider_model_hint =
+      'models_screens.add_provider.model_hint';
+  static const models_screens_add_provider_anthropic_option =
+      'models_screens.add_provider.anthropic_option';
+  static const models_screens_add_provider_openai_option =
+      'models_screens.add_provider.openai_option';
+  static const models_screens_add_provider_create_button =
+      'models_screens.add_provider.create_button';
+  static const models_screens_add_provider_title =
+      'models_screens.add_provider.title';
+  static const models_screens_add_provider_basic_info_section =
+      'models_screens.add_provider.basic_info_section';
+  static const models_screens_add_provider_api_config_section =
+      'models_screens.add_provider.api_config_section';
+  static const models_screens_add_provider_general_error =
+      'models_screens.add_provider.general_error';
+  static const models_screens_add_provider_validation_error =
+      'models_screens.add_provider.validation_error';
+  static const models_screens_add_provider_success_message =
+      'models_screens.add_provider.success_message';
   static const chats_screens_chats_list_title =
       'chats_screens.chats_list.title';
   static const chats_screens_chats_list_add_chat =

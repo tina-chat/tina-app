@@ -125,7 +125,7 @@ final class WorkspaceToolsNotifierProvider
 }
 
 String _$workspaceToolsNotifierHash() =>
-    r'c6f60ecf41a8f8affb65fa1490d37b480420f9a7';
+    r'05379ce8ec9dd661d6894012dab1db482349149e';
 
 abstract class _$WorkspaceToolsNotifier
     extends $AsyncNotifier<List<WorkspaceTool>> {

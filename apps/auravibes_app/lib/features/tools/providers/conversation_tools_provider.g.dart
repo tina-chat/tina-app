@@ -105,7 +105,7 @@ final class ConversationToolsNotifierProvider
 }
 
 String _$conversationToolsNotifierHash() =>
-    r'd9589442b8087809fcb09bf89fced706b98fc163';
+    r'63b7937d64ac5d90df7d644f5ef254b30a9282d0';
 
 final class ConversationToolsNotifierFamily extends $Family
     with
@@ -226,7 +226,7 @@ final class AvailableConversationToolsNotifierProvider
 }
 
 String _$availableConversationToolsNotifierHash() =>
-    r'a60967e0164ec194e12535c24e9e503a1ec1fe9f';
+    r'c71130a9cd701b4d11e50df287fbc019ebf70a9c';
 
 final class AvailableConversationToolsNotifierFamily extends $Family
     with
@@ -276,15 +276,18 @@ abstract class _$AvailableConversationToolsNotifier
   }
 }
 
-/// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+/// Provider to get context-aware tools for chat
+/// (conversation -> workspace -> app defaults)
 
 @ProviderFor(ContextAwareToolsNotifier)
 const contextAwareToolsProvider = ContextAwareToolsNotifierFamily._();
 
-/// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+/// Provider to get context-aware tools for chat
+/// (conversation -> workspace -> app defaults)
 final class ContextAwareToolsNotifierProvider
     extends $AsyncNotifierProvider<ContextAwareToolsNotifier, List<String>> {
-  /// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+  /// Provider to get context-aware tools for chat
+  /// (conversation -> workspace -> app defaults)
   const ContextAwareToolsNotifierProvider._({
     required ContextAwareToolsNotifierFamily super.from,
     required (String, String) super.argument,
@@ -323,9 +326,10 @@ final class ContextAwareToolsNotifierProvider
 }
 
 String _$contextAwareToolsNotifierHash() =>
-    r'be8cae298e644dcb6a936b30c3bf3c6709390446';
+    r'b3a2ca0a27424d9df1f7e470e5ff1687eb36a64f';
 
-/// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+/// Provider to get context-aware tools for chat
+/// (conversation -> workspace -> app defaults)
 
 final class ContextAwareToolsNotifierFamily extends $Family
     with
@@ -345,7 +349,8 @@ final class ContextAwareToolsNotifierFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+  /// Provider to get context-aware tools for chat
+  /// (conversation -> workspace -> app defaults)
 
   ContextAwareToolsNotifierProvider call((String, String) ids) =>
       ContextAwareToolsNotifierProvider._(argument: ids, from: this);
@@ -354,7 +359,8 @@ final class ContextAwareToolsNotifierFamily extends $Family
   String toString() => r'contextAwareToolsProvider';
 }
 
-/// Provider to get context-aware tools for chat (conversation -> workspace -> app defaults)
+/// Provider to get context-aware tools for chat
+/// (conversation -> workspace -> app defaults)
 
 abstract class _$ContextAwareToolsNotifier
     extends $AsyncNotifier<List<String>> {

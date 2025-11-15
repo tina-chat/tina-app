@@ -8,6 +8,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'add_model_provider_providers.g.dart';
 
+sealed class AddModelException implements Exception {}
+
+class AddModelExceptionNoWorkspace implements AddModelException {}
+
+class AddModelExceptionNoUnkown implements AddModelException {}
+
 @riverpod
 class AddModelProviderState extends _$AddModelProviderState {
   @override
@@ -16,47 +22,60 @@ class AddModelProviderState extends _$AddModelProviderState {
   }
 
   void setName(String newName) {
-    state = state.copyWith(name: newName);
+    state = state.copyWith(
+      name: newName,
+    );
   }
 
   void setKey(String newKey) {
-    state = state.copyWith(key: newKey);
+    state = state.copyWith(
+      key: newKey,
+    );
   }
 
   void setType(ChatModelType? newValue) {
-    state = state.copyWith(type: newValue);
+    state = state.copyWith(
+      type: newValue,
+    );
+  }
+
+  void setUrl(String? newUrl) {
+    state = state.copyWith(
+      url: newUrl,
+    );
   }
 
   Future<ModelProviderEntity?> addModelProvider() async {
-    final repo = ref.read(modelProvidersRepositoryProvider);
-    final wRepo = ref.read(workspaceRepositoryProvider);
-
-    final name = state.name;
-    final typeModel = state.type;
-    final key = state.key;
-    final url = state.url;
-
-    if (name == null || typeModel == null || key == null) {
-      return null;
-    }
-    final workspaces = await wRepo.getAllWorkspaces();
-    final firstWorkspace = workspaces.firstOrNull;
-    if (firstWorkspace == null) {
+    if (!state.isValid()) {
       return null;
     }
 
-    final provider = await repo.createModelProvider(
-      ModelProviderToCreate(
-        name: name,
-        type: typeModel,
-        key: key,
-        url: url,
-        workspaceId: firstWorkspace.id,
-      ),
-    );
+    try {
+      final repo = ref.read(modelProvidersRepositoryProvider);
+      final wRepo = ref.read(workspaceRepositoryProvider);
 
-    return provider;
+      final workspaces = await wRepo.getAllWorkspaces();
+      final firstWorkspace = workspaces.firstOrNull;
+      if (firstWorkspace == null) {
+        throw AddModelExceptionNoWorkspace();
+      }
+
+      final provider = await repo.createModelProvider(
+        ModelProviderToCreate(
+          name: state.name!,
+          type: state.type!,
+          key: state.key!,
+          url: state.url,
+          workspaceId: firstWorkspace.id,
+        ),
+      );
+      return provider;
+    } on AddModelException catch (_) {
+      rethrow;
+    } on Exception catch (_) {
+      throw AddModelExceptionNoUnkown();
+    }
   }
 }
 
-final addChatModelMutation = Mutation<void>();
+final addChatModelMutationProvider = Mutation<void>();

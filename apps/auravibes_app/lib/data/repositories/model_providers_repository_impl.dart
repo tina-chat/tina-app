@@ -65,7 +65,7 @@ class ModelProvidersRepositoryImpl implements ModelProvidersRepository {
       name: Value(workspace.name),
       type: Value(workspace.type),
       keyValue: Value(workspace.key),
-      url: Value(workspace.url),
+      url: Value.absentIfNull(workspace.url),
       workspaceId: Value(workspace.workspaceId),
     );
   }
