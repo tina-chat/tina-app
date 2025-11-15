@@ -280,7 +280,8 @@ class _CreateButton extends HookConsumerWidget {
       children: [
         const _ErrorBanner(),
         AuraButton(
-          onPressed: isSubmitting ? null : onSubmit,
+          disabled: isSubmitting || !isValid,
+          onPressed: onSubmit,
           isLoading: isSubmitting,
           isFullWidth: true,
           size: AuraButtonSize.large,

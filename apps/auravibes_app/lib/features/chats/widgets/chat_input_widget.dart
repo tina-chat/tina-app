@@ -9,10 +9,12 @@ class ChatInputWidget extends HookConsumerWidget {
   const ChatInputWidget({
     required this.onSendMessage,
     required this.onToolsPress,
+    this.disabled = false,
     super.key,
   });
 
-  final void Function(String message)? onSendMessage;
+  final bool disabled;
+  final void Function(String message) onSendMessage;
   final VoidCallback? onToolsPress;
 
   @override
@@ -24,14 +26,12 @@ class ChatInputWidget extends HookConsumerWidget {
       () => controller.text.trim().isEmpty,
     );
 
-    final sendMessage = useMemoized<void Function()?>(
-      () => (isEmpty || onSendMessage == null)
-          ? null
-          : () {
-              final message = controller.text.trim();
-              onSendMessage!(message);
-              controller.clear();
-            },
+    final sendMessage = useCallback(
+      () {
+        final message = controller.text.trim();
+        onSendMessage(message);
+        controller.clear();
+      },
       [controller, onSendMessage, isEmpty],
     );
 
@@ -46,7 +46,7 @@ class ChatInputWidget extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: AuraButton(
-                  onPressed: onToolsPress,
+                  onPressed: onToolsPress!,
                   variant: AuraButtonVariant.secondary,
                   size: AuraButtonSize.small,
                   child: const AuraIcon(Icons.build_circle_outlined),
@@ -57,6 +57,7 @@ class ChatInputWidget extends HookConsumerWidget {
 
             // Send button
             AuraButton(
+              disabled: isEmpty || disabled,
               onPressed: sendMessage,
               size: AuraButtonSize.small,
               child: const AuraIcon(Icons.arrow_upward),
@@ -69,7 +70,7 @@ class ChatInputWidget extends HookConsumerWidget {
         maxLines: 2,
         textInputAction: TextInputAction.send,
         onSubmitted: (value) {
-          sendMessage?.call();
+          sendMessage.call();
         },
       ),
     );

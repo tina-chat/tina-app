@@ -18,10 +18,11 @@ class AuraButton extends StatelessWidget {
     this.size = AuraButtonSize.medium,
     this.isLoading = false,
     this.isFullWidth = false,
+    this.disabled = false,
   });
 
   /// The callback that is called when the button is tapped.
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
   /// The widget to display inside the button.
   final Widget child;
@@ -38,6 +39,9 @@ class AuraButton extends StatelessWidget {
   /// Whether the button should take the full width of its parent.
   final bool isFullWidth;
 
+  /// Whether the button is disabled.
+  final bool disabled;
+
   @override
   Widget build(BuildContext context) {
     final auraColors = context.auraColors;
@@ -49,7 +53,7 @@ class AuraButton extends StatelessWidget {
       child: AuraPressable(
         padding: _getPadding(auraTheme.spacing),
         color: DesignColors.transparent,
-        onPressed: isLoading ? null : onPressed,
+        onPressed: (disabled || isLoading) ? null : onPressed,
         decoration: BoxDecoration(
           color: _getBackgroundColor(auraColors),
           borderRadius: BorderRadius.circular(auraTheme.borderRadius.xl),
@@ -76,7 +80,7 @@ class AuraButton extends StatelessWidget {
   }
 
   Color _getBackgroundColor(AuraColorScheme colors) {
-    if (onPressed == null) return colors.outlineVariant;
+    if (disabled) return colors.outlineVariant;
 
     return switch (variant) {
       AuraButtonVariant.primary => colors.primary,
@@ -88,7 +92,7 @@ class AuraButton extends StatelessWidget {
   }
 
   Color _getForegroundColor(AuraColorScheme colors) {
-    if (onPressed == null) return colors.onSurfaceVariant;
+    if (disabled) return colors.onSurfaceVariant;
 
     return switch (variant) {
       AuraButtonVariant.primary => colors.onPrimary,
@@ -100,6 +104,8 @@ class AuraButton extends StatelessWidget {
   }
 
   Color _getLoadingColor(AuraColorScheme colors) {
+    if (disabled) return colors.onSurfaceVariant;
+
     return switch (variant) {
       AuraButtonVariant.primary => colors.onPrimary,
       AuraButtonVariant.secondary => colors.onSecondary,
@@ -129,13 +135,14 @@ class AuraButton extends StatelessWidget {
   Border? _getBorder(AuraColorScheme colors) {
     if (variant == AuraButtonVariant.outlined) {
       return Border.all(
-        color: onPressed == null ? colors.outlineVariant : colors.primary,
+        color: disabled ? colors.outlineVariant : colors.primary,
       );
     }
     return null;
   }
 
   List<BoxShadow> _getBoxShadow() {
+    if (disabled) return [];
     if (variant == AuraButtonVariant.elevated) {
       return [DesignShadows.sm];
     }

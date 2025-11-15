@@ -79,7 +79,7 @@ Widget loadingButtonUseCase(BuildContext context) {
 Widget disabledButtonUseCase(BuildContext context) {
   return Center(
     child: AuraButton(
-      onPressed: null,
+      onPressed: () {},
       variant: AuraButtonVariant.primary,
       size: AuraButtonSize.medium,
       child: const Text('Disabled Button'),

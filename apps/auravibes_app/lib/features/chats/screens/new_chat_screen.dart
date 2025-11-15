@@ -101,9 +101,8 @@ class NewChatScreen extends HookConsumerWidget {
         children: [
           Center(
             child: ChatInputWidget(
-              onSendMessage: (isLoading.value || modelIdState.value == null)
-                  ? null
-                  : handleSendMessage,
+              disabled: isLoading.value || modelIdState.value == null,
+              onSendMessage: handleSendMessage,
               onToolsPress: onToolsPress,
             ),
           ),
