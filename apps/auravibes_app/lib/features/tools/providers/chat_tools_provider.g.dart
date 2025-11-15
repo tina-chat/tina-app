@@ -33,7 +33,7 @@ final class ChatToolsNotifierProvider
   ChatToolsNotifier create() => ChatToolsNotifier();
 }
 
-String _$chatToolsNotifierHash() => r'e20b94f40a28e87a091154540f4f37b3d172517a';
+String _$chatToolsNotifierHash() => r'7e458874e3b1a5e61480f9aa46c5012d56388ff5';
 
 abstract class _$ChatToolsNotifier extends $AsyncNotifier<ChatToolsState> {
   FutureOr<ChatToolsState> build();

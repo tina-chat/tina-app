@@ -8,17 +8,20 @@ part of 'chatbot_service_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Provider that creates a ChatbotService without tools (for title generation, etc.)
+/// Provider that creates a ChatbotService without tools
+/// (for title generation, etc.)
 
 @ProviderFor(chatbotService)
 const chatbotServiceProvider = ChatbotServiceFamily._();
 
-/// Provider that creates a ChatbotService without tools (for title generation, etc.)
+/// Provider that creates a ChatbotService without tools
+/// (for title generation, etc.)
 
 final class ChatbotServiceProvider
     extends $FunctionalProvider<ChatbotService, ChatbotService, ChatbotService>
     with $Provider<ChatbotService> {
-  /// Provider that creates a ChatbotService without tools (for title generation, etc.)
+  /// Provider that creates a ChatbotService without tools
+  /// (for title generation, etc.)
   const ChatbotServiceProvider._({
     required ChatbotServiceFamily super.from,
     required ChatModelWithProviderEntity super.argument,
@@ -72,7 +75,8 @@ final class ChatbotServiceProvider
 
 String _$chatbotServiceHash() => r'8510f716393eefb710a07155a816540c16003e49';
 
-/// Provider that creates a ChatbotService without tools (for title generation, etc.)
+/// Provider that creates a ChatbotService without tools
+/// (for title generation, etc.)
 
 final class ChatbotServiceFamily extends $Family
     with
@@ -86,7 +90,8 @@ final class ChatbotServiceFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// Provider that creates a ChatbotService without tools (for title generation, etc.)
+  /// Provider that creates a ChatbotService without tools
+  /// (for title generation, etc.)
 
   ChatbotServiceProvider call(ChatModelWithProviderEntity modelProvider) =>
       ChatbotServiceProvider._(argument: modelProvider, from: this);

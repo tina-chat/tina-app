@@ -72,6 +72,7 @@ class ChatModelsRepositoryImpl implements ChatModelsRepository {
         createdAt: withProvider.modelProvider.createdAt,
         updatedAt: withProvider.modelProvider.updatedAt,
         workspaceId: withProvider.modelProvider.workspaceId,
+        url: withProvider.modelProvider.url,
       ),
     );
   }

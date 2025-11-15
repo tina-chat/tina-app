@@ -208,8 +208,8 @@ return $default(_that.name,_that.type,_that.key,_that.url);case _:
 /// @nodoc
 
 
-class _AddModelProviderModel implements AddModelProviderModel {
-  const _AddModelProviderModel({this.name, this.type, this.key, this.url});
+class _AddModelProviderModel extends AddModelProviderModel {
+  const _AddModelProviderModel({this.name, this.type, this.key, this.url}): super._();
   
 
 @override final  String? name;

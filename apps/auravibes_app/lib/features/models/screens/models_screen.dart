@@ -35,8 +35,20 @@ class _AddModelModalButton extends ConsumerWidget {
           onPressed: () {
             showDialog<void>(
               context: context,
-              builder: (ctx) =>
-                  const AlertDialog(content: AddModelProviderWidget()),
+              builder: (ctx) => Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
+                ),
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: ctx.auraTheme.spacing.xl3 * 6,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(ctx.auraTheme.spacing.lg),
+                    child: const AddModelProviderWidget(),
+                  ),
+                ),
+              ),
             ).then((onValue) {
               ref.invalidate(listModelProvidersProvider);
             });
