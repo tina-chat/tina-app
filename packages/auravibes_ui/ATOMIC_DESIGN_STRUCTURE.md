@@ -40,7 +40,7 @@ packages/ui/lib/src/
 
 ### Workspace Configuration ✅
 - Added `resolution: workspace` to pubspec.yaml
-- Updated SDK constraint to `^3.9.0` for workspace support
+- Updated SDK constraint to `^3.10.0` for workspace support
 - Added UI package to root workspace configuration
 - Successfully bootstrapped with melos
 

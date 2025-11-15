@@ -4,7 +4,7 @@
 AuraVibes is a privacy-first AI assistant that provides users with complete control over their data and AI interactions. The app allows users to bring their own API keys, ensuring cost transparency and preventing vendor lock-in. It features local-first storage, optional cloud sync, and supports multiple AI providers through a unified interface.
 
 ## Tech Stack
-- **Framework**: Flutter with Dart SDK ^3.9.0
+- **Framework**: Flutter with Dart SDK ^3.10.0
 - **Architecture**: Clean Architecture with layered approach
 - **Package Management**: Melos for monorepo management
 - **Code Generation**: build_runner for JSON serialization and other generated code

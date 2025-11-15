@@ -2,7 +2,8 @@ import 'package:async/async.dart';
 import 'package:langchain/langchain.dart';
 
 enum UserToolType {
-  calculator('calculator');
+  calculator('calculator')
+  ;
 
   const UserToolType(this.value);
   static UserToolType? fromValue(String value) {
