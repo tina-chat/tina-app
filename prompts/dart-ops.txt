@@ -108,7 +108,7 @@ fvm dart create --template=package packages/domain/chat_domain
 # Configure for workspace
 cd packages/domain/chat_domain
 echo "resolution: workspace" >> pubspec.yaml
-sed -i 's/sdk: .*/sdk: "^3.9.0"/' pubspec.yaml
+sed -i 's/sdk: .*/sdk: "^3.10.0"/' pubspec.yaml
 
 # Bootstrap workspace
 cd ../../.. && melos bootstrap
@@ -122,7 +122,7 @@ fvm flutter create --template=package packages/features/chat
 # Configure for workspace
 cd packages/features/chat
 echo "resolution: workspace" >> pubspec.yaml
-sed -i 's/sdk: .*/sdk: "^3.9.0"/' pubspec.yaml
+sed -i 's/sdk: .*/sdk: "^3.10.0"/' pubspec.yaml
 
 # Bootstrap workspace
 cd ../../.. && melos bootstrap

@@ -69,7 +69,7 @@ melos list                          # Verify new package is discovered
 
 **Important Notes:**
 - All workspace packages must include `resolution: workspace` in their pubspec.yaml
-- SDK constraint should be `^3.9.0` or higher for workspace support
+- SDK constraint should be `^3.10.0` or higher for workspace support
 - Watch for dependency conflicts between packages - use compatible versions
 - Test dependencies in isolated packages may conflict with app dependencies
 
@@ -200,7 +200,7 @@ cd packages/domain/chat_domain
 echo "resolution: workspace" >> pubspec.yaml
 
 # Update SDK constraint for workspace support  
-sed -i 's/sdk: .*/sdk: "^3.9.0"/' pubspec.yaml
+sed -i 's/sdk: .*/sdk: "^3.10.0"/' pubspec.yaml
 
 # Add to root workspace (already configured with patterns)
 # Root pubspec.yaml workspace already includes: packages/domain/*

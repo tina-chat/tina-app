@@ -1,7 +1,8 @@
 /// Enum representing the type of chat model.
 enum ChatModelType {
   openai('openai'),
-  anthropic('anthropic');
+  anthropic('anthropic')
+  ;
 
   /// Creates a new ChatModelType with the given string value
   const ChatModelType(this.value);

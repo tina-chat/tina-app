@@ -4,7 +4,8 @@ enum WorkspaceType {
   local('local'),
 
   /// Remote workspace accessed via URL
-  remote('remote');
+  remote('remote')
+  ;
 
   /// Creates a new WorkspaceType with the given string value
   const WorkspaceType(this.value);

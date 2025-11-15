@@ -37,7 +37,8 @@ enum NavigationItemType {
   tools,
   models,
   agents,
-  prompts;
+  prompts
+  ;
 
   GoRouteData router() {
     return switch (this) {

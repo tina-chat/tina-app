@@ -2,7 +2,8 @@ enum MessagesTableType {
   text('text'),
   image('image'),
   toolCall('tool_call'),
-  system('system');
+  system('system')
+  ;
 
   const MessagesTableType(this.value);
   final String value;
@@ -14,7 +15,8 @@ enum MessageTableStatus {
   sent('sent'),
   streaming('streaming'),
   delivered('delivered'),
-  error('error');
+  error('error')
+  ;
 
   const MessageTableStatus(this.value);
 
