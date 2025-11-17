@@ -1429,6 +1429,1097 @@ class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
   }
 }
 
+class $ApiModelProvidersTable extends ApiModelProviders
+    with TableInfo<$ApiModelProvidersTable, ApiModelProvidersTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ApiModelProvidersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<ModelProvidersTableType?, String>
+  type =
+      GeneratedColumn<String>(
+        'type',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<ModelProvidersTableType?>(
+        $ApiModelProvidersTable.$convertertypen,
+      );
+  static const VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String> url = GeneratedColumn<String>(
+    'url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _docMeta = const VerificationMeta('doc');
+  @override
+  late final GeneratedColumn<String> doc = GeneratedColumn<String>(
+    'doc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, type, url, doc];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'api_model_providers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ApiModelProvidersTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+        _urlMeta,
+        url.isAcceptableOrUnknown(data['url']!, _urlMeta),
+      );
+    }
+    if (data.containsKey('doc')) {
+      context.handle(
+        _docMeta,
+        doc.isAcceptableOrUnknown(data['doc']!, _docMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ApiModelProvidersTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ApiModelProvidersTable(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      type: $ApiModelProvidersTable.$convertertypen.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}type'],
+        ),
+      ),
+      url: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}url'],
+      ),
+      doc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}doc'],
+      ),
+    );
+  }
+
+  @override
+  $ApiModelProvidersTable createAlias(String alias) {
+    return $ApiModelProvidersTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<ModelProvidersTableType, String, String>
+  $convertertype = const EnumNameConverter<ModelProvidersTableType>(
+    ModelProvidersTableType.values,
+  );
+  static JsonTypeConverter2<ModelProvidersTableType?, String?, String?>
+  $convertertypen = JsonTypeConverter2.asNullable($convertertype);
+}
+
+class ApiModelProvidersTable extends DataClass
+    implements Insertable<ApiModelProvidersTable> {
+  final String id;
+
+  /// Human-readable name of the model
+  final String name;
+
+  /// Type of chat model (local or remote)
+  /// Stored as string to handle enum conversion
+  final ModelProvidersTableType? type;
+  final String? url;
+  final String? doc;
+  const ApiModelProvidersTable({
+    required this.id,
+    required this.name,
+    this.type,
+    this.url,
+    this.doc,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || type != null) {
+      map['type'] = Variable<String>(
+        $ApiModelProvidersTable.$convertertypen.toSql(type),
+      );
+    }
+    if (!nullToAbsent || url != null) {
+      map['url'] = Variable<String>(url);
+    }
+    if (!nullToAbsent || doc != null) {
+      map['doc'] = Variable<String>(doc);
+    }
+    return map;
+  }
+
+  ApiModelProvidersCompanion toCompanion(bool nullToAbsent) {
+    return ApiModelProvidersCompanion(
+      id: Value(id),
+      name: Value(name),
+      type: type == null && nullToAbsent ? const Value.absent() : Value(type),
+      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
+      doc: doc == null && nullToAbsent ? const Value.absent() : Value(doc),
+    );
+  }
+
+  factory ApiModelProvidersTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ApiModelProvidersTable(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      type: $ApiModelProvidersTable.$convertertypen.fromJson(
+        serializer.fromJson<String?>(json['type']),
+      ),
+      url: serializer.fromJson<String?>(json['url']),
+      doc: serializer.fromJson<String?>(json['doc']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'type': serializer.toJson<String?>(
+        $ApiModelProvidersTable.$convertertypen.toJson(type),
+      ),
+      'url': serializer.toJson<String?>(url),
+      'doc': serializer.toJson<String?>(doc),
+    };
+  }
+
+  ApiModelProvidersTable copyWith({
+    String? id,
+    String? name,
+    Value<ModelProvidersTableType?> type = const Value.absent(),
+    Value<String?> url = const Value.absent(),
+    Value<String?> doc = const Value.absent(),
+  }) => ApiModelProvidersTable(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    type: type.present ? type.value : this.type,
+    url: url.present ? url.value : this.url,
+    doc: doc.present ? doc.value : this.doc,
+  );
+  ApiModelProvidersTable copyWithCompanion(ApiModelProvidersCompanion data) {
+    return ApiModelProvidersTable(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      type: data.type.present ? data.type.value : this.type,
+      url: data.url.present ? data.url.value : this.url,
+      doc: data.doc.present ? data.doc.value : this.doc,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ApiModelProvidersTable(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('url: $url, ')
+          ..write('doc: $doc')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, type, url, doc);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ApiModelProvidersTable &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.type == this.type &&
+          other.url == this.url &&
+          other.doc == this.doc);
+}
+
+class ApiModelProvidersCompanion
+    extends UpdateCompanion<ApiModelProvidersTable> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<ModelProvidersTableType?> type;
+  final Value<String?> url;
+  final Value<String?> doc;
+  final Value<int> rowid;
+  const ApiModelProvidersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.type = const Value.absent(),
+    this.url = const Value.absent(),
+    this.doc = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ApiModelProvidersCompanion.insert({
+    required String id,
+    required String name,
+    this.type = const Value.absent(),
+    this.url = const Value.absent(),
+    this.doc = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name);
+  static Insertable<ApiModelProvidersTable> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? type,
+    Expression<String>? url,
+    Expression<String>? doc,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (type != null) 'type': type,
+      if (url != null) 'url': url,
+      if (doc != null) 'doc': doc,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ApiModelProvidersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<ModelProvidersTableType?>? type,
+    Value<String?>? url,
+    Value<String?>? doc,
+    Value<int>? rowid,
+  }) {
+    return ApiModelProvidersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      url: url ?? this.url,
+      doc: doc ?? this.doc,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(
+        $ApiModelProvidersTable.$convertertypen.toSql(type.value),
+      );
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (doc.present) {
+      map['doc'] = Variable<String>(doc.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ApiModelProvidersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('url: $url, ')
+          ..write('doc: $doc, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ApiModelsTable extends ApiModels
+    with TableInfo<$ApiModelsTable, ApiModelsTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ApiModelsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _modelProviderMeta = const VerificationMeta(
+    'modelProvider',
+  );
+  @override
+  late final GeneratedColumn<String> modelProvider = GeneratedColumn<String>(
+    'model_provider',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES api_model_providers (id)',
+    ),
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>?, String>
+  modalitiesInput = GeneratedColumn<String>(
+    'modalities_input',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  ).withConverter<List<String>?>($ApiModelsTable.$convertermodalitiesInputn);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>?, String>
+  modalitiesOuput = GeneratedColumn<String>(
+    'modalities_ouput',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  ).withConverter<List<String>?>($ApiModelsTable.$convertermodalitiesOuputn);
+  static const VerificationMeta _openWeightsMeta = const VerificationMeta(
+    'openWeights',
+  );
+  @override
+  late final GeneratedColumn<bool> openWeights = GeneratedColumn<bool>(
+    'open_weights',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("open_weights" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _costInputMeta = const VerificationMeta(
+    'costInput',
+  );
+  @override
+  late final GeneratedColumn<double> costInput = GeneratedColumn<double>(
+    'cost_input',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _costOutputMeta = const VerificationMeta(
+    'costOutput',
+  );
+  @override
+  late final GeneratedColumn<double> costOutput = GeneratedColumn<double>(
+    'cost_output',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _costCacheReadMeta = const VerificationMeta(
+    'costCacheRead',
+  );
+  @override
+  late final GeneratedColumn<double> costCacheRead = GeneratedColumn<double>(
+    'cost_cache_read',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _limitContextMeta = const VerificationMeta(
+    'limitContext',
+  );
+  @override
+  late final GeneratedColumn<int> limitContext = GeneratedColumn<int>(
+    'limit_context',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _limitOutputMeta = const VerificationMeta(
+    'limitOutput',
+  );
+  @override
+  late final GeneratedColumn<int> limitOutput = GeneratedColumn<int>(
+    'limit_output',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    modelProvider,
+    id,
+    name,
+    modalitiesInput,
+    modalitiesOuput,
+    openWeights,
+    costInput,
+    costOutput,
+    costCacheRead,
+    limitContext,
+    limitOutput,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'api_models';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ApiModelsTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('model_provider')) {
+      context.handle(
+        _modelProviderMeta,
+        modelProvider.isAcceptableOrUnknown(
+          data['model_provider']!,
+          _modelProviderMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_modelProviderMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('open_weights')) {
+      context.handle(
+        _openWeightsMeta,
+        openWeights.isAcceptableOrUnknown(
+          data['open_weights']!,
+          _openWeightsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cost_input')) {
+      context.handle(
+        _costInputMeta,
+        costInput.isAcceptableOrUnknown(data['cost_input']!, _costInputMeta),
+      );
+    }
+    if (data.containsKey('cost_output')) {
+      context.handle(
+        _costOutputMeta,
+        costOutput.isAcceptableOrUnknown(data['cost_output']!, _costOutputMeta),
+      );
+    }
+    if (data.containsKey('cost_cache_read')) {
+      context.handle(
+        _costCacheReadMeta,
+        costCacheRead.isAcceptableOrUnknown(
+          data['cost_cache_read']!,
+          _costCacheReadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('limit_context')) {
+      context.handle(
+        _limitContextMeta,
+        limitContext.isAcceptableOrUnknown(
+          data['limit_context']!,
+          _limitContextMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_limitContextMeta);
+    }
+    if (data.containsKey('limit_output')) {
+      context.handle(
+        _limitOutputMeta,
+        limitOutput.isAcceptableOrUnknown(
+          data['limit_output']!,
+          _limitOutputMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_limitOutputMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ApiModelsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ApiModelsTable(
+      modelProvider: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model_provider'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      modalitiesInput: $ApiModelsTable.$convertermodalitiesInputn.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}modalities_input'],
+        ),
+      ),
+      modalitiesOuput: $ApiModelsTable.$convertermodalitiesOuputn.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}modalities_ouput'],
+        ),
+      ),
+      openWeights: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}open_weights'],
+      ),
+      costInput: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cost_input'],
+      ),
+      costOutput: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cost_output'],
+      ),
+      costCacheRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cost_cache_read'],
+      ),
+      limitContext: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}limit_context'],
+      )!,
+      limitOutput: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}limit_output'],
+      )!,
+    );
+  }
+
+  @override
+  $ApiModelsTable createAlias(String alias) {
+    return $ApiModelsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<List<String>, String, Object?>
+  $convertermodalitiesInput = stringListConverter;
+  static JsonTypeConverter2<List<String>?, String?, Object?>
+  $convertermodalitiesInputn = JsonTypeConverter2.asNullable(
+    $convertermodalitiesInput,
+  );
+  static JsonTypeConverter2<List<String>, String, Object?>
+  $convertermodalitiesOuput = stringListConverter;
+  static JsonTypeConverter2<List<String>?, String?, Object?>
+  $convertermodalitiesOuputn = JsonTypeConverter2.asNullable(
+    $convertermodalitiesOuput,
+  );
+}
+
+class ApiModelsTable extends DataClass implements Insertable<ApiModelsTable> {
+  final String modelProvider;
+  final String id;
+
+  /// Human-readable name of the model
+  final String name;
+
+  /// Type of chat model (local or remote)
+  /// Stored as string to handle enum conversion
+  final List<String>? modalitiesInput;
+  final List<String>? modalitiesOuput;
+  final bool? openWeights;
+  final double? costInput;
+  final double? costOutput;
+  final double? costCacheRead;
+  final int limitContext;
+  final int limitOutput;
+  const ApiModelsTable({
+    required this.modelProvider,
+    required this.id,
+    required this.name,
+    this.modalitiesInput,
+    this.modalitiesOuput,
+    this.openWeights,
+    this.costInput,
+    this.costOutput,
+    this.costCacheRead,
+    required this.limitContext,
+    required this.limitOutput,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['model_provider'] = Variable<String>(modelProvider);
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || modalitiesInput != null) {
+      map['modalities_input'] = Variable<String>(
+        $ApiModelsTable.$convertermodalitiesInputn.toSql(modalitiesInput),
+      );
+    }
+    if (!nullToAbsent || modalitiesOuput != null) {
+      map['modalities_ouput'] = Variable<String>(
+        $ApiModelsTable.$convertermodalitiesOuputn.toSql(modalitiesOuput),
+      );
+    }
+    if (!nullToAbsent || openWeights != null) {
+      map['open_weights'] = Variable<bool>(openWeights);
+    }
+    if (!nullToAbsent || costInput != null) {
+      map['cost_input'] = Variable<double>(costInput);
+    }
+    if (!nullToAbsent || costOutput != null) {
+      map['cost_output'] = Variable<double>(costOutput);
+    }
+    if (!nullToAbsent || costCacheRead != null) {
+      map['cost_cache_read'] = Variable<double>(costCacheRead);
+    }
+    map['limit_context'] = Variable<int>(limitContext);
+    map['limit_output'] = Variable<int>(limitOutput);
+    return map;
+  }
+
+  ApiModelsCompanion toCompanion(bool nullToAbsent) {
+    return ApiModelsCompanion(
+      modelProvider: Value(modelProvider),
+      id: Value(id),
+      name: Value(name),
+      modalitiesInput: modalitiesInput == null && nullToAbsent
+          ? const Value.absent()
+          : Value(modalitiesInput),
+      modalitiesOuput: modalitiesOuput == null && nullToAbsent
+          ? const Value.absent()
+          : Value(modalitiesOuput),
+      openWeights: openWeights == null && nullToAbsent
+          ? const Value.absent()
+          : Value(openWeights),
+      costInput: costInput == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costInput),
+      costOutput: costOutput == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costOutput),
+      costCacheRead: costCacheRead == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costCacheRead),
+      limitContext: Value(limitContext),
+      limitOutput: Value(limitOutput),
+    );
+  }
+
+  factory ApiModelsTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ApiModelsTable(
+      modelProvider: serializer.fromJson<String>(json['modelProvider']),
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      modalitiesInput: $ApiModelsTable.$convertermodalitiesInputn.fromJson(
+        serializer.fromJson<Object?>(json['modalitiesInput']),
+      ),
+      modalitiesOuput: $ApiModelsTable.$convertermodalitiesOuputn.fromJson(
+        serializer.fromJson<Object?>(json['modalitiesOuput']),
+      ),
+      openWeights: serializer.fromJson<bool?>(json['openWeights']),
+      costInput: serializer.fromJson<double?>(json['costInput']),
+      costOutput: serializer.fromJson<double?>(json['costOutput']),
+      costCacheRead: serializer.fromJson<double?>(json['costCacheRead']),
+      limitContext: serializer.fromJson<int>(json['limitContext']),
+      limitOutput: serializer.fromJson<int>(json['limitOutput']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'modelProvider': serializer.toJson<String>(modelProvider),
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'modalitiesInput': serializer.toJson<Object?>(
+        $ApiModelsTable.$convertermodalitiesInputn.toJson(modalitiesInput),
+      ),
+      'modalitiesOuput': serializer.toJson<Object?>(
+        $ApiModelsTable.$convertermodalitiesOuputn.toJson(modalitiesOuput),
+      ),
+      'openWeights': serializer.toJson<bool?>(openWeights),
+      'costInput': serializer.toJson<double?>(costInput),
+      'costOutput': serializer.toJson<double?>(costOutput),
+      'costCacheRead': serializer.toJson<double?>(costCacheRead),
+      'limitContext': serializer.toJson<int>(limitContext),
+      'limitOutput': serializer.toJson<int>(limitOutput),
+    };
+  }
+
+  ApiModelsTable copyWith({
+    String? modelProvider,
+    String? id,
+    String? name,
+    Value<List<String>?> modalitiesInput = const Value.absent(),
+    Value<List<String>?> modalitiesOuput = const Value.absent(),
+    Value<bool?> openWeights = const Value.absent(),
+    Value<double?> costInput = const Value.absent(),
+    Value<double?> costOutput = const Value.absent(),
+    Value<double?> costCacheRead = const Value.absent(),
+    int? limitContext,
+    int? limitOutput,
+  }) => ApiModelsTable(
+    modelProvider: modelProvider ?? this.modelProvider,
+    id: id ?? this.id,
+    name: name ?? this.name,
+    modalitiesInput: modalitiesInput.present
+        ? modalitiesInput.value
+        : this.modalitiesInput,
+    modalitiesOuput: modalitiesOuput.present
+        ? modalitiesOuput.value
+        : this.modalitiesOuput,
+    openWeights: openWeights.present ? openWeights.value : this.openWeights,
+    costInput: costInput.present ? costInput.value : this.costInput,
+    costOutput: costOutput.present ? costOutput.value : this.costOutput,
+    costCacheRead: costCacheRead.present
+        ? costCacheRead.value
+        : this.costCacheRead,
+    limitContext: limitContext ?? this.limitContext,
+    limitOutput: limitOutput ?? this.limitOutput,
+  );
+  ApiModelsTable copyWithCompanion(ApiModelsCompanion data) {
+    return ApiModelsTable(
+      modelProvider: data.modelProvider.present
+          ? data.modelProvider.value
+          : this.modelProvider,
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      modalitiesInput: data.modalitiesInput.present
+          ? data.modalitiesInput.value
+          : this.modalitiesInput,
+      modalitiesOuput: data.modalitiesOuput.present
+          ? data.modalitiesOuput.value
+          : this.modalitiesOuput,
+      openWeights: data.openWeights.present
+          ? data.openWeights.value
+          : this.openWeights,
+      costInput: data.costInput.present ? data.costInput.value : this.costInput,
+      costOutput: data.costOutput.present
+          ? data.costOutput.value
+          : this.costOutput,
+      costCacheRead: data.costCacheRead.present
+          ? data.costCacheRead.value
+          : this.costCacheRead,
+      limitContext: data.limitContext.present
+          ? data.limitContext.value
+          : this.limitContext,
+      limitOutput: data.limitOutput.present
+          ? data.limitOutput.value
+          : this.limitOutput,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ApiModelsTable(')
+          ..write('modelProvider: $modelProvider, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('modalitiesInput: $modalitiesInput, ')
+          ..write('modalitiesOuput: $modalitiesOuput, ')
+          ..write('openWeights: $openWeights, ')
+          ..write('costInput: $costInput, ')
+          ..write('costOutput: $costOutput, ')
+          ..write('costCacheRead: $costCacheRead, ')
+          ..write('limitContext: $limitContext, ')
+          ..write('limitOutput: $limitOutput')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    modelProvider,
+    id,
+    name,
+    modalitiesInput,
+    modalitiesOuput,
+    openWeights,
+    costInput,
+    costOutput,
+    costCacheRead,
+    limitContext,
+    limitOutput,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ApiModelsTable &&
+          other.modelProvider == this.modelProvider &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.modalitiesInput == this.modalitiesInput &&
+          other.modalitiesOuput == this.modalitiesOuput &&
+          other.openWeights == this.openWeights &&
+          other.costInput == this.costInput &&
+          other.costOutput == this.costOutput &&
+          other.costCacheRead == this.costCacheRead &&
+          other.limitContext == this.limitContext &&
+          other.limitOutput == this.limitOutput);
+}
+
+class ApiModelsCompanion extends UpdateCompanion<ApiModelsTable> {
+  final Value<String> modelProvider;
+  final Value<String> id;
+  final Value<String> name;
+  final Value<List<String>?> modalitiesInput;
+  final Value<List<String>?> modalitiesOuput;
+  final Value<bool?> openWeights;
+  final Value<double?> costInput;
+  final Value<double?> costOutput;
+  final Value<double?> costCacheRead;
+  final Value<int> limitContext;
+  final Value<int> limitOutput;
+  final Value<int> rowid;
+  const ApiModelsCompanion({
+    this.modelProvider = const Value.absent(),
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.modalitiesInput = const Value.absent(),
+    this.modalitiesOuput = const Value.absent(),
+    this.openWeights = const Value.absent(),
+    this.costInput = const Value.absent(),
+    this.costOutput = const Value.absent(),
+    this.costCacheRead = const Value.absent(),
+    this.limitContext = const Value.absent(),
+    this.limitOutput = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ApiModelsCompanion.insert({
+    required String modelProvider,
+    required String id,
+    required String name,
+    this.modalitiesInput = const Value.absent(),
+    this.modalitiesOuput = const Value.absent(),
+    this.openWeights = const Value.absent(),
+    this.costInput = const Value.absent(),
+    this.costOutput = const Value.absent(),
+    this.costCacheRead = const Value.absent(),
+    required int limitContext,
+    required int limitOutput,
+    this.rowid = const Value.absent(),
+  }) : modelProvider = Value(modelProvider),
+       id = Value(id),
+       name = Value(name),
+       limitContext = Value(limitContext),
+       limitOutput = Value(limitOutput);
+  static Insertable<ApiModelsTable> custom({
+    Expression<String>? modelProvider,
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? modalitiesInput,
+    Expression<String>? modalitiesOuput,
+    Expression<bool>? openWeights,
+    Expression<double>? costInput,
+    Expression<double>? costOutput,
+    Expression<double>? costCacheRead,
+    Expression<int>? limitContext,
+    Expression<int>? limitOutput,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (modelProvider != null) 'model_provider': modelProvider,
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (modalitiesInput != null) 'modalities_input': modalitiesInput,
+      if (modalitiesOuput != null) 'modalities_ouput': modalitiesOuput,
+      if (openWeights != null) 'open_weights': openWeights,
+      if (costInput != null) 'cost_input': costInput,
+      if (costOutput != null) 'cost_output': costOutput,
+      if (costCacheRead != null) 'cost_cache_read': costCacheRead,
+      if (limitContext != null) 'limit_context': limitContext,
+      if (limitOutput != null) 'limit_output': limitOutput,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ApiModelsCompanion copyWith({
+    Value<String>? modelProvider,
+    Value<String>? id,
+    Value<String>? name,
+    Value<List<String>?>? modalitiesInput,
+    Value<List<String>?>? modalitiesOuput,
+    Value<bool?>? openWeights,
+    Value<double?>? costInput,
+    Value<double?>? costOutput,
+    Value<double?>? costCacheRead,
+    Value<int>? limitContext,
+    Value<int>? limitOutput,
+    Value<int>? rowid,
+  }) {
+    return ApiModelsCompanion(
+      modelProvider: modelProvider ?? this.modelProvider,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      modalitiesInput: modalitiesInput ?? this.modalitiesInput,
+      modalitiesOuput: modalitiesOuput ?? this.modalitiesOuput,
+      openWeights: openWeights ?? this.openWeights,
+      costInput: costInput ?? this.costInput,
+      costOutput: costOutput ?? this.costOutput,
+      costCacheRead: costCacheRead ?? this.costCacheRead,
+      limitContext: limitContext ?? this.limitContext,
+      limitOutput: limitOutput ?? this.limitOutput,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (modelProvider.present) {
+      map['model_provider'] = Variable<String>(modelProvider.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (modalitiesInput.present) {
+      map['modalities_input'] = Variable<String>(
+        $ApiModelsTable.$convertermodalitiesInputn.toSql(modalitiesInput.value),
+      );
+    }
+    if (modalitiesOuput.present) {
+      map['modalities_ouput'] = Variable<String>(
+        $ApiModelsTable.$convertermodalitiesOuputn.toSql(modalitiesOuput.value),
+      );
+    }
+    if (openWeights.present) {
+      map['open_weights'] = Variable<bool>(openWeights.value);
+    }
+    if (costInput.present) {
+      map['cost_input'] = Variable<double>(costInput.value);
+    }
+    if (costOutput.present) {
+      map['cost_output'] = Variable<double>(costOutput.value);
+    }
+    if (costCacheRead.present) {
+      map['cost_cache_read'] = Variable<double>(costCacheRead.value);
+    }
+    if (limitContext.present) {
+      map['limit_context'] = Variable<int>(limitContext.value);
+    }
+    if (limitOutput.present) {
+      map['limit_output'] = Variable<int>(limitOutput.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ApiModelsCompanion(')
+          ..write('modelProvider: $modelProvider, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('modalitiesInput: $modalitiesInput, ')
+          ..write('modalitiesOuput: $modalitiesOuput, ')
+          ..write('openWeights: $openWeights, ')
+          ..write('costInput: $costInput, ')
+          ..write('costOutput: $costOutput, ')
+          ..write('costCacheRead: $costCacheRead, ')
+          ..write('limitContext: $limitContext, ')
+          ..write('limitOutput: $limitOutput, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConversationsTable extends Conversations
     with TableInfo<$ConversationsTable, ConversationsTable> {
   @override
@@ -3355,6 +4446,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $WorkspacesTable workspaces = $WorkspacesTable(this);
   late final $ModelProvidersTable modelProviders = $ModelProvidersTable(this);
   late final $ChatModelsTable chatModels = $ChatModelsTable(this);
+  late final $ApiModelProvidersTable apiModelProviders =
+      $ApiModelProvidersTable(this);
+  late final $ApiModelsTable apiModels = $ApiModelsTable(this);
   late final $ConversationsTable conversations = $ConversationsTable(this);
   late final $MessagesTable messages = $MessagesTable(this);
   late final $WorkspaceToolsTable workspaceTools = $WorkspaceToolsTable(this);
@@ -3365,6 +4459,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this as AppDatabase,
   );
   late final ChatModelsDao chatModelsDao = ChatModelsDao(this as AppDatabase);
+  late final ApiModelProvidersDao apiModelProvidersDao = ApiModelProvidersDao(
+    this as AppDatabase,
+  );
+  late final ApiModelsDao apiModelsDao = ApiModelsDao(this as AppDatabase);
   late final ConversationDao conversationDao = ConversationDao(
     this as AppDatabase,
   );
@@ -3383,6 +4481,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     workspaces,
     modelProviders,
     chatModels,
+    apiModelProviders,
+    apiModels,
     conversations,
     messages,
     workspaceTools,
@@ -4855,6 +5955,786 @@ typedef $$ChatModelsTableProcessedTableManager =
       (ChatModelsTable, $$ChatModelsTableReferences),
       ChatModelsTable,
       PrefetchHooks Function({bool modelProviderId, bool conversationsRefs})
+    >;
+typedef $$ApiModelProvidersTableCreateCompanionBuilder =
+    ApiModelProvidersCompanion Function({
+      required String id,
+      required String name,
+      Value<ModelProvidersTableType?> type,
+      Value<String?> url,
+      Value<String?> doc,
+      Value<int> rowid,
+    });
+typedef $$ApiModelProvidersTableUpdateCompanionBuilder =
+    ApiModelProvidersCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<ModelProvidersTableType?> type,
+      Value<String?> url,
+      Value<String?> doc,
+      Value<int> rowid,
+    });
+
+final class $$ApiModelProvidersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ApiModelProvidersTable,
+          ApiModelProvidersTable
+        > {
+  $$ApiModelProvidersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$ApiModelsTable, List<ApiModelsTable>>
+  _apiModelsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.apiModels,
+    aliasName: $_aliasNameGenerator(
+      db.apiModelProviders.id,
+      db.apiModels.modelProvider,
+    ),
+  );
+
+  $$ApiModelsTableProcessedTableManager get apiModelsRefs {
+    final manager = $$ApiModelsTableTableManager(
+      $_db,
+      $_db.apiModels,
+    ).filter((f) => f.modelProvider.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_apiModelsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ApiModelProvidersTableFilterComposer
+    extends Composer<_$AppDatabase, $ApiModelProvidersTable> {
+  $$ApiModelProvidersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    ModelProvidersTableType?,
+    ModelProvidersTableType,
+    String
+  >
+  get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doc => $composableBuilder(
+    column: $table.doc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> apiModelsRefs(
+    Expression<bool> Function($$ApiModelsTableFilterComposer f) f,
+  ) {
+    final $$ApiModelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.apiModels,
+      getReferencedColumn: (t) => t.modelProvider,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelsTableFilterComposer(
+            $db: $db,
+            $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ApiModelProvidersTableOrderingComposer
+    extends Composer<_$AppDatabase, $ApiModelProvidersTable> {
+  $$ApiModelProvidersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doc => $composableBuilder(
+    column: $table.doc,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ApiModelProvidersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ApiModelProvidersTable> {
+  $$ApiModelProvidersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<ModelProvidersTableType?, String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<String> get doc =>
+      $composableBuilder(column: $table.doc, builder: (column) => column);
+
+  Expression<T> apiModelsRefs<T extends Object>(
+    Expression<T> Function($$ApiModelsTableAnnotationComposer a) f,
+  ) {
+    final $$ApiModelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.apiModels,
+      getReferencedColumn: (t) => t.modelProvider,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ApiModelProvidersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ApiModelProvidersTable,
+          ApiModelProvidersTable,
+          $$ApiModelProvidersTableFilterComposer,
+          $$ApiModelProvidersTableOrderingComposer,
+          $$ApiModelProvidersTableAnnotationComposer,
+          $$ApiModelProvidersTableCreateCompanionBuilder,
+          $$ApiModelProvidersTableUpdateCompanionBuilder,
+          (ApiModelProvidersTable, $$ApiModelProvidersTableReferences),
+          ApiModelProvidersTable,
+          PrefetchHooks Function({bool apiModelsRefs})
+        > {
+  $$ApiModelProvidersTableTableManager(
+    _$AppDatabase db,
+    $ApiModelProvidersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ApiModelProvidersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ApiModelProvidersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ApiModelProvidersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<ModelProvidersTableType?> type = const Value.absent(),
+                Value<String?> url = const Value.absent(),
+                Value<String?> doc = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ApiModelProvidersCompanion(
+                id: id,
+                name: name,
+                type: type,
+                url: url,
+                doc: doc,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<ModelProvidersTableType?> type = const Value.absent(),
+                Value<String?> url = const Value.absent(),
+                Value<String?> doc = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ApiModelProvidersCompanion.insert(
+                id: id,
+                name: name,
+                type: type,
+                url: url,
+                doc: doc,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ApiModelProvidersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({apiModelsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (apiModelsRefs) db.apiModels],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (apiModelsRefs)
+                    await $_getPrefetchedData<
+                      ApiModelProvidersTable,
+                      $ApiModelProvidersTable,
+                      ApiModelsTable
+                    >(
+                      currentTable: table,
+                      referencedTable: $$ApiModelProvidersTableReferences
+                          ._apiModelsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ApiModelProvidersTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).apiModelsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.modelProvider == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ApiModelProvidersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ApiModelProvidersTable,
+      ApiModelProvidersTable,
+      $$ApiModelProvidersTableFilterComposer,
+      $$ApiModelProvidersTableOrderingComposer,
+      $$ApiModelProvidersTableAnnotationComposer,
+      $$ApiModelProvidersTableCreateCompanionBuilder,
+      $$ApiModelProvidersTableUpdateCompanionBuilder,
+      (ApiModelProvidersTable, $$ApiModelProvidersTableReferences),
+      ApiModelProvidersTable,
+      PrefetchHooks Function({bool apiModelsRefs})
+    >;
+typedef $$ApiModelsTableCreateCompanionBuilder =
+    ApiModelsCompanion Function({
+      required String modelProvider,
+      required String id,
+      required String name,
+      Value<List<String>?> modalitiesInput,
+      Value<List<String>?> modalitiesOuput,
+      Value<bool?> openWeights,
+      Value<double?> costInput,
+      Value<double?> costOutput,
+      Value<double?> costCacheRead,
+      required int limitContext,
+      required int limitOutput,
+      Value<int> rowid,
+    });
+typedef $$ApiModelsTableUpdateCompanionBuilder =
+    ApiModelsCompanion Function({
+      Value<String> modelProvider,
+      Value<String> id,
+      Value<String> name,
+      Value<List<String>?> modalitiesInput,
+      Value<List<String>?> modalitiesOuput,
+      Value<bool?> openWeights,
+      Value<double?> costInput,
+      Value<double?> costOutput,
+      Value<double?> costCacheRead,
+      Value<int> limitContext,
+      Value<int> limitOutput,
+      Value<int> rowid,
+    });
+
+final class $$ApiModelsTableReferences
+    extends BaseReferences<_$AppDatabase, $ApiModelsTable, ApiModelsTable> {
+  $$ApiModelsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ApiModelProvidersTable _modelProviderTable(_$AppDatabase db) =>
+      db.apiModelProviders.createAlias(
+        $_aliasNameGenerator(
+          db.apiModels.modelProvider,
+          db.apiModelProviders.id,
+        ),
+      );
+
+  $$ApiModelProvidersTableProcessedTableManager get modelProvider {
+    final $_column = $_itemColumn<String>('model_provider')!;
+
+    final manager = $$ApiModelProvidersTableTableManager(
+      $_db,
+      $_db.apiModelProviders,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_modelProviderTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ApiModelsTableFilterComposer
+    extends Composer<_$AppDatabase, $ApiModelsTable> {
+  $$ApiModelsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+  get modalitiesInput => $composableBuilder(
+    column: $table.modalitiesInput,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+  get modalitiesOuput => $composableBuilder(
+    column: $table.modalitiesOuput,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<bool> get openWeights => $composableBuilder(
+    column: $table.openWeights,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get costInput => $composableBuilder(
+    column: $table.costInput,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get costOutput => $composableBuilder(
+    column: $table.costOutput,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get costCacheRead => $composableBuilder(
+    column: $table.costCacheRead,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get limitContext => $composableBuilder(
+    column: $table.limitContext,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get limitOutput => $composableBuilder(
+    column: $table.limitOutput,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ApiModelProvidersTableFilterComposer get modelProvider {
+    final $$ApiModelProvidersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelProvider,
+      referencedTable: $db.apiModelProviders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelProvidersTableFilterComposer(
+            $db: $db,
+            $table: $db.apiModelProviders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ApiModelsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ApiModelsTable> {
+  $$ApiModelsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get modalitiesInput => $composableBuilder(
+    column: $table.modalitiesInput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get modalitiesOuput => $composableBuilder(
+    column: $table.modalitiesOuput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get openWeights => $composableBuilder(
+    column: $table.openWeights,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get costInput => $composableBuilder(
+    column: $table.costInput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get costOutput => $composableBuilder(
+    column: $table.costOutput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get costCacheRead => $composableBuilder(
+    column: $table.costCacheRead,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get limitContext => $composableBuilder(
+    column: $table.limitContext,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get limitOutput => $composableBuilder(
+    column: $table.limitOutput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ApiModelProvidersTableOrderingComposer get modelProvider {
+    final $$ApiModelProvidersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelProvider,
+      referencedTable: $db.apiModelProviders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelProvidersTableOrderingComposer(
+            $db: $db,
+            $table: $db.apiModelProviders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ApiModelsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ApiModelsTable> {
+  $$ApiModelsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<String>?, String> get modalitiesInput =>
+      $composableBuilder(
+        column: $table.modalitiesInput,
+        builder: (column) => column,
+      );
+
+  GeneratedColumnWithTypeConverter<List<String>?, String> get modalitiesOuput =>
+      $composableBuilder(
+        column: $table.modalitiesOuput,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<bool> get openWeights => $composableBuilder(
+    column: $table.openWeights,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get costInput =>
+      $composableBuilder(column: $table.costInput, builder: (column) => column);
+
+  GeneratedColumn<double> get costOutput => $composableBuilder(
+    column: $table.costOutput,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get costCacheRead => $composableBuilder(
+    column: $table.costCacheRead,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get limitContext => $composableBuilder(
+    column: $table.limitContext,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get limitOutput => $composableBuilder(
+    column: $table.limitOutput,
+    builder: (column) => column,
+  );
+
+  $$ApiModelProvidersTableAnnotationComposer get modelProvider {
+    final $$ApiModelProvidersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.modelProvider,
+          referencedTable: $db.apiModelProviders,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ApiModelProvidersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.apiModelProviders,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ApiModelsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ApiModelsTable,
+          ApiModelsTable,
+          $$ApiModelsTableFilterComposer,
+          $$ApiModelsTableOrderingComposer,
+          $$ApiModelsTableAnnotationComposer,
+          $$ApiModelsTableCreateCompanionBuilder,
+          $$ApiModelsTableUpdateCompanionBuilder,
+          (ApiModelsTable, $$ApiModelsTableReferences),
+          ApiModelsTable,
+          PrefetchHooks Function({bool modelProvider})
+        > {
+  $$ApiModelsTableTableManager(_$AppDatabase db, $ApiModelsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ApiModelsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ApiModelsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ApiModelsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> modelProvider = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<List<String>?> modalitiesInput = const Value.absent(),
+                Value<List<String>?> modalitiesOuput = const Value.absent(),
+                Value<bool?> openWeights = const Value.absent(),
+                Value<double?> costInput = const Value.absent(),
+                Value<double?> costOutput = const Value.absent(),
+                Value<double?> costCacheRead = const Value.absent(),
+                Value<int> limitContext = const Value.absent(),
+                Value<int> limitOutput = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ApiModelsCompanion(
+                modelProvider: modelProvider,
+                id: id,
+                name: name,
+                modalitiesInput: modalitiesInput,
+                modalitiesOuput: modalitiesOuput,
+                openWeights: openWeights,
+                costInput: costInput,
+                costOutput: costOutput,
+                costCacheRead: costCacheRead,
+                limitContext: limitContext,
+                limitOutput: limitOutput,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String modelProvider,
+                required String id,
+                required String name,
+                Value<List<String>?> modalitiesInput = const Value.absent(),
+                Value<List<String>?> modalitiesOuput = const Value.absent(),
+                Value<bool?> openWeights = const Value.absent(),
+                Value<double?> costInput = const Value.absent(),
+                Value<double?> costOutput = const Value.absent(),
+                Value<double?> costCacheRead = const Value.absent(),
+                required int limitContext,
+                required int limitOutput,
+                Value<int> rowid = const Value.absent(),
+              }) => ApiModelsCompanion.insert(
+                modelProvider: modelProvider,
+                id: id,
+                name: name,
+                modalitiesInput: modalitiesInput,
+                modalitiesOuput: modalitiesOuput,
+                openWeights: openWeights,
+                costInput: costInput,
+                costOutput: costOutput,
+                costCacheRead: costCacheRead,
+                limitContext: limitContext,
+                limitOutput: limitOutput,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ApiModelsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({modelProvider = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (modelProvider) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.modelProvider,
+                                referencedTable: $$ApiModelsTableReferences
+                                    ._modelProviderTable(db),
+                                referencedColumn: $$ApiModelsTableReferences
+                                    ._modelProviderTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ApiModelsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ApiModelsTable,
+      ApiModelsTable,
+      $$ApiModelsTableFilterComposer,
+      $$ApiModelsTableOrderingComposer,
+      $$ApiModelsTableAnnotationComposer,
+      $$ApiModelsTableCreateCompanionBuilder,
+      $$ApiModelsTableUpdateCompanionBuilder,
+      (ApiModelsTable, $$ApiModelsTableReferences),
+      ApiModelsTable,
+      PrefetchHooks Function({bool modelProvider})
     >;
 typedef $$ConversationsTableCreateCompanionBuilder =
     ConversationsCompanion Function({
@@ -6655,6 +8535,10 @@ class $AppDatabaseManager {
       $$ModelProvidersTableTableManager(_db, _db.modelProviders);
   $$ChatModelsTableTableManager get chatModels =>
       $$ChatModelsTableTableManager(_db, _db.chatModels);
+  $$ApiModelProvidersTableTableManager get apiModelProviders =>
+      $$ApiModelProvidersTableTableManager(_db, _db.apiModelProviders);
+  $$ApiModelsTableTableManager get apiModels =>
+      $$ApiModelsTableTableManager(_db, _db.apiModels);
   $$ConversationsTableTableManager get conversations =>
       $$ConversationsTableTableManager(_db, _db.conversations);
   $$MessagesTableTableManager get messages =>

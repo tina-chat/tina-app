@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:auravibes_app/data/database/drift/daos/api_model_providers_dao.dart';
+import 'package:auravibes_app/data/database/drift/daos/api_models_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/chat_models_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/conversation_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/conversation_tools_dao.dart';
@@ -7,6 +9,8 @@ import 'package:auravibes_app/data/database/drift/daos/message_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/model_providers_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/workspace_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/workspace_tools_dao.dart';
+import 'package:auravibes_app/data/database/drift/tables/api_model_provider_table.dart';
+import 'package:auravibes_app/data/database/drift/tables/api_model_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/chat_models_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/conversation_disabled_tools_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/conversations_table.dart';
@@ -32,6 +36,8 @@ part 'app_database.g.dart';
     Workspaces,
     ModelProviders,
     ChatModels,
+    ApiModelProviders,
+    ApiModels,
     Conversations,
     Messages,
     WorkspaceTools,
@@ -41,6 +47,8 @@ part 'app_database.g.dart';
     WorkspaceDao,
     ModelProvidersDao,
     ChatModelsDao,
+    ApiModelProvidersDao,
+    ApiModelsDao,
     ConversationDao,
     MessageDao,
     WorkspaceToolsDao,
@@ -57,7 +65,7 @@ class AppDatabase extends _$AppDatabase {
 
   /// Database schema version.
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   /// Migration logic for database schema upgrades.
   ///
@@ -69,6 +77,14 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
         // No default tools initialization needed
         // Tools are defined in the app code via ToolService, not the database
+      },
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 2) {
+          // Add new tables for API models and providers
+          // TODO: Uncomment after DAOs are created
+          // await m.createTable(apiModelProviders);
+          // await m.createTable(apiModels);
+        }
       },
     );
   }
