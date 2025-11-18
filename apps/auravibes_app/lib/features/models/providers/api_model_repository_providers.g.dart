@@ -158,3 +158,45 @@ final class ModelSyncServiceProvider
 }
 
 String _$modelSyncServiceHash() => r'858309c7530c0e52cb6fc7aecc5099033ac8a34b';
+
+@ProviderFor(modelProvidersNotifier)
+const modelProvidersProvider = ModelProvidersNotifierProvider._();
+
+final class ModelProvidersNotifierProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ApiModelProviderEntity>>,
+          List<ApiModelProviderEntity>,
+          FutureOr<List<ApiModelProviderEntity>>
+        >
+    with
+        $FutureModifier<List<ApiModelProviderEntity>>,
+        $FutureProvider<List<ApiModelProviderEntity>> {
+  const ModelProvidersNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'modelProvidersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$modelProvidersNotifierHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ApiModelProviderEntity>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ApiModelProviderEntity>> create(Ref ref) {
+    return modelProvidersNotifier(ref);
+  }
+}
+
+String _$modelProvidersNotifierHash() =>
+    r'5d05741a4b0a934221b3cae01dbbde5e6b46dc79';

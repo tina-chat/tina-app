@@ -90,9 +90,9 @@ class NewChatScreen extends HookConsumerWidget {
 
     return AuraScreen(
       appBar: AuraAppBar(
-        footer: SelectChatModelWidget(
-          chatModelId: modelIdState.value,
-          selectChatModelId: (value) {
+        footer: SelectCredentialsModelWidget(
+          credentialsModelId: modelIdState.value,
+          selectCredentialsModelId: (value) {
             modelIdState.value = value;
           },
         ),

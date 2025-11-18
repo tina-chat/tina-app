@@ -335,8 +335,13 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     if (modelId == null) {
       throw Exception('no model id for conversation');
     }
-    final chatModelsRepository = ref.read(chatModelsRepositoryProvider);
-    final foundModel = await chatModelsRepository.getChatModelById(modelId);
+    final credentialsModelsRepository = ref.read(
+      credentialsModelsRepositoryProvider,
+    );
+    final foundModel = await credentialsModelsRepository
+        .getCredentialsModelById(
+          modelId,
+        );
     if (foundModel == null) {
       throw Exception('Selected model not found');
     }
@@ -435,8 +440,13 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     // start message streaming
 
     // Get chat model provider
-    final chatModelsRepository = ref.read(chatModelsRepositoryProvider);
-    final foundModel = await chatModelsRepository.getChatModelById(modelId);
+    final credentialsModelsRepository = ref.read(
+      credentialsModelsRepositoryProvider,
+    );
+    final foundModel = await credentialsModelsRepository
+        .getCredentialsModelById(
+          modelId,
+        );
     if (foundModel == null) {
       throw Exception('Selected model not found');
     }

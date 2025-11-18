@@ -3,6 +3,9 @@ import 'package:auravibes_app/domain/entities/api_model_provider.dart';
 import 'package:auravibes_app/domain/repositories/api_model_repository.dart';
 import 'package:auravibes_app/services/model_api_service.dart';
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
+
+final _log = Logger('service:model_sync');
 
 /// Service for synchronizing model and provider data with the external API.
 ///
@@ -122,7 +125,8 @@ class ModelSyncService {
         modelsAdded: modelsAdded,
         errors: errors,
       );
-    } on Exception catch (e) {
+    } on Exception catch (e, s) {
+      _log.severe('sync failed', e, s);
       errors.add('Sync operation failed: $e');
       return ModelSyncResult(
         isSuccess: false,

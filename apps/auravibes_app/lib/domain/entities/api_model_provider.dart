@@ -41,7 +41,7 @@ abstract class ApiModelProviderEntity with _$ApiModelProviderEntity {
         id: json.get('id'),
         name: json.get('name'),
         type: _getType(json),
-        url: json.get('url'),
+        url: json.get('api'),
         doc: json.get('doc'),
       );
   const ApiModelProviderEntity._();

@@ -66,9 +66,9 @@ class _ChatConversationScreen extends HookConsumerWidget {
             },
           ),
         ],
-        footer: SelectChatModelWidget(
-          chatModelId: modelId,
-          selectChatModelId: ref
+        footer: SelectCredentialsModelWidget(
+          credentialsModelId: modelId,
+          selectCredentialsModelId: ref
               .watch(conversationChatProvider.notifier)
               .setModel,
         ),

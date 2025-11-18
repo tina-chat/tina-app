@@ -57,9 +57,9 @@ class EnhancedModelInput extends HookConsumerWidget {
         return (
           state.name,
           state.validateName(),
-          LocaleKeys.models_screens_add_provider_name_hint,
-          LocaleKeys.models_screens_add_provider_name_label,
-          LocaleKeys.models_screens_add_provider_name_placeholder,
+          LocaleKeys.models_screens_add_provider_fields_name_hint,
+          LocaleKeys.models_screens_add_provider_fields_name_label,
+          LocaleKeys.models_screens_add_provider_fields_name_placeholder,
           TextInputType.text,
         );
 
@@ -67,9 +67,9 @@ class EnhancedModelInput extends HookConsumerWidget {
         return (
           state.key,
           state.validateKey(),
-          LocaleKeys.models_screens_add_provider_key_hint,
-          LocaleKeys.models_screens_add_provider_key_label,
-          LocaleKeys.models_screens_add_provider_key_placeholder,
+          LocaleKeys.models_screens_add_provider_fields_key_hint,
+          LocaleKeys.models_screens_add_provider_fields_key_label,
+          LocaleKeys.models_screens_add_provider_fields_key_placeholder,
           TextInputType.visiblePassword,
         );
 
@@ -77,9 +77,9 @@ class EnhancedModelInput extends HookConsumerWidget {
         return (
           state.url,
           state.validateUrl(),
-          LocaleKeys.models_screens_add_provider_url_hint,
-          LocaleKeys.models_screens_add_provider_url_label,
-          LocaleKeys.models_screens_add_provider_url_placeholder,
+          LocaleKeys.models_screens_add_provider_fields_url_hint,
+          LocaleKeys.models_screens_add_provider_fields_url_label,
+          LocaleKeys.models_screens_add_provider_fields_url_placeholder,
           TextInputType.url,
         );
     }

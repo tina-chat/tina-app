@@ -418,1017 +418,6 @@ class WorkspacesCompanion extends UpdateCompanion<WorkspacesTable> {
   }
 }
 
-class $ModelProvidersTable extends ModelProviders
-    with TableInfo<$ModelProvidersTable, ModelProvidersTable> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ModelProvidersTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    clientDefault: () => const UuidV7().generate(),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<ChatModelType, String> type =
-      GeneratedColumn<String>(
-        'type',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      ).withConverter<ChatModelType>($ModelProvidersTable.$convertertype);
-  static const VerificationMeta _urlMeta = const VerificationMeta('url');
-  @override
-  late final GeneratedColumn<String> url = GeneratedColumn<String>(
-    'url',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _keyValueMeta = const VerificationMeta(
-    'keyValue',
-  );
-  @override
-  late final GeneratedColumn<String> keyValue = GeneratedColumn<String>(
-    'key_value',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _workspaceIdMeta = const VerificationMeta(
-    'workspaceId',
-  );
-  @override
-  late final GeneratedColumn<String> workspaceId = GeneratedColumn<String>(
-    'workspace_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES workspaces (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    createdAt,
-    updatedAt,
-    name,
-    type,
-    url,
-    keyValue,
-    workspaceId,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'model_providers';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ModelProvidersTable> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('url')) {
-      context.handle(
-        _urlMeta,
-        url.isAcceptableOrUnknown(data['url']!, _urlMeta),
-      );
-    }
-    if (data.containsKey('key_value')) {
-      context.handle(
-        _keyValueMeta,
-        keyValue.isAcceptableOrUnknown(data['key_value']!, _keyValueMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_keyValueMeta);
-    }
-    if (data.containsKey('workspace_id')) {
-      context.handle(
-        _workspaceIdMeta,
-        workspaceId.isAcceptableOrUnknown(
-          data['workspace_id']!,
-          _workspaceIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_workspaceIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ModelProvidersTable map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ModelProvidersTable(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      type: $ModelProvidersTable.$convertertype.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}type'],
-        )!,
-      ),
-      url: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}url'],
-      ),
-      keyValue: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}key_value'],
-      )!,
-      workspaceId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}workspace_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ModelProvidersTable createAlias(String alias) {
-    return $ModelProvidersTable(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<ChatModelType, String, String> $convertertype =
-      const EnumNameConverter<ChatModelType>(ChatModelType.values);
-}
-
-class ModelProvidersTable extends DataClass
-    implements Insertable<ModelProvidersTable> {
-  ///Primary key column as string
-  final String id;
-
-  /// when was created timestamp
-  final DateTime createdAt;
-
-  /// when was last updated timestamp
-  final DateTime updatedAt;
-
-  /// Human-readable name of the chat model
-  final String name;
-
-  /// Type of chat model (local or remote)
-  /// Stored as string to handle enum conversion
-  final ChatModelType type;
-
-  /// URL for remote chat models, null for default urls
-  final String? url;
-
-  /// URL for remote chat models, null for default urls
-  final String keyValue;
-  final String workspaceId;
-  const ModelProvidersTable({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.name,
-    required this.type,
-    this.url,
-    required this.keyValue,
-    required this.workspaceId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['name'] = Variable<String>(name);
-    {
-      map['type'] = Variable<String>(
-        $ModelProvidersTable.$convertertype.toSql(type),
-      );
-    }
-    if (!nullToAbsent || url != null) {
-      map['url'] = Variable<String>(url);
-    }
-    map['key_value'] = Variable<String>(keyValue);
-    map['workspace_id'] = Variable<String>(workspaceId);
-    return map;
-  }
-
-  ModelProvidersCompanion toCompanion(bool nullToAbsent) {
-    return ModelProvidersCompanion(
-      id: Value(id),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      name: Value(name),
-      type: Value(type),
-      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
-      keyValue: Value(keyValue),
-      workspaceId: Value(workspaceId),
-    );
-  }
-
-  factory ModelProvidersTable.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ModelProvidersTable(
-      id: serializer.fromJson<String>(json['id']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      name: serializer.fromJson<String>(json['name']),
-      type: $ModelProvidersTable.$convertertype.fromJson(
-        serializer.fromJson<String>(json['type']),
-      ),
-      url: serializer.fromJson<String?>(json['url']),
-      keyValue: serializer.fromJson<String>(json['keyValue']),
-      workspaceId: serializer.fromJson<String>(json['workspaceId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'name': serializer.toJson<String>(name),
-      'type': serializer.toJson<String>(
-        $ModelProvidersTable.$convertertype.toJson(type),
-      ),
-      'url': serializer.toJson<String?>(url),
-      'keyValue': serializer.toJson<String>(keyValue),
-      'workspaceId': serializer.toJson<String>(workspaceId),
-    };
-  }
-
-  ModelProvidersTable copyWith({
-    String? id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? name,
-    ChatModelType? type,
-    Value<String?> url = const Value.absent(),
-    String? keyValue,
-    String? workspaceId,
-  }) => ModelProvidersTable(
-    id: id ?? this.id,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    name: name ?? this.name,
-    type: type ?? this.type,
-    url: url.present ? url.value : this.url,
-    keyValue: keyValue ?? this.keyValue,
-    workspaceId: workspaceId ?? this.workspaceId,
-  );
-  ModelProvidersTable copyWithCompanion(ModelProvidersCompanion data) {
-    return ModelProvidersTable(
-      id: data.id.present ? data.id.value : this.id,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      name: data.name.present ? data.name.value : this.name,
-      type: data.type.present ? data.type.value : this.type,
-      url: data.url.present ? data.url.value : this.url,
-      keyValue: data.keyValue.present ? data.keyValue.value : this.keyValue,
-      workspaceId: data.workspaceId.present
-          ? data.workspaceId.value
-          : this.workspaceId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ModelProvidersTable(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('name: $name, ')
-          ..write('type: $type, ')
-          ..write('url: $url, ')
-          ..write('keyValue: $keyValue, ')
-          ..write('workspaceId: $workspaceId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    createdAt,
-    updatedAt,
-    name,
-    type,
-    url,
-    keyValue,
-    workspaceId,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ModelProvidersTable &&
-          other.id == this.id &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.name == this.name &&
-          other.type == this.type &&
-          other.url == this.url &&
-          other.keyValue == this.keyValue &&
-          other.workspaceId == this.workspaceId);
-}
-
-class ModelProvidersCompanion extends UpdateCompanion<ModelProvidersTable> {
-  final Value<String> id;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<String> name;
-  final Value<ChatModelType> type;
-  final Value<String?> url;
-  final Value<String> keyValue;
-  final Value<String> workspaceId;
-  final Value<int> rowid;
-  const ModelProvidersCompanion({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.name = const Value.absent(),
-    this.type = const Value.absent(),
-    this.url = const Value.absent(),
-    this.keyValue = const Value.absent(),
-    this.workspaceId = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ModelProvidersCompanion.insert({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    required String name,
-    required ChatModelType type,
-    this.url = const Value.absent(),
-    required String keyValue,
-    required String workspaceId,
-    this.rowid = const Value.absent(),
-  }) : name = Value(name),
-       type = Value(type),
-       keyValue = Value(keyValue),
-       workspaceId = Value(workspaceId);
-  static Insertable<ModelProvidersTable> custom({
-    Expression<String>? id,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<String>? name,
-    Expression<String>? type,
-    Expression<String>? url,
-    Expression<String>? keyValue,
-    Expression<String>? workspaceId,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (name != null) 'name': name,
-      if (type != null) 'type': type,
-      if (url != null) 'url': url,
-      if (keyValue != null) 'key_value': keyValue,
-      if (workspaceId != null) 'workspace_id': workspaceId,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ModelProvidersCompanion copyWith({
-    Value<String>? id,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<String>? name,
-    Value<ChatModelType>? type,
-    Value<String?>? url,
-    Value<String>? keyValue,
-    Value<String>? workspaceId,
-    Value<int>? rowid,
-  }) {
-    return ModelProvidersCompanion(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      name: name ?? this.name,
-      type: type ?? this.type,
-      url: url ?? this.url,
-      keyValue: keyValue ?? this.keyValue,
-      workspaceId: workspaceId ?? this.workspaceId,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (type.present) {
-      map['type'] = Variable<String>(
-        $ModelProvidersTable.$convertertype.toSql(type.value),
-      );
-    }
-    if (url.present) {
-      map['url'] = Variable<String>(url.value);
-    }
-    if (keyValue.present) {
-      map['key_value'] = Variable<String>(keyValue.value);
-    }
-    if (workspaceId.present) {
-      map['workspace_id'] = Variable<String>(workspaceId.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ModelProvidersCompanion(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('name: $name, ')
-          ..write('type: $type, ')
-          ..write('url: $url, ')
-          ..write('keyValue: $keyValue, ')
-          ..write('workspaceId: $workspaceId, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ChatModelsTable extends ChatModels
-    with TableInfo<$ChatModelsTable, ChatModelsTable> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ChatModelsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    clientDefault: () => const UuidV7().generate(),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _displayNameMeta = const VerificationMeta(
-    'displayName',
-  );
-  @override
-  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
-    'display_name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _modelIdMeta = const VerificationMeta(
-    'modelId',
-  );
-  @override
-  late final GeneratedColumn<String> modelId = GeneratedColumn<String>(
-    'model_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _modelTypeMeta = const VerificationMeta(
-    'modelType',
-  );
-  @override
-  late final GeneratedColumn<String> modelType = GeneratedColumn<String>(
-    'model_type',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _modelProviderIdMeta = const VerificationMeta(
-    'modelProviderId',
-  );
-  @override
-  late final GeneratedColumn<String> modelProviderId = GeneratedColumn<String>(
-    'model_provider_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES model_providers (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    createdAt,
-    updatedAt,
-    displayName,
-    modelId,
-    modelType,
-    modelProviderId,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'chat_models';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ChatModelsTable> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('display_name')) {
-      context.handle(
-        _displayNameMeta,
-        displayName.isAcceptableOrUnknown(
-          data['display_name']!,
-          _displayNameMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_displayNameMeta);
-    }
-    if (data.containsKey('model_id')) {
-      context.handle(
-        _modelIdMeta,
-        modelId.isAcceptableOrUnknown(data['model_id']!, _modelIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_modelIdMeta);
-    }
-    if (data.containsKey('model_type')) {
-      context.handle(
-        _modelTypeMeta,
-        modelType.isAcceptableOrUnknown(data['model_type']!, _modelTypeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_modelTypeMeta);
-    }
-    if (data.containsKey('model_provider_id')) {
-      context.handle(
-        _modelProviderIdMeta,
-        modelProviderId.isAcceptableOrUnknown(
-          data['model_provider_id']!,
-          _modelProviderIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_modelProviderIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ChatModelsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ChatModelsTable(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      displayName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}display_name'],
-      )!,
-      modelId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}model_id'],
-      )!,
-      modelType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}model_type'],
-      )!,
-      modelProviderId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}model_provider_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ChatModelsTable createAlias(String alias) {
-    return $ChatModelsTable(attachedDatabase, alias);
-  }
-}
-
-class ChatModelsTable extends DataClass implements Insertable<ChatModelsTable> {
-  ///Primary key column as string
-  final String id;
-
-  /// when was created timestamp
-  final DateTime createdAt;
-
-  /// when was last updated timestamp
-  final DateTime updatedAt;
-
-  /// Model Display Name
-  final String displayName;
-
-  /// model unique identifier
-  final String modelId;
-
-  /// model type
-  final String modelType;
-  final String modelProviderId;
-  const ChatModelsTable({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.displayName,
-    required this.modelId,
-    required this.modelType,
-    required this.modelProviderId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['display_name'] = Variable<String>(displayName);
-    map['model_id'] = Variable<String>(modelId);
-    map['model_type'] = Variable<String>(modelType);
-    map['model_provider_id'] = Variable<String>(modelProviderId);
-    return map;
-  }
-
-  ChatModelsCompanion toCompanion(bool nullToAbsent) {
-    return ChatModelsCompanion(
-      id: Value(id),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      displayName: Value(displayName),
-      modelId: Value(modelId),
-      modelType: Value(modelType),
-      modelProviderId: Value(modelProviderId),
-    );
-  }
-
-  factory ChatModelsTable.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ChatModelsTable(
-      id: serializer.fromJson<String>(json['id']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      displayName: serializer.fromJson<String>(json['displayName']),
-      modelId: serializer.fromJson<String>(json['modelId']),
-      modelType: serializer.fromJson<String>(json['modelType']),
-      modelProviderId: serializer.fromJson<String>(json['modelProviderId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'displayName': serializer.toJson<String>(displayName),
-      'modelId': serializer.toJson<String>(modelId),
-      'modelType': serializer.toJson<String>(modelType),
-      'modelProviderId': serializer.toJson<String>(modelProviderId),
-    };
-  }
-
-  ChatModelsTable copyWith({
-    String? id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? displayName,
-    String? modelId,
-    String? modelType,
-    String? modelProviderId,
-  }) => ChatModelsTable(
-    id: id ?? this.id,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    displayName: displayName ?? this.displayName,
-    modelId: modelId ?? this.modelId,
-    modelType: modelType ?? this.modelType,
-    modelProviderId: modelProviderId ?? this.modelProviderId,
-  );
-  ChatModelsTable copyWithCompanion(ChatModelsCompanion data) {
-    return ChatModelsTable(
-      id: data.id.present ? data.id.value : this.id,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      displayName: data.displayName.present
-          ? data.displayName.value
-          : this.displayName,
-      modelId: data.modelId.present ? data.modelId.value : this.modelId,
-      modelType: data.modelType.present ? data.modelType.value : this.modelType,
-      modelProviderId: data.modelProviderId.present
-          ? data.modelProviderId.value
-          : this.modelProviderId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ChatModelsTable(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('displayName: $displayName, ')
-          ..write('modelId: $modelId, ')
-          ..write('modelType: $modelType, ')
-          ..write('modelProviderId: $modelProviderId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    createdAt,
-    updatedAt,
-    displayName,
-    modelId,
-    modelType,
-    modelProviderId,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ChatModelsTable &&
-          other.id == this.id &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.displayName == this.displayName &&
-          other.modelId == this.modelId &&
-          other.modelType == this.modelType &&
-          other.modelProviderId == this.modelProviderId);
-}
-
-class ChatModelsCompanion extends UpdateCompanion<ChatModelsTable> {
-  final Value<String> id;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<String> displayName;
-  final Value<String> modelId;
-  final Value<String> modelType;
-  final Value<String> modelProviderId;
-  final Value<int> rowid;
-  const ChatModelsCompanion({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.displayName = const Value.absent(),
-    this.modelId = const Value.absent(),
-    this.modelType = const Value.absent(),
-    this.modelProviderId = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ChatModelsCompanion.insert({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    required String displayName,
-    required String modelId,
-    required String modelType,
-    required String modelProviderId,
-    this.rowid = const Value.absent(),
-  }) : displayName = Value(displayName),
-       modelId = Value(modelId),
-       modelType = Value(modelType),
-       modelProviderId = Value(modelProviderId);
-  static Insertable<ChatModelsTable> custom({
-    Expression<String>? id,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<String>? displayName,
-    Expression<String>? modelId,
-    Expression<String>? modelType,
-    Expression<String>? modelProviderId,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (displayName != null) 'display_name': displayName,
-      if (modelId != null) 'model_id': modelId,
-      if (modelType != null) 'model_type': modelType,
-      if (modelProviderId != null) 'model_provider_id': modelProviderId,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ChatModelsCompanion copyWith({
-    Value<String>? id,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<String>? displayName,
-    Value<String>? modelId,
-    Value<String>? modelType,
-    Value<String>? modelProviderId,
-    Value<int>? rowid,
-  }) {
-    return ChatModelsCompanion(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      displayName: displayName ?? this.displayName,
-      modelId: modelId ?? this.modelId,
-      modelType: modelType ?? this.modelType,
-      modelProviderId: modelProviderId ?? this.modelProviderId,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (displayName.present) {
-      map['display_name'] = Variable<String>(displayName.value);
-    }
-    if (modelId.present) {
-      map['model_id'] = Variable<String>(modelId.value);
-    }
-    if (modelType.present) {
-      map['model_type'] = Variable<String>(modelType.value);
-    }
-    if (modelProviderId.present) {
-      map['model_provider_id'] = Variable<String>(modelProviderId.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ChatModelsCompanion(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('displayName: $displayName, ')
-          ..write('modelId: $modelId, ')
-          ..write('modelType: $modelType, ')
-          ..write('modelProviderId: $modelProviderId, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ApiModelProvidersTable extends ApiModelProviders
     with TableInfo<$ApiModelProvidersTable, ApiModelProvidersTable> {
   @override
@@ -1526,7 +515,7 @@ class $ApiModelProvidersTable extends ApiModelProviders
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   ApiModelProvidersTable map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -2026,7 +1015,7 @@ class $ApiModelsTable extends ApiModels
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id, modelProvider};
   @override
   ApiModelsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -2520,6 +1509,906 @@ class ApiModelsCompanion extends UpdateCompanion<ApiModelsTable> {
   }
 }
 
+class $CredentialsTable extends Credentials
+    with TableInfo<$CredentialsTable, CredentialsTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CredentialsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const UuidV7().generate(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _modelIdMeta = const VerificationMeta(
+    'modelId',
+  );
+  @override
+  late final GeneratedColumn<String> modelId = GeneratedColumn<String>(
+    'model_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES api_models (id)',
+    ),
+  );
+  static const VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String> url = GeneratedColumn<String>(
+    'url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _keyValueMeta = const VerificationMeta(
+    'keyValue',
+  );
+  @override
+  late final GeneratedColumn<String> keyValue = GeneratedColumn<String>(
+    'key_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _workspaceIdMeta = const VerificationMeta(
+    'workspaceId',
+  );
+  @override
+  late final GeneratedColumn<String> workspaceId = GeneratedColumn<String>(
+    'workspace_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES workspaces (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    createdAt,
+    updatedAt,
+    name,
+    modelId,
+    url,
+    keyValue,
+    workspaceId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'credentials';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CredentialsTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('model_id')) {
+      context.handle(
+        _modelIdMeta,
+        modelId.isAcceptableOrUnknown(data['model_id']!, _modelIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_modelIdMeta);
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+        _urlMeta,
+        url.isAcceptableOrUnknown(data['url']!, _urlMeta),
+      );
+    }
+    if (data.containsKey('key_value')) {
+      context.handle(
+        _keyValueMeta,
+        keyValue.isAcceptableOrUnknown(data['key_value']!, _keyValueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyValueMeta);
+    }
+    if (data.containsKey('workspace_id')) {
+      context.handle(
+        _workspaceIdMeta,
+        workspaceId.isAcceptableOrUnknown(
+          data['workspace_id']!,
+          _workspaceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_workspaceIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  CredentialsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CredentialsTable(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      modelId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model_id'],
+      )!,
+      url: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}url'],
+      ),
+      keyValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key_value'],
+      )!,
+      workspaceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workspace_id'],
+      )!,
+    );
+  }
+
+  @override
+  $CredentialsTable createAlias(String alias) {
+    return $CredentialsTable(attachedDatabase, alias);
+  }
+}
+
+class CredentialsTable extends DataClass
+    implements Insertable<CredentialsTable> {
+  ///Primary key column as string
+  final String id;
+
+  /// when was created timestamp
+  final DateTime createdAt;
+
+  /// when was last updated timestamp
+  final DateTime updatedAt;
+
+  /// Human-readable name of the chat model
+  final String name;
+  final String modelId;
+
+  /// URL for remote chat models, null for default urls
+  final String? url;
+
+  /// URL for remote chat models, null for default urls
+  final String keyValue;
+  final String workspaceId;
+  const CredentialsTable({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.name,
+    required this.modelId,
+    this.url,
+    required this.keyValue,
+    required this.workspaceId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['name'] = Variable<String>(name);
+    map['model_id'] = Variable<String>(modelId);
+    if (!nullToAbsent || url != null) {
+      map['url'] = Variable<String>(url);
+    }
+    map['key_value'] = Variable<String>(keyValue);
+    map['workspace_id'] = Variable<String>(workspaceId);
+    return map;
+  }
+
+  CredentialsCompanion toCompanion(bool nullToAbsent) {
+    return CredentialsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      name: Value(name),
+      modelId: Value(modelId),
+      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
+      keyValue: Value(keyValue),
+      workspaceId: Value(workspaceId),
+    );
+  }
+
+  factory CredentialsTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CredentialsTable(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      name: serializer.fromJson<String>(json['name']),
+      modelId: serializer.fromJson<String>(json['modelId']),
+      url: serializer.fromJson<String?>(json['url']),
+      keyValue: serializer.fromJson<String>(json['keyValue']),
+      workspaceId: serializer.fromJson<String>(json['workspaceId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'name': serializer.toJson<String>(name),
+      'modelId': serializer.toJson<String>(modelId),
+      'url': serializer.toJson<String?>(url),
+      'keyValue': serializer.toJson<String>(keyValue),
+      'workspaceId': serializer.toJson<String>(workspaceId),
+    };
+  }
+
+  CredentialsTable copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    String? modelId,
+    Value<String?> url = const Value.absent(),
+    String? keyValue,
+    String? workspaceId,
+  }) => CredentialsTable(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    name: name ?? this.name,
+    modelId: modelId ?? this.modelId,
+    url: url.present ? url.value : this.url,
+    keyValue: keyValue ?? this.keyValue,
+    workspaceId: workspaceId ?? this.workspaceId,
+  );
+  CredentialsTable copyWithCompanion(CredentialsCompanion data) {
+    return CredentialsTable(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      name: data.name.present ? data.name.value : this.name,
+      modelId: data.modelId.present ? data.modelId.value : this.modelId,
+      url: data.url.present ? data.url.value : this.url,
+      keyValue: data.keyValue.present ? data.keyValue.value : this.keyValue,
+      workspaceId: data.workspaceId.present
+          ? data.workspaceId.value
+          : this.workspaceId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CredentialsTable(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('name: $name, ')
+          ..write('modelId: $modelId, ')
+          ..write('url: $url, ')
+          ..write('keyValue: $keyValue, ')
+          ..write('workspaceId: $workspaceId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    name,
+    modelId,
+    url,
+    keyValue,
+    workspaceId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CredentialsTable &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.name == this.name &&
+          other.modelId == this.modelId &&
+          other.url == this.url &&
+          other.keyValue == this.keyValue &&
+          other.workspaceId == this.workspaceId);
+}
+
+class CredentialsCompanion extends UpdateCompanion<CredentialsTable> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<String> name;
+  final Value<String> modelId;
+  final Value<String?> url;
+  final Value<String> keyValue;
+  final Value<String> workspaceId;
+  final Value<int> rowid;
+  const CredentialsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.name = const Value.absent(),
+    this.modelId = const Value.absent(),
+    this.url = const Value.absent(),
+    this.keyValue = const Value.absent(),
+    this.workspaceId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CredentialsCompanion.insert({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    required String name,
+    required String modelId,
+    this.url = const Value.absent(),
+    required String keyValue,
+    required String workspaceId,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       modelId = Value(modelId),
+       keyValue = Value(keyValue),
+       workspaceId = Value(workspaceId);
+  static Insertable<CredentialsTable> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? name,
+    Expression<String>? modelId,
+    Expression<String>? url,
+    Expression<String>? keyValue,
+    Expression<String>? workspaceId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (name != null) 'name': name,
+      if (modelId != null) 'model_id': modelId,
+      if (url != null) 'url': url,
+      if (keyValue != null) 'key_value': keyValue,
+      if (workspaceId != null) 'workspace_id': workspaceId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CredentialsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<String>? name,
+    Value<String>? modelId,
+    Value<String?>? url,
+    Value<String>? keyValue,
+    Value<String>? workspaceId,
+    Value<int>? rowid,
+  }) {
+    return CredentialsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      modelId: modelId ?? this.modelId,
+      url: url ?? this.url,
+      keyValue: keyValue ?? this.keyValue,
+      workspaceId: workspaceId ?? this.workspaceId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (modelId.present) {
+      map['model_id'] = Variable<String>(modelId.value);
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (keyValue.present) {
+      map['key_value'] = Variable<String>(keyValue.value);
+    }
+    if (workspaceId.present) {
+      map['workspace_id'] = Variable<String>(workspaceId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CredentialsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('name: $name, ')
+          ..write('modelId: $modelId, ')
+          ..write('url: $url, ')
+          ..write('keyValue: $keyValue, ')
+          ..write('workspaceId: $workspaceId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CredentialModelsTable extends CredentialModels
+    with TableInfo<$CredentialModelsTable, CredentialModelsTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CredentialModelsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const UuidV7().generate(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _modelIdMeta = const VerificationMeta(
+    'modelId',
+  );
+  @override
+  late final GeneratedColumn<String> modelId = GeneratedColumn<String>(
+    'model_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES api_model_providers (id)',
+    ),
+  );
+  static const VerificationMeta _credentialsIdMeta = const VerificationMeta(
+    'credentialsId',
+  );
+  @override
+  late final GeneratedColumn<String> credentialsId = GeneratedColumn<String>(
+    'credentials_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES credentials (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    createdAt,
+    updatedAt,
+    modelId,
+    credentialsId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'credential_models';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CredentialModelsTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('model_id')) {
+      context.handle(
+        _modelIdMeta,
+        modelId.isAcceptableOrUnknown(data['model_id']!, _modelIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_modelIdMeta);
+    }
+    if (data.containsKey('credentials_id')) {
+      context.handle(
+        _credentialsIdMeta,
+        credentialsId.isAcceptableOrUnknown(
+          data['credentials_id']!,
+          _credentialsIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_credentialsIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  CredentialModelsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CredentialModelsTable(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      modelId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model_id'],
+      )!,
+      credentialsId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}credentials_id'],
+      )!,
+    );
+  }
+
+  @override
+  $CredentialModelsTable createAlias(String alias) {
+    return $CredentialModelsTable(attachedDatabase, alias);
+  }
+}
+
+class CredentialModelsTable extends DataClass
+    implements Insertable<CredentialModelsTable> {
+  ///Primary key column as string
+  final String id;
+
+  /// when was created timestamp
+  final DateTime createdAt;
+
+  /// when was last updated timestamp
+  final DateTime updatedAt;
+
+  /// model unique identifier
+  final String modelId;
+  final String credentialsId;
+  const CredentialModelsTable({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.modelId,
+    required this.credentialsId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['model_id'] = Variable<String>(modelId);
+    map['credentials_id'] = Variable<String>(credentialsId);
+    return map;
+  }
+
+  CredentialModelsCompanion toCompanion(bool nullToAbsent) {
+    return CredentialModelsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      modelId: Value(modelId),
+      credentialsId: Value(credentialsId),
+    );
+  }
+
+  factory CredentialModelsTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CredentialModelsTable(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      modelId: serializer.fromJson<String>(json['modelId']),
+      credentialsId: serializer.fromJson<String>(json['credentialsId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'modelId': serializer.toJson<String>(modelId),
+      'credentialsId': serializer.toJson<String>(credentialsId),
+    };
+  }
+
+  CredentialModelsTable copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? modelId,
+    String? credentialsId,
+  }) => CredentialModelsTable(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    modelId: modelId ?? this.modelId,
+    credentialsId: credentialsId ?? this.credentialsId,
+  );
+  CredentialModelsTable copyWithCompanion(CredentialModelsCompanion data) {
+    return CredentialModelsTable(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      modelId: data.modelId.present ? data.modelId.value : this.modelId,
+      credentialsId: data.credentialsId.present
+          ? data.credentialsId.value
+          : this.credentialsId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CredentialModelsTable(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('modelId: $modelId, ')
+          ..write('credentialsId: $credentialsId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, createdAt, updatedAt, modelId, credentialsId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CredentialModelsTable &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.modelId == this.modelId &&
+          other.credentialsId == this.credentialsId);
+}
+
+class CredentialModelsCompanion extends UpdateCompanion<CredentialModelsTable> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<String> modelId;
+  final Value<String> credentialsId;
+  final Value<int> rowid;
+  const CredentialModelsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.modelId = const Value.absent(),
+    this.credentialsId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CredentialModelsCompanion.insert({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    required String modelId,
+    required String credentialsId,
+    this.rowid = const Value.absent(),
+  }) : modelId = Value(modelId),
+       credentialsId = Value(credentialsId);
+  static Insertable<CredentialModelsTable> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? modelId,
+    Expression<String>? credentialsId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (modelId != null) 'model_id': modelId,
+      if (credentialsId != null) 'credentials_id': credentialsId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CredentialModelsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<String>? modelId,
+    Value<String>? credentialsId,
+    Value<int>? rowid,
+  }) {
+    return CredentialModelsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      modelId: modelId ?? this.modelId,
+      credentialsId: credentialsId ?? this.credentialsId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (modelId.present) {
+      map['model_id'] = Variable<String>(modelId.value);
+    }
+    if (credentialsId.present) {
+      map['credentials_id'] = Variable<String>(credentialsId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CredentialModelsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('modelId: $modelId, ')
+          ..write('credentialsId: $credentialsId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConversationsTable extends Conversations
     with TableInfo<$ConversationsTable, ConversationsTable> {
   @override
@@ -2594,7 +2483,7 @@ class $ConversationsTable extends Conversations
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES chat_models (id)',
+      'REFERENCES credential_models (id)',
     ),
   );
   static const VerificationMeta _isPinnedMeta = const VerificationMeta(
@@ -4444,21 +4333,25 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $WorkspacesTable workspaces = $WorkspacesTable(this);
-  late final $ModelProvidersTable modelProviders = $ModelProvidersTable(this);
-  late final $ChatModelsTable chatModels = $ChatModelsTable(this);
   late final $ApiModelProvidersTable apiModelProviders =
       $ApiModelProvidersTable(this);
   late final $ApiModelsTable apiModels = $ApiModelsTable(this);
+  late final $CredentialsTable credentials = $CredentialsTable(this);
+  late final $CredentialModelsTable credentialModels = $CredentialModelsTable(
+    this,
+  );
   late final $ConversationsTable conversations = $ConversationsTable(this);
   late final $MessagesTable messages = $MessagesTable(this);
   late final $WorkspaceToolsTable workspaceTools = $WorkspaceToolsTable(this);
   late final $ConversationDisabledToolsTable conversationDisabledTools =
       $ConversationDisabledToolsTable(this);
   late final WorkspaceDao workspaceDao = WorkspaceDao(this as AppDatabase);
-  late final ModelProvidersDao modelProvidersDao = ModelProvidersDao(
+  late final CredentialsDao credentialsDao = CredentialsDao(
     this as AppDatabase,
   );
-  late final ChatModelsDao chatModelsDao = ChatModelsDao(this as AppDatabase);
+  late final CredentialModelsDao credentialModelsDao = CredentialModelsDao(
+    this as AppDatabase,
+  );
   late final ApiModelProvidersDao apiModelProvidersDao = ApiModelProvidersDao(
     this as AppDatabase,
   );
@@ -4479,10 +4372,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     workspaces,
-    modelProviders,
-    chatModels,
     apiModelProviders,
     apiModels,
+    credentials,
+    credentialModels,
     conversations,
     messages,
     workspaceTools,
@@ -4515,22 +4408,22 @@ final class $$WorkspacesTableReferences
     extends BaseReferences<_$AppDatabase, $WorkspacesTable, WorkspacesTable> {
   $$WorkspacesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$ModelProvidersTable, List<ModelProvidersTable>>
-  _modelProvidersRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.modelProviders,
+  static MultiTypedResultKey<$CredentialsTable, List<CredentialsTable>>
+  _credentialsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.credentials,
     aliasName: $_aliasNameGenerator(
       db.workspaces.id,
-      db.modelProviders.workspaceId,
+      db.credentials.workspaceId,
     ),
   );
 
-  $$ModelProvidersTableProcessedTableManager get modelProvidersRefs {
-    final manager = $$ModelProvidersTableTableManager(
+  $$CredentialsTableProcessedTableManager get credentialsRefs {
+    final manager = $$CredentialsTableTableManager(
       $_db,
-      $_db.modelProviders,
+      $_db.credentials,
     ).filter((f) => f.workspaceId.id.sqlEquals($_itemColumn<String>('id')!));
 
-    final cache = $_typedResult.readTableOrNull(_modelProvidersRefsTable($_db));
+    final cache = $_typedResult.readTableOrNull(_credentialsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -4619,22 +4512,22 @@ class $$WorkspacesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  Expression<bool> modelProvidersRefs(
-    Expression<bool> Function($$ModelProvidersTableFilterComposer f) f,
+  Expression<bool> credentialsRefs(
+    Expression<bool> Function($$CredentialsTableFilterComposer f) f,
   ) {
-    final $$ModelProvidersTableFilterComposer composer = $composerBuilder(
+    final $$CredentialsTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.id,
-      referencedTable: $db.modelProviders,
+      referencedTable: $db.credentials,
       getReferencedColumn: (t) => t.workspaceId,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ModelProvidersTableFilterComposer(
+          }) => $$CredentialsTableFilterComposer(
             $db: $db,
-            $table: $db.modelProviders,
+            $table: $db.credentials,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -4762,22 +4655,22 @@ class $$WorkspacesTableAnnotationComposer
   GeneratedColumn<String> get url =>
       $composableBuilder(column: $table.url, builder: (column) => column);
 
-  Expression<T> modelProvidersRefs<T extends Object>(
-    Expression<T> Function($$ModelProvidersTableAnnotationComposer a) f,
+  Expression<T> credentialsRefs<T extends Object>(
+    Expression<T> Function($$CredentialsTableAnnotationComposer a) f,
   ) {
-    final $$ModelProvidersTableAnnotationComposer composer = $composerBuilder(
+    final $$CredentialsTableAnnotationComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.id,
-      referencedTable: $db.modelProviders,
+      referencedTable: $db.credentials,
       getReferencedColumn: (t) => t.workspaceId,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ModelProvidersTableAnnotationComposer(
+          }) => $$CredentialsTableAnnotationComposer(
             $db: $db,
-            $table: $db.modelProviders,
+            $table: $db.credentials,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -4852,7 +4745,7 @@ class $$WorkspacesTableTableManager
           (WorkspacesTable, $$WorkspacesTableReferences),
           WorkspacesTable,
           PrefetchHooks Function({
-            bool modelProvidersRefs,
+            bool credentialsRefs,
             bool conversationsRefs,
             bool workspaceToolsRefs,
           })
@@ -4914,35 +4807,35 @@ class $$WorkspacesTableTableManager
               .toList(),
           prefetchHooksCallback:
               ({
-                modelProvidersRefs = false,
+                credentialsRefs = false,
                 conversationsRefs = false,
                 workspaceToolsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
-                    if (modelProvidersRefs) db.modelProviders,
+                    if (credentialsRefs) db.credentials,
                     if (conversationsRefs) db.conversations,
                     if (workspaceToolsRefs) db.workspaceTools,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
                     return [
-                      if (modelProvidersRefs)
+                      if (credentialsRefs)
                         await $_getPrefetchedData<
                           WorkspacesTable,
                           $WorkspacesTable,
-                          ModelProvidersTable
+                          CredentialsTable
                         >(
                           currentTable: table,
                           referencedTable: $$WorkspacesTableReferences
-                              ._modelProvidersRefsTable(db),
+                              ._credentialsRefsTable(db),
                           managerFromTypedResult: (p0) =>
                               $$WorkspacesTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).modelProvidersRefs,
+                              ).credentialsRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.workspaceId == item.id,
@@ -5012,949 +4905,10 @@ typedef $$WorkspacesTableProcessedTableManager =
       (WorkspacesTable, $$WorkspacesTableReferences),
       WorkspacesTable,
       PrefetchHooks Function({
-        bool modelProvidersRefs,
+        bool credentialsRefs,
         bool conversationsRefs,
         bool workspaceToolsRefs,
       })
-    >;
-typedef $$ModelProvidersTableCreateCompanionBuilder =
-    ModelProvidersCompanion Function({
-      Value<String> id,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      required String name,
-      required ChatModelType type,
-      Value<String?> url,
-      required String keyValue,
-      required String workspaceId,
-      Value<int> rowid,
-    });
-typedef $$ModelProvidersTableUpdateCompanionBuilder =
-    ModelProvidersCompanion Function({
-      Value<String> id,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<String> name,
-      Value<ChatModelType> type,
-      Value<String?> url,
-      Value<String> keyValue,
-      Value<String> workspaceId,
-      Value<int> rowid,
-    });
-
-final class $$ModelProvidersTableReferences
-    extends
-        BaseReferences<
-          _$AppDatabase,
-          $ModelProvidersTable,
-          ModelProvidersTable
-        > {
-  $$ModelProvidersTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $WorkspacesTable _workspaceIdTable(_$AppDatabase db) =>
-      db.workspaces.createAlias(
-        $_aliasNameGenerator(db.modelProviders.workspaceId, db.workspaces.id),
-      );
-
-  $$WorkspacesTableProcessedTableManager get workspaceId {
-    final $_column = $_itemColumn<String>('workspace_id')!;
-
-    final manager = $$WorkspacesTableTableManager(
-      $_db,
-      $_db.workspaces,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_workspaceIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<$ChatModelsTable, List<ChatModelsTable>>
-  _chatModelsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.chatModels,
-    aliasName: $_aliasNameGenerator(
-      db.modelProviders.id,
-      db.chatModels.modelProviderId,
-    ),
-  );
-
-  $$ChatModelsTableProcessedTableManager get chatModelsRefs {
-    final manager = $$ChatModelsTableTableManager($_db, $_db.chatModels).filter(
-      (f) => f.modelProviderId.id.sqlEquals($_itemColumn<String>('id')!),
-    );
-
-    final cache = $_typedResult.readTableOrNull(_chatModelsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$ModelProvidersTableFilterComposer
-    extends Composer<_$AppDatabase, $ModelProvidersTable> {
-  $$ModelProvidersTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<ChatModelType, ChatModelType, String>
-  get type => $composableBuilder(
-    column: $table.type,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnFilters<String> get url => $composableBuilder(
-    column: $table.url,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get keyValue => $composableBuilder(
-    column: $table.keyValue,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$WorkspacesTableFilterComposer get workspaceId {
-    final $$WorkspacesTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.workspaceId,
-      referencedTable: $db.workspaces,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$WorkspacesTableFilterComposer(
-            $db: $db,
-            $table: $db.workspaces,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<bool> chatModelsRefs(
-    Expression<bool> Function($$ChatModelsTableFilterComposer f) f,
-  ) {
-    final $$ChatModelsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.chatModels,
-      getReferencedColumn: (t) => t.modelProviderId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ChatModelsTableFilterComposer(
-            $db: $db,
-            $table: $db.chatModels,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$ModelProvidersTableOrderingComposer
-    extends Composer<_$AppDatabase, $ModelProvidersTable> {
-  $$ModelProvidersTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get type => $composableBuilder(
-    column: $table.type,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get url => $composableBuilder(
-    column: $table.url,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get keyValue => $composableBuilder(
-    column: $table.keyValue,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$WorkspacesTableOrderingComposer get workspaceId {
-    final $$WorkspacesTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.workspaceId,
-      referencedTable: $db.workspaces,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$WorkspacesTableOrderingComposer(
-            $db: $db,
-            $table: $db.workspaces,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ModelProvidersTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ModelProvidersTable> {
-  $$ModelProvidersTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<ChatModelType, String> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumn<String> get url =>
-      $composableBuilder(column: $table.url, builder: (column) => column);
-
-  GeneratedColumn<String> get keyValue =>
-      $composableBuilder(column: $table.keyValue, builder: (column) => column);
-
-  $$WorkspacesTableAnnotationComposer get workspaceId {
-    final $$WorkspacesTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.workspaceId,
-      referencedTable: $db.workspaces,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$WorkspacesTableAnnotationComposer(
-            $db: $db,
-            $table: $db.workspaces,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<T> chatModelsRefs<T extends Object>(
-    Expression<T> Function($$ChatModelsTableAnnotationComposer a) f,
-  ) {
-    final $$ChatModelsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.chatModels,
-      getReferencedColumn: (t) => t.modelProviderId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ChatModelsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.chatModels,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$ModelProvidersTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $ModelProvidersTable,
-          ModelProvidersTable,
-          $$ModelProvidersTableFilterComposer,
-          $$ModelProvidersTableOrderingComposer,
-          $$ModelProvidersTableAnnotationComposer,
-          $$ModelProvidersTableCreateCompanionBuilder,
-          $$ModelProvidersTableUpdateCompanionBuilder,
-          (ModelProvidersTable, $$ModelProvidersTableReferences),
-          ModelProvidersTable,
-          PrefetchHooks Function({bool workspaceId, bool chatModelsRefs})
-        > {
-  $$ModelProvidersTableTableManager(
-    _$AppDatabase db,
-    $ModelProvidersTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ModelProvidersTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ModelProvidersTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ModelProvidersTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<ChatModelType> type = const Value.absent(),
-                Value<String?> url = const Value.absent(),
-                Value<String> keyValue = const Value.absent(),
-                Value<String> workspaceId = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ModelProvidersCompanion(
-                id: id,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                name: name,
-                type: type,
-                url: url,
-                keyValue: keyValue,
-                workspaceId: workspaceId,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                required String name,
-                required ChatModelType type,
-                Value<String?> url = const Value.absent(),
-                required String keyValue,
-                required String workspaceId,
-                Value<int> rowid = const Value.absent(),
-              }) => ModelProvidersCompanion.insert(
-                id: id,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                name: name,
-                type: type,
-                url: url,
-                keyValue: keyValue,
-                workspaceId: workspaceId,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ModelProvidersTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({workspaceId = false, chatModelsRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [if (chatModelsRefs) db.chatModels],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (workspaceId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.workspaceId,
-                                    referencedTable:
-                                        $$ModelProvidersTableReferences
-                                            ._workspaceIdTable(db),
-                                    referencedColumn:
-                                        $$ModelProvidersTableReferences
-                                            ._workspaceIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (chatModelsRefs)
-                        await $_getPrefetchedData<
-                          ModelProvidersTable,
-                          $ModelProvidersTable,
-                          ChatModelsTable
-                        >(
-                          currentTable: table,
-                          referencedTable: $$ModelProvidersTableReferences
-                              ._chatModelsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$ModelProvidersTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).chatModelsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.modelProviderId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$ModelProvidersTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $ModelProvidersTable,
-      ModelProvidersTable,
-      $$ModelProvidersTableFilterComposer,
-      $$ModelProvidersTableOrderingComposer,
-      $$ModelProvidersTableAnnotationComposer,
-      $$ModelProvidersTableCreateCompanionBuilder,
-      $$ModelProvidersTableUpdateCompanionBuilder,
-      (ModelProvidersTable, $$ModelProvidersTableReferences),
-      ModelProvidersTable,
-      PrefetchHooks Function({bool workspaceId, bool chatModelsRefs})
-    >;
-typedef $$ChatModelsTableCreateCompanionBuilder =
-    ChatModelsCompanion Function({
-      Value<String> id,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      required String displayName,
-      required String modelId,
-      required String modelType,
-      required String modelProviderId,
-      Value<int> rowid,
-    });
-typedef $$ChatModelsTableUpdateCompanionBuilder =
-    ChatModelsCompanion Function({
-      Value<String> id,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<String> displayName,
-      Value<String> modelId,
-      Value<String> modelType,
-      Value<String> modelProviderId,
-      Value<int> rowid,
-    });
-
-final class $$ChatModelsTableReferences
-    extends BaseReferences<_$AppDatabase, $ChatModelsTable, ChatModelsTable> {
-  $$ChatModelsTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $ModelProvidersTable _modelProviderIdTable(_$AppDatabase db) =>
-      db.modelProviders.createAlias(
-        $_aliasNameGenerator(
-          db.chatModels.modelProviderId,
-          db.modelProviders.id,
-        ),
-      );
-
-  $$ModelProvidersTableProcessedTableManager get modelProviderId {
-    final $_column = $_itemColumn<String>('model_provider_id')!;
-
-    final manager = $$ModelProvidersTableTableManager(
-      $_db,
-      $_db.modelProviders,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_modelProviderIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<$ConversationsTable, List<ConversationsTable>>
-  _conversationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.conversations,
-    aliasName: $_aliasNameGenerator(db.chatModels.id, db.conversations.modelId),
-  );
-
-  $$ConversationsTableProcessedTableManager get conversationsRefs {
-    final manager = $$ConversationsTableTableManager(
-      $_db,
-      $_db.conversations,
-    ).filter((f) => f.modelId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_conversationsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$ChatModelsTableFilterComposer
-    extends Composer<_$AppDatabase, $ChatModelsTable> {
-  $$ChatModelsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get displayName => $composableBuilder(
-    column: $table.displayName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get modelId => $composableBuilder(
-    column: $table.modelId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get modelType => $composableBuilder(
-    column: $table.modelType,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$ModelProvidersTableFilterComposer get modelProviderId {
-    final $$ModelProvidersTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.modelProviderId,
-      referencedTable: $db.modelProviders,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ModelProvidersTableFilterComposer(
-            $db: $db,
-            $table: $db.modelProviders,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<bool> conversationsRefs(
-    Expression<bool> Function($$ConversationsTableFilterComposer f) f,
-  ) {
-    final $$ConversationsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.conversations,
-      getReferencedColumn: (t) => t.modelId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ConversationsTableFilterComposer(
-            $db: $db,
-            $table: $db.conversations,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$ChatModelsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ChatModelsTable> {
-  $$ChatModelsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get displayName => $composableBuilder(
-    column: $table.displayName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get modelId => $composableBuilder(
-    column: $table.modelId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get modelType => $composableBuilder(
-    column: $table.modelType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$ModelProvidersTableOrderingComposer get modelProviderId {
-    final $$ModelProvidersTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.modelProviderId,
-      referencedTable: $db.modelProviders,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ModelProvidersTableOrderingComposer(
-            $db: $db,
-            $table: $db.modelProviders,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ChatModelsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ChatModelsTable> {
-  $$ChatModelsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<String> get displayName => $composableBuilder(
-    column: $table.displayName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get modelId =>
-      $composableBuilder(column: $table.modelId, builder: (column) => column);
-
-  GeneratedColumn<String> get modelType =>
-      $composableBuilder(column: $table.modelType, builder: (column) => column);
-
-  $$ModelProvidersTableAnnotationComposer get modelProviderId {
-    final $$ModelProvidersTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.modelProviderId,
-      referencedTable: $db.modelProviders,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ModelProvidersTableAnnotationComposer(
-            $db: $db,
-            $table: $db.modelProviders,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<T> conversationsRefs<T extends Object>(
-    Expression<T> Function($$ConversationsTableAnnotationComposer a) f,
-  ) {
-    final $$ConversationsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.conversations,
-      getReferencedColumn: (t) => t.modelId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ConversationsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.conversations,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$ChatModelsTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $ChatModelsTable,
-          ChatModelsTable,
-          $$ChatModelsTableFilterComposer,
-          $$ChatModelsTableOrderingComposer,
-          $$ChatModelsTableAnnotationComposer,
-          $$ChatModelsTableCreateCompanionBuilder,
-          $$ChatModelsTableUpdateCompanionBuilder,
-          (ChatModelsTable, $$ChatModelsTableReferences),
-          ChatModelsTable,
-          PrefetchHooks Function({bool modelProviderId, bool conversationsRefs})
-        > {
-  $$ChatModelsTableTableManager(_$AppDatabase db, $ChatModelsTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ChatModelsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ChatModelsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ChatModelsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<String> displayName = const Value.absent(),
-                Value<String> modelId = const Value.absent(),
-                Value<String> modelType = const Value.absent(),
-                Value<String> modelProviderId = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ChatModelsCompanion(
-                id: id,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                displayName: displayName,
-                modelId: modelId,
-                modelType: modelType,
-                modelProviderId: modelProviderId,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                required String displayName,
-                required String modelId,
-                required String modelType,
-                required String modelProviderId,
-                Value<int> rowid = const Value.absent(),
-              }) => ChatModelsCompanion.insert(
-                id: id,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                displayName: displayName,
-                modelId: modelId,
-                modelType: modelType,
-                modelProviderId: modelProviderId,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ChatModelsTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({modelProviderId = false, conversationsRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (conversationsRefs) db.conversations,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (modelProviderId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.modelProviderId,
-                                    referencedTable: $$ChatModelsTableReferences
-                                        ._modelProviderIdTable(db),
-                                    referencedColumn:
-                                        $$ChatModelsTableReferences
-                                            ._modelProviderIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (conversationsRefs)
-                        await $_getPrefetchedData<
-                          ChatModelsTable,
-                          $ChatModelsTable,
-                          ConversationsTable
-                        >(
-                          currentTable: table,
-                          referencedTable: $$ChatModelsTableReferences
-                              ._conversationsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$ChatModelsTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).conversationsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.modelId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$ChatModelsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $ChatModelsTable,
-      ChatModelsTable,
-      $$ChatModelsTableFilterComposer,
-      $$ChatModelsTableOrderingComposer,
-      $$ChatModelsTableAnnotationComposer,
-      $$ChatModelsTableCreateCompanionBuilder,
-      $$ChatModelsTableUpdateCompanionBuilder,
-      (ChatModelsTable, $$ChatModelsTableReferences),
-      ChatModelsTable,
-      PrefetchHooks Function({bool modelProviderId, bool conversationsRefs})
     >;
 typedef $$ApiModelProvidersTableCreateCompanionBuilder =
     ApiModelProvidersCompanion Function({
@@ -6004,6 +4958,32 @@ final class $$ApiModelProvidersTableReferences
     ).filter((f) => f.modelProvider.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_apiModelsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CredentialModelsTable,
+    List<CredentialModelsTable>
+  >
+  _credentialModelsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.credentialModels,
+    aliasName: $_aliasNameGenerator(
+      db.apiModelProviders.id,
+      db.credentialModels.modelId,
+    ),
+  );
+
+  $$CredentialModelsTableProcessedTableManager get credentialModelsRefs {
+    final manager = $$CredentialModelsTableTableManager(
+      $_db,
+      $_db.credentialModels,
+    ).filter((f) => f.modelId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _credentialModelsRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -6065,6 +5045,31 @@ class $$ApiModelProvidersTableFilterComposer
           }) => $$ApiModelsTableFilterComposer(
             $db: $db,
             $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> credentialModelsRefs(
+    Expression<bool> Function($$CredentialModelsTableFilterComposer f) f,
+  ) {
+    final $$CredentialModelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentialModels,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialModelsTableFilterComposer(
+            $db: $db,
+            $table: $db.credentialModels,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6158,6 +5163,31 @@ class $$ApiModelProvidersTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> credentialModelsRefs<T extends Object>(
+    Expression<T> Function($$CredentialModelsTableAnnotationComposer a) f,
+  ) {
+    final $$CredentialModelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentialModels,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialModelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.credentialModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$ApiModelProvidersTableTableManager
@@ -6173,7 +5203,10 @@ class $$ApiModelProvidersTableTableManager
           $$ApiModelProvidersTableUpdateCompanionBuilder,
           (ApiModelProvidersTable, $$ApiModelProvidersTableReferences),
           ApiModelProvidersTable,
-          PrefetchHooks Function({bool apiModelsRefs})
+          PrefetchHooks Function({
+            bool apiModelsRefs,
+            bool credentialModelsRefs,
+          })
         > {
   $$ApiModelProvidersTableTableManager(
     _$AppDatabase db,
@@ -6231,38 +5264,63 @@ class $$ApiModelProvidersTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({apiModelsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (apiModelsRefs) db.apiModels],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (apiModelsRefs)
-                    await $_getPrefetchedData<
-                      ApiModelProvidersTable,
-                      $ApiModelProvidersTable,
-                      ApiModelsTable
-                    >(
-                      currentTable: table,
-                      referencedTable: $$ApiModelProvidersTableReferences
-                          ._apiModelsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$ApiModelProvidersTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).apiModelsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.modelProvider == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({apiModelsRefs = false, credentialModelsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (apiModelsRefs) db.apiModels,
+                    if (credentialModelsRefs) db.credentialModels,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (apiModelsRefs)
+                        await $_getPrefetchedData<
+                          ApiModelProvidersTable,
+                          $ApiModelProvidersTable,
+                          ApiModelsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ApiModelProvidersTableReferences
+                              ._apiModelsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ApiModelProvidersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).apiModelsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.modelProvider == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (credentialModelsRefs)
+                        await $_getPrefetchedData<
+                          ApiModelProvidersTable,
+                          $ApiModelProvidersTable,
+                          CredentialModelsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ApiModelProvidersTableReferences
+                              ._credentialModelsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ApiModelProvidersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).credentialModelsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.modelId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6279,7 +5337,7 @@ typedef $$ApiModelProvidersTableProcessedTableManager =
       $$ApiModelProvidersTableUpdateCompanionBuilder,
       (ApiModelProvidersTable, $$ApiModelProvidersTableReferences),
       ApiModelProvidersTable,
-      PrefetchHooks Function({bool apiModelsRefs})
+      PrefetchHooks Function({bool apiModelsRefs, bool credentialModelsRefs})
     >;
 typedef $$ApiModelsTableCreateCompanionBuilder =
     ApiModelsCompanion Function({
@@ -6335,6 +5393,24 @@ final class $$ApiModelsTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$CredentialsTable, List<CredentialsTable>>
+  _credentialsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.credentials,
+    aliasName: $_aliasNameGenerator(db.apiModels.id, db.credentials.modelId),
+  );
+
+  $$CredentialsTableProcessedTableManager get credentialsRefs {
+    final manager = $$CredentialsTableTableManager(
+      $_db,
+      $_db.credentials,
+    ).filter((f) => f.modelId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_credentialsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 }
@@ -6421,6 +5497,31 @@ class $$ApiModelsTableFilterComposer
           ),
     );
     return composer;
+  }
+
+  Expression<bool> credentialsRefs(
+    Expression<bool> Function($$CredentialsTableFilterComposer f) f,
+  ) {
+    final $$CredentialsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentials,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialsTableFilterComposer(
+            $db: $db,
+            $table: $db.credentials,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
   }
 }
 
@@ -6585,6 +5686,31 @@ class $$ApiModelsTableAnnotationComposer
         );
     return composer;
   }
+
+  Expression<T> credentialsRefs<T extends Object>(
+    Expression<T> Function($$CredentialsTableAnnotationComposer a) f,
+  ) {
+    final $$CredentialsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentials,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.credentials,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$ApiModelsTableTableManager
@@ -6600,7 +5726,7 @@ class $$ApiModelsTableTableManager
           $$ApiModelsTableUpdateCompanionBuilder,
           (ApiModelsTable, $$ApiModelsTableReferences),
           ApiModelsTable,
-          PrefetchHooks Function({bool modelProvider})
+          PrefetchHooks Function({bool modelProvider, bool credentialsRefs})
         > {
   $$ApiModelsTableTableManager(_$AppDatabase db, $ApiModelsTable table)
     : super(
@@ -6677,47 +5803,72 @@ class $$ApiModelsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({modelProvider = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (modelProvider) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.modelProvider,
-                                referencedTable: $$ApiModelsTableReferences
-                                    ._modelProviderTable(db),
-                                referencedColumn: $$ApiModelsTableReferences
-                                    ._modelProviderTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({modelProvider = false, credentialsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (credentialsRefs) db.credentials,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (modelProvider) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.modelProvider,
+                                    referencedTable: $$ApiModelsTableReferences
+                                        ._modelProviderTable(db),
+                                    referencedColumn: $$ApiModelsTableReferences
+                                        ._modelProviderTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (credentialsRefs)
+                        await $_getPrefetchedData<
+                          ApiModelsTable,
+                          $ApiModelsTable,
+                          CredentialsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ApiModelsTableReferences
+                              ._credentialsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ApiModelsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).credentialsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.modelId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6734,7 +5885,1125 @@ typedef $$ApiModelsTableProcessedTableManager =
       $$ApiModelsTableUpdateCompanionBuilder,
       (ApiModelsTable, $$ApiModelsTableReferences),
       ApiModelsTable,
-      PrefetchHooks Function({bool modelProvider})
+      PrefetchHooks Function({bool modelProvider, bool credentialsRefs})
+    >;
+typedef $$CredentialsTableCreateCompanionBuilder =
+    CredentialsCompanion Function({
+      Value<String> id,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      required String name,
+      required String modelId,
+      Value<String?> url,
+      required String keyValue,
+      required String workspaceId,
+      Value<int> rowid,
+    });
+typedef $$CredentialsTableUpdateCompanionBuilder =
+    CredentialsCompanion Function({
+      Value<String> id,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String> name,
+      Value<String> modelId,
+      Value<String?> url,
+      Value<String> keyValue,
+      Value<String> workspaceId,
+      Value<int> rowid,
+    });
+
+final class $$CredentialsTableReferences
+    extends BaseReferences<_$AppDatabase, $CredentialsTable, CredentialsTable> {
+  $$CredentialsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ApiModelsTable _modelIdTable(_$AppDatabase db) =>
+      db.apiModels.createAlias(
+        $_aliasNameGenerator(db.credentials.modelId, db.apiModels.id),
+      );
+
+  $$ApiModelsTableProcessedTableManager get modelId {
+    final $_column = $_itemColumn<String>('model_id')!;
+
+    final manager = $$ApiModelsTableTableManager(
+      $_db,
+      $_db.apiModels,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_modelIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $WorkspacesTable _workspaceIdTable(_$AppDatabase db) =>
+      db.workspaces.createAlias(
+        $_aliasNameGenerator(db.credentials.workspaceId, db.workspaces.id),
+      );
+
+  $$WorkspacesTableProcessedTableManager get workspaceId {
+    final $_column = $_itemColumn<String>('workspace_id')!;
+
+    final manager = $$WorkspacesTableTableManager(
+      $_db,
+      $_db.workspaces,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_workspaceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CredentialModelsTable,
+    List<CredentialModelsTable>
+  >
+  _credentialModelsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.credentialModels,
+    aliasName: $_aliasNameGenerator(
+      db.credentials.id,
+      db.credentialModels.credentialsId,
+    ),
+  );
+
+  $$CredentialModelsTableProcessedTableManager get credentialModelsRefs {
+    final manager = $$CredentialModelsTableTableManager(
+      $_db,
+      $_db.credentialModels,
+    ).filter((f) => f.credentialsId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _credentialModelsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CredentialsTableFilterComposer
+    extends Composer<_$AppDatabase, $CredentialsTable> {
+  $$CredentialsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get keyValue => $composableBuilder(
+    column: $table.keyValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ApiModelsTableFilterComposer get modelId {
+    final $$ApiModelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelId,
+      referencedTable: $db.apiModels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelsTableFilterComposer(
+            $db: $db,
+            $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$WorkspacesTableFilterComposer get workspaceId {
+    final $$WorkspacesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.workspaceId,
+      referencedTable: $db.workspaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WorkspacesTableFilterComposer(
+            $db: $db,
+            $table: $db.workspaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> credentialModelsRefs(
+    Expression<bool> Function($$CredentialModelsTableFilterComposer f) f,
+  ) {
+    final $$CredentialModelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentialModels,
+      getReferencedColumn: (t) => t.credentialsId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialModelsTableFilterComposer(
+            $db: $db,
+            $table: $db.credentialModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CredentialsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CredentialsTable> {
+  $$CredentialsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get keyValue => $composableBuilder(
+    column: $table.keyValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ApiModelsTableOrderingComposer get modelId {
+    final $$ApiModelsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelId,
+      referencedTable: $db.apiModels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelsTableOrderingComposer(
+            $db: $db,
+            $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$WorkspacesTableOrderingComposer get workspaceId {
+    final $$WorkspacesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.workspaceId,
+      referencedTable: $db.workspaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WorkspacesTableOrderingComposer(
+            $db: $db,
+            $table: $db.workspaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CredentialsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CredentialsTable> {
+  $$CredentialsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<String> get keyValue =>
+      $composableBuilder(column: $table.keyValue, builder: (column) => column);
+
+  $$ApiModelsTableAnnotationComposer get modelId {
+    final $$ApiModelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelId,
+      referencedTable: $db.apiModels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.apiModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$WorkspacesTableAnnotationComposer get workspaceId {
+    final $$WorkspacesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.workspaceId,
+      referencedTable: $db.workspaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WorkspacesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.workspaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> credentialModelsRefs<T extends Object>(
+    Expression<T> Function($$CredentialModelsTableAnnotationComposer a) f,
+  ) {
+    final $$CredentialModelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.credentialModels,
+      getReferencedColumn: (t) => t.credentialsId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialModelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.credentialModels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CredentialsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CredentialsTable,
+          CredentialsTable,
+          $$CredentialsTableFilterComposer,
+          $$CredentialsTableOrderingComposer,
+          $$CredentialsTableAnnotationComposer,
+          $$CredentialsTableCreateCompanionBuilder,
+          $$CredentialsTableUpdateCompanionBuilder,
+          (CredentialsTable, $$CredentialsTableReferences),
+          CredentialsTable,
+          PrefetchHooks Function({
+            bool modelId,
+            bool workspaceId,
+            bool credentialModelsRefs,
+          })
+        > {
+  $$CredentialsTableTableManager(_$AppDatabase db, $CredentialsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CredentialsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CredentialsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CredentialsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> modelId = const Value.absent(),
+                Value<String?> url = const Value.absent(),
+                Value<String> keyValue = const Value.absent(),
+                Value<String> workspaceId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CredentialsCompanion(
+                id: id,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                name: name,
+                modelId: modelId,
+                url: url,
+                keyValue: keyValue,
+                workspaceId: workspaceId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                required String name,
+                required String modelId,
+                Value<String?> url = const Value.absent(),
+                required String keyValue,
+                required String workspaceId,
+                Value<int> rowid = const Value.absent(),
+              }) => CredentialsCompanion.insert(
+                id: id,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                name: name,
+                modelId: modelId,
+                url: url,
+                keyValue: keyValue,
+                workspaceId: workspaceId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CredentialsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                modelId = false,
+                workspaceId = false,
+                credentialModelsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (credentialModelsRefs) db.credentialModels,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (modelId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.modelId,
+                                    referencedTable:
+                                        $$CredentialsTableReferences
+                                            ._modelIdTable(db),
+                                    referencedColumn:
+                                        $$CredentialsTableReferences
+                                            ._modelIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (workspaceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.workspaceId,
+                                    referencedTable:
+                                        $$CredentialsTableReferences
+                                            ._workspaceIdTable(db),
+                                    referencedColumn:
+                                        $$CredentialsTableReferences
+                                            ._workspaceIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (credentialModelsRefs)
+                        await $_getPrefetchedData<
+                          CredentialsTable,
+                          $CredentialsTable,
+                          CredentialModelsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CredentialsTableReferences
+                              ._credentialModelsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CredentialsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).credentialModelsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.credentialsId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CredentialsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CredentialsTable,
+      CredentialsTable,
+      $$CredentialsTableFilterComposer,
+      $$CredentialsTableOrderingComposer,
+      $$CredentialsTableAnnotationComposer,
+      $$CredentialsTableCreateCompanionBuilder,
+      $$CredentialsTableUpdateCompanionBuilder,
+      (CredentialsTable, $$CredentialsTableReferences),
+      CredentialsTable,
+      PrefetchHooks Function({
+        bool modelId,
+        bool workspaceId,
+        bool credentialModelsRefs,
+      })
+    >;
+typedef $$CredentialModelsTableCreateCompanionBuilder =
+    CredentialModelsCompanion Function({
+      Value<String> id,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      required String modelId,
+      required String credentialsId,
+      Value<int> rowid,
+    });
+typedef $$CredentialModelsTableUpdateCompanionBuilder =
+    CredentialModelsCompanion Function({
+      Value<String> id,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String> modelId,
+      Value<String> credentialsId,
+      Value<int> rowid,
+    });
+
+final class $$CredentialModelsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CredentialModelsTable,
+          CredentialModelsTable
+        > {
+  $$CredentialModelsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ApiModelProvidersTable _modelIdTable(_$AppDatabase db) =>
+      db.apiModelProviders.createAlias(
+        $_aliasNameGenerator(
+          db.credentialModels.modelId,
+          db.apiModelProviders.id,
+        ),
+      );
+
+  $$ApiModelProvidersTableProcessedTableManager get modelId {
+    final $_column = $_itemColumn<String>('model_id')!;
+
+    final manager = $$ApiModelProvidersTableTableManager(
+      $_db,
+      $_db.apiModelProviders,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_modelIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CredentialsTable _credentialsIdTable(_$AppDatabase db) =>
+      db.credentials.createAlias(
+        $_aliasNameGenerator(
+          db.credentialModels.credentialsId,
+          db.credentials.id,
+        ),
+      );
+
+  $$CredentialsTableProcessedTableManager get credentialsId {
+    final $_column = $_itemColumn<String>('credentials_id')!;
+
+    final manager = $$CredentialsTableTableManager(
+      $_db,
+      $_db.credentials,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_credentialsIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ConversationsTable, List<ConversationsTable>>
+  _conversationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.conversations,
+    aliasName: $_aliasNameGenerator(
+      db.credentialModels.id,
+      db.conversations.modelId,
+    ),
+  );
+
+  $$ConversationsTableProcessedTableManager get conversationsRefs {
+    final manager = $$ConversationsTableTableManager(
+      $_db,
+      $_db.conversations,
+    ).filter((f) => f.modelId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_conversationsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CredentialModelsTableFilterComposer
+    extends Composer<_$AppDatabase, $CredentialModelsTable> {
+  $$CredentialModelsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ApiModelProvidersTableFilterComposer get modelId {
+    final $$ApiModelProvidersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelId,
+      referencedTable: $db.apiModelProviders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelProvidersTableFilterComposer(
+            $db: $db,
+            $table: $db.apiModelProviders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CredentialsTableFilterComposer get credentialsId {
+    final $$CredentialsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.credentialsId,
+      referencedTable: $db.credentials,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialsTableFilterComposer(
+            $db: $db,
+            $table: $db.credentials,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> conversationsRefs(
+    Expression<bool> Function($$ConversationsTableFilterComposer f) f,
+  ) {
+    final $$ConversationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.conversations,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ConversationsTableFilterComposer(
+            $db: $db,
+            $table: $db.conversations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CredentialModelsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CredentialModelsTable> {
+  $$CredentialModelsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ApiModelProvidersTableOrderingComposer get modelId {
+    final $$ApiModelProvidersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.modelId,
+      referencedTable: $db.apiModelProviders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ApiModelProvidersTableOrderingComposer(
+            $db: $db,
+            $table: $db.apiModelProviders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CredentialsTableOrderingComposer get credentialsId {
+    final $$CredentialsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.credentialsId,
+      referencedTable: $db.credentials,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialsTableOrderingComposer(
+            $db: $db,
+            $table: $db.credentials,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CredentialModelsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CredentialModelsTable> {
+  $$CredentialModelsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$ApiModelProvidersTableAnnotationComposer get modelId {
+    final $$ApiModelProvidersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.modelId,
+          referencedTable: $db.apiModelProviders,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ApiModelProvidersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.apiModelProviders,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$CredentialsTableAnnotationComposer get credentialsId {
+    final $$CredentialsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.credentialsId,
+      referencedTable: $db.credentials,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CredentialsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.credentials,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> conversationsRefs<T extends Object>(
+    Expression<T> Function($$ConversationsTableAnnotationComposer a) f,
+  ) {
+    final $$ConversationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.conversations,
+      getReferencedColumn: (t) => t.modelId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ConversationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.conversations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CredentialModelsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CredentialModelsTable,
+          CredentialModelsTable,
+          $$CredentialModelsTableFilterComposer,
+          $$CredentialModelsTableOrderingComposer,
+          $$CredentialModelsTableAnnotationComposer,
+          $$CredentialModelsTableCreateCompanionBuilder,
+          $$CredentialModelsTableUpdateCompanionBuilder,
+          (CredentialModelsTable, $$CredentialModelsTableReferences),
+          CredentialModelsTable,
+          PrefetchHooks Function({
+            bool modelId,
+            bool credentialsId,
+            bool conversationsRefs,
+          })
+        > {
+  $$CredentialModelsTableTableManager(
+    _$AppDatabase db,
+    $CredentialModelsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CredentialModelsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CredentialModelsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CredentialModelsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> modelId = const Value.absent(),
+                Value<String> credentialsId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CredentialModelsCompanion(
+                id: id,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                modelId: modelId,
+                credentialsId: credentialsId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                required String modelId,
+                required String credentialsId,
+                Value<int> rowid = const Value.absent(),
+              }) => CredentialModelsCompanion.insert(
+                id: id,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                modelId: modelId,
+                credentialsId: credentialsId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CredentialModelsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                modelId = false,
+                credentialsId = false,
+                conversationsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (conversationsRefs) db.conversations,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (modelId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.modelId,
+                                    referencedTable:
+                                        $$CredentialModelsTableReferences
+                                            ._modelIdTable(db),
+                                    referencedColumn:
+                                        $$CredentialModelsTableReferences
+                                            ._modelIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (credentialsId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.credentialsId,
+                                    referencedTable:
+                                        $$CredentialModelsTableReferences
+                                            ._credentialsIdTable(db),
+                                    referencedColumn:
+                                        $$CredentialModelsTableReferences
+                                            ._credentialsIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (conversationsRefs)
+                        await $_getPrefetchedData<
+                          CredentialModelsTable,
+                          $CredentialModelsTable,
+                          ConversationsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CredentialModelsTableReferences
+                              ._conversationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CredentialModelsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).conversationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.modelId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CredentialModelsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CredentialModelsTable,
+      CredentialModelsTable,
+      $$CredentialModelsTableFilterComposer,
+      $$CredentialModelsTableOrderingComposer,
+      $$CredentialModelsTableAnnotationComposer,
+      $$CredentialModelsTableCreateCompanionBuilder,
+      $$CredentialModelsTableUpdateCompanionBuilder,
+      (CredentialModelsTable, $$CredentialModelsTableReferences),
+      CredentialModelsTable,
+      PrefetchHooks Function({
+        bool modelId,
+        bool credentialsId,
+        bool conversationsRefs,
+      })
     >;
 typedef $$ConversationsTableCreateCompanionBuilder =
     ConversationsCompanion Function({
@@ -6787,17 +7056,17 @@ final class $$ConversationsTableReferences
     );
   }
 
-  static $ChatModelsTable _modelIdTable(_$AppDatabase db) =>
-      db.chatModels.createAlias(
-        $_aliasNameGenerator(db.conversations.modelId, db.chatModels.id),
+  static $CredentialModelsTable _modelIdTable(_$AppDatabase db) =>
+      db.credentialModels.createAlias(
+        $_aliasNameGenerator(db.conversations.modelId, db.credentialModels.id),
       );
 
-  $$ChatModelsTableProcessedTableManager? get modelId {
+  $$CredentialModelsTableProcessedTableManager? get modelId {
     final $_column = $_itemColumn<String>('model_id');
     if ($_column == null) return null;
-    final manager = $$ChatModelsTableTableManager(
+    final manager = $$CredentialModelsTableTableManager(
       $_db,
-      $_db.chatModels,
+      $_db.credentialModels,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_modelIdTable($_db));
     if (item == null) return manager;
@@ -6913,20 +7182,20 @@ class $$ConversationsTableFilterComposer
     return composer;
   }
 
-  $$ChatModelsTableFilterComposer get modelId {
-    final $$ChatModelsTableFilterComposer composer = $composerBuilder(
+  $$CredentialModelsTableFilterComposer get modelId {
+    final $$CredentialModelsTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.modelId,
-      referencedTable: $db.chatModels,
+      referencedTable: $db.credentialModels,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ChatModelsTableFilterComposer(
+          }) => $$CredentialModelsTableFilterComposer(
             $db: $db,
-            $table: $db.chatModels,
+            $table: $db.credentialModels,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7046,20 +7315,20 @@ class $$ConversationsTableOrderingComposer
     return composer;
   }
 
-  $$ChatModelsTableOrderingComposer get modelId {
-    final $$ChatModelsTableOrderingComposer composer = $composerBuilder(
+  $$CredentialModelsTableOrderingComposer get modelId {
+    final $$CredentialModelsTableOrderingComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.modelId,
-      referencedTable: $db.chatModels,
+      referencedTable: $db.credentialModels,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ChatModelsTableOrderingComposer(
+          }) => $$CredentialModelsTableOrderingComposer(
             $db: $db,
-            $table: $db.chatModels,
+            $table: $db.credentialModels,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7117,20 +7386,20 @@ class $$ConversationsTableAnnotationComposer
     return composer;
   }
 
-  $$ChatModelsTableAnnotationComposer get modelId {
-    final $$ChatModelsTableAnnotationComposer composer = $composerBuilder(
+  $$CredentialModelsTableAnnotationComposer get modelId {
+    final $$CredentialModelsTableAnnotationComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.modelId,
-      referencedTable: $db.chatModels,
+      referencedTable: $db.credentialModels,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ChatModelsTableAnnotationComposer(
+          }) => $$CredentialModelsTableAnnotationComposer(
             $db: $db,
-            $table: $db.chatModels,
+            $table: $db.credentialModels,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -8531,14 +8800,14 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$WorkspacesTableTableManager get workspaces =>
       $$WorkspacesTableTableManager(_db, _db.workspaces);
-  $$ModelProvidersTableTableManager get modelProviders =>
-      $$ModelProvidersTableTableManager(_db, _db.modelProviders);
-  $$ChatModelsTableTableManager get chatModels =>
-      $$ChatModelsTableTableManager(_db, _db.chatModels);
   $$ApiModelProvidersTableTableManager get apiModelProviders =>
       $$ApiModelProvidersTableTableManager(_db, _db.apiModelProviders);
   $$ApiModelsTableTableManager get apiModels =>
       $$ApiModelsTableTableManager(_db, _db.apiModels);
+  $$CredentialsTableTableManager get credentials =>
+      $$CredentialsTableTableManager(_db, _db.credentials);
+  $$CredentialModelsTableTableManager get credentialModels =>
+      $$CredentialModelsTableTableManager(_db, _db.credentialModels);
   $$ConversationsTableTableManager get conversations =>
       $$ConversationsTableTableManager(_db, _db.conversations);
   $$MessagesTableTableManager get messages =>

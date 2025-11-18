@@ -2,23 +2,22 @@ import 'dart:io';
 
 import 'package:auravibes_app/data/database/drift/daos/api_model_providers_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/api_models_dao.dart';
-import 'package:auravibes_app/data/database/drift/daos/chat_models_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/conversation_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/conversation_tools_dao.dart';
+import 'package:auravibes_app/data/database/drift/daos/credential_models_dao.dart';
+import 'package:auravibes_app/data/database/drift/daos/credentials_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/message_dao.dart';
-import 'package:auravibes_app/data/database/drift/daos/model_providers_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/workspace_dao.dart';
 import 'package:auravibes_app/data/database/drift/daos/workspace_tools_dao.dart';
 import 'package:auravibes_app/data/database/drift/tables/api_model_provider_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/api_model_table.dart';
-import 'package:auravibes_app/data/database/drift/tables/chat_models_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/conversation_disabled_tools_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/conversations_table.dart';
+import 'package:auravibes_app/data/database/drift/tables/credentials_models_table.dart';
+import 'package:auravibes_app/data/database/drift/tables/credentials_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/messages_table.dart';
-import 'package:auravibes_app/data/database/drift/tables/model_provider_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/workspace_tools_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/workspaces_table.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
 import 'package:auravibes_app/domain/enums/workspace_type.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -34,8 +33,8 @@ part 'app_database.g.dart';
 @DriftDatabase(
   tables: [
     Workspaces,
-    ModelProviders,
-    ChatModels,
+    Credentials,
+    CredentialModels,
     ApiModelProviders,
     ApiModels,
     Conversations,
@@ -45,8 +44,8 @@ part 'app_database.g.dart';
   ],
   daos: [
     WorkspaceDao,
-    ModelProvidersDao,
-    ChatModelsDao,
+    CredentialsDao,
+    CredentialModelsDao,
     ApiModelProvidersDao,
     ApiModelsDao,
     ConversationDao,

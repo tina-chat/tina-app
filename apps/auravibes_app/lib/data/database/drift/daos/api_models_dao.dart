@@ -45,19 +45,14 @@ class ApiModelsDao extends DatabaseAccessor<AppDatabase>
   /// Inserts a new model into the database.
   ///
   /// Returns the inserted model.
-  Future<ApiModelsTable> insertModel(ApiModelsCompanion model) {
-    return into(apiModels).insertReturning(model);
-  }
-
-  /// Updates an existing model in the database.
-  ///
-  /// Updates the model with the given [id] using the provided [model] data.
-  /// Returns true if a model was updated, false otherwise.
-  Future<bool> updateModel(String id, ApiModelsCompanion model) async {
-    final updateCount = await (update(
-      apiModels,
-    )..where((t) => t.id.equals(id))).write(model);
-    return updateCount > 0;
+  Future<ApiModelsTable> upsertModel(ApiModelsCompanion model) {
+    return into(apiModels).insertReturning(
+      model,
+      onConflict: DoUpdate(
+        (old) => model,
+        target: [apiModels.id, apiModels.modelProvider],
+      ),
+    );
   }
 
   /// Deletes a model from the database.
@@ -128,22 +123,6 @@ class ApiModelsDao extends DatabaseAccessor<AppDatabase>
         .then((rows) => rows.length);
   }
 
-  /// Inserts or updates a model based on the ID.
-  ///
-  /// If a model with the given ID exists, it will be updated.
-  /// Otherwise, a new model will be inserted.
-  /// Returns the inserted/updated model.
-  Future<ApiModelsTable> upsertModel(ApiModelsCompanion model) async {
-    final existingModel = await getModelById(model.id.value);
-
-    if (existingModel != null) {
-      await updateModel(model.id.value, model);
-      return (await getModelById(model.id.value))!;
-    } else {
-      return insertModel(model);
-    }
-  }
-
   /// Batch inserts multiple models into the database.
   ///
   /// Returns the list of inserted models.
@@ -154,7 +133,7 @@ class ApiModelsDao extends DatabaseAccessor<AppDatabase>
       final results = <ApiModelsTable>[];
       for (final model in models) {
         try {
-          final inserted = await insertModel(model);
+          final inserted = await upsertModel(model);
           results.add(inserted);
         } on Exception catch (e) {
           // Continue with other models if one fails

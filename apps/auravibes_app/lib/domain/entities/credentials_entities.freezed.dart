@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'model_providers_entities.dart';
+part of 'credentials_entities.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,40 +12,40 @@ part of 'model_providers_entities.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ModelProviderEntity {
+mixin _$CredentialsEntity {
 
- String get id; String get name; ChatModelType get type; String get key; DateTime get createdAt; DateTime get updatedAt; String get workspaceId; String? get url;
-/// Create a copy of ModelProviderEntity
+ String get id; String get name; String get key; String get modelId; DateTime get createdAt; DateTime get updatedAt; String get workspaceId; String? get url;
+/// Create a copy of CredentialsEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ModelProviderEntityCopyWith<ModelProviderEntity> get copyWith => _$ModelProviderEntityCopyWithImpl<ModelProviderEntity>(this as ModelProviderEntity, _$identity);
+$CredentialsEntityCopyWith<CredentialsEntity> get copyWith => _$CredentialsEntityCopyWithImpl<CredentialsEntity>(this as CredentialsEntity, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ModelProviderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CredentialsEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,type,key,createdAt,updatedAt,workspaceId,url);
+int get hashCode => Object.hash(runtimeType,id,name,key,modelId,createdAt,updatedAt,workspaceId,url);
 
 @override
 String toString() {
-  return 'ModelProviderEntity(id: $id, name: $name, type: $type, key: $key, createdAt: $createdAt, updatedAt: $updatedAt, workspaceId: $workspaceId, url: $url)';
+  return 'CredentialsEntity(id: $id, name: $name, key: $key, modelId: $modelId, createdAt: $createdAt, updatedAt: $updatedAt, workspaceId: $workspaceId, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ModelProviderEntityCopyWith<$Res>  {
-  factory $ModelProviderEntityCopyWith(ModelProviderEntity value, $Res Function(ModelProviderEntity) _then) = _$ModelProviderEntityCopyWithImpl;
+abstract mixin class $CredentialsEntityCopyWith<$Res>  {
+  factory $CredentialsEntityCopyWith(CredentialsEntity value, $Res Function(CredentialsEntity) _then) = _$CredentialsEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, ChatModelType type, String key, DateTime createdAt, DateTime updatedAt, String workspaceId, String? url
+ String id, String name, String key, String modelId, DateTime createdAt, DateTime updatedAt, String workspaceId, String? url
 });
 
 
@@ -53,21 +53,21 @@ $Res call({
 
 }
 /// @nodoc
-class _$ModelProviderEntityCopyWithImpl<$Res>
-    implements $ModelProviderEntityCopyWith<$Res> {
-  _$ModelProviderEntityCopyWithImpl(this._self, this._then);
+class _$CredentialsEntityCopyWithImpl<$Res>
+    implements $CredentialsEntityCopyWith<$Res> {
+  _$CredentialsEntityCopyWithImpl(this._self, this._then);
 
-  final ModelProviderEntity _self;
-  final $Res Function(ModelProviderEntity) _then;
+  final CredentialsEntity _self;
+  final $Res Function(CredentialsEntity) _then;
 
-/// Create a copy of ModelProviderEntity
+/// Create a copy of CredentialsEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? type = null,Object? key = null,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,Object? url = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? key = null,Object? modelId = null,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,Object? url = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -79,8 +79,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [ModelProviderEntity].
-extension ModelProviderEntityPatterns on ModelProviderEntity {
+/// Adds pattern-matching-related methods to [CredentialsEntity].
+extension CredentialsEntityPatterns on CredentialsEntity {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -93,10 +93,10 @@ extension ModelProviderEntityPatterns on ModelProviderEntity {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ModelProviderEntity value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CredentialsEntity value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ModelProviderEntity() when $default != null:
+case _CredentialsEntity() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -115,10 +115,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ModelProviderEntity value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CredentialsEntity value)  $default,){
 final _that = this;
 switch (_that) {
-case _ModelProviderEntity():
+case _CredentialsEntity():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -136,10 +136,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ModelProviderEntity value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CredentialsEntity value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ModelProviderEntity() when $default != null:
+case _CredentialsEntity() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -157,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  ChatModelType type,  String key,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String key,  String modelId,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ModelProviderEntity() when $default != null:
-return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
+case _CredentialsEntity() when $default != null:
+return $default(_that.id,_that.name,_that.key,_that.modelId,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
   return orElse();
 
 }
@@ -178,10 +178,10 @@ return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.u
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  ChatModelType type,  String key,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String key,  String modelId,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)  $default,) {final _that = this;
 switch (_that) {
-case _ModelProviderEntity():
-return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
+case _CredentialsEntity():
+return $default(_that.id,_that.name,_that.key,_that.modelId,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +198,10 @@ return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.u
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  ChatModelType type,  String key,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String key,  String modelId,  DateTime createdAt,  DateTime updatedAt,  String workspaceId,  String? url)?  $default,) {final _that = this;
 switch (_that) {
-case _ModelProviderEntity() when $default != null:
-return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
+case _CredentialsEntity() when $default != null:
+return $default(_that.id,_that.name,_that.key,_that.modelId,_that.createdAt,_that.updatedAt,_that.workspaceId,_that.url);case _:
   return null;
 
 }
@@ -212,50 +212,50 @@ return $default(_that.id,_that.name,_that.type,_that.key,_that.createdAt,_that.u
 /// @nodoc
 
 
-class _ModelProviderEntity implements ModelProviderEntity {
-  const _ModelProviderEntity({required this.id, required this.name, required this.type, required this.key, required this.createdAt, required this.updatedAt, required this.workspaceId, this.url});
+class _CredentialsEntity implements CredentialsEntity {
+  const _CredentialsEntity({required this.id, required this.name, required this.key, required this.modelId, required this.createdAt, required this.updatedAt, required this.workspaceId, this.url});
   
 
 @override final  String id;
 @override final  String name;
-@override final  ChatModelType type;
 @override final  String key;
+@override final  String modelId;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 @override final  String workspaceId;
 @override final  String? url;
 
-/// Create a copy of ModelProviderEntity
+/// Create a copy of CredentialsEntity
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ModelProviderEntityCopyWith<_ModelProviderEntity> get copyWith => __$ModelProviderEntityCopyWithImpl<_ModelProviderEntity>(this, _$identity);
+_$CredentialsEntityCopyWith<_CredentialsEntity> get copyWith => __$CredentialsEntityCopyWithImpl<_CredentialsEntity>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ModelProviderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CredentialsEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,type,key,createdAt,updatedAt,workspaceId,url);
+int get hashCode => Object.hash(runtimeType,id,name,key,modelId,createdAt,updatedAt,workspaceId,url);
 
 @override
 String toString() {
-  return 'ModelProviderEntity(id: $id, name: $name, type: $type, key: $key, createdAt: $createdAt, updatedAt: $updatedAt, workspaceId: $workspaceId, url: $url)';
+  return 'CredentialsEntity(id: $id, name: $name, key: $key, modelId: $modelId, createdAt: $createdAt, updatedAt: $updatedAt, workspaceId: $workspaceId, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ModelProviderEntityCopyWith<$Res> implements $ModelProviderEntityCopyWith<$Res> {
-  factory _$ModelProviderEntityCopyWith(_ModelProviderEntity value, $Res Function(_ModelProviderEntity) _then) = __$ModelProviderEntityCopyWithImpl;
+abstract mixin class _$CredentialsEntityCopyWith<$Res> implements $CredentialsEntityCopyWith<$Res> {
+  factory _$CredentialsEntityCopyWith(_CredentialsEntity value, $Res Function(_CredentialsEntity) _then) = __$CredentialsEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, ChatModelType type, String key, DateTime createdAt, DateTime updatedAt, String workspaceId, String? url
+ String id, String name, String key, String modelId, DateTime createdAt, DateTime updatedAt, String workspaceId, String? url
 });
 
 
@@ -263,21 +263,21 @@ $Res call({
 
 }
 /// @nodoc
-class __$ModelProviderEntityCopyWithImpl<$Res>
-    implements _$ModelProviderEntityCopyWith<$Res> {
-  __$ModelProviderEntityCopyWithImpl(this._self, this._then);
+class __$CredentialsEntityCopyWithImpl<$Res>
+    implements _$CredentialsEntityCopyWith<$Res> {
+  __$CredentialsEntityCopyWithImpl(this._self, this._then);
 
-  final _ModelProviderEntity _self;
-  final $Res Function(_ModelProviderEntity) _then;
+  final _CredentialsEntity _self;
+  final $Res Function(_CredentialsEntity) _then;
 
-/// Create a copy of ModelProviderEntity
+/// Create a copy of CredentialsEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? type = null,Object? key = null,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,Object? url = freezed,}) {
-  return _then(_ModelProviderEntity(
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? key = null,Object? modelId = null,Object? createdAt = null,Object? updatedAt = null,Object? workspaceId = null,Object? url = freezed,}) {
+  return _then(_CredentialsEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -290,40 +290,40 @@ as String?,
 }
 
 /// @nodoc
-mixin _$ModelProviderToCreate {
+mixin _$CredentialsToCreate {
 
- String get name; ChatModelType get type; String get key; String get workspaceId; String? get url;
-/// Create a copy of ModelProviderToCreate
+ String get name; String get key; String get workspaceId; String get modelId; String? get url;
+/// Create a copy of CredentialsToCreate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ModelProviderToCreateCopyWith<ModelProviderToCreate> get copyWith => _$ModelProviderToCreateCopyWithImpl<ModelProviderToCreate>(this as ModelProviderToCreate, _$identity);
+$CredentialsToCreateCopyWith<CredentialsToCreate> get copyWith => _$CredentialsToCreateCopyWithImpl<CredentialsToCreate>(this as CredentialsToCreate, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ModelProviderToCreate&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CredentialsToCreate&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,type,key,workspaceId,url);
+int get hashCode => Object.hash(runtimeType,name,key,workspaceId,modelId,url);
 
 @override
 String toString() {
-  return 'ModelProviderToCreate(name: $name, type: $type, key: $key, workspaceId: $workspaceId, url: $url)';
+  return 'CredentialsToCreate(name: $name, key: $key, workspaceId: $workspaceId, modelId: $modelId, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ModelProviderToCreateCopyWith<$Res>  {
-  factory $ModelProviderToCreateCopyWith(ModelProviderToCreate value, $Res Function(ModelProviderToCreate) _then) = _$ModelProviderToCreateCopyWithImpl;
+abstract mixin class $CredentialsToCreateCopyWith<$Res>  {
+  factory $CredentialsToCreateCopyWith(CredentialsToCreate value, $Res Function(CredentialsToCreate) _then) = _$CredentialsToCreateCopyWithImpl;
 @useResult
 $Res call({
- String name, ChatModelType type, String key, String workspaceId, String? url
+ String name, String key, String workspaceId, String modelId, String? url
 });
 
 
@@ -331,21 +331,21 @@ $Res call({
 
 }
 /// @nodoc
-class _$ModelProviderToCreateCopyWithImpl<$Res>
-    implements $ModelProviderToCreateCopyWith<$Res> {
-  _$ModelProviderToCreateCopyWithImpl(this._self, this._then);
+class _$CredentialsToCreateCopyWithImpl<$Res>
+    implements $CredentialsToCreateCopyWith<$Res> {
+  _$CredentialsToCreateCopyWithImpl(this._self, this._then);
 
-  final ModelProviderToCreate _self;
-  final $Res Function(ModelProviderToCreate) _then;
+  final CredentialsToCreate _self;
+  final $Res Function(CredentialsToCreate) _then;
 
-/// Create a copy of ModelProviderToCreate
+/// Create a copy of CredentialsToCreate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? type = null,Object? key = null,Object? workspaceId = null,Object? url = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? key = null,Object? workspaceId = null,Object? modelId = null,Object? url = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
+as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -354,8 +354,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [ModelProviderToCreate].
-extension ModelProviderToCreatePatterns on ModelProviderToCreate {
+/// Adds pattern-matching-related methods to [CredentialsToCreate].
+extension CredentialsToCreatePatterns on CredentialsToCreate {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -368,10 +368,10 @@ extension ModelProviderToCreatePatterns on ModelProviderToCreate {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ModelProviderToCreate value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CredentialsToCreate value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ModelProviderToCreate() when $default != null:
+case _CredentialsToCreate() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -390,10 +390,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ModelProviderToCreate value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CredentialsToCreate value)  $default,){
 final _that = this;
 switch (_that) {
-case _ModelProviderToCreate():
+case _CredentialsToCreate():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -411,10 +411,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ModelProviderToCreate value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CredentialsToCreate value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ModelProviderToCreate() when $default != null:
+case _CredentialsToCreate() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -432,10 +432,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String key,  String workspaceId,  String modelId,  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ModelProviderToCreate() when $default != null:
-return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
+case _CredentialsToCreate() when $default != null:
+return $default(_that.name,_that.key,_that.workspaceId,_that.modelId,_that.url);case _:
   return orElse();
 
 }
@@ -453,10 +453,10 @@ return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String key,  String workspaceId,  String modelId,  String? url)  $default,) {final _that = this;
 switch (_that) {
-case _ModelProviderToCreate():
-return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
+case _CredentialsToCreate():
+return $default(_that.name,_that.key,_that.workspaceId,_that.modelId,_that.url);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -473,10 +473,10 @@ return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  ChatModelType type,  String key,  String workspaceId,  String? url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String key,  String workspaceId,  String modelId,  String? url)?  $default,) {final _that = this;
 switch (_that) {
-case _ModelProviderToCreate() when $default != null:
-return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);case _:
+case _CredentialsToCreate() when $default != null:
+return $default(_that.name,_that.key,_that.workspaceId,_that.modelId,_that.url);case _:
   return null;
 
 }
@@ -487,47 +487,47 @@ return $default(_that.name,_that.type,_that.key,_that.workspaceId,_that.url);cas
 /// @nodoc
 
 
-class _ModelProviderToCreate implements ModelProviderToCreate {
-  const _ModelProviderToCreate({required this.name, required this.type, required this.key, required this.workspaceId, this.url});
+class _CredentialsToCreate implements CredentialsToCreate {
+  const _CredentialsToCreate({required this.name, required this.key, required this.workspaceId, required this.modelId, this.url});
   
 
 @override final  String name;
-@override final  ChatModelType type;
 @override final  String key;
 @override final  String workspaceId;
+@override final  String modelId;
 @override final  String? url;
 
-/// Create a copy of ModelProviderToCreate
+/// Create a copy of CredentialsToCreate
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ModelProviderToCreateCopyWith<_ModelProviderToCreate> get copyWith => __$ModelProviderToCreateCopyWithImpl<_ModelProviderToCreate>(this, _$identity);
+_$CredentialsToCreateCopyWith<_CredentialsToCreate> get copyWith => __$CredentialsToCreateCopyWithImpl<_CredentialsToCreate>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ModelProviderToCreate&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.key, key) || other.key == key)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CredentialsToCreate&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.modelId, modelId) || other.modelId == modelId)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,type,key,workspaceId,url);
+int get hashCode => Object.hash(runtimeType,name,key,workspaceId,modelId,url);
 
 @override
 String toString() {
-  return 'ModelProviderToCreate(name: $name, type: $type, key: $key, workspaceId: $workspaceId, url: $url)';
+  return 'CredentialsToCreate(name: $name, key: $key, workspaceId: $workspaceId, modelId: $modelId, url: $url)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ModelProviderToCreateCopyWith<$Res> implements $ModelProviderToCreateCopyWith<$Res> {
-  factory _$ModelProviderToCreateCopyWith(_ModelProviderToCreate value, $Res Function(_ModelProviderToCreate) _then) = __$ModelProviderToCreateCopyWithImpl;
+abstract mixin class _$CredentialsToCreateCopyWith<$Res> implements $CredentialsToCreateCopyWith<$Res> {
+  factory _$CredentialsToCreateCopyWith(_CredentialsToCreate value, $Res Function(_CredentialsToCreate) _then) = __$CredentialsToCreateCopyWithImpl;
 @override @useResult
 $Res call({
- String name, ChatModelType type, String key, String workspaceId, String? url
+ String name, String key, String workspaceId, String modelId, String? url
 });
 
 
@@ -535,21 +535,21 @@ $Res call({
 
 }
 /// @nodoc
-class __$ModelProviderToCreateCopyWithImpl<$Res>
-    implements _$ModelProviderToCreateCopyWith<$Res> {
-  __$ModelProviderToCreateCopyWithImpl(this._self, this._then);
+class __$CredentialsToCreateCopyWithImpl<$Res>
+    implements _$CredentialsToCreateCopyWith<$Res> {
+  __$CredentialsToCreateCopyWithImpl(this._self, this._then);
 
-  final _ModelProviderToCreate _self;
-  final $Res Function(_ModelProviderToCreate) _then;
+  final _CredentialsToCreate _self;
+  final $Res Function(_CredentialsToCreate) _then;
 
-/// Create a copy of ModelProviderToCreate
+/// Create a copy of CredentialsToCreate
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? type = null,Object? key = null,Object? workspaceId = null,Object? url = freezed,}) {
-  return _then(_ModelProviderToCreate(
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? key = null,Object? workspaceId = null,Object? modelId = null,Object? url = freezed,}) {
+  return _then(_CredentialsToCreate(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as ChatModelType,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
+as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
+as String,modelId: null == modelId ? _self.modelId : modelId // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -561,7 +561,7 @@ as String?,
 /// @nodoc
 mixin _$ModelProviderFilter {
 
- List<String>? get workspaces; List<ChatModelType>? get types;
+ List<String>? get workspaces; List<CredentialsModelType>? get types;
 /// Create a copy of ModelProviderFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -592,7 +592,7 @@ abstract mixin class $ModelProviderFilterCopyWith<$Res>  {
   factory $ModelProviderFilterCopyWith(ModelProviderFilter value, $Res Function(ModelProviderFilter) _then) = _$ModelProviderFilterCopyWithImpl;
 @useResult
 $Res call({
- List<String>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<CredentialsModelType>? types
 });
 
 
@@ -613,7 +613,7 @@ class _$ModelProviderFilterCopyWithImpl<$Res>
   return _then(_self.copyWith(
 workspaces: freezed == workspaces ? _self.workspaces : workspaces // ignore: cast_nullable_to_non_nullable
 as List<String>?,types: freezed == types ? _self.types : types // ignore: cast_nullable_to_non_nullable
-as List<ChatModelType>?,
+as List<CredentialsModelType>?,
   ));
 }
 
@@ -698,7 +698,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<CredentialsModelType>? types)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -719,7 +719,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<ChatModelType>? types)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String>? workspaces,  List<CredentialsModelType>? types)  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter():
 return $default(_that.workspaces,_that.types);case _:
@@ -739,7 +739,7 @@ return $default(_that.workspaces,_that.types);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String>? workspaces,  List<ChatModelType>? types)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String>? workspaces,  List<CredentialsModelType>? types)?  $default,) {final _that = this;
 switch (_that) {
 case _ModelProviderFilter() when $default != null:
 return $default(_that.workspaces,_that.types);case _:
@@ -754,7 +754,7 @@ return $default(_that.workspaces,_that.types);case _:
 
 
 class _ModelProviderFilter implements ModelProviderFilter {
-  const _ModelProviderFilter({final  List<String>? workspaces, final  List<ChatModelType>? types}): _workspaces = workspaces,_types = types;
+  const _ModelProviderFilter({final  List<String>? workspaces, final  List<CredentialsModelType>? types}): _workspaces = workspaces,_types = types;
   
 
  final  List<String>? _workspaces;
@@ -766,8 +766,8 @@ class _ModelProviderFilter implements ModelProviderFilter {
   return EqualUnmodifiableListView(value);
 }
 
- final  List<ChatModelType>? _types;
-@override List<ChatModelType>? get types {
+ final  List<CredentialsModelType>? _types;
+@override List<CredentialsModelType>? get types {
   final value = _types;
   if (value == null) return null;
   if (_types is EqualUnmodifiableListView) return _types;
@@ -806,7 +806,7 @@ abstract mixin class _$ModelProviderFilterCopyWith<$Res> implements $ModelProvid
   factory _$ModelProviderFilterCopyWith(_ModelProviderFilter value, $Res Function(_ModelProviderFilter) _then) = __$ModelProviderFilterCopyWithImpl;
 @override @useResult
 $Res call({
- List<String>? workspaces, List<ChatModelType>? types
+ List<String>? workspaces, List<CredentialsModelType>? types
 });
 
 
@@ -827,7 +827,7 @@ class __$ModelProviderFilterCopyWithImpl<$Res>
   return _then(_ModelProviderFilter(
 workspaces: freezed == workspaces ? _self._workspaces : workspaces // ignore: cast_nullable_to_non_nullable
 as List<String>?,types: freezed == types ? _self._types : types // ignore: cast_nullable_to_non_nullable
-as List<ChatModelType>?,
+as List<CredentialsModelType>?,
   ));
 }
 

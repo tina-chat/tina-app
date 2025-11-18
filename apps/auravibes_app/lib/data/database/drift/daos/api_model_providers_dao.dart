@@ -1,8 +1,46 @@
 import 'package:auravibes_app/data/database/drift/app_database.dart';
 import 'package:auravibes_app/data/database/drift/tables/api_model_provider_table.dart';
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 part 'api_model_providers_dao.g.dart';
+
+// Define popular providers in priority order (top 10)
+final popularProviders = [
+  'openai',
+  'anthropic',
+  'google',
+  'google-vertex',
+  'azure',
+  'groq',
+  'xai',
+  'togetherai',
+  'huggingface',
+  'deepseek',
+];
+
+int _sortProviders(ApiModelProvidersTable a, ApiModelProvidersTable b) {
+  final aIndex = popularProviders.indexOf(a.id);
+  final bIndex = popularProviders.indexOf(b.id);
+
+  // If both are popular, sort by their position in the popular list
+  if (aIndex != -1 && bIndex != -1) {
+    return aIndex.compareTo(bIndex);
+  }
+
+  // If only a is popular, a comes first
+  if (aIndex != -1) {
+    return -1;
+  }
+
+  // If only b is popular, b comes first
+  if (bIndex != -1) {
+    return 1;
+  }
+
+  // If neither is popular, sort alphabetically by name
+  return a.name.compareTo(b.name);
+}
 
 /// Data Access Object for API model providers operations.
 @DriftAccessor(tables: [ApiModelProviders])
@@ -13,11 +51,12 @@ class ApiModelProvidersDao extends DatabaseAccessor<AppDatabase>
 
   /// Retrieves all API model providers from the database.
   ///
-  /// Returns a list of all providers ordered by their name.
-  Future<List<ApiModelProvidersTable>> getAllProviders() {
-    return (select(
-      apiModelProviders,
-    )..orderBy([(t) => OrderingTerm(expression: t.name)])).get();
+  /// Returns a list of all providers ordered by popularity first, then by name.
+  Future<List<ApiModelProvidersTable>> getAllProviders() async {
+    final allProviders = await select(apiModelProviders).get();
+
+    // Sort providers: popular ones first in defined order, then alphabetically
+    return allProviders.sorted(_sortProviders);
   }
 
   /// Retrieves a provider by its ID.
@@ -42,10 +81,13 @@ class ApiModelProvidersDao extends DatabaseAccessor<AppDatabase>
   /// Inserts a new provider into the database.
   ///
   /// Returns the inserted provider.
-  Future<ApiModelProvidersTable> insertProvider(
+  Future<ApiModelProvidersTable> upsertProvider(
     ApiModelProvidersCompanion provider,
   ) {
-    return into(apiModelProviders).insertReturning(provider);
+    return into(apiModelProviders).insertReturning(
+      provider,
+      onConflict: DoUpdate((_) => provider, target: [apiModelProviders.id]),
+    );
   }
 
   /// Updates an existing provider in the database.
@@ -107,32 +149,14 @@ class ApiModelProvidersDao extends DatabaseAccessor<AppDatabase>
     )..addColumns([apiModelProviders.id])).get().then((rows) => rows.length);
   }
 
-  /// Inserts or updates a provider based on the ID.
-  ///
-  /// If a provider with the given ID exists, it will be updated.
-  /// Otherwise, a new provider will be inserted.
-  /// Returns the inserted/updated provider.
-  Future<ApiModelProvidersTable> upsertProvider(
-    ApiModelProvidersCompanion provider,
-  ) async {
-    final existingProvider = await getProviderById(provider.id.value);
-
-    if (existingProvider != null) {
-      await updateProvider(provider.id.value, provider);
-      return (await getProviderById(provider.id.value))!;
-    } else {
-      return insertProvider(provider);
-    }
-  }
-
   /// Batch inserts multiple providers into the database.
   ///
   /// Returns the list of inserted providers.
-  Future<List<ApiModelProvidersTable>> batchInsertProviders(
+  Future<List<ApiModelProvidersTable>> batchUpsertProviders(
     List<ApiModelProvidersCompanion> providers,
   ) async {
     return transaction(() async {
-      return [for (final provider in providers) await insertProvider(provider)];
+      return [for (final provider in providers) await upsertProvider(provider)];
     });
   }
 

@@ -33,4 +33,7 @@ class ApiModels extends Table {
   IntColumn get limitContext => integer()();
 
   IntColumn get limitOutput => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id, modelProvider};
 }

@@ -6,10 +6,10 @@ enum ModelProvidersTableType {
   anthropic('anthropic')
   ;
 
-  /// Creates a new ChatModelType with the given string value
+  /// Creates a new CredentialsModelType with the given string value
   const ModelProvidersTableType(this.value);
 
-  /// Creates a ChatModelType from a string value
+  /// Creates a CredentialsModelType from a string value
   ///
   /// Throws [ArgumentError] if the value is not a valid chat model type
   static ModelProvidersTableType? fromString(String value) {
@@ -41,4 +41,7 @@ class ApiModelProviders extends Table {
   TextColumn get url => text().nullable()();
 
   TextColumn get doc => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
 }

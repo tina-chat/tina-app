@@ -11,25 +11,32 @@
     "add_provider": {
       "open_button": "Agregar Proveedor",
       "title": "Agregar Proveedor de Modelo",
-      "basic_info_section": "Información Básica",
-      "api_config_section": "Configuración API",
-      "name_label": "Nombre",
-      "name_placeholder": "Ingresa el nombre del proveedor",
-      "name_hint": "Elige un nombre descriptivo para este proveedor",
-      "key_label": "Clave API",
-      "key_placeholder": "Ingresa tu clave API",
-      "key_hint": "Tu clave API personal del proveedor",
-      "url_label": "URL Personalizada",
-      "url_placeholder": "https://api.ejemplo.com (opcional)",
-      "url_hint": "Endpoint API personalizado (déjalo vacío para usar el predeterminado)",
-      "model_label": "Proveedor de Modelo",
-      "model_hint": "Elige el proveedor de modelo de IA",
-      "anthropic_option": "Anthropic",
-      "openai_option": "OpenAI",
       "create_button": "Crear Proveedor",
-      "validation_error": "Por favor corrige los errores abajo",
-      "general_error": "Algo salió mal",
-      "success_message": "¡Proveedor creado exitosamente!"
+      "sections": {
+        "advanced": "Avanzado"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingresa el nombre del proveedor",
+          "hint": "Elige un nombre descriptivo para este proveedor"
+        },
+        "key": {
+          "label": "Clave API",
+          "placeholder": "Ingresa tu clave API",
+          "hint": "Tu clave API personal del proveedor"
+        },
+        "url": {
+          "label": "URL Personalizada",
+          "placeholder": "https://api.ejemplo.com (opcional)",
+          "hint": "Endpoint API personalizado (déjalo vacío para usar el predeterminado)"
+        }
+      },
+      "search": {
+        "placeholder": "Buscar proveedores de modelos...",
+        "no_models_found": "No se encontraron proveedores de modelos",
+        "no_icon": "Sin ícono"
+      }
     }
   },
   "chats_screens": {

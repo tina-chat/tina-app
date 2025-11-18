@@ -1,21 +1,21 @@
 /// Enum representing the type of chat model.
-enum ChatModelType {
+enum CredentialsModelType {
   openai('openai'),
   anthropic('anthropic')
   ;
 
-  /// Creates a new ChatModelType with the given string value
-  const ChatModelType(this.value);
+  /// Creates a new CredentialsModelType with the given string value
+  const CredentialsModelType(this.value);
 
-  /// Creates a ChatModelType from a string value
+  /// Creates a CredentialsModelType from a string value
   ///
   /// Throws [ArgumentError] if the value is not a valid chat model type
-  factory ChatModelType.fromString(String value) {
+  factory CredentialsModelType.fromString(String value) {
     switch (value.toLowerCase()) {
       case 'openai':
-        return ChatModelType.openai;
+        return CredentialsModelType.openai;
       case 'anthropic':
-        return ChatModelType.anthropic;
+        return CredentialsModelType.anthropic;
       default:
         throw ArgumentError('Invalid chat model type: $value');
     }

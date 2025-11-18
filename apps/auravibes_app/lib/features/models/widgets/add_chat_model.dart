@@ -1,6 +1,8 @@
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
+import 'package:auravibes_app/domain/entities/api_model_provider.dart';
 import 'package:auravibes_app/features/models/providers/add_model_provider_providers.dart';
+import 'package:auravibes_app/features/models/providers/api_model_repository_providers.dart';
 import 'package:auravibes_app/features/models/widgets/enhanced_model_input.dart';
+import 'package:auravibes_app/features/models/widgets/model_logo.dart';
 import 'package:auravibes_app/i18n/locale_keys.dart';
 import 'package:auravibes_app/widgets/text_locale.dart';
 import 'package:auravibes_ui/ui.dart';
@@ -13,8 +15,12 @@ import 'package:riverpod/src/framework.dart';
 class AddModelProviderWidget extends HookConsumerWidget {
   const AddModelProviderWidget({super.key});
 
+  // Extract long locale key to avoid line length issues
+  static const String _noModelsFoundKey =
+      LocaleKeys.models_screens_add_provider_search_no_models_found;
+
   void _submitForm(BuildContext context, WidgetRef ref) {
-    addChatModelMutationProvider.run(ref, (transaction) async {
+    addCredentialsModelMutationProvider.run(ref, (transaction) async {
       final notifier = transaction.get(addModelProviderStateProvider.notifier);
       final created = await notifier.addModelProvider();
       if (context.mounted && created != null) {
@@ -28,12 +34,23 @@ class AddModelProviderWidget extends HookConsumerWidget {
     final scrollController = useScrollController();
     final formKey = useMemoized(GlobalKey<FormState>.new, []);
 
+    final hasModel = ref.watch(
+      addModelProviderStateProvider.select(
+        (value) => value.modelId != null,
+      ),
+    );
+
+    if (!hasModel) {
+      return _SelectModelProvider();
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         _ModalHeader(
           onClose: () => Navigator.of(context).pop(),
         ),
+        _SelectedModelHeader(),
         Flexible(
           child: SingleChildScrollView(
             controller: scrollController,
@@ -44,7 +61,13 @@ class AddModelProviderWidget extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const _BasicInfoSection(),
+                  const EnhancedModelInput(
+                    fieldType: ModelInputFieldType.name,
+                    // onSubmitted: keyFocusNode.requestFocus,
+                  ),
+                  const EnhancedModelInput(
+                    fieldType: ModelInputFieldType.key,
+                  ),
                   SizedBox(height: context.auraTheme.spacing.xl),
                   _ApiConfigSection(
                     onSubmit: () => _submitForm(context, ref),
@@ -92,26 +115,6 @@ class _ModalHeader extends StatelessWidget {
   }
 }
 
-/// Basic information section with name and provider type
-class _BasicInfoSection extends StatelessWidget {
-  const _BasicInfoSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return _FormSection(
-      title: LocaleKeys.models_screens_add_provider_basic_info_section,
-      children: [
-        const EnhancedModelInput(
-          fieldType: ModelInputFieldType.name,
-          // onSubmitted: keyFocusNode.requestFocus,
-        ),
-        SizedBox(height: context.auraTheme.spacing.lg),
-        _ModelTypeSelector(),
-      ],
-    );
-  }
-}
-
 /// API configuration section with key and URL
 class _ApiConfigSection extends StatelessWidget {
   const _ApiConfigSection({
@@ -122,84 +125,56 @@ class _ApiConfigSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _FormSection(
-      title: LocaleKeys.models_screens_add_provider_api_config_section,
-      children: [
-        const EnhancedModelInput(
-          fieldType: ModelInputFieldType.key,
-        ),
-        SizedBox(height: context.auraTheme.spacing.lg),
-        EnhancedModelInput(
-          fieldType: ModelInputFieldType.url,
+    return _HiddenSection(
+      title: LocaleKeys.models_screens_add_provider_sections_advanced,
+      child: EnhancedModelInput(
+        fieldType: ModelInputFieldType.url,
 
-          onSubmitted: onSubmit,
-        ),
-      ],
+        onSubmitted: onSubmit,
+      ),
     );
   }
 }
 
 /// Reusable form section with title and content
-class _FormSection extends StatelessWidget {
-  const _FormSection({
+class _HiddenSection extends HookWidget {
+  const _HiddenSection({
     required this.title,
-    required this.children,
+    required this.child,
   });
 
   final String title;
-  final List<Widget> children;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final visibilityState = useState(false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextLocale(
-          title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: context.auraColors.primary,
-          ),
+        Row(
+          children: [
+            TextLocale(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: context.auraColors.primary,
+              ),
+            ),
+            AuraIconButton(
+              icon: visibilityState.value
+                  ? Icons.expand_less
+                  : Icons.expand_more,
+              onPressed: () {
+                visibilityState.value = !visibilityState.value;
+              },
+            ),
+          ],
         ),
         SizedBox(height: context.auraTheme.spacing.md),
-        ...children,
-      ],
-    );
-  }
-}
-
-/// Enhanced model type selector with hint text
-class _ModelTypeSelector extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final type = ref.watch(
-      addModelProviderStateProvider.select(
-        (value) => value.type,
-      ),
-    );
-
-    final notifier = ref.read(addModelProviderStateProvider.notifier);
-
-    return AuraDropdownSelector<ChatModelType>(
-      value: type,
-      onChanged: notifier.setType,
-      label: const TextLocale(
-        LocaleKeys.models_screens_add_provider_model_label,
-      ),
-      hint: const TextLocale(LocaleKeys.models_screens_add_provider_model_hint),
-
-      options: const [
-        AuraDropdownOption(
-          value: ChatModelType.anthropic,
-          child: TextLocale(
-            LocaleKeys.models_screens_add_provider_anthropic_option,
-          ),
-        ),
-        AuraDropdownOption(
-          value: ChatModelType.openai,
-          child: TextLocale(
-            LocaleKeys.models_screens_add_provider_openai_option,
-          ),
+        Visibility(
+          visible: visibilityState.value,
+          child: child,
         ),
       ],
     );
@@ -212,12 +187,17 @@ class _ErrorBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final addChatModelMutation = ref.watch(addChatModelMutationProvider);
+    final addCredentialsModelMutation = ref.watch(
+      addCredentialsModelMutationProvider,
+    );
 
-    final error = switch (addChatModelMutation) {
-      MutationError<void>(:final error as AddModelException) => switch (error) {
-        AddModelExceptionNoWorkspace() => 'no workspace found',
-        AddModelExceptionNoUnkown() => 'unkown error',
+    final error = switch (addCredentialsModelMutation) {
+      MutationError<void>(:final error) => switch (error) {
+        AddModelException() => switch (error) {
+          AddModelExceptionNoWorkspace() => 'no workspace found',
+          AddModelExceptionNoUnkown() => 'unkown error',
+        },
+        _ => error.toString(),
       },
       _ => null,
     };
@@ -265,7 +245,7 @@ class _CreateButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSubmitting = ref.watch(
-      addChatModelMutationProvider.select(
+      addCredentialsModelMutationProvider.select(
         (value) => value.isPending,
       ),
     );
@@ -287,6 +267,161 @@ class _CreateButton extends HookConsumerWidget {
           size: AuraButtonSize.large,
           child: const TextLocale(
             LocaleKeys.models_screens_add_provider_create_button,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SelectModelProvider extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final models = ref.watch(modelProvidersProvider).value;
+    final searchQuery = useState('');
+    final addModelProvider = ref.watch(
+      addModelProviderStateProvider.notifier,
+    );
+
+    // Filter models based on search query using useMemoized
+    final filteredModels = useMemoized(() {
+      if (models == null) return <ApiModelProviderEntity>[];
+
+      if (searchQuery.value.isEmpty) {
+        return models;
+      }
+
+      final query = searchQuery.value.toLowerCase();
+      return models.where((model) {
+        return model.name.toLowerCase().contains(query);
+      }).toList();
+    }, [models, searchQuery.value]);
+
+    if (models == null) {
+      return AuraButton(
+        onPressed: () {},
+        child: const AuraText(child: Text('reload')),
+      );
+    }
+
+    return AuraColumn(
+      children: [
+        const AuraText(
+          child: TextLocale(
+            LocaleKeys.chats_screens_chat_conversation_select_model_selctor,
+          ),
+        ),
+        SizedBox(height: context.auraTheme.spacing.md),
+        // Search input field
+        AuraInput(
+          placeholder: const AuraText(
+            child: TextLocale(
+              LocaleKeys.models_screens_add_provider_search_placeholder,
+            ),
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: context.auraColors.onSurfaceVariant,
+          ),
+          initialValue: searchQuery.value,
+          onChanged: (value) {
+            searchQuery.value = value;
+          },
+        ),
+        SizedBox(height: context.auraTheme.spacing.md),
+        Expanded(
+          child: filteredModels.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_off,
+                        size: 48,
+                        color: context.auraColors.onSurfaceVariant,
+                      ),
+                      SizedBox(height: context.auraTheme.spacing.sm),
+                      const AuraText(
+                        style: AuraTextStyle.bodyLarge,
+                        color: AuraTextColor.onSurfaceVariant,
+                        child: TextLocale(
+                          AddModelProviderWidget._noModelsFoundKey,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: filteredModels.length,
+                  itemBuilder: (context, index) {
+                    final model = filteredModels[index];
+                    return AuraCard(
+                      onTap: () {
+                        addModelProvider.setModel(model.id);
+                      },
+                      child: Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          ModelLogo(
+                            modelId: model.id,
+                          ),
+                          AuraText(
+                            child: Text(model.name),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Header showing the selected model with a back button
+class _SelectedModelHeader extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedModelId = ref.watch(
+      addModelProviderStateProvider.select(
+        (value) => value.modelId,
+      ),
+    );
+
+    final addModelProvider = ref.watch(
+      addModelProviderStateProvider.notifier,
+    );
+
+    final models = ref.watch(modelProvidersProvider).value;
+
+    if (selectedModelId == null || models == null) {
+      return const SizedBox.shrink();
+    }
+
+    final selectedModel = models.firstWhere(
+      (model) => model.id == selectedModelId,
+    );
+
+    return Row(
+      children: [
+        AuraIconButton(
+          onPressed: () {
+            addModelProvider.setModel(null);
+          },
+          icon: Icons.arrow_back,
+          semanticLabel: 'Back to model selection',
+        ),
+        SizedBox(width: context.auraTheme.spacing.md),
+        ModelLogo(
+          modelId: selectedModel.id,
+          height: 24,
+        ),
+        SizedBox(width: context.auraTheme.spacing.md),
+        Expanded(
+          child: AuraText(
+            style: AuraTextStyle.bodyLarge,
+            child: Text(selectedModel.name),
           ),
         ),
       ],

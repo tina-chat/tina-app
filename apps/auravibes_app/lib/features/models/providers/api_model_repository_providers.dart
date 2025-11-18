@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auravibes_app/data/repositories/api_model_repository_impl.dart';
+import 'package:auravibes_app/domain/entities/api_model_provider.dart';
 import 'package:auravibes_app/domain/repositories/api_model_repository.dart';
 import 'package:auravibes_app/providers/app_providers.dart';
 import 'package:auravibes_app/services/model_api_service.dart';
@@ -42,4 +43,9 @@ ModelSyncService modelSyncService(Ref ref) {
 
   ref.onDispose(timer.cancel);
   return service;
+}
+
+@riverpod
+Future<List<ApiModelProviderEntity>> modelProvidersNotifier(Ref ref) {
+  return ref.watch(apiModelRepositoryProvider).getAllProviders();
 }

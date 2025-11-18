@@ -69,18 +69,20 @@ class ApiModelRepositoryImpl implements ApiModelRepository {
           .toList();
 
       final insertedProviders = await _database.apiModelProvidersDao
-          .batchInsertProviders(providerCompanions);
+          .batchUpsertProviders(providerCompanions);
 
       return [
         for (final insertedProvider in insertedProviders)
           _mapToProviderEntity(insertedProvider),
       ];
-    } catch (e) {
-      if (e is ApiModelException) rethrow;
+    } on Exception catch (e) {
       throw ApiModelException(
         'Failed to batch upsert providers',
-        e as Exception,
+        e,
       );
+    } catch (_) {
+      rethrow;
+      // if (e is ApiModelException) rethrow;
     }
   }
 
