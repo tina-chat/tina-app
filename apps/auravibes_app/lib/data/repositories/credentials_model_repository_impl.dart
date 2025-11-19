@@ -89,7 +89,7 @@ class CredentialsModelsRepositoryImpl implements CredentialsModelsRepository {
     if (type == null) return null;
     return switch (type) {
       .openai => .openai,
-      .anthropic => .openai,
+      .anthropic => .anthropic,
     };
   }
 }

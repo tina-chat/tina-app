@@ -29,11 +29,11 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
     }
     final modelType = modelProvider.type;
     if (modelType == null) {
-      ModelProviderNoTypeException(credentials.modelId);
+      throw ModelProviderNoTypeException(credentials.modelId);
     }
     final models = await ModelProviderServices().getCredentialsModels(
       ModelProvider(
-        type: .fromString(modelType!.value),
+        type: .fromString(modelType.value),
         key: credentials.key,
         url: credentials.url ?? modelProvider.url,
       ),

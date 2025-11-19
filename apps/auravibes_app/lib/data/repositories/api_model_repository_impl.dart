@@ -132,7 +132,7 @@ class ApiModelRepositoryImpl implements ApiModelRepository {
       name: providerTable.name,
       type: _mapToTypeTable(providerTable.type),
       doc: providerTable.doc,
-      url: providerTable.doc,
+      url: providerTable.url,
     );
   }
 
@@ -152,7 +152,7 @@ class ApiModelRepositoryImpl implements ApiModelRepository {
     if (type == null) return null;
     return switch (type) {
       .openai => .openai,
-      .anthropic => .openai,
+      .anthropic => .anthropic,
     };
   }
 
@@ -160,7 +160,7 @@ class ApiModelRepositoryImpl implements ApiModelRepository {
     if (type == null) return null;
     return switch (type) {
       .openai => .openai,
-      .anthropic => .openai,
+      .anthropic => .anthropic,
     };
   }
 
@@ -172,7 +172,7 @@ class ApiModelRepositoryImpl implements ApiModelRepository {
       costCacheRead: modelTable.costCacheRead,
       costInput: modelTable.costInput,
       costOutput: modelTable.costOutput,
-      limitContext: modelTable.limitOutput,
+      limitContext: modelTable.limitContext,
       limitOutput: modelTable.limitOutput,
       modalitiesInput: modelTable.modalitiesInput ?? [],
       modalitiesOuput: modelTable.modalitiesOuput ?? [],
