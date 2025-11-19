@@ -1,6 +1,6 @@
 import 'package:auravibes_app/features/models/providers/list_models_providers.dart';
 import 'package:auravibes_app/features/models/widgets/add_chat_model.dart';
-import 'package:auravibes_app/features/models/widgets/list_models.dart';
+import 'package:auravibes_app/features/models/widgets/list_model_credentials.dart';
 import 'package:auravibes_app/i18n/locale_keys.dart';
 import 'package:auravibes_app/widgets/text_locale.dart';
 import 'package:auravibes_ui/ui.dart';
@@ -19,7 +19,7 @@ class ModelsScreen extends StatelessWidget {
           const Icon(Icons.memory_outlined, size: 64),
           const SizedBox(height: 24),
           _AddModelModalButton(),
-          const Expanded(child: ListModelsWidget()),
+          const Expanded(child: ListModelCredentialsWidget()),
         ],
       ),
     );
@@ -50,7 +50,7 @@ class _AddModelModalButton extends ConsumerWidget {
                 ),
               ),
             ).then((onValue) {
-              ref.invalidate(listModelProvidersProvider);
+              ref.invalidate(listCredentialsProvider);
             });
             // context.go(location)
           },

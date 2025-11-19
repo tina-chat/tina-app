@@ -1,23 +1,22 @@
-import 'package:auravibes_app/domain/entities/model_providers_entities.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
+import 'package:auravibes_app/domain/entities/credentials_entities.dart';
 
-/// Repository interface for chatModel data operations.
+/// Repository interface for credentialsModel data operations.
 ///
-/// This abstract class defines the contract for chatModel data access,
+/// This abstract class defines the contract for credentialsModel data access,
 /// following the Repository pattern from Clean Architecture.
 /// Implementations should handle data persistence, retrieval, and
-/// business logic validation for chatModel operations.
-abstract class ModelProvidersRepository {
-  Future<List<ModelProviderEntity>> getModelProviders(
+/// business logic validation for credentialsModel operations.
+abstract class CredentialsRepository {
+  Future<List<CredentialsEntity>> getCredentials(
     ModelProviderFilter filter,
   );
 
-  Future<ModelProviderEntity> createModelProvider(
-    ModelProviderToCreate modelProvider,
+  Future<CredentialsEntity> createCredential(
+    CredentialsToCreate credentials,
   );
 }
 
-/// Base exception for chatModel-related operations.
+/// Base exception for credentialsModel-related operations.
 class ModelProviderException implements Exception {
   /// Creates a new ModelProviderException
   const ModelProviderException(this.message, [this.cause]);
@@ -47,16 +46,30 @@ class ModelProviderNotFoundException extends ModelProviderException {
   const ModelProviderNotFoundException(this.modelProviderId, [Exception? cause])
     : super('ModelProvider with ID "$modelProviderId" not found', cause);
 
-  /// ID of the chatModel that was not found
+  /// ID of the credentialsModel that was not found
   final int modelProviderId;
 }
 
 /// Exception thrown when a modelProvider is not found.
 class ModelProviderNotModelsException extends ModelProviderException {
   /// Creates a new ModelProviderNotModelsException
-  const ModelProviderNotModelsException(this.modelType, [Exception? cause])
-    : super('ModelProvider with type "$modelType" not found models', cause);
+  const ModelProviderNotModelsException(this.modelId, [Exception? cause])
+    : super('ModelProvider with type "$modelId" not found models', cause);
 
-  /// ID of the chatModel that was not found
-  final ChatModelType modelType;
+  /// ID of the credentialsModel that was not found
+  final String modelId;
+}
+
+class ModelProviderNotModelIdException extends ModelProviderException {
+  const ModelProviderNotModelIdException(this.modelId, [Exception? cause])
+    : super('ModelProvider with id "$modelId" not found', cause);
+
+  final String modelId;
+}
+
+class ModelProviderNoTypeException extends ModelProviderException {
+  const ModelProviderNoTypeException(this.modelId, [Exception? cause])
+    : super('ModelProvider with id "$modelId" not found', cause);
+
+  final String modelId;
 }

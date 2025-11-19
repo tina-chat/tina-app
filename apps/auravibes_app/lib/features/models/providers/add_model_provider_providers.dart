@@ -1,8 +1,10 @@
-import 'package:auravibes_app/domain/entities/model_providers_entities.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
+import 'package:auravibes_app/domain/entities/credentials_entities.dart';
 import 'package:auravibes_app/features/models/models/add_model_provider_model.dart';
+import 'package:auravibes_app/features/models/providers/api_model_repository_providers.dart';
 import 'package:auravibes_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:auravibes_app/features/workspaces/providers/workspace_repository_providers.dart';
+import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod/experimental/mutation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,6 +15,8 @@ sealed class AddModelException implements Exception {}
 class AddModelExceptionNoWorkspace implements AddModelException {}
 
 class AddModelExceptionNoUnkown implements AddModelException {}
+
+final _log = Logger('add_model_providers');
 
 @riverpod
 class AddModelProviderState extends _$AddModelProviderState {
@@ -33,9 +37,16 @@ class AddModelProviderState extends _$AddModelProviderState {
     );
   }
 
-  void setType(ChatModelType? newValue) {
+  void setModel(String? newValue) {
+    final models = ref.watch(modelProvidersProvider).value;
+    final model = models?.firstWhereOrNull(
+      (element) {
+        return element.id == newValue;
+      },
+    );
     state = state.copyWith(
-      type: newValue,
+      modelId: newValue,
+      name: model?.name,
     );
   }
 
@@ -45,7 +56,7 @@ class AddModelProviderState extends _$AddModelProviderState {
     );
   }
 
-  Future<ModelProviderEntity?> addModelProvider() async {
+  Future<CredentialsEntity?> addModelProvider() async {
     if (!state.isValid()) {
       return null;
     }
@@ -60,10 +71,10 @@ class AddModelProviderState extends _$AddModelProviderState {
         throw AddModelExceptionNoWorkspace();
       }
 
-      final provider = await repo.createModelProvider(
-        ModelProviderToCreate(
+      final provider = await repo.createCredential(
+        CredentialsToCreate(
           name: state.name!,
-          type: state.type!,
+          modelId: state.modelId!,
           key: state.key!,
           url: state.url,
           workspaceId: firstWorkspace.id,
@@ -72,10 +83,11 @@ class AddModelProviderState extends _$AddModelProviderState {
       return provider;
     } on AddModelException catch (_) {
       rethrow;
-    } on Exception catch (_) {
+    } on Exception catch (e, s) {
+      _log.severe('addModelProvider error', e, s);
       throw AddModelExceptionNoUnkown();
     }
   }
 }
 
-final addChatModelMutationProvider = Mutation<void>();
+final addCredentialsModelMutationProvider = Mutation<void>();

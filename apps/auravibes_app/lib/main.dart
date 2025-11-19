@@ -1,3 +1,4 @@
+import 'package:auravibes_app/features/models/providers/api_model_repository_providers.dart';
 import 'package:auravibes_app/main/locale.dart';
 import 'package:auravibes_app/router/app_router.dart';
 import 'package:auravibes_app/widgets/auravibes_sidebar.dart';
@@ -9,7 +10,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MainLocale.ensureInitialized();
-  runApp(ProviderScope(child: MainLocale(child: MyApp())));
+
+  final container = ProviderContainer()..read(modelSyncServiceProvider);
+
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: MainLocale(child: MyApp()),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -76,11 +76,11 @@ class _ChatTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final modelDisplayName = ref.watch(
-      listChatModelProvidersProvider.select(
+      listCredentialsCredentialsProvider.select(
         (cms) => cms.value
-            ?.firstWhereOrNull((cm) => cm.chatModel.id == chat.modelId)
-            ?.chatModel
-            .displayName,
+            ?.firstWhereOrNull((cm) => cm.credentialsModel.id == chat.modelId)
+            ?.credentialsModel
+            .modelId,
       ),
     );
     return AuraCard(

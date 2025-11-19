@@ -24,7 +24,7 @@ final class ChatbotServiceProvider
   /// (for title generation, etc.)
   const ChatbotServiceProvider._({
     required ChatbotServiceFamily super.from,
-    required ChatModelWithProviderEntity super.argument,
+    required CredentialsModelWithProviderEntity super.argument,
   }) : super(
          retry: null,
          name: r'chatbotServiceProvider',
@@ -50,7 +50,7 @@ final class ChatbotServiceProvider
 
   @override
   ChatbotService create(Ref ref) {
-    final argument = this.argument as ChatModelWithProviderEntity;
+    final argument = this.argument as CredentialsModelWithProviderEntity;
     return chatbotService(ref, argument);
   }
 
@@ -73,14 +73,17 @@ final class ChatbotServiceProvider
   }
 }
 
-String _$chatbotServiceHash() => r'8510f716393eefb710a07155a816540c16003e49';
+String _$chatbotServiceHash() => r'c6927355a42a8075dee27597c5d9e47a67ab2bb5';
 
 /// Provider that creates a ChatbotService without tools
 /// (for title generation, etc.)
 
 final class ChatbotServiceFamily extends $Family
     with
-        $FunctionalFamilyOverride<ChatbotService, ChatModelWithProviderEntity> {
+        $FunctionalFamilyOverride<
+          ChatbotService,
+          CredentialsModelWithProviderEntity
+        > {
   const ChatbotServiceFamily._()
     : super(
         retry: null,
@@ -93,8 +96,9 @@ final class ChatbotServiceFamily extends $Family
   /// Provider that creates a ChatbotService without tools
   /// (for title generation, etc.)
 
-  ChatbotServiceProvider call(ChatModelWithProviderEntity modelProvider) =>
-      ChatbotServiceProvider._(argument: modelProvider, from: this);
+  ChatbotServiceProvider call(
+    CredentialsModelWithProviderEntity modelProvider,
+  ) => ChatbotServiceProvider._(argument: modelProvider, from: this);
 
   @override
   String toString() => r'chatbotServiceProvider';

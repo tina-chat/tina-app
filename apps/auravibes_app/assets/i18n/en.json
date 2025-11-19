@@ -11,25 +11,32 @@
     "add_provider": {
       "open_button": "Add Provider",
       "title": "Add Model Provider",
-      "basic_info_section": "Basic Information",
-      "api_config_section": "API Configuration",
-      "name_label": "Name",
-      "name_placeholder": "Enter provider name",
-      "name_hint": "Choose a descriptive name for this provider",
-      "key_label": "API Key",
-      "key_placeholder": "Enter your API key",
-      "key_hint": "Your personal API key from the provider",
-      "url_label": "Custom URL",
-      "url_placeholder": "https://api.example.com (optional)",
-      "url_hint": "Custom API endpoint (leave empty for default)",
-      "model_label": "Model Provider",
-      "model_hint": "Choose the AI model provider",
-      "anthropic_option": "Anthropic",
-      "openai_option": "OpenAI",
       "create_button": "Create Provider",
-      "validation_error": "Please fix the errors below",
-      "general_error": "Something went wrong",
-      "success_message": "Provider created successfully!"
+      "sections": {
+        "advanced": "Advanced"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter provider name",
+          "hint": "Choose a descriptive name for this provider"
+        },
+        "key": {
+          "label": "API Key",
+          "placeholder": "Enter your API key",
+          "hint": "Your personal API key from the provider"
+        },
+        "url": {
+          "label": "Custom URL",
+          "placeholder": "https://api.example.com (optional)",
+          "hint": "Custom API endpoint (leave empty for default)"
+        }
+      },
+      "search": {
+        "placeholder": "Search model providers...",
+        "no_models_found": "No model providers found",
+        "no_icon": "No icon"
+      }
     }
   },
   "chats_screens": {

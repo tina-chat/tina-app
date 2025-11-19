@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:auravibes_app/domain/entities/chat_models_entities.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
+import 'package:auravibes_app/domain/entities/credentials_models_entities.dart';
 import 'package:auravibes_app/services/chatbot_service/models/chat_message_models.dart';
 import 'package:collection/collection.dart';
 import 'package:langchain/langchain.dart';
@@ -26,7 +25,7 @@ List<AIChatMessageToolCall>? safeDecode(String? metadata) {
 
 class ChatbotService {
   ChatbotService(this.chatProvider, {this.tools});
-  ChatModelWithProviderEntity chatProvider;
+  CredentialsModelWithProviderEntity chatProvider;
   List<ToolSpec>? tools;
 
   Stream<ChatResult> sendMessage(
@@ -54,16 +53,16 @@ class ChatbotService {
       };
     }).flattenedToList;
 
-    final chatModel = _getChatModel(tools: this.tools ?? tools);
+    final credentialsModel = _getCredentialsModel(tools: this.tools ?? tools);
 
-    return chatModel.stream(
+    return credentialsModel.stream(
       PromptValue.chat(chatMessages),
       options: _getModelOptions(),
     );
   }
 
   Future<String> generateTitle(String firstMessage) async {
-    final chatModel = _getChatModel();
+    final credentialsModel = _getCredentialsModel();
 
     final prompt = PromptValue.chat([
       ChatMessage.humanText(
@@ -75,7 +74,7 @@ The title should capture the main topic or theme. Respond with only the title, n
     ]);
 
     try {
-      final result = await chatModel.invoke(
+      final result = await credentialsModel.invoke(
         prompt,
         options: _getModelOptions(),
       );
@@ -118,32 +117,36 @@ The title should capture the main topic or theme. Respond with only the title, n
   }
 
   ChatModelOptions _getModelOptions() {
-    return switch (chatProvider.modelProvider.type) {
-      ChatModelType.openai => ChatOpenAIOptions(
-        model: chatProvider.chatModel.modelId,
+    final type = chatProvider.modelsProvider.type;
+    if (type == null) throw UnimplementedError();
+    return switch (type) {
+      .openai => ChatOpenAIOptions(
+        model: chatProvider.credentialsModel.modelId,
       ),
-      ChatModelType.anthropic => ChatAnthropicOptions(
-        model: chatProvider.chatModel.modelId,
+      .anthropic => ChatAnthropicOptions(
+        model: chatProvider.credentialsModel.modelId,
       ),
     };
   }
 
-  BaseChatModel _getChatModel({List<ToolSpec>? tools}) {
-    return switch (chatProvider.modelProvider.type) {
-      ChatModelType.openai => ChatOpenAI(
-        apiKey: chatProvider.modelProvider.key,
-        baseUrl: chatProvider.modelProvider.url ?? 'https://api.openai.com/v1',
+  BaseChatModel _getCredentialsModel({List<ToolSpec>? tools}) {
+    final type = chatProvider.modelsProvider.type;
+    if (type == null) throw UnimplementedError();
+    final url = chatProvider.credentials.url ?? chatProvider.modelsProvider.url;
+    return switch (type) {
+      .openai => ChatOpenAI(
+        apiKey: chatProvider.credentials.key,
+        baseUrl: url ?? 'https://api.openai.com/v1',
         defaultOptions: ChatOpenAIOptions(
-          model: chatProvider.chatModel.modelId,
+          model: chatProvider.credentialsModel.modelId,
           tools: tools,
         ),
       ),
-      ChatModelType.anthropic => ChatAnthropic(
-        apiKey: chatProvider.modelProvider.key,
-        baseUrl:
-            chatProvider.modelProvider.url ?? 'https://api.anthropic.com/v1',
+      .anthropic => ChatAnthropic(
+        apiKey: chatProvider.credentials.key,
+        baseUrl: url ?? 'https://api.anthropic.com/v1',
         defaultOptions: ChatAnthropicOptions(
-          model: chatProvider.chatModel.modelId,
+          model: chatProvider.credentialsModel.modelId,
           tools: tools,
         ),
       ),

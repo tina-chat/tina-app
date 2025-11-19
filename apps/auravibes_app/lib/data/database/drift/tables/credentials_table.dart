@@ -1,17 +1,14 @@
+import 'package:auravibes_app/data/database/drift/tables/api_model_table.dart';
 import 'package:auravibes_app/data/database/drift/tables/common.dart';
 import 'package:auravibes_app/data/database/drift/tables/workspaces_table.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
 import 'package:drift/drift.dart';
 
-/// Table definition for chat models in the database.
-@DataClassName('ModelProvidersTable')
-class ModelProviders extends Table with TableMixin {
+@DataClassName('CredentialsTable')
+class Credentials extends Table with TableMixin {
   /// Human-readable name of the chat model
   TextColumn get name => text()();
 
-  /// Type of chat model (local or remote)
-  /// Stored as string to handle enum conversion
-  TextColumn get type => textEnum<ChatModelType>()();
+  TextColumn get modelId => text().references(ApiModels, #id)();
 
   /// URL for remote chat models, null for default urls
   TextColumn get url => text().nullable()();

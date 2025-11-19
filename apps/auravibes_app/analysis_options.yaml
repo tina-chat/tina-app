@@ -1,5 +1,18 @@
 include: package:very_good_analysis/analysis_options.yaml
 
+analyzer:
+  plugins:
+    - custom_lint
+
+  exclude:
+    - "**/**.g.dart"
+    - "lib/**.g.dart"
+    - "**/**.freezed.dart"
+    - "lib/**.freezed.dart"
+    - "lib/i18n/*"
+    - "build/**"
+    - "lib/generated/**"
+    
 linter:
 
   rules:

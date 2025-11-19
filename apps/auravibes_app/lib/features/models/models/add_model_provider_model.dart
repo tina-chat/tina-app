@@ -1,4 +1,3 @@
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_model_provider_model.freezed.dart';
@@ -7,7 +6,7 @@ part 'add_model_provider_model.freezed.dart';
 abstract class AddModelProviderModel with _$AddModelProviderModel {
   const factory AddModelProviderModel({
     String? name,
-    ChatModelType? type,
+    String? modelId,
     String? key,
     String? url,
   }) = _AddModelProviderModel;
@@ -38,9 +37,9 @@ abstract class AddModelProviderModel with _$AddModelProviderModel {
     return null;
   }
 
-  String? validateType() {
-    final type = this.type;
-    if (type == null) {
+  String? validateModelId() {
+    final modelId = this.modelId;
+    if (modelId == null) {
       return 'Please select a model provider';
     }
     return null;
@@ -70,7 +69,7 @@ abstract class AddModelProviderModel with _$AddModelProviderModel {
   bool isValid() {
     return (validateKey() ??
             validateName() ??
-            validateType() ??
+            validateModelId() ??
             validateUrl()) ==
         null;
   }

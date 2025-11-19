@@ -1,32 +1,32 @@
-import 'package:auravibes_app/domain/entities/model_providers_entities.dart';
-import 'package:auravibes_app/domain/enums/chat_models_type.dart';
+import 'package:auravibes_app/domain/entities/credentials_entities.dart';
 import 'package:auravibes_app/features/models/providers/list_models_providers.dart';
 import 'package:auravibes_ui/ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ListModelsWidget extends ConsumerWidget {
-  const ListModelsWidget({super.key});
+class ListModelCredentialsWidget extends ConsumerWidget {
+  const ListModelCredentialsWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatModelsAsync = ref.watch(listModelProvidersProvider);
+    final credentialsModelsAsync = ref.watch(listCredentialsProvider);
 
-    return switch (chatModelsAsync) {
-      AsyncData(value: final chatModels) => () {
-        if (chatModels.isEmpty) {
+    return switch (credentialsModelsAsync) {
+      AsyncData(value: final credentialsModels) => () {
+        if (credentialsModels.isEmpty) {
           return _buildEmptyState(context);
         }
 
         return ListView.builder(
           padding: const EdgeInsets.all(16),
-          itemCount: chatModels.length,
+          itemCount: credentialsModels.length,
           shrinkWrap: true,
           // separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
-            final chatModel = chatModels[index];
-            //return Text(chatModel.name);
-            return _ChatModelCard(chatModel: chatModel);
+            final credentialsModel = credentialsModels[index];
+            //return Text(credentialsModel.name);
+            return _CredentialsModelCard(credentialsModel: credentialsModel);
           },
         );
       }(),
@@ -67,10 +67,10 @@ class ListModelsWidget extends ConsumerWidget {
   }
 }
 
-class _ChatModelCard extends StatelessWidget {
-  const _ChatModelCard({required this.chatModel});
+class _CredentialsModelCard extends StatelessWidget {
+  const _CredentialsModelCard({required this.credentialsModel});
 
-  final ModelProviderEntity chatModel;
+  final CredentialsEntity credentialsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class _ChatModelCard extends StatelessWidget {
                   children: [
                     AuraText(
                       style: AuraTextStyle.heading6,
-                      child: Text(chatModel.name),
+                      child: Text(credentialsModel.name),
                       // TODO: fontWeight: FontWeight.bold,
                     ),
                     const SizedBox(height: 4),
@@ -102,17 +102,16 @@ class _ChatModelCard extends StatelessWidget {
                 ),
               ),
               AuraBadge.text(
-                variant: _getBadgeVariant(),
-                child: Text(chatModel.type.value.toUpperCase()),
+                child: Text(credentialsModel.modelId.toUpperCase()),
               ),
             ],
           ),
-          if (chatModel.url != null) ...[
+          if (credentialsModel.url != null) ...[
             const SizedBox(height: 12),
             AuraText(
               style: AuraTextStyle.bodySmall,
 
-              child: Text('URL: ${chatModel.url}'),
+              child: Text('URL: ${credentialsModel.url}'),
               // TODO: color: Colors.grey,
             ),
           ],
@@ -122,7 +121,9 @@ class _ChatModelCard extends StatelessWidget {
               Expanded(
                 child: AuraText(
                   style: AuraTextStyle.bodySmall,
-                  child: Text('API Key: ${_obscureApiKey(chatModel.key)}'),
+                  child: Text(
+                    'API Key: ${_obscureApiKey(credentialsModel.key)}',
+                  ),
                   // TODO: color: Colors.grey,
                 ),
               ),
@@ -140,37 +141,18 @@ class _ChatModelCard extends StatelessWidget {
   }
 
   Widget _buildModelTypeIcon() {
-    IconData iconData;
-    Color iconColor;
-
-    switch (chatModel.type) {
-      case ChatModelType.openai:
-        iconData = Icons.psychology_outlined;
-        iconColor = const Color(0xFF10A37F); // OpenAI green
-      case ChatModelType.anthropic:
-        iconData = Icons.smart_toy_outlined;
-        iconColor = const Color(0xFFD97757); // Anthropic orange
-    }
-
-    return AuraIcon(iconData, color: iconColor);
+    return SvgPicture.network(
+      'https://models.dev/logos/${credentialsModel.modelId}.svg',
+      placeholderBuilder: (BuildContext context) =>
+          const CircularProgressIndicator(), // Optional: show a loading
+      // indicator
+      //height: 100, // Optional: specify height
+      // width: 100, // Optional: specify width
+    );
   }
 
   String _getModelTypeDisplay() {
-    switch (chatModel.type) {
-      case ChatModelType.openai:
-        return 'OpenAI Compatible';
-      case ChatModelType.anthropic:
-        return 'Anthropic Claude';
-    }
-  }
-
-  AuraBadgeVariant _getBadgeVariant() {
-    switch (chatModel.type) {
-      case ChatModelType.openai:
-        return AuraBadgeVariant.success;
-      case ChatModelType.anthropic:
-        return AuraBadgeVariant.info;
-    }
+    return credentialsModel.modelId;
   }
 
   String _obscureApiKey(String apiKey) {

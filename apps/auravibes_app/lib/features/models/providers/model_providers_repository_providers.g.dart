@@ -15,11 +15,11 @@ const modelProvidersRepositoryProvider = ModelProvidersRepositoryProvider._();
 final class ModelProvidersRepositoryProvider
     extends
         $FunctionalProvider<
-          ModelProvidersRepository,
-          ModelProvidersRepository,
-          ModelProvidersRepository
+          CredentialsRepository,
+          CredentialsRepository,
+          CredentialsRepository
         >
-    with $Provider<ModelProvidersRepository> {
+    with $Provider<CredentialsRepository> {
   const ModelProvidersRepositoryProvider._()
     : super(
         from: null,
@@ -36,71 +36,72 @@ final class ModelProvidersRepositoryProvider
 
   @$internal
   @override
-  $ProviderElement<ModelProvidersRepository> $createElement(
+  $ProviderElement<CredentialsRepository> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  ModelProvidersRepository create(Ref ref) {
+  CredentialsRepository create(Ref ref) {
     return modelProvidersRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ModelProvidersRepository value) {
+  Override overrideWithValue(CredentialsRepository value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ModelProvidersRepository>(value),
+      providerOverride: $SyncValueProvider<CredentialsRepository>(value),
     );
   }
 }
 
 String _$modelProvidersRepositoryHash() =>
-    r'6051a7c5398da8a61b5fc1d7638453a5e036edd7';
+    r'57a0ff0d598b47a00a75bf57222b36239ecf8306';
 
-@ProviderFor(chatModelsRepository)
-const chatModelsRepositoryProvider = ChatModelsRepositoryProvider._();
+@ProviderFor(credentialsModelsRepository)
+const credentialsModelsRepositoryProvider =
+    CredentialsModelsRepositoryProvider._();
 
-final class ChatModelsRepositoryProvider
+final class CredentialsModelsRepositoryProvider
     extends
         $FunctionalProvider<
-          ChatModelsRepository,
-          ChatModelsRepository,
-          ChatModelsRepository
+          CredentialsModelsRepository,
+          CredentialsModelsRepository,
+          CredentialsModelsRepository
         >
-    with $Provider<ChatModelsRepository> {
-  const ChatModelsRepositoryProvider._()
+    with $Provider<CredentialsModelsRepository> {
+  const CredentialsModelsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'chatModelsRepositoryProvider',
+        name: r'credentialsModelsRepositoryProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$chatModelsRepositoryHash();
+  String debugGetCreateSourceHash() => _$credentialsModelsRepositoryHash();
 
   @$internal
   @override
-  $ProviderElement<ChatModelsRepository> $createElement(
+  $ProviderElement<CredentialsModelsRepository> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  ChatModelsRepository create(Ref ref) {
-    return chatModelsRepository(ref);
+  CredentialsModelsRepository create(Ref ref) {
+    return credentialsModelsRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ChatModelsRepository value) {
+  Override overrideWithValue(CredentialsModelsRepository value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ChatModelsRepository>(value),
+      providerOverride: $SyncValueProvider<CredentialsModelsRepository>(value),
     );
   }
 }
 
-String _$chatModelsRepositoryHash() =>
-    r'0970f1e250860672b8eda3e5f4b3cddfe079697f';
+String _$credentialsModelsRepositoryHash() =>
+    r'468b0c39af77df56af751f9d8496be40c42d1378';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:auravibes_app/domain/entities/chat_models_entities.dart';
+import 'package:auravibes_app/domain/entities/credentials_models_entities.dart';
 import 'package:auravibes_app/domain/enums/chat_models_type.dart';
 import 'package:auravibes_app/services/model_provider_services/models/antropic_responses.dart';
 import 'package:http/http.dart' as http;
@@ -8,40 +8,38 @@ import 'package:openai_dart/openai_dart.dart';
 
 class ModelProvider {
   const ModelProvider({required this.type, required this.key, this.url});
-  final ChatModelType type;
+  final CredentialsModelType type;
   final String key;
   final String? url;
 }
 
 class ModelProviderServices {
-  Future<List<ChatModelToCreate>?> getChatModels(ModelProvider provider) async {
-    if (provider.type == ChatModelType.openai) {
+  Future<List<CredentialModelToCreate>?> getCredentialsModels(
+    ModelProvider provider,
+  ) async {
+    if (provider.type == CredentialsModelType.openai) {
       final client = OpenAIClient(apiKey: provider.key, baseUrl: provider.url);
 
       final models = await client.listModels();
       return models.data
           .map(
-            (model) => ChatModelToCreate(
-              displayName: model.id,
+            (model) => CredentialModelToCreate(
               modelId: model.id,
-              modelType: model.object?.name ?? 'model',
-              modelProviderId: '',
+              credentialsId: '',
             ),
           )
           .toList();
     }
 
-    if (provider.type == ChatModelType.anthropic) {
+    if (provider.type == CredentialsModelType.anthropic) {
       // Models.values
       final models = await _anthopicAllModels(provider);
 
       return models
           .map(
-            (model) => ChatModelToCreate(
-              displayName: model.displayName,
+            (model) => CredentialModelToCreate(
               modelId: model.id,
-              modelType: model.type,
-              modelProviderId: '',
+              credentialsId: '',
             ),
           )
           .toList();

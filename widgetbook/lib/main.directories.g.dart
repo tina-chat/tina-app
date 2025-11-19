@@ -797,13 +797,15 @@ final directories = <_widgetbook.WidgetbookNode>[
           ),
         ],
       ),
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'AuraListDivider',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'List Divider',
-          builder: _widgetbook_workspace_atoms_auravibes_divider_stories
-              .listDividerUseCase,
-        ),
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'List Divider',
+            builder: _widgetbook_workspace_atoms_auravibes_divider_stories
+                .listDividerUseCase,
+          ),
+        ],
       ),
       _widgetbook.WidgetbookComponent(
         name: 'AuraMessageBubble',
@@ -1039,13 +1041,15 @@ final directories = <_widgetbook.WidgetbookNode>[
           ),
         ],
       ),
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'AuraSectionDivider',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'Section Divider',
-          builder: _widgetbook_workspace_atoms_auravibes_divider_stories
-              .sectionDividerUseCase,
-        ),
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Section Divider',
+            builder: _widgetbook_workspace_atoms_auravibes_divider_stories
+                .sectionDividerUseCase,
+          ),
+        ],
       ),
       _widgetbook.WidgetbookComponent(
         name: 'AuraSpinner',

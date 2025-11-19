@@ -1,0 +1,201 @@
+import 'package:auravibes_app/data/database/drift/app_database.dart';
+import 'package:auravibes_app/data/database/drift/tables/api_model_provider_table.dart';
+import 'package:auravibes_app/domain/entities/api_model.dart';
+import 'package:auravibes_app/domain/entities/api_model_provider.dart';
+import 'package:auravibes_app/domain/repositories/api_model_repository.dart';
+
+/// Implementation of the [ApiModelRepository] interface.
+///
+/// This class provides a concrete implementation of API model and provider
+/// data operations using the Drift database. It handles the mapping between
+/// domain entities and database records, and provides proper error handling.
+class ApiModelRepositoryImpl implements ApiModelRepository {
+  ApiModelRepositoryImpl(this._database);
+
+  /// The database instance for API model operations.
+  final AppDatabase _database;
+
+  // Provider operations
+
+  @override
+  Future<List<ApiModelProviderEntity>> getAllProviders() async {
+    try {
+      final providerTables = await _database.apiModelProvidersDao
+          .getAllProviders();
+      return providerTables.map(_mapToProviderEntity).toList();
+    } catch (e) {
+      throw ApiModelException(
+        'Failed to retrieve all providers',
+        e as Exception,
+      );
+    }
+  }
+
+  @override
+  Future<List<ApiModelProviderEntity>> getProvidersByType(String type) async {
+    try {
+      final providerTables = await _database.apiModelProvidersDao
+          .getProvidersByType(type);
+      return providerTables.map(_mapToProviderEntity).toList();
+    } catch (e) {
+      throw ApiModelException(
+        'Failed to retrieve providers of type $type',
+        e as Exception,
+      );
+    }
+  }
+
+  // Model operations
+
+  @override
+  Future<List<ApiModelEntity>> getAllModels() async {
+    try {
+      final modelTables = await _database.apiModelsDao.getAllModels();
+      return modelTables.map(_mapToModelEntity).toList();
+    } catch (e) {
+      throw ApiModelException('Failed to retrieve all models', e as Exception);
+    }
+  }
+
+  // Batch operations
+
+  @override
+  Future<List<ApiModelProviderEntity>> batchUpsertProviders(
+    List<ApiModelProviderEntity> providers,
+  ) async {
+    try {
+      final providerCompanions = providers
+          .map(_modelProviderEntityToCompanion)
+          .toList();
+
+      final insertedProviders = await _database.apiModelProvidersDao
+          .batchUpsertProviders(providerCompanions);
+
+      return [
+        for (final insertedProvider in insertedProviders)
+          _mapToProviderEntity(insertedProvider),
+      ];
+    } on Exception catch (e) {
+      throw ApiModelException(
+        'Failed to batch upsert providers',
+        e,
+      );
+    } catch (_) {
+      rethrow;
+      // if (e is ApiModelException) rethrow;
+    }
+  }
+
+  @override
+  Future<List<ApiModelEntity>> batchUpsertModels(
+    List<ApiModelEntity> models,
+  ) async {
+    try {
+      final modelCompanions = models
+          .map(_mapEntityToCompanion)
+          .nonNulls
+          .toList();
+      final insertedModels = await _database.apiModelsDao.batchUpsertModels(
+        modelCompanions,
+      );
+
+      return [
+        for (final insertedModel in insertedModels)
+          _mapToModelEntity(insertedModel),
+      ];
+    } catch (e) {
+      if (e is ApiModelException) rethrow;
+      throw ApiModelException('Failed to batch upsert models', e as Exception);
+    }
+  }
+
+  @override
+  Future<int> deleteAllData() async {
+    try {
+      final deletedModels = await _database.apiModelsDao.deleteAllModels();
+      final deletedProviders = await _database.apiModelProvidersDao
+          .deleteAllProviders();
+      return deletedModels + deletedProviders;
+    } catch (e) {
+      throw ApiModelException('Failed to delete all data', e as Exception);
+    }
+  }
+
+  // Helper methods
+
+  /// Maps a database table record to a domain entity.
+  ApiModelProviderEntity _mapToProviderEntity(
+    ApiModelProvidersTable providerTable,
+  ) {
+    return ApiModelProviderEntity(
+      id: providerTable.id,
+      name: providerTable.name,
+      type: _mapToTypeTable(providerTable.type),
+      doc: providerTable.doc,
+      url: providerTable.url,
+    );
+  }
+
+  ApiModelProvidersCompanion _modelProviderEntityToCompanion(
+    ApiModelProviderEntity entity,
+  ) {
+    return ApiModelProvidersCompanion(
+      id: .new(entity.id),
+      name: .new(entity.name),
+      doc: .new(entity.doc),
+      url: .new(entity.url),
+      type: .absentIfNull(_mapTableToType(entity.type)),
+    );
+  }
+
+  ModelProvidersType? _mapToTypeTable(ModelProvidersTableType? type) {
+    if (type == null) return null;
+    return switch (type) {
+      .openai => .openai,
+      .anthropic => .anthropic,
+    };
+  }
+
+  ModelProvidersTableType? _mapTableToType(ModelProvidersType? type) {
+    if (type == null) return null;
+    return switch (type) {
+      .openai => .openai,
+      .anthropic => .anthropic,
+    };
+  }
+
+  /// Maps a database table record to a domain entity.
+  ApiModelEntity _mapToModelEntity(ApiModelsTable modelTable) {
+    return ApiModelEntity(
+      id: modelTable.id,
+      name: modelTable.name,
+      costCacheRead: modelTable.costCacheRead,
+      costInput: modelTable.costInput,
+      costOutput: modelTable.costOutput,
+      limitContext: modelTable.limitContext,
+      limitOutput: modelTable.limitOutput,
+      modalitiesInput: modelTable.modalitiesInput ?? [],
+      modalitiesOuput: modelTable.modalitiesOuput ?? [],
+      modelProvider: modelTable.modelProvider,
+
+      openWeights: modelTable.openWeights,
+    );
+  }
+
+  ApiModelsCompanion? _mapEntityToCompanion(ApiModelEntity? entity) {
+    if (entity == null) return null;
+    return ApiModelsCompanion(
+      id: .new(entity.id),
+      name: .new(entity.name),
+      costCacheRead: .new(entity.costCacheRead),
+      costInput: .new(entity.costInput),
+      costOutput: .new(entity.costOutput),
+      limitContext: .new(entity.limitContext),
+      limitOutput: .new(entity.limitOutput),
+      modalitiesInput: .new(entity.modalitiesInput),
+      modalitiesOuput: .new(entity.modalitiesOuput),
+      modelProvider: .new(entity.modelProvider),
+      openWeights: .new(entity.openWeights),
+    );
+  }
+}

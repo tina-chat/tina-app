@@ -9,44 +9,44 @@ part of 'list_chat_models_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(listChatModelProviders)
-const listChatModelProvidersProvider = ListChatModelProvidersProvider._();
+@ProviderFor(listCredentialsCredentials)
+const listCredentialsCredentialsProvider =
+    ListCredentialsCredentialsProvider._();
 
-final class ListChatModelProvidersProvider
+final class ListCredentialsCredentialsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<ChatModelWithProviderEntity>>,
-          List<ChatModelWithProviderEntity>,
-          FutureOr<List<ChatModelWithProviderEntity>>
+          AsyncValue<List<CredentialsModelWithProviderEntity>>,
+          List<CredentialsModelWithProviderEntity>,
+          FutureOr<List<CredentialsModelWithProviderEntity>>
         >
     with
-        $FutureModifier<List<ChatModelWithProviderEntity>>,
-        $FutureProvider<List<ChatModelWithProviderEntity>> {
-  const ListChatModelProvidersProvider._()
+        $FutureModifier<List<CredentialsModelWithProviderEntity>>,
+        $FutureProvider<List<CredentialsModelWithProviderEntity>> {
+  const ListCredentialsCredentialsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'listChatModelProvidersProvider',
+        name: r'listCredentialsCredentialsProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$listChatModelProvidersHash();
+  String debugGetCreateSourceHash() => _$listCredentialsCredentialsHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<ChatModelWithProviderEntity>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
+  $FutureProviderElement<List<CredentialsModelWithProviderEntity>>
+  $createElement($ProviderPointer pointer) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<ChatModelWithProviderEntity>> create(Ref ref) {
-    return listChatModelProviders(ref);
+  FutureOr<List<CredentialsModelWithProviderEntity>> create(Ref ref) {
+    return listCredentialsCredentials(ref);
   }
 }
 
-String _$listChatModelProvidersHash() =>
-    r'a68063dd249c6cc5ac608a3dfb6de45f2f26a5a8';
+String _$listCredentialsCredentialsHash() =>
+    r'225f85566f451f494f08d15035a6f70c2c445aa5';

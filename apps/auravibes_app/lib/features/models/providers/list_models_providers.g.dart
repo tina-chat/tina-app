@@ -9,44 +9,43 @@ part of 'list_models_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(listModelProviders)
-const listModelProvidersProvider = ListModelProvidersProvider._();
+@ProviderFor(listCredentials)
+const listCredentialsProvider = ListCredentialsProvider._();
 
-final class ListModelProvidersProvider
+final class ListCredentialsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<ModelProviderEntity>>,
-          List<ModelProviderEntity>,
-          FutureOr<List<ModelProviderEntity>>
+          AsyncValue<List<CredentialsEntity>>,
+          List<CredentialsEntity>,
+          FutureOr<List<CredentialsEntity>>
         >
     with
-        $FutureModifier<List<ModelProviderEntity>>,
-        $FutureProvider<List<ModelProviderEntity>> {
-  const ListModelProvidersProvider._()
+        $FutureModifier<List<CredentialsEntity>>,
+        $FutureProvider<List<CredentialsEntity>> {
+  const ListCredentialsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'listModelProvidersProvider',
+        name: r'listCredentialsProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$listModelProvidersHash();
+  String debugGetCreateSourceHash() => _$listCredentialsHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<ModelProviderEntity>> $createElement(
+  $FutureProviderElement<List<CredentialsEntity>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<ModelProviderEntity>> create(Ref ref) {
-    return listModelProviders(ref);
+  FutureOr<List<CredentialsEntity>> create(Ref ref) {
+    return listCredentials(ref);
   }
 }
 
-String _$listModelProvidersHash() =>
-    r'4775799687a6817f7430c3b75ea6edcf9ff0a8ca';
+String _$listCredentialsHash() => r'b91cb2733d01a054c507871f987fc9219896c013';
