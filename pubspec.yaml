@@ -109,5 +109,14 @@ melos:
         - melos clean
         - melos bootstrap
         -  melos run generate
+    
+    flavors:
+      exec: dart pub run flutter_flavorizr -f
+      concurrency: 1
+      orderDependents: true
+      failFast: true
+      packageFilters:
+        dependsOn:
+          - flutter_flavorizr
 
 
