@@ -92,6 +92,7 @@ flavorizr:
           ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
       macos:
         bundleId: "me.auravibes.app"
+        icon: "assets/launcher_icons/prod/macos.png"
     dev:
       app:
         name: "AuraVibes Dev"
@@ -104,6 +105,7 @@ flavorizr:
           ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
       macos:
         bundleId: "me.auravibes.app.dev"
+        icon: "assets/launcher_icons/prod/macos.png"
   instructions:
     - assets:download
     - assets:extract
@@ -125,8 +127,8 @@ flavorizr:
     - macos:configs
     - macos:buildTargets
     - macos:schema
-    # - macos:dummyAssets
-    # - macos:icons
+    - macos:dummyAssets
+    - macos:icons
     - macos:plist
     - flutter:flavors
     # - flutter:app
