@@ -1,0 +1,6 @@
+#include "../../Flutter/prodProfile.xcconfig"
+#include "Warnings.xcconfig"
+
+ASSET_PREFIX=prod
+BUNDLE_NAME=AuraVibes
+BUNDLE_DISPLAY_NAME=AuraVibes

@@ -58,6 +58,8 @@ dev_dependencies:
   # Code generation for Drift
   drift_dev: ^2.29.0
 
+  flutter_flavorizr: ^2.4.1
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
   freezed: ^3.2.3
@@ -74,3 +76,63 @@ flutter:
   assets:
     - assets/i18n/
   uses-material-design: true
+
+flavorizr:
+  ide: "vscode"
+  flavors:
+    prod:
+      app:
+        name: "AuraVibes"
+
+      android:
+        applicationId: "me.auravibes.app"
+      ios:
+        bundleId: "me.auravibes.app"
+        buildSettings:
+          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
+      macos:
+        bundleId: "me.auravibes.app"
+        icon: "assets/launcher_icons/prod/macos.png"
+    dev:
+      app:
+        name: "AuraVibes Dev"
+
+      android:
+        applicationId: "me.auravibes.app.dev"
+      ios:
+        bundleId: "me.auravibes.app.dev"
+        buildSettings:
+          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
+      macos:
+        bundleId: "me.auravibes.app.dev"
+        icon: "assets/launcher_icons/prod/macos.png"
+  instructions:
+    - assets:download
+    - assets:extract
+    - android:flavorizrGradle
+    - android:buildGradle
+    - android:androidManifest
+    # - android:dummyAssets
+    # - android:icons
+    - ios:podfile
+    - ios:xcconfig
+    - ios:buildTargets
+    - ios:schema
+    # - ios:dummyAssets
+    # - ios:icons
+    - ios:plist
+    # - ios:launchScreen
+    - macos:podfile
+    - macos:xcconfig
+    - macos:configs
+    - macos:buildTargets
+    - macos:schema
+    - macos:dummyAssets
+    - macos:icons
+    - macos:plist
+    - flutter:flavors
+    # - flutter:app
+    # - flutter:pages
+    # - flutter:main
+    # - ide:config # monorepo needs to edit on root
+    - assets:clean
