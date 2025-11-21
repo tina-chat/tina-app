@@ -59,6 +59,7 @@ dev_dependencies:
   drift_dev: ^2.29.0
 
   flutter_flavorizr: ^2.4.1
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
   freezed: ^3.2.3
@@ -88,7 +89,7 @@ flavorizr:
       ios:
         bundleId: "me.auravibes.app"
         buildSettings:
-          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon"
+          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
       macos:
         bundleId: "me.auravibes.app"
     dev:
@@ -100,7 +101,7 @@ flavorizr:
       ios:
         bundleId: "me.auravibes.app.dev"
         buildSettings:
-          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon"
+          ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon-$(ASSET_PREFIX)"
       macos:
         bundleId: "me.auravibes.app.dev"
   instructions:

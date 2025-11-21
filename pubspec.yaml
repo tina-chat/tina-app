@@ -110,7 +110,7 @@ melos:
         - melos bootstrap
         -  melos run generate
     
-    flavors:
+    generate:flavors:
       exec: dart pub run flutter_flavorizr -f
       concurrency: 1
       orderDependents: true
@@ -118,5 +118,14 @@ melos:
       packageFilters:
         dependsOn:
           - flutter_flavorizr
+
+    generate:icons:
+      exec: dart pub run flutter_launcher_icons
+      concurrency: 1
+      orderDependents: true
+      failFast: true
+      packageFilters:
+        dependsOn:
+          - flutter_launcher_icons
 
 
