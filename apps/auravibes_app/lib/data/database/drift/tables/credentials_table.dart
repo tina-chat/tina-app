@@ -13,7 +13,7 @@ class Credentials extends Table with TableMixin {
   /// URL for remote chat models, null for default urls
   TextColumn get url => text().nullable()();
 
-  /// URL for remote chat models, null for default urls
+  /// UUID reference to securely stored API key
   TextColumn get keyValue => text()();
 
   TextColumn get workspaceId => text().references(Workspaces, #id)();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auravibes_app/domain/entities/credentials_models_entities.dart';
+import 'package:auravibes_app/domain/repositories/model_providers_repository.dart';
 import 'package:auravibes_app/services/chatbot_service/models/chat_message_models.dart';
 import 'package:collection/collection.dart';
 import 'package:langchain/langchain.dart';
@@ -24,14 +25,14 @@ List<AIChatMessageToolCall>? safeDecode(String? metadata) {
 }
 
 class ChatbotService {
-  ChatbotService(this.chatProvider, {this.tools});
-  CredentialsModelWithProviderEntity chatProvider;
-  List<ToolSpec>? tools;
+  ChatbotService(this.credentialsRepository);
+  CredentialsRepository credentialsRepository;
 
   Stream<ChatResult> sendMessage(
+    CredentialsModelWithProviderEntity chatProvider,
     List<ChatbotMessage> messages, {
     List<ToolSpec>? tools,
-  }) {
+  }) async* {
     final chatMessages = messages.map((message) {
       return switch (message) {
         ChatbotMessageHumanText(:final message) => [
@@ -53,21 +54,27 @@ class ChatbotService {
       };
     }).flattenedToList;
 
-    final credentialsModel = _getCredentialsModel(tools: this.tools ?? tools);
+    final credentialsModel = await _getCredentialsModel(
+      chatProvider,
+      tools: tools,
+    );
 
-    return credentialsModel.stream(
+    yield* credentialsModel.stream(
       PromptValue.chat(chatMessages),
-      options: _getModelOptions(),
+      options: _getModelOptions(chatProvider),
     );
   }
 
-  Future<String> generateTitle(String firstMessage) async {
-    final credentialsModel = _getCredentialsModel();
+  Future<String> generateTitle(
+    CredentialsModelWithProviderEntity chatProvider,
+    String firstMessage,
+  ) async {
+    final credentialsModel = await _getCredentialsModel(chatProvider);
 
     final prompt = PromptValue.chat([
       ChatMessage.humanText(
         '''
-Generate a short, concise title (max 5 words) for a conversation that starts with this message: "$firstMessage". 
+Generate a short, concise title (max 5 words) for a conversation that starts with this message: "$firstMessage".
 The title should capture the main topic or theme. Respond with only the title, no quotes or extra text.
 ''',
       ),
@@ -76,7 +83,7 @@ The title should capture the main topic or theme. Respond with only the title, n
     try {
       final result = await credentialsModel.invoke(
         prompt,
-        options: _getModelOptions(),
+        options: _getModelOptions(chatProvider),
       );
       var title = result.outputAsString.trim();
 
@@ -116,7 +123,9 @@ The title should capture the main topic or theme. Respond with only the title, n
     return words.length > 30 ? '${words.substring(0, 27)}...' : words;
   }
 
-  ChatModelOptions _getModelOptions() {
+  ChatModelOptions _getModelOptions(
+    CredentialsModelWithProviderEntity chatProvider,
+  ) {
     final type = chatProvider.modelsProvider.type;
     if (type == null) throw UnimplementedError();
     return switch (type) {
@@ -129,13 +138,25 @@ The title should capture the main topic or theme. Respond with only the title, n
     };
   }
 
-  BaseChatModel _getCredentialsModel({List<ToolSpec>? tools}) {
+  Future<BaseChatModel> _getCredentialsModel(
+    CredentialsModelWithProviderEntity chatProvider, {
+    List<ToolSpec>? tools,
+  }) async {
     final type = chatProvider.modelsProvider.type;
     if (type == null) throw UnimplementedError();
     final url = chatProvider.credentials.url ?? chatProvider.modelsProvider.url;
+
+    // Get the actual API key from secure storage using the UUID
+    final keyUUID = chatProvider.credentials.key;
+    final apiKey = await credentialsRepository.getApiKey(keyUUID);
+
+    if (apiKey == null) {
+      throw Exception('API key not found for UUID: $keyUUID');
+    }
+
     return switch (type) {
       .openai => ChatOpenAI(
-        apiKey: chatProvider.credentials.key,
+        apiKey: apiKey,
         baseUrl: url ?? 'https://api.openai.com/v1',
         defaultOptions: ChatOpenAIOptions(
           model: chatProvider.credentialsModel.modelId,
@@ -143,7 +164,7 @@ The title should capture the main topic or theme. Respond with only the title, n
         ),
       ),
       .anthropic => ChatAnthropic(
-        apiKey: chatProvider.credentials.key,
+        apiKey: apiKey,
         baseUrl: url ?? 'https://api.anthropic.com/v1',
         defaultOptions: ChatAnthropicOptions(
           model: chatProvider.credentialsModel.modelId,

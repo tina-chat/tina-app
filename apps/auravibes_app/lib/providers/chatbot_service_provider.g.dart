@@ -12,7 +12,7 @@ part of 'chatbot_service_provider.dart';
 /// (for title generation, etc.)
 
 @ProviderFor(chatbotService)
-const chatbotServiceProvider = ChatbotServiceFamily._();
+const chatbotServiceProvider = ChatbotServiceProvider._();
 
 /// Provider that creates a ChatbotService without tools
 /// (for title generation, etc.)
@@ -22,26 +22,19 @@ final class ChatbotServiceProvider
     with $Provider<ChatbotService> {
   /// Provider that creates a ChatbotService without tools
   /// (for title generation, etc.)
-  const ChatbotServiceProvider._({
-    required ChatbotServiceFamily super.from,
-    required CredentialsModelWithProviderEntity super.argument,
-  }) : super(
-         retry: null,
-         name: r'chatbotServiceProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
+  const ChatbotServiceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'chatbotServiceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$chatbotServiceHash();
-
-  @override
-  String toString() {
-    return r'chatbotServiceProvider'
-        ''
-        '($argument)';
-  }
 
   @$internal
   @override
@@ -50,8 +43,7 @@ final class ChatbotServiceProvider
 
   @override
   ChatbotService create(Ref ref) {
-    final argument = this.argument as CredentialsModelWithProviderEntity;
-    return chatbotService(ref, argument);
+    return chatbotService(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -61,45 +53,6 @@ final class ChatbotServiceProvider
       providerOverride: $SyncValueProvider<ChatbotService>(value),
     );
   }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ChatbotServiceProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
 }
 
-String _$chatbotServiceHash() => r'c6927355a42a8075dee27597c5d9e47a67ab2bb5';
-
-/// Provider that creates a ChatbotService without tools
-/// (for title generation, etc.)
-
-final class ChatbotServiceFamily extends $Family
-    with
-        $FunctionalFamilyOverride<
-          ChatbotService,
-          CredentialsModelWithProviderEntity
-        > {
-  const ChatbotServiceFamily._()
-    : super(
-        retry: null,
-        name: r'chatbotServiceProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  /// Provider that creates a ChatbotService without tools
-  /// (for title generation, etc.)
-
-  ChatbotServiceProvider call(
-    CredentialsModelWithProviderEntity modelProvider,
-  ) => ChatbotServiceProvider._(argument: modelProvider, from: this);
-
-  @override
-  String toString() => r'chatbotServiceProvider';
-}
+String _$chatbotServiceHash() => r'2060db7e1bb02ee67faa4e1a9ff1c3de623f0075';
