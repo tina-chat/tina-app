@@ -60,4 +60,38 @@ abstract class LocaleKeys {
   static const tools_names_calculator_name = 'tools_names.calculator.name';
   static const tools_names_calculator_description =
       'tools_names.calculator.description';
+  static const home_screen_welcome_title = 'home_screen.welcome_title';
+  static const home_screen_welcome_subtitle = 'home_screen.welcome_subtitle';
+  static const home_screen_quick_actions = 'home_screen.quick_actions';
+  static const home_screen_recent_conversations =
+      'home_screen.recent_conversations';
+  static const home_screen_actions_start_new_chat =
+      'home_screen.actions.start_new_chat';
+  static const home_screen_actions_all_chats = 'home_screen.actions.all_chats';
+  static const home_screen_actions_settings = 'home_screen.actions.settings';
+  static const home_screen_actions_models = 'home_screen.actions.models';
+  static const home_screen_actions_tools = 'home_screen.actions.tools';
+  static const home_screen_actions_agents = 'home_screen.actions.agents';
+  static const home_screen_conversation_states_no_conversations =
+      'home_screen.conversation_states.no_conversations';
+  static const home_screen_conversation_states_no_chats_yet =
+      'home_screen.conversation_states.no_chats_yet';
+  static const home_screen_conversation_states_start_first_conversation =
+      'home_screen.conversation_states.start_first_conversation';
+  static const home_screen_conversation_states_error_loading_conversations =
+      'home_screen.conversation_states.error_loading_conversations';
+  static const home_screen_conversation_states_error_loading_chats =
+      'home_screen.conversation_states.error_loading_chats';
+  static const home_screen_date_formatting_just_now =
+      'home_screen.date_formatting.just_now';
+  static const home_screen_date_formatting_minutes_ago =
+      'home_screen.date_formatting.minutes_ago';
+  static const home_screen_date_formatting_hours_ago =
+      'home_screen.date_formatting.hours_ago';
+  static const home_screen_date_formatting_days_ago =
+      'home_screen.date_formatting.days_ago';
+  static const status_bar_models_available = 'status_bar.models_available';
+  static const status_bar_loading_models = 'status_bar.loading_models';
+  static const status_bar_model_error = 'status_bar.model_error';
+  static const status_bar_api_connected = 'status_bar.api_connected';
 }

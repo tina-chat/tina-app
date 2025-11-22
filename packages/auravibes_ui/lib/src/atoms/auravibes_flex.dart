@@ -1,3 +1,4 @@
+import 'package:auravibes_ui/src/tokens/auravibes_theme.dart';
 import 'package:auravibes_ui/src/tokens/design_tokens.dart';
 import 'package:flutter/widgets.dart';
 
@@ -33,7 +34,7 @@ class AuraColumn extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
       mainAxisAlignment: mainAxisAlignment,
-      spacing: _getSpacing(spacing),
+      spacing: context.auraTheme.fromSpacing(spacing),
       children: children,
     );
   }
@@ -72,52 +73,8 @@ class AuraRow extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
       mainAxisAlignment: mainAxisAlignment,
-      spacing: _getSpacing(spacing),
+      spacing: context.auraTheme.fromSpacing(spacing),
       children: children,
     );
   }
-}
-
-double _getSpacing(AuraSpacing spacing) {
-  return switch (spacing) {
-    AuraSpacing.none => 0,
-    AuraSpacing.base => DesignSpacing.base,
-    AuraSpacing.xs => DesignSpacing.xs,
-    AuraSpacing.sm => DesignSpacing.sm,
-    AuraSpacing.md => DesignSpacing.md,
-    AuraSpacing.lg => DesignSpacing.lg,
-    AuraSpacing.xl => DesignSpacing.xl,
-    AuraSpacing.xl2 => DesignSpacing.xl2,
-    AuraSpacing.xl3 => DesignSpacing.xl3,
-  };
-}
-
-/// define spacing on components
-enum AuraSpacing {
-  /// no spacing
-  none,
-
-  /// common spacing
-  base,
-
-  /// extra small spacing
-  xs,
-
-  /// small spacing
-  sm,
-
-  /// medium spacing
-  md,
-
-  /// large spacing
-  lg,
-
-  /// extra large spacing
-  xl,
-
-  /// 2x extra large spacing
-  xl2,
-
-  /// 3x extra large spacing
-  xl3,
 }

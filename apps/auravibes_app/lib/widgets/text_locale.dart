@@ -5,6 +5,7 @@ class TextLocale extends StatelessWidget {
   const TextLocale(
     this.data, {
     super.key,
+    this.args,
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -19,6 +20,7 @@ class TextLocale extends StatelessWidget {
     this.selectionColor,
   });
 
+  final List<String>? args;
   final String data;
   final TextStyle? style;
   final StrutStyle? strutStyle;
@@ -36,7 +38,7 @@ class TextLocale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      data.tr(),
+      data.tr(args: args, context: context),
       style: style,
       strutStyle: strutStyle,
       textAlign: textAlign,

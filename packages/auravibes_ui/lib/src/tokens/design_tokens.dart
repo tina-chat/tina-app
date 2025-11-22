@@ -537,3 +537,33 @@ class DesignShadows {
     blurRadius: 32,
   );
 }
+
+/// define spacing on components
+enum AuraSpacing {
+  /// no spacing
+  none,
+
+  /// common spacing
+  base,
+
+  /// extra small spacing
+  xs,
+
+  /// small spacing
+  sm,
+
+  /// medium spacing
+  md,
+
+  /// large spacing
+  lg,
+
+  /// extra large spacing
+  xl,
+
+  /// 2x extra large spacing
+  xl2,
+
+  /// 3x extra large spacing
+  xl3,
+}
