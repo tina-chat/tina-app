@@ -1753,7 +1753,7 @@ class CredentialsTable extends DataClass
   /// URL for remote chat models, null for default urls
   final String? url;
 
-  /// URL for remote chat models, null for default urls
+  /// UUID reference to securely stored API key
   final String keyValue;
   final String workspaceId;
   const CredentialsTable({

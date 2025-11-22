@@ -31,4 +31,14 @@ class CredentialsDao extends DatabaseAccessor<AppDatabase>
   ) async {
     return into(credentials).insertReturning(modelProvider);
   }
+
+  Future<CredentialsTable?> getCredentialById(String id) {
+    return (select(
+      credentials,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
+  }
+
+  Future<void> deleteCredential(String id) {
+    return (delete(credentials)..where((t) => t.id.equals(id))).go();
+  }
 }

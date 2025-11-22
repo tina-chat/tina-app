@@ -1,4 +1,4 @@
-import 'package:auravibes_app/domain/entities/credentials_models_entities.dart';
+import 'package:auravibes_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:auravibes_app/services/chatbot_service/chatbot_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,7 +9,7 @@ part 'chatbot_service_provider.g.dart';
 @riverpod
 ChatbotService chatbotService(
   Ref ref,
-  CredentialsModelWithProviderEntity modelProvider,
 ) {
-  return ChatbotService(modelProvider);
+  final credentialsRepository = ref.watch(modelProvidersRepositoryProvider);
+  return ChatbotService(credentialsRepository);
 }

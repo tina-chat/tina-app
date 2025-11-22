@@ -6,8 +6,8 @@ import 'package:auravibes_app/features/chats/providers/conversation_providers.da
 import 'package:auravibes_app/features/chats/providers/conversation_repository_provider.dart';
 import 'package:auravibes_app/features/models/providers/model_providers_repository_providers.dart';
 import 'package:auravibes_app/features/tools/providers/conversation_tools_provider.dart';
+import 'package:auravibes_app/providers/chatbot_service_provider.dart';
 import 'package:auravibes_app/providers/tool_calling_manager_provider.dart';
-import 'package:auravibes_app/services/chatbot_service/chatbot_service.dart';
 import 'package:auravibes_app/services/chatbot_service/models/chat_message_models.dart';
 import 'package:auravibes_app/services/tools/tool_service.dart';
 import 'package:auravibes_app/services/tools/user_tools_entity.dart';
@@ -362,7 +362,7 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
           ),
         );
 
-    final titleService = ChatbotService(foundModel);
+    final chatbotService = ref.watch(chatbotServiceProvider);
     final aiMessages = messages.map<ChatbotMessage>((message) {
       if (message.isUser) {
         return ChatbotMessage.humanText(message.content);
@@ -384,7 +384,8 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
       );
     }).toList();
 
-    final stream = titleService.sendMessage(
+    final stream = chatbotService.sendMessage(
+      foundModel,
       aiMessages,
       tools: ToolService.getTools(
         only: toolTypes,
@@ -456,8 +457,8 @@ class MessagesManagerNotifier extends _$MessagesManagerNotifier {
     );
 
     // Generate title for conversation
-    final titleService = ChatbotService(foundModel);
-    final title = await titleService.generateTitle(message);
+    final chatbotService = ref.watch(chatbotServiceProvider);
+    final title = await chatbotService.generateTitle(foundModel, message);
 
     // Create conversation
     final conversation = await ref

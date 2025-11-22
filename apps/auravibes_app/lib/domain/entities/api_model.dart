@@ -46,17 +46,17 @@ abstract class ApiModelEntity with _$ApiModelEntity {
     String modelProvider,
     Map<String, dynamic> json,
   ) {
-    final cost = json['cost'] as Map<String, dynamic>;
-    final limit = json['limit'] as Map<String, dynamic>;
-    final modalities = json['modalities'] as Map<String, dynamic>;
+    final cost = json.get<Map<String, dynamic>?>('cost');
+    final limit = json.get<Map<String, dynamic>>('limit');
+    final modalities = json.get<Map<String, dynamic>>('modalities');
     return ApiModelEntity(
       modelProvider: modelProvider,
       id: json.get('id'),
       name: json.get('name'),
       openWeights: json.get('open_weights'),
-      costInput: cost.get<num?>('input')?.toDouble(),
-      costOutput: cost.get<num?>('output')?.toDouble(),
-      costCacheRead: cost.get<num?>('cache_read')?.toDouble(),
+      costInput: cost?.get<num?>('input')?.toDouble(),
+      costOutput: cost?.get<num?>('output')?.toDouble(),
+      costCacheRead: cost?.get<num?>('cache_read')?.toDouble(),
       limitContext: limit.get('context'),
       limitOutput: limit.get('output'),
       modalitiesInput: (modalities.get<List<dynamic>?>('input') ?? []).cast(),
