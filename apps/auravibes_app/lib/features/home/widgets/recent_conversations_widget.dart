@@ -160,7 +160,6 @@ class _RecentChatTile extends ConsumerWidget {
                 ],
               ],
             ),
-            // TODO: Add last message preview when message provider is available for individual conversations
           ],
         ),
       ),
