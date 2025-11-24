@@ -65,5 +65,42 @@
       "name": "Calculator",
       "description": "Solve Math problems"
     }
+  },
+  "home_screen": {
+    "welcome_title": "Welcome to AuraVibes",
+    "welcome_subtitle": "Your AI assistant is ready to help",
+    "quick_actions": "Quick Actions",
+    "recent_conversations": "Recent Conversations",
+    "actions": {
+      "start_new_chat": "Start New Chat",
+      "all_chats": "All Chats",
+      "settings": "Settings",
+      "models": "Models",
+      "tools": "Tools",
+      "agents": "Agents"
+    },
+    "conversation_states": {
+      "no_conversations": "No conversations yet",
+      "no_chats_yet": "No Chats Yet",
+      "start_first_conversation": "Start your first conversation with AuraVibes",
+      "error_loading_conversations": "Error loading conversations: {}",
+      "error_loading_chats": "Error loading chats: {}"
+    },
+    "date_formatting": {
+      "just_now": "Just now",
+      "minutes_ago": "{}m ago",
+      "hours_ago": "{}h ago",
+      "days_ago": "{}d ago"
+    }
+  },
+  "status_bar": {
+    "models_available": {
+      "zero": "No models available",
+      "one": "{} model available",
+      "other": "{} models available"
+    },
+    "loading_models": "Loading models...",
+    "model_error": "Model error",
+    "api_connected": "API Connected"
   }
 }

@@ -94,6 +94,21 @@ class AuraTheme extends ThemeExtension<AuraTheme> {
       animation: animation.lerp(other.animation, t),
     );
   }
+
+  /// get the spacing based on enum
+  double fromSpacing(AuraSpacing value) {
+    return switch (value) {
+      AuraSpacing.none => 0,
+      AuraSpacing.base => spacing.md,
+      AuraSpacing.xs => spacing.xs,
+      AuraSpacing.sm => spacing.sm,
+      AuraSpacing.md => spacing.md,
+      AuraSpacing.lg => spacing.lg,
+      AuraSpacing.xl => spacing.xl,
+      AuraSpacing.xl2 => spacing.xl2,
+      AuraSpacing.xl3 => spacing.xl3,
+    };
+  }
 }
 
 /// Color scheme that adapts to light and dark themes.
