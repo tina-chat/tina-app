@@ -1,0 +1,22 @@
+import 'package:auravibes_ui/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+@widgetbook.UseCase(name: 'AuraSpinner', type: AuraSpinner)
+Widget basicSpinnerUseCase(BuildContext context) {
+  return AuraSpinner(
+    size: context.knobs.object.dropdown(
+      label: 'size',
+      options: AuraSpinnerSize.values,
+      labelBuilder: (value) => value.name,
+    ),
+    strokeWidth: context.knobs.double.slider(
+      label: 'strokeWidth',
+      initialValue: 4.0,
+      min: 1.0,
+      max: 10.0,
+    ),
+    color: context.knobs.color(label: 'color', initialValue: Colors.blue),
+  );
+}

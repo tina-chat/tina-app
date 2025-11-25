@@ -1,6 +1,7 @@
 import 'package:auravibes_ui/src/tokens/tokens.dart';
 import 'package:flutter/widgets.dart';
 
+@immutable
 /// definition of aura paddings
 class AuraEdgeInsetsGeometry {
   /// constructor for each side
@@ -24,6 +25,15 @@ class AuraEdgeInsetsGeometry {
   /// base spacing
   static const base = AuraEdgeInsetsGeometry.all(.base);
 
+  /// medium spacing
+  static const medium = AuraEdgeInsetsGeometry.all(.md);
+
+  /// large spacing
+  static const large = AuraEdgeInsetsGeometry.all(.lg);
+
+  /// small spacing
+  static const small = AuraEdgeInsetsGeometry.all(.sm);
+
   /// left padding
   final AuraSpacing left;
 
@@ -44,6 +54,24 @@ class AuraEdgeInsetsGeometry {
       right: context.auraTheme.fromSpacing(right),
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || // Quick check for same instance
+      other is AuraEdgeInsetsGeometry && // Check if 'other' is also a Person
+          runtimeType == other.runtimeType && // Ensure same type
+          left == other.left && // Compare properties
+          right == other.right && // Compare properties
+          top == other.top && // Compare properties
+          bottom == other.bottom; // Compare properties
+
+  @override
+  int get hashCode => Object.hashAll([
+    left,
+    top,
+    bottom,
+    top,
+  ]); // Combine hash codes
 }
 
 /// Padding for const

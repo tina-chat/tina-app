@@ -279,13 +279,14 @@ void main() {
       expect(auraIcon.semanticLabel, semanticLabel);
     });
 
-    testWidgets('disables button when onPressed is null', (tester) async {
+    testWidgets('disables button when disabled is true', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: AuraIconButton(
               icon: Icons.star,
-              onPressed: null,
+              onPressed: () {},
+              disabled: true,
             ),
           ),
         ),
