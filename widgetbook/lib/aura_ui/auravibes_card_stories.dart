@@ -8,14 +8,7 @@ import 'package:widgetbook_workspace/knobs/padding.dart';
 Widget basicCardUseCase(BuildContext context) {
   return AuraCard(
     padding: context.knobs.padding(),
-
-    onTap: context.knobs.boolean(label: 'Enable Tap')
-        ? () {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Card tapped!')));
-          }
-        : null,
+    onTap: context.knobs.boolean(label: 'Enable Tap') ? () {} : null,
     semanticLabel: context.knobs.stringOrNull(label: 'Semantic Label'),
     style: context.knobs.objectOrNull.dropdown(
       label: 'style',
