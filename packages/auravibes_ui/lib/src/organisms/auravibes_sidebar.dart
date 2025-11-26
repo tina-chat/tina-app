@@ -1,5 +1,4 @@
 import 'package:auravibes_ui/src/atoms/atoms.dart';
-import 'package:auravibes_ui/src/atoms/auravibes_pressable.dart';
 import 'package:auravibes_ui/src/tokens/tokens.dart';
 import 'package:flutter/material.dart';
 

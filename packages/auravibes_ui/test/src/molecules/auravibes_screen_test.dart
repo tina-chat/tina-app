@@ -80,8 +80,9 @@ void main() {
         find.byType(BackdropFilter),
       );
       final imageFilter = backdropFilter.filter;
-      // Note: We can't easily inspect ImageFilter properties in tests without casting to internal types
-      // or relying on implementation details, but finding it exists is a good check.
+      // Note: We can't easily inspect ImageFilter properties in tests without
+      // casting to internal types or relying on implementation details, but
+      // finding it exists is a good check.
       expect(imageFilter, isNotNull);
     });
 
@@ -109,7 +110,7 @@ void main() {
     });
 
     testWidgets('applies padding when provided', (tester) async {
-      const padding = AuraEdgeInsetsGeometry.all(AuraSpacing.md);
+      const padding = AuraEdgeInsetsGeometry.medium;
 
       await tester.pumpWidget(
         MaterialApp(

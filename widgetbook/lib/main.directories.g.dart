@@ -41,6 +41,8 @@ import 'package:widgetbook_workspace/aura_ui/auravibes_message_status_stories.da
     as _widgetbook_workspace_aura_ui_auravibes_message_status_stories;
 import 'package:widgetbook_workspace/aura_ui/auravibes_navigation_item_stories.dart'
     as _widgetbook_workspace_aura_ui_auravibes_navigation_item_stories;
+import 'package:widgetbook_workspace/aura_ui/auravibes_screen_stories.dart'
+    as _widgetbook_workspace_aura_ui_auravibes_screen_stories;
 import 'package:widgetbook_workspace/aura_ui/auravibes_spinner_stories.dart'
     as _widgetbook_workspace_aura_ui_auravibes_spinner_stories;
 import 'package:widgetbook_workspace/aura_ui/auravibes_tab_item_stories.dart'
@@ -285,6 +287,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _widgetbook_workspace_aura_ui_auravibes_message_bubble_stories
                     .userTextMessageUseCase,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'AuraScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Aura Screen',
+            builder: _widgetbook_workspace_aura_ui_auravibes_screen_stories
+                .defaultAuraScreenUseCase,
           ),
         ],
       ),

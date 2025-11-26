@@ -36,8 +36,10 @@ class AuraScreen extends StatelessWidget {
   /// app bar
   final Widget? appBar;
 
+  /// padding
   final AuraEdgeInsetsGeometry? padding;
 
+  /// variant
   final AuraScreenVariation variant;
 
   /// allow override
