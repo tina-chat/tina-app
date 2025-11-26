@@ -70,6 +70,7 @@ class AuraIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     super.key,
+    this.disabled = false,
     this.size = AuraIconSize.medium,
     this.color,
     this.backgroundColor,
@@ -82,7 +83,10 @@ class AuraIconButton extends StatelessWidget {
   final IconData icon;
 
   /// The callback that is called when the button is pressed.
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
+
+  /// Whether the button is disabled.
+  final bool disabled;
 
   /// The size of the icon.
   final AuraIconSize size;
@@ -113,7 +117,7 @@ class AuraIconButton extends StatelessWidget {
       width: buttonSize,
       height: buttonSize,
       child: IconButton(
-        onPressed: onPressed,
+        onPressed: disabled ? null : onPressed,
         icon: AuraIcon(
           icon,
           size: size,
@@ -186,7 +190,7 @@ class AuraIconButton extends StatelessWidget {
   }
 
   Color _getIconColor(AuraColorScheme colors) {
-    if (onPressed == null) {
+    if (disabled) {
       return colors.onSurfaceVariant.withValues(alpha: 0.6);
     }
 
@@ -199,7 +203,7 @@ class AuraIconButton extends StatelessWidget {
   }
 
   Color _getBackgroundColor(AuraColorScheme colors) {
-    if (onPressed == null) return Colors.transparent;
+    if (disabled) return Colors.transparent;
 
     return switch (variant) {
       AuraIconButtonVariant.ghost => Colors.transparent,

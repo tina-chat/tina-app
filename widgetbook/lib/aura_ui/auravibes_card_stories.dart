@@ -1,0 +1,33 @@
+import 'package:auravibes_ui/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_workspace/knobs/padding.dart';
+
+@widgetbook.UseCase(name: 'Basic Card', type: AuraCard)
+Widget basicCardUseCase(BuildContext context) {
+  return AuraCard(
+    padding: context.knobs.padding(),
+    onTap: context.knobs.boolean(label: 'Enable Tap') ? () {} : null,
+    semanticLabel: context.knobs.stringOrNull(label: 'Semantic Label'),
+    style: context.knobs.objectOrNull.dropdown(
+      label: 'style',
+      options: AuraCardStyle.values,
+      labelBuilder: (value) => value.name,
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        AuraText(style: AuraTextStyle.heading6, child: Text('Card Title')),
+        SizedBox(height: 8),
+        AuraText(
+          style: AuraTextStyle.body,
+          child: Text(
+            'This is a basic card with some content inside it. Cards are great for organizing information.',
+          ),
+        ),
+      ],
+    ),
+  );
+}

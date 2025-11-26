@@ -17,11 +17,13 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      // themeMode: .light,
       // Use the generated directories variable
       directories: directories,
       addons: [
         InspectorAddon(enabled: true),
-        AlignmentAddon(),
+        TextScaleAddon(),
+        SemanticsAddon(),
         ViewportAddon([
           Viewports.none,
           IosViewports.iPhone13,
@@ -31,22 +33,23 @@ class WidgetbookApp extends StatelessWidget {
           LinuxViewports.desktop,
         ]),
         ThemeAddon(
-          themeBuilder: (context, theme, child) => Theme(
-            data: theme,
-            child: Container(
-              decoration: BoxDecoration(color: theme.colorScheme.surface),
-              child: child,
-            ),
-          ),
+          themeBuilder: (context, theme, child) =>
+              Theme(data: theme, child: child),
           themes: [
-            WidgetbookTheme(
-              name: 'Aura Light Theme',
-              data: _createLightTheme(),
-            ),
-            WidgetbookTheme(name: 'Aura Dark Theme', data: _createDarkTheme()),
+            WidgetbookTheme(name: 'Aura Light', data: _createLightTheme()),
+            WidgetbookTheme(name: 'Aura Dark', data: _createDarkTheme()),
           ],
         ),
-        BuilderAddon(name: 'Builder', builder: (context, child) => child),
+        BuilderAddon(
+          name: 'SafeArea',
+          builder: (ctx, child) => ColoredBox(
+            color: ctx.auraColors.surface,
+
+            child: SafeArea(child: child),
+          ),
+        ),
+        AlignmentAddon(),
+        // BuilderAddon(name: 'Builder', builder: (context, child) => child),
       ],
     );
   }

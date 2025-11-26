@@ -14,4 +14,3 @@ export 'src/organisms/organisms.dart';
 export 'src/templates/templates.dart';
 // Export design tokens
 export 'src/tokens/tokens.dart';
-export 'src/ui.dart';

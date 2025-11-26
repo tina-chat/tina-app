@@ -11,8 +11,10 @@
 // - Settings panel with multiple form sections
 
 // Export all organism components here
-// export 'app_header.dart';
-// export 'product_listing.dart';
-// export 'chat_interface.dart';
-// export 'settings_panel.dart';
+export 'auravibes_app_bar_action.dart';
+export 'auravibes_dropdown_selector.dart';
+export 'auravibes_field_wrapper.dart';
+export 'auravibes_input.dart';
+export 'auravibes_navigation_item.dart';
 export 'auravibes_sidebar.dart';
+export 'auravibes_tab_item.dart';
