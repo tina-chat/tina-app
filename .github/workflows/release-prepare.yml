@@ -42,7 +42,7 @@ jobs:
           pub-cache-key: "flutter-pub-:os:-:channel:-:version:-:arch:-${{ hashFiles('pubspec.lock') }}"
 
       - name: 🚀 Create Release PR with Melos
-        uses: bluefireteam/melos-action@v3
+        uses: bluefireteam/melos-action@main  # Using main to get peter-evans/create-pull-request@v7.0.9 fix
         with:
           run-versioning: ${{ inputs.prerelease == false }}
           run-versioning-prerelease: ${{ inputs.prerelease == true }}
