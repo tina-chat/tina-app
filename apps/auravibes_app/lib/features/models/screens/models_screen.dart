@@ -2,6 +2,7 @@ import 'package:auravibes_app/features/models/providers/list_models_providers.da
 import 'package:auravibes_app/features/models/widgets/add_chat_model.dart';
 import 'package:auravibes_app/features/models/widgets/list_model_credentials.dart';
 import 'package:auravibes_app/i18n/locale_keys.dart';
+import 'package:auravibes_app/widgets/app_content.dart';
 import 'package:auravibes_app/widgets/text_locale.dart';
 import 'package:auravibes_ui/ui.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,10 @@ class ModelsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AuraColumn(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return AuraScreen(
+      child: AuraColumn(
         children: [
           const Icon(Icons.memory_outlined, size: 64),
-          const SizedBox(height: 24),
           _AddModelModalButton(),
           const Expanded(child: ListModelCredentialsWidget()),
         ],
@@ -29,36 +28,45 @@ class ModelsScreen extends StatelessWidget {
 class _AddModelModalButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        AuraButton(
-          onPressed: () {
-            showDialog<void>(
-              context: context,
-              builder: (ctx) => Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DesignBorderRadius.xl),
-                ),
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxWidth: ctx.auraTheme.spacing.xl3 * 6,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(ctx.auraTheme.spacing.lg),
-                    child: const AddModelProviderWidget(),
-                  ),
+    return AuraPadding(
+      padding: const .horizontal(.md),
+      child: AppContent(
+        child: Row(
+          children: [
+            Expanded(
+              child: AuraButton(
+                onPressed: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (ctx) => Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          DesignBorderRadius.xl,
+                        ),
+                      ),
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: ctx.auraTheme.spacing.xl3 * 6,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(ctx.auraTheme.spacing.lg),
+                          child: const AddModelProviderWidget(),
+                        ),
+                      ),
+                    ),
+                  ).then((onValue) {
+                    ref.invalidate(listCredentialsProvider);
+                  });
+                  // context.go(location)
+                },
+                child: const TextLocale(
+                  LocaleKeys.models_screens_add_provider_open_button,
                 ),
               ),
-            ).then((onValue) {
-              ref.invalidate(listCredentialsProvider);
-            });
-            // context.go(location)
-          },
-          child: const TextLocale(
-            LocaleKeys.models_screens_add_provider_open_button,
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

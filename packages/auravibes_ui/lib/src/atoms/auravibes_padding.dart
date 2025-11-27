@@ -12,6 +12,20 @@ class AuraEdgeInsetsGeometry {
     this.bottom = .none,
   });
 
+  /// constructor for horizontal padding
+  const AuraEdgeInsetsGeometry.horizontal(AuraSpacing spacing)
+    : left = spacing,
+      right = spacing,
+      top = .none,
+      bottom = .none;
+
+  /// constructor for vertical padding
+  const AuraEdgeInsetsGeometry.vertical(AuraSpacing spacing)
+    : top = spacing,
+      bottom = spacing,
+      left = .none,
+      right = .none;
+
   /// constructor for all same padding
   const AuraEdgeInsetsGeometry.all(AuraSpacing spacing)
     : left = spacing,

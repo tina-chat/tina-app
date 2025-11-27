@@ -1,4 +1,5 @@
 import 'package:auravibes_app/features/models/providers/api_model_repository_providers.dart';
+import 'package:auravibes_app/features/settings/providers/theme_provider.dart';
 import 'package:auravibes_app/flavors.dart';
 import 'package:auravibes_app/main/locale.dart';
 import 'package:auravibes_app/router/app_router.dart';
@@ -21,31 +22,43 @@ Future<void> main() async {
   runApp(
     UncontrolledProviderScope(
       container: container,
-      child: MainLocale(child: MyApp()),
+      child: const MainLocale(child: MyApp()),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeAsync = ref.watch(themeControllerProvider);
+    final themeMode = themeAsync.asData?.value.themeMode ?? ThemeMode.system;
+
     return Portal(
       child: MaterialApp.router(
         title: F.title,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+        builder: (context, child) => AuraText(child: child!),
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
-          useMaterial3: true,
+          extensions: const [
+            AuraTheme.light,
+          ],
         ),
+        darkTheme: ThemeData(
+          colorScheme: const ColorScheme.dark(),
+          extensions: const [
+            AuraTheme.dark,
+          ],
+        ),
+        themeMode: themeMode,
         routerConfig: _router,
       ),
     );
   }
 
-  final GoRouter _router = GoRouter(
+  static final GoRouter _router = GoRouter(
     routes: $appRoutes,
     initialLocation: '/home',
     navigatorKey: rootNavigatorKey,

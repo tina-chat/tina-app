@@ -102,5 +102,22 @@
     "loading_models": "Cargando modelos...",
     "model_error": "Error de modelo",
     "api_connected": "API Conectada"
+  },
+  "settings_screen": {
+    "title": "Configuración",
+    "app_settings": {
+      "title": "Configuración de la App",
+      "subtitle": "Configura tus preferencias y comportamiento de la app"
+    },
+    "theme": {
+      "title": "Tema y Apariencia",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema",
+      "system_default": "Predeterminado del Sistema"
+    },
+    "actions": {
+      "cancel": "Cancelar"
+    }
   }
 }

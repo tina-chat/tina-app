@@ -1,4 +1,5 @@
 import 'package:auravibes_ui/src/atoms/auravibes_loading.dart';
+import 'package:auravibes_ui/src/atoms/auravibes_padding.dart';
 import 'package:auravibes_ui/src/atoms/auravibes_pressable.dart';
 import 'package:auravibes_ui/src/tokens/auravibes_theme.dart';
 import 'package:auravibes_ui/src/tokens/design_tokens.dart';
@@ -51,7 +52,6 @@ class AuraButton extends StatelessWidget {
       width: isFullWidth ? double.infinity : null,
       // height: _getHeight(),
       child: AuraPressable(
-        padding: _getPadding(auraTheme.spacing),
         color: DesignColors.transparent,
         onPressed: (disabled || isLoading) ? null : onPressed,
         decoration: BoxDecoration(
@@ -61,19 +61,22 @@ class AuraButton extends StatelessWidget {
           border: _getBorder(auraColors),
         ),
         // decoration: DecoratedBox(decoration: decoration),
-        child: Center(
-          child: isLoading
-              ? SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: AuraLoadingCircle(
-                    color: _getLoadingColor(auraColors),
+        child: AuraPadding(
+          padding: _getPadding(auraTheme.spacing),
+          child: Center(
+            child: isLoading
+                ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: AuraLoadingCircle(
+                      color: _getLoadingColor(auraColors),
+                    ),
+                  )
+                : DefaultTextStyle(
+                    style: _getTextStyle(auraColors, auraTheme.typography),
+                    child: child,
                   ),
-                )
-              : DefaultTextStyle(
-                  style: _getTextStyle(auraColors, auraTheme.typography),
-                  child: child,
-                ),
+          ),
         ),
       ),
     );
@@ -115,20 +118,11 @@ class AuraButton extends StatelessWidget {
     };
   }
 
-  EdgeInsets _getPadding(AuraSpacingTheme spacing) {
+  AuraEdgeInsetsGeometry _getPadding(AuraSpacingTheme spacing) {
     return switch (size) {
-      AuraButtonSize.small => EdgeInsets.symmetric(
-        horizontal: spacing.md,
-        vertical: spacing.sm,
-      ),
-      AuraButtonSize.medium => EdgeInsets.symmetric(
-        horizontal: spacing.lg,
-        vertical: spacing.md,
-      ),
-      AuraButtonSize.large => EdgeInsets.symmetric(
-        horizontal: spacing.xl,
-        vertical: spacing.lg,
-      ),
+      AuraButtonSize.small => .small,
+      AuraButtonSize.medium => .medium,
+      AuraButtonSize.large => .large,
     };
   }
 
