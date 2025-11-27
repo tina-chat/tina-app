@@ -173,19 +173,21 @@ class _AuraSidebarItem extends StatelessWidget {
     return AuraPressable(
       color: colors.primary,
       onPressed: onTap,
-      padding: EdgeInsets.all(context.auraTheme.spacing.sm),
       decoration: BoxDecoration(
         color: selected ? colors.primary.withValues(alpha: .1) : null,
         borderRadius: BorderRadius.circular(context.auraTheme.borderRadius.xl),
       ),
-      child: AuraText(
-        color: selected ? AuraTextColor.primary : null,
-        child: AuraRow(
-          spacing: AuraSpacing.sm,
-          children: [
-            ?icon,
-            label,
-          ],
+      child: AuraPadding(
+        padding: .small,
+        child: AuraText(
+          color: selected ? .primary : null,
+          child: AuraRow(
+            spacing: .sm,
+            children: [
+              ?icon,
+              label,
+            ],
+          ),
         ),
       ),
     );

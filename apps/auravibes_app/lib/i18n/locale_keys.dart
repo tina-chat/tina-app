@@ -94,4 +94,17 @@ abstract class LocaleKeys {
   static const status_bar_loading_models = 'status_bar.loading_models';
   static const status_bar_model_error = 'status_bar.model_error';
   static const status_bar_api_connected = 'status_bar.api_connected';
+  static const settings_screen_title = 'settings_screen.title';
+  static const settings_screen_app_settings_title =
+      'settings_screen.app_settings.title';
+  static const settings_screen_app_settings_subtitle =
+      'settings_screen.app_settings.subtitle';
+  static const settings_screen_theme_title = 'settings_screen.theme.title';
+  static const settings_screen_theme_light = 'settings_screen.theme.light';
+  static const settings_screen_theme_dark = 'settings_screen.theme.dark';
+  static const settings_screen_theme_system = 'settings_screen.theme.system';
+  static const settings_screen_theme_system_default =
+      'settings_screen.theme.system_default';
+  static const settings_screen_actions_cancel =
+      'settings_screen.actions.cancel';
 }

@@ -160,7 +160,7 @@ class AuraText extends StatelessWidget {
   Color? _getColor(BuildContext context) {
     final auraColors = context.auraColors;
     return switch (color) {
-      null => null,
+      null => auraColors.onSurface,
       AuraTextColor.primary => auraColors.primary,
       AuraTextColor.onSurface => auraColors.onSurface,
       AuraTextColor.error => auraColors.error,

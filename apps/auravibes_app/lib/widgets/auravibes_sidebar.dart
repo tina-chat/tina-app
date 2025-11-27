@@ -80,16 +80,16 @@ class _AuraSidebarWrapperState extends State<AuraSidebarWrapper>
       label: TextLocale(LocaleKeys.menu_models),
       value: NavigationItemType.models,
     ),
-    const AuraNavigationData(
-      icon: Icons.smart_toy_outlined,
-      label: TextLocale(LocaleKeys.menu_agents),
-      value: NavigationItemType.agents,
-    ),
-    const AuraNavigationData(
-      icon: Icons.description_outlined,
-      label: TextLocale(LocaleKeys.menu_prompts),
-      value: NavigationItemType.prompts,
-    ),
+    // const AuraNavigationData(
+    //   icon: Icons.smart_toy_outlined,
+    //   label: TextLocale(LocaleKeys.menu_agents),
+    //   value: NavigationItemType.agents,
+    // ),
+    // const AuraNavigationData(
+    //   icon: Icons.description_outlined,
+    //   label: TextLocale(LocaleKeys.menu_prompts),
+    //   value: NavigationItemType.prompts,
+    // ),
   ];
 
   @override

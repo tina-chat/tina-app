@@ -41,7 +41,7 @@ class ListModelCredentialsWidget extends ConsumerWidget {
     return const Center(
       child: Padding(
         padding: EdgeInsets.all(32),
-        child: Column(
+        child: AuraColumn(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AuraIcon(
@@ -49,12 +49,10 @@ class ListModelCredentialsWidget extends ConsumerWidget {
               size: AuraIconSize.extraLarge,
               color: Colors.grey,
             ),
-            SizedBox(height: 16),
             AuraText(
               style: AuraTextStyle.heading3,
               child: Text('No AI Models Configured'),
             ),
-            SizedBox(height: 8),
             AuraText(
               // TODO: color: Colors.grey,
               textAlign: TextAlign.center,
@@ -80,7 +78,7 @@ class _CredentialsModelCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _buildModelTypeIcon(),
+              _buildModelTypeIcon(context),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -140,14 +138,18 @@ class _CredentialsModelCard extends StatelessWidget {
     );
   }
 
-  Widget _buildModelTypeIcon() {
+  Widget _buildModelTypeIcon(BuildContext context) {
     return SvgPicture.network(
       'https://models.dev/logos/${credentialsModel.modelId}.svg',
       placeholderBuilder: (BuildContext context) =>
           const CircularProgressIndicator(), // Optional: show a loading
       // indicator
-      //height: 100, // Optional: specify height
-      // width: 100, // Optional: specify width
+      colorFilter: ColorFilter.mode(
+        context.auraColors.onBackground,
+        BlendMode.srcIn,
+      ),
+      height: 30, // Optional: specify height
+      width: 30, // Optional: specify width
     );
   }
 

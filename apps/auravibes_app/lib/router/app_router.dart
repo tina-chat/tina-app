@@ -5,7 +5,7 @@ import 'package:auravibes_app/features/chats/screens/new_chat_screen.dart';
 import 'package:auravibes_app/features/home/home_screen.dart';
 import 'package:auravibes_app/features/models/screens/models_screen.dart';
 import 'package:auravibes_app/features/prompts/prompts_screen.dart';
-import 'package:auravibes_app/features/settings/settings_screen.dart';
+import 'package:auravibes_app/features/settings/screens/settings_screen.dart';
 import 'package:auravibes_app/features/tools/tools_screen.dart';
 import 'package:auravibes_app/main.dart';
 import 'package:flutter/widgets.dart';

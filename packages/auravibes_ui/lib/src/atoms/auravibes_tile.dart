@@ -108,6 +108,7 @@ class AuraTile extends StatelessWidget {
           SizedBox(width: theme.spacing.sm),
         ],
         Flexible(
+          fit: .tight,
           child: DefaultTextStyle(
             style: _getTextStyle(colors, theme.typography),
             child: child,

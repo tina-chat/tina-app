@@ -13,7 +13,6 @@ class AuraPressable extends StatefulWidget {
     this.decoration,
     this.onPressed,
     this.onLongPress,
-    this.padding,
     this.clipBehavior = Clip.hardEdge,
   });
 
@@ -31,9 +30,6 @@ class AuraPressable extends StatefulWidget {
 
   /// onLongPress
   final void Function()? onLongPress;
-
-  /// padding
-  final EdgeInsetsGeometry? padding;
 
   /// clipBehavior
   final Clip? clipBehavior;
@@ -86,7 +82,6 @@ class AuraPressableState extends State<AuraPressable> {
     final alpha = pressed ? (selectedColor.a) : alphaNorPressed;
     if (widget.onPressed == null) {
       return Container(
-        padding: widget.padding ?? EdgeInsets.zero,
         decoration: widget.decoration,
         clipBehavior: widget.decoration == null
             ? Clip.none
@@ -123,10 +118,7 @@ class AuraPressableState extends State<AuraPressable> {
                 ? SystemMouseCursors.click
                 : MouseCursor.defer,
             child: Listener(
-              child: Padding(
-                padding: widget.padding ?? EdgeInsets.zero,
-                child: widget.child,
-              ),
+              child: widget.child,
             ),
           ),
         ),

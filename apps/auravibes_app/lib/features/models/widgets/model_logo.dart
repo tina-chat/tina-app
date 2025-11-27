@@ -23,6 +23,10 @@ class ModelLogo extends StatelessWidget {
       'https://models.dev/logos/$modelId.svg',
       height: height,
       width: width,
+      colorFilter: ColorFilter.mode(
+        context.auraColors.onBackground,
+        BlendMode.srcIn,
+      ),
       placeholderBuilder: (context) {
         return const AuraSpinner();
       },
